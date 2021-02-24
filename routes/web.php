@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,5 +20,7 @@ Route::get('/', function () {
 });
 
 
-
-Route::post('/admin/register-customer',[CustomerController::class,'store'])->middleware('auth')->name('admin.register-customer');
+Route::get('/login',[LoginController::class,'index'])->name('login');
+Route::post('/admin/register-customer',[CustomerController::class,'store'])
+            ->middleware('auth')
+            ->name('admin.register-customer');

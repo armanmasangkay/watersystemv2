@@ -41,7 +41,6 @@ class CustomerRegistrationTest extends TestCase
             'firstname'=>'Arman',
             'lastname'=>'Masangkay'
         ]);
-
     }
 
 
@@ -52,7 +51,6 @@ class CustomerRegistrationTest extends TestCase
             'username'=>'amasangkay',
             'password'=>Hash::make('1234')
         ]);
-
         $customerData=[
             'account_number'=>'',
             'firstname'=>'',
@@ -86,6 +84,10 @@ class CustomerRegistrationTest extends TestCase
 
     public function test_registering_customer_can_only_be_accessed_by_admin()
     {
+       $response=$this->post(route('admin.register-customer'),[
+            'test'=>'test'
+        ]);
 
+        $response->assertRedirect(route('login'));
     }
 }
