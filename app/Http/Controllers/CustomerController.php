@@ -23,7 +23,7 @@ class CustomerController extends Controller
                 'required',
                 Rule::in(BarangayData::names())
             ],
-            'contact_number'=>'required',
+            'contact_number'=>'required|numeric|digits:11',
             'connection_type'=>'required',
             'connection_status'=>'required'
         ];
@@ -39,10 +39,17 @@ class CustomerController extends Controller
 
             'purok.required'=>'Purok must not be empty',
 
+            //Barangay validation
             'barangay.required'=>'Barangay must not be empty',
             'barangay.in'=>'Invalid barangay value',
-            
+
+
+            //Contact number validation
             'contact_number.required'=>'Contact number must not be empty',
+            'contact_number.numeric'=>'Contact number must only contain numbers',
+            'contact_number.digits'=>'Contact number should be 11 digits',
+
+
             'connection_type.required'=>'Connection type must not be empty',
             'connection_status.required'=>'Connection Status must not be empty'
 

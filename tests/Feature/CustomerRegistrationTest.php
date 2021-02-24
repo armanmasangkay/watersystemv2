@@ -162,6 +162,74 @@ class CustomerRegistrationTest extends TestCase
 
     }
 
+    public function test_customer_registration_returns_an_error_if_contact_number_contains_non_numeric_data()
+    {
+        $user=User::factory()->create([
+            'name'=>'Arman Masangkay',
+            'username'=>'amasangkay',
+            'password'=>Hash::make('1234')
+        ]);
 
-    
+        $customerData=[
+            'account_number'=>AccountNumber::new("020",0),
+            'firstname'=>'Arman',
+            'middlename'=>'Macasuhot',
+            'lastname'=>'Masangkay',
+            'civil_status'=>'married',
+            'purok'=>'Purok 1',
+            'barangay'=>"Amparo",
+            'contact_number'=>'a9757375747',
+            'connection_type'=>'institutional',
+            'connection_status'=>'active'
+        ];
+
+        $response=$this->actingAs($user)->post(route('admin.register-customer'),$customerData);
+        $response->assertExactJson([
+            'created'=>false,
+            'errors'=>[
+                'contact_number'=>['Contact number must only contain numbers',"Contact number should be 11 digits"]
+            ]
+
+        ]);
+
+        $this->assertDatabaseCount('customers',0);
+
+    }
+
+    public function test_customer_registration_returns_an_error_if_contact_number_contains_digits_lesser_than_11()
+    {
+        $user=User::factory()->create([
+            'name'=>'Arman Masangkay',
+            'username'=>'amasangkay',
+            'password'=>Hash::make('1234')
+        ]);
+
+        $customerData=[
+            'account_number'=>AccountNumber::new("020",0),
+            'firstname'=>'Arman',
+            'middlename'=>'Macasuhot',
+            'lastname'=>'Masangkay',
+            'civil_status'=>'married',
+            'purok'=>'Purok 1',
+            'barangay'=>"Amparo",
+            'contact_number'=>'0975737574',
+            'connection_type'=>'institutional',
+            'connection_status'=>'active'
+        ];
+
+        $response=$this->actingAs($user)->post(route('admin.register-customer'),$customerData);
+        $response->assertExactJson([
+            'created'=>false,
+            'errors'=>[
+                'contact_number'=>['Contact number should be 11 digits']
+            ]
+
+        ]);
+
+        $this->assertDatabaseCount('customers',0);
+
+    }
+
+
+
 }
