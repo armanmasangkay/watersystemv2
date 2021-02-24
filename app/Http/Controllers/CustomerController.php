@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Classes\Facades\BarangayData;
 use App\Http\Requests\StoreCustomerRequest;
 use App\Models\Customer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class CustomerController extends Controller
 {
@@ -15,9 +17,12 @@ class CustomerController extends Controller
             'account_number'=>'required',
             'firstname'=>'required',
             'lastname'=>'required',
-            'civil_status'=>'required',
+            'civil_status'=>'required|in:married,single,widowed',
             'purok'=>'required',
-            'barangay'=>'required',
+            'barangay'=>[
+                'required',
+                Rule::in(BarangayData::names())
+            ],
             'contact_number'=>'required',
             'connection_type'=>'required',
             'connection_status'=>'required'
@@ -27,9 +32,16 @@ class CustomerController extends Controller
             'account_number.required'=>'Account number must not be empty',
             'firstname.required'=>'First name must not be empty',
             'lastname.required'=>'Last name must not be empty',
+
+            //Civil status validation
             'civil_status.required'=>'Civil status must not be empty',
+            'civil_status.in'=>'Invalid civil status value',
+
             'purok.required'=>'Purok must not be empty',
+
             'barangay.required'=>'Barangay must not be empty',
+            'barangay.in'=>'Invalid barangay value',
+            
             'contact_number.required'=>'Contact number must not be empty',
             'connection_type.required'=>'Connection type must not be empty',
             'connection_status.required'=>'Connection Status must not be empty'

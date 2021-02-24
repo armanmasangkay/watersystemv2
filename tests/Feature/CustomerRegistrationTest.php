@@ -25,7 +25,7 @@ class CustomerRegistrationTest extends TestCase
             'firstname'=>'Arman',
             'middlename'=>'Macasuhot',
             'lastname'=>'Masangkay',
-            'civil_status'=>'Married',
+            'civil_status'=>'married',
             'purok'=>'Purok 1',
             'barangay'=>"Amparo",
             'contact_number'=>'09757375747',
@@ -93,4 +93,75 @@ class CustomerRegistrationTest extends TestCase
             'error'=>'Unauthorized access'
         ]);
     }
+
+    public function test_returns_error_when_civil_status_value_is_not_valid()
+    {
+        $user=User::factory()->create([
+            'name'=>'Arman Masangkay',
+            'username'=>'amasangkay',
+            'password'=>Hash::make('1234')
+        ]);
+
+        $customerData=[
+            'account_number'=>AccountNumber::new("020",0),
+            'firstname'=>'Arman',
+            'middlename'=>'Macasuhot',
+            'lastname'=>'Masangkay',
+            'civil_status'=>'not married',
+            'purok'=>'Purok 1',
+            'barangay'=>"Amparo",
+            'contact_number'=>'09757375747',
+            'connection_type'=>'institutional',
+            'connection_status'=>'active'
+        ];
+
+        $response=$this->actingAs($user)->post(route('admin.register-customer'),$customerData);
+        $response->assertExactJson([
+            'created'=>false,
+            'errors'=>[
+                'civil_status'=>['Invalid civil status value']
+            ]
+
+        ]);
+
+        $this->assertDatabaseCount('customers',0);
+      
+    }
+
+    public function test_returns_error_when_barangay_value_is_not_valid()
+    {
+        $user=User::factory()->create([
+            'name'=>'Arman Masangkay',
+            'username'=>'amasangkay',
+            'password'=>Hash::make('1234')
+        ]);
+
+        $customerData=[
+            'account_number'=>AccountNumber::new("020",0),
+            'firstname'=>'Arman',
+            'middlename'=>'Macasuhot',
+            'lastname'=>'Masangkay',
+            'civil_status'=>'married',
+            'purok'=>'Purok 1',
+            'barangay'=>"Alien Place",
+            'contact_number'=>'09757375747',
+            'connection_type'=>'institutional',
+            'connection_status'=>'active'
+        ];
+
+        $response=$this->actingAs($user)->post(route('admin.register-customer'),$customerData);
+        $response->assertExactJson([
+            'created'=>false,
+            'errors'=>[
+                'barangay'=>['Invalid barangay value']
+            ]
+
+        ]);
+
+        $this->assertDatabaseCount('customers',0);
+
+    }
+
+
+    
 }
