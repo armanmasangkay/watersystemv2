@@ -82,12 +82,15 @@ class CustomerRegistrationTest extends TestCase
         $this->assertDatabaseCount('customers',0);
     }
 
-    public function test_registering_customer_can_only_be_accessed_by_admin()
+    public function test_registering_customer_post_request_returns_unauthorized_error_if_not_authenticated()
     {
        $response=$this->post(route('admin.register-customer'),[
             'test'=>'test'
         ]);
 
-        $response->assertRedirect(route('login'));
+        $response->assertStatus(401);
+        $response->assertJson([
+            'error'=>'Unauthorized access'
+        ]);
     }
 }

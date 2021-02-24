@@ -22,5 +22,5 @@ Route::get('/', function () {
 
 Route::get('/login',[LoginController::class,'index'])->name('login');
 Route::post('/admin/register-customer',[CustomerController::class,'store'])
-            ->middleware('auth')
+            ->middleware('access.authorize')
             ->name('admin.register-customer');

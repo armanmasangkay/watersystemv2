@@ -21,4 +21,6 @@ class Customer extends Model
         'connection_type',
         'connection_status'
     ];
+
+    
 }
