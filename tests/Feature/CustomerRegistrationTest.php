@@ -230,6 +230,13 @@ class CustomerRegistrationTest extends TestCase
 
     }
 
+    public function test_customer_registration_get_route_can_be_accessed_only_by_admins()
+    {
 
+        //continue working on this
+
+       $response= $this->get(route('admin.register-customer'));
+        $response->assertRedirect(route('login'));
+    }
 
 }

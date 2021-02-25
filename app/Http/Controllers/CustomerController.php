@@ -11,6 +11,12 @@ use Illuminate\Validation\Rule;
 
 class CustomerController extends Controller
 {
+
+    public function index()
+    {
+       
+    }
+
     public function store(Request $request)
     {
         $rules=[
@@ -51,6 +57,8 @@ class CustomerController extends Controller
 
 
             'connection_type.required'=>'Connection type must not be empty',
+
+                
             'connection_status.required'=>'Connection Status must not be empty'
 
         ];
