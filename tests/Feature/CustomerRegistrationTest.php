@@ -232,11 +232,26 @@ class CustomerRegistrationTest extends TestCase
 
     public function test_customer_registration_get_route_can_be_accessed_only_by_admins()
     {
-
-        //continue working on this
-
        $response= $this->get(route('admin.register-customer'));
         $response->assertRedirect(route('login'));
+    }
+
+    public function test_customer_registration_route_returns_registration_view()
+    {
+        $user=User::factory()->create([
+            'name'=>'Arman Masangkay',
+            'username'=>'amasangkay',
+            'password'=>Hash::make('1234')
+        ]);
+        $response=$this->actingAs($user)->get(route('admin.register-customer'));
+        $response->assertViewIs('pages.customer-registration');
+    }
+
+    public function test_customer_registration_form_view_can_be_rendered()
+    {
+       $view=$this->view('pages.customer-registration');
+       $view->assertSee('Customer Registration');
+
     }
 
 }

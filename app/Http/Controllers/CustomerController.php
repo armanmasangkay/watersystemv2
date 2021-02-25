@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Classes\Facades\BarangayData;
-use App\Http\Requests\StoreCustomerRequest;
 use App\Models\Customer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -14,10 +13,10 @@ class CustomerController extends Controller
 
     public function index()
     {
-       
+       return view('pages.customer-registration');
     }
 
-    public function store(Request $request)
+public function store(Request $request)
     {
         $rules=[
             'account_number'=>'required',

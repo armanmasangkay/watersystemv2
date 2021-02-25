@@ -23,14 +23,13 @@ Route::get('/', function () {
 Route::get('/login',[LoginController::class,'index'])->name('login');
 
 Route::prefix('admin')->name('admin.')->group(function(){
-    
+
     Route::get('/register-customer',[CustomerController::class,'index'])
         ->middleware('auth')
         ->name('register-customer');
 
     Route::post('/register-customer',[CustomerController::class,'store'])
             ->middleware('access.authorize');
-           
 
 });
 
