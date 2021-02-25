@@ -246,7 +246,7 @@ class CustomerRegistrationTest extends TestCase
         $response=$this->actingAs($user)->get(route('admin.register-customer'));
         $response->assertViewIs('pages.customer-registration');
     }
-
+    
     public function test_customer_registration_form_view_can_be_rendered()
     {
        $view=$this->view('pages.customer-registration');
