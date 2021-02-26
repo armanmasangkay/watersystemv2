@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Route;
 
@@ -31,6 +32,8 @@ Route::prefix('admin')->name('admin.')->group(function(){
 
     Route::post('/register-customer',[CustomerController::class,'store'])
             ->middleware('access.authorize');
+
+    Route::get('/dashboard',[DashboardController::class,'index'])->name('dashboard');
 
 });
 
