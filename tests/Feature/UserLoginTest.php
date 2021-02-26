@@ -13,4 +13,6 @@ class UserLoginTest extends TestCase
         $response=$this->get(route('login'));
         $response->assertViewIs('pages.login');
     }
+
+    
 }
