@@ -70,8 +70,9 @@ class LoginTest extends DuskTestCase
                     ->press('Log In')
                     ->waitForRoute('login')
                     ->assertSee("Invalid credentials!");
-    
-                   
+
+           
+       
         });
     }
 }

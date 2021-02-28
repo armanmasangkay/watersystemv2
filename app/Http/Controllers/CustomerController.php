@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Classes\Facades\AccountNumber;
 use App\Classes\Facades\BarangayData;
+use App\Classes\Facades\CustomerRegistrationOptions;
+use App\Exceptions\BarangayDoesNotExistException;
 use App\Models\Customer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -13,11 +16,20 @@ class CustomerController extends Controller
 
     public function index()
     {
-       return view('pages.customer-registration');
+      
+       return view('pages.customer-registration',[
+        'civilStatuses'=>CustomerRegistrationOptions::civilStatuses(),
+        'barangays'=>CustomerRegistrationOptions::barangays(),
+        'connectionTypes'=>CustomerRegistrationOptions::connectionTypes(),
+        'connectionStatuses'=>CustomerRegistrationOptions::connectionStatuses()
+        ]);
     }
 
 public function store(Request $request)
-    {
+    { 
+        $brgyCode=BarangayData::getCodeByName($request->barangay);
+        $accountNumber=AccountNumber::new(strval($brgyCode),BarangayData::numberOfPeopleOn($request->barangay));
+       
         $rules=[
             'account_number'=>'required',
             'firstname'=>'required',
@@ -61,8 +73,10 @@ public function store(Request $request)
             'connection_status.required'=>'Connection Status must not be empty'
 
         ];
+        $requestsData=array_merge($request->all(),['account_number'=>$accountNumber]);
+          
     
-       $validator=Validator::make($request->all(),$rules,$messages);
+       $validator=Validator::make($requestsData,$rules,$messages);
 
        if($validator->fails()){
            return response()->json([
@@ -71,7 +85,7 @@ public function store(Request $request)
            ]);
        }
 
-        Customer::create($request->all());
+        Customer::create($requestsData);
 
         return response()->json([
             'created'=>true

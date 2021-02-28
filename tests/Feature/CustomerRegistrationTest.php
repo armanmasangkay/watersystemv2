@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Classes\Facades\AccountNumber;
+use App\Classes\Facades\CustomerRegistrationOptions;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
@@ -12,6 +13,7 @@ class CustomerRegistrationTest extends TestCase
 {
     use RefreshDatabase;
 
+  
     public function test_can_register_a_customer_with_valid_data()
     {
         $user=User::factory()->create([
@@ -218,6 +220,7 @@ class CustomerRegistrationTest extends TestCase
         ];
 
         $response=$this->actingAs($user)->post(route('admin.register-customer'),$customerData);
+    
         $response->assertExactJson([
             'created'=>false,
             'errors'=>[
@@ -249,8 +252,13 @@ class CustomerRegistrationTest extends TestCase
     
     public function test_customer_registration_form_view_can_be_rendered()
     {
-       $view=$this->view('pages.customer-registration');
-       $view->assertSee('Customer Registration');
+       $view=$this->view('pages.customer-registration',[
+           'civilStatuses'=>CustomerRegistrationOptions::civilStatuses(),
+           'barangays'=>CustomerRegistrationOptions::barangays(),
+           'connectionTypes'=>CustomerRegistrationOptions::connectionTypes(),
+           'connectionStatuses'=>CustomerRegistrationOptions::connectionStatuses()
+       ]);
+       $view->assertSee('Register a Customer');
 
     }
 

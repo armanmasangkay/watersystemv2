@@ -1,5 +1,6 @@
 <?php namespace App\Classes\Facades;
 
+use App\Exceptions\BarangayDoesNotExistException;
 
 class BarangayData{
     private static $data=[
@@ -46,6 +47,18 @@ class BarangayData{
         '300'=>'Upper Villa Jacinta'
     ];
 
+    public static function getCodeByName($barangayName)
+    {
+        while($barangay=current(self::$data)){
+            if($barangay==$barangayName){
+                return key(self::$data);
+            }
+            next(self::$data);
+        }
+
+        return null;
+    }
+
     public static function names()
     {
         $barangayNames=[];
@@ -54,5 +67,18 @@ class BarangayData{
             array_push($barangayNames,$barangay);
         }
         return $barangayNames;
+    }
+
+    public static function numberOfPeopleOn($barangay)
+    {
+        return 1;
+    }
+
+    public static function getRandomBarangayName()
+    {
+        $keys=array_keys(self::$data);
+
+        
+        return self::$data[$keys[random_int(0,count($keys)-1)]];
     }
 }
