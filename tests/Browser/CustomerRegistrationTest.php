@@ -62,4 +62,28 @@ class CustomerRegistrationTest extends DuskTestCase
                     ->assertSeeIn("#connection-status","Active");
         });
     }
+
+    public function test_fields_to_show_validation_errors_if_a_field_has_errors_after_submitting()
+    {
+        $this->browse(function (Browser $browser) {
+            $user=User::factory()->create([
+                'name'=>'Arman Masangkay',
+                'username'=>'armanmasangkay',
+                'password'=>Hash::make('1234')
+            ]);
+
+            $browser->loginAs($user)
+                    ->visit(route('admin.register-customer'))
+                    ->assertMissing("#error-firstname")
+                    ->assertMissing('#error-lastname')
+                    ->assertMissing('#error-contact-number')
+                    ->assertMissing('#error-purok')
+                    ->pressAndWaitFor('Register',2)
+                    ->assertVisible('#error-firstname')
+                    ->assertVisible('#error-lastname')
+                    ->assertVisible('#error-contact-number')
+                    ->assertVisible('#error-purok')
+                    
+        });
+    }
 }
