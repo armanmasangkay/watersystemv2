@@ -11,9 +11,9 @@
     <input type="text" name="firstname" id="">
     <input type="text" name="middlename" id="">
     <input type="text" name="lastname" id="">
-    <select name="civil_status" id="">
+    <select name="civil_status" id="civil_status">
         @foreach($civilStatuses as $civilStatus)
-        <option value="{{$civilStatus}}">{{$civilStatus}}</option>
+        <option value="{{$civilStatus}}">{{Str::ucfirst($civilStatus)}}</option>
         @endforeach
     </select>
     <input type="text" name="purok" id="">
@@ -23,14 +23,14 @@
         @endforeach
     </select>
     <input type="number" name="contact_number" id="">
-    <select name="connection_type" id="">
+    <select name="connection_type" id="connection-type">
         @foreach($connectionTypes as $connectionType)
-        <option value="{{$connectionType}}">{{$connectionType}}</option>
+        <option value="{{$connectionType}}">{{Str::ucfirst($connectionType)}}</option>
         @endforeach
     </select>
-    <select name="connection_status" id="">
+    <select name="connection_status" id="connection-status">
         @foreach($connectionStatuses as $connectionStatus)
-        <option value="{{$connectionStatus}}">{{$connectionStatus}}</option>
+        <option value="{{$connectionStatus}}">{{Str::ucfirst($connectionStatus)}}</option>
         @endforeach
     </select>
 

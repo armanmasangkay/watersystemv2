@@ -44,4 +44,22 @@ class CustomerRegistrationTest extends DuskTestCase
 
         });
     }
+
+
+    public function test_selections_have_first_letter_being_uppercased_on_the_display_text()
+    {
+        $this->browse(function (Browser $browser) {
+            $user=User::factory()->create([
+                'name'=>'Arman Masangkay',
+                'username'=>'armanmasangkay',
+                'password'=>Hash::make('1234')
+            ]);
+
+            $browser->loginAs($user)
+                    ->visit(route('admin.register-customer'))
+                    ->assertSeeIn("#civil_status",'Single')
+                    ->assertSeeIn("#connection-type","Residential")
+                    ->assertSeeIn("#connection-status","Active");
+        });
+    }
 }
