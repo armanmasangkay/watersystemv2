@@ -66,10 +66,9 @@ class CustomerRegistrationTest extends TestCase
             'connection_status'=>''
         ];
         $response=$this->actingAs($user)->post(route('admin.register-customer'),$customerData);
-        $response->assertExactJson([
+        $response->assertSimilarJson([
            'created'=>false,
            'errors'=>[
-               'account_number'=>['Account number must not be empty'],
                'firstname'=>['First name must not be empty'],
                'lastname'=>['Last name must not be empty'],
                'civil_status'=>['Civil status must not be empty'],
