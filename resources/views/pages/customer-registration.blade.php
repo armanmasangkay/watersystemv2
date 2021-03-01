@@ -13,7 +13,6 @@
             <div class="card-body px-5">
                 <small class="mb-5 text-danger">Note: (*) Required fields</small>
                 <form action="" method="post" class="mt-4">
-                    @csrf
                    
                     <p class="text-primary">Person Information</p>
                     <hr>
@@ -114,42 +113,62 @@
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script>
     $(document).ready(function(){
+        const registerBtn=$("#register-btn");
+        const registrationForm=$("form");
 
-        $("#register-btn").prop('disabled',false);
+        registerBtn.prop('disabled',false);
 
         $("form").submit(function(e){
             e.preventDefault();
+            registerBtn.prop('disabled',true);
+            registerBtn.html("Registering..")
 
-            $.post("{{route('admin.register-customer')}}",$(this).serialize(),function(response){
-               
-                if(response.created==true){
-                    Swal.fire('Great!','Customer account was successfully created!','success');
-                }else{
-                    $("#error-firstname").prop('hidden',false);
-                    if(response.errors.firstname){
-                        $("#error-firstname").html(response.errors.firstname)
-                        $("input[name='firstname']").addClass('is-invalid')
-                    }
-                    
+            let data=$(this).serialize()+"&_token={{csrf_token()}}";
 
-                    $("#error-lastname").prop('hidden',false);
-                    if(response.errors.lastname){
-                        $("#error-lastname").html(response.errors.lastname)
-                        $("input[name='lastname']").addClass('is-invalid')
-                    }
+            window.setTimeout(function(){
+                $.post("{{route('admin.register-customer')}}",data,function(response){
+                    if(response.created==true){
+                        Swal.fire('Great!','Customer account was successfully created!','success').then(function(result){
+                            if(result.isConfirmed)
+                            {
+                                window.location.reload();
+                            }
+                        })
 
-                    $("#error-contact-number").prop('hidden',false);
-                    if(response.errors.contact_number){
-                        $("#error-contact-number").html(response.errors.contact_number)
-                        $("input[name='contact_number']").addClass('is-invalid')
+                    }else{
+                        $("#error-firstname").prop('hidden',false);
+                        if(response.errors.firstname){
+                            $("#error-firstname").html(response.errors.firstname)
+                            $("input[name='firstname']").addClass('is-invalid')
+                        }
+                        
+
+                        $("#error-lastname").prop('hidden',false);
+                        if(response.errors.lastname){
+                            $("#error-lastname").html(response.errors.lastname)
+                            $("input[name='lastname']").addClass('is-invalid')
+                        }
+
+                        $("#error-contact-number").prop('hidden',false);
+                        if(response.errors.contact_number){
+                            $("#error-contact-number").html(response.errors.contact_number)
+                            $("input[name='contact_number']").addClass('is-invalid')
+                        }
+                        $("#error-purok").prop('hidden',false);
+                        if(response.errors.purok){
+                            $("#error-purok").html(response.errors.purok)
+                            $("input[name='purok']").addClass('is-invalid')
+                        }
                     }
-                    $("#error-purok").prop('hidden',false);
-                    if(response.errors.purok){
-                        $("#error-purok").html(response.errors.purok)
-                        $("input[name='purok']").addClass('is-invalid')
-                    }
-                }
-            })
+                }).always(function(){
+                    registerBtn.prop('disabled',false);
+                    registerBtn.html("Register")
+                }).fail(function(){
+                    Swal.fire('Ooops!','There seems to be a problem with your internet connection','error');
+                }) 
+
+            },2000)
+           
         })
     })
 
