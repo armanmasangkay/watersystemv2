@@ -1,6 +1,7 @@
 <?php namespace App\Classes\Facades;
 
 use App\Exceptions\BarangayDoesNotExistException;
+use App\Models\Customer;
 
 class BarangayData{
     private static $data=[
@@ -71,7 +72,7 @@ class BarangayData{
 
     public static function numberOfPeopleOn($barangay)
     {
-        return 1;
+        return Customer::where('barangay',$barangay)->count();
     }
 
     public static function getRandomBarangayName()

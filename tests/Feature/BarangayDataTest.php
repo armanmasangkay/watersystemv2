@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Classes\Facades\BarangayData;
 use App\Models\Customer;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -12,12 +13,12 @@ class BarangayDataTest extends TestCase
     use RefreshDatabase;
     public function test_function_numberOfPeopleOn_should_return_correct_number_of_people()
     {
-        Customer::factory()->create([
+        Customer::factory()->count(2)->create([
             'barangay'=>'Amparo'
         ]);
 
-        $numberOfPeopleRegistered=Customer::where('barangay','Amparo')->count();
-        $this->assertEquals(1,$numberOfPeopleRegistered);
+        $numberOfPeopleRegistered=BarangayData::numberOfPeopleOn("Amparo");
+        $this->assertEquals(2,$numberOfPeopleRegistered);
     
 
     }

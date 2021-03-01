@@ -97,7 +97,7 @@
                     </div>
                 
                     <div class="d-grid gap-2 col-4 mx-auto mt-4">
-                        <button class="btn btn-primary py-2" type="Submit">Register</button>
+                        <button class="btn btn-primary py-2" type="Submit" disabled id="register-btn">Register</button>
                     
                     </div>
                 
@@ -114,6 +114,9 @@
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script>
     $(document).ready(function(){
+
+        $("#register-btn").prop('disabled',false);
+
         $("form").submit(function(e){
             e.preventDefault();
 
@@ -123,26 +126,27 @@
                     Swal.fire('Great!','Customer account was successfully created!','success');
                 }else{
                     $("#error-firstname").prop('hidden',false);
-
-
-                    //TODO add is-invalid class to errors
                     if(response.errors.firstname){
                         $("#error-firstname").html(response.errors.firstname)
+                        $("input[name='firstname']").addClass('is-invalid')
                     }
                     
 
                     $("#error-lastname").prop('hidden',false);
                     if(response.errors.lastname){
                         $("#error-lastname").html(response.errors.lastname)
+                        $("input[name='lastname']").addClass('is-invalid')
                     }
 
                     $("#error-contact-number").prop('hidden',false);
                     if(response.errors.contact_number){
                         $("#error-contact-number").html(response.errors.contact_number)
+                        $("input[name='contact_number']").addClass('is-invalid')
                     }
                     $("#error-purok").prop('hidden',false);
                     if(response.errors.purok){
                         $("#error-purok").html(response.errors.purok)
+                        $("input[name='purok']").addClass('is-invalid')
                     }
                 }
             })
