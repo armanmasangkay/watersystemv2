@@ -42,7 +42,10 @@ public function store(Request $request)
             ],
             'contact_number'=>'required|numeric|digits:11',
             'connection_type'=>'required',
-            'connection_status'=>'required'
+            'connection_type_specifics'=>'required_if:connection_type,others',
+
+            'connection_status'=>'required',
+            'connection_status_specifics'=>'required_if:connection_status,others'
         ];
 
         $messages=[
@@ -68,9 +71,10 @@ public function store(Request $request)
 
 
             'connection_type.required'=>'Connection type must not be empty',
-
+            'connection_type_specifics.required_if'=>'Specific connection type must be provided if "OTHERS" is selected',
                 
-            'connection_status.required'=>'Connection Status must not be empty'
+            'connection_status.required'=>'Connection Status must not be empty',
+            'connection_status_specifics.required_if'=>'Specific connection status must be provided if "OTHERS" is selected',
 
         ];
         $requestsData=array_merge($request->all(),['account_number'=>$accountNumber]);
@@ -78,7 +82,11 @@ public function store(Request $request)
     
        $validator=Validator::make($requestsData,$rules,$messages);
 
+
+    
+
        if($validator->fails()){
+
            return response()->json([
                'created'=>false,
                'errors'=>$validator->errors()

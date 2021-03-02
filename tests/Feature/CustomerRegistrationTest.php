@@ -261,4 +261,73 @@ class CustomerRegistrationTest extends TestCase
 
     }
 
+    public function test_selecting_connection_type_to_others_should_throw_an_error_if_connection_type_specifics_is_not_provided()
+    {
+        $user=User::factory()->create([
+            'name'=>'Arman Masangkay',
+            'username'=>'amasangkay',
+            'password'=>Hash::make('1234')
+        ]);
+
+        $customerData=[
+            'account_number'=>AccountNumber::new("020",0),
+            'firstname'=>'Arman',
+            'middlename'=>'Macasuhot',
+            'lastname'=>'Masangkay',
+            'civil_status'=>'married',
+            'purok'=>'Purok 1',
+            'barangay'=>"Amparo",
+            'contact_number'=>'09757375747',
+            'connection_type'=>'others',
+            'connection_type_specifics'=>'',
+            'connection_status'=>'active'
+        ];
+
+        $response=$this->actingAs($user)->post(route('admin.register-customer'),$customerData);
+
+        $response->assertExactJson([
+            'created'=>false,
+            'errors'=>[
+                'connection_type_specifics'=>['Specific connection type must be provided if "OTHERS" is selected']
+            ]
+        ]);
+
+        $this->assertDatabaseCount('customers',0);
+    }
+
+    public function test_selecting_connection_status_to_others_should_throw_an_error_if_connection_status_specifics_is_not_provided()
+    {
+        $user=User::factory()->create([
+            'name'=>'Arman Masangkay',
+            'username'=>'amasangkay',
+            'password'=>Hash::make('1234')
+        ]);
+
+        $customerData=[
+            'account_number'=>AccountNumber::new("020",0),
+            'firstname'=>'Arman',
+            'middlename'=>'Macasuhot',
+            'lastname'=>'Masangkay',
+            'civil_status'=>'married',
+            'purok'=>'Purok 1',
+            'barangay'=>"Amparo",
+            'contact_number'=>'09757375747',
+            'connection_type'=>'institutional',
+            'connection_type_specifics'=>'',
+            'connection_status'=>'others',
+            'connection_status_specifics'=>'',
+        ];
+
+        $response=$this->actingAs($user)->post(route('admin.register-customer'),$customerData);
+
+        $response->assertExactJson([
+            'created'=>false,
+            'errors'=>[
+                'connection_status_specifics'=>['Specific connection status must be provided if "OTHERS" is selected']
+            ]
+        ]);
+
+        $this->assertDatabaseCount('customers',0);
+    }
+
 }
