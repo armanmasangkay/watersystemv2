@@ -86,6 +86,16 @@
                             </select>
                         </div>
                         <div class="col">
+                            <label for=""><small class="text-muted">If others, please specify</small></label>
+                            <input type="text" name="connection_type_specifics" id="connection_type_specifics" class="form-control mt-2" disabled>
+                            <small id="error-type-specifics" class="text-danger">
+                                  
+                            </small>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col">
                             <label for=""><small class="text-muted">Connection Status</small>  <small class="text-danger">*</small></label>
                             <select name="connection_status" id="connection-status" class="form-select mb-3 mt-2">
                                 @foreach($connectionStatuses as $connectionStatus)
@@ -93,6 +103,14 @@
                                 @endforeach
                             </select>
                         </div>
+                        <div class="col">
+                            <label for=""><small class="text-muted">If others, please specify</small></label>
+                            <input type="text" name="connection_status_specifics" id="connection_status_specifics" class="form-control mt-2" disabled>
+                            <small id="error-status-specifics" class="text-danger">
+                               
+                            </small>
+                        </div>
+                      
                     </div>
                 
                     <div class="d-grid gap-2 col-4 mx-auto mt-4">
@@ -118,15 +136,50 @@
 
         registerBtn.prop('disabled',false);
 
+
+        /*
+            Connection Type & connection status is changed
+        */
+        
+        const connectionTypeSelect=$("#connection-type");
+        const connectionTypeSpecificsField=$("#connection_type_specifics");
+        connectionTypeSelect.change(function(e){
+            let selectedValue=$(this).val();
+            if(selectedValue==="others"){
+                connectionTypeSpecificsField.prop('disabled',false)
+            }else{
+                connectionTypeSpecificsField.prop('disabled',true)
+                connectionTypeSpecificsField.val("")
+            }
+        })
+
+        const connectionStatusSelect=$("#connection-status");
+        const connectionStatusSpecificsField=$("#connection_status_specifics");
+        connectionStatusSelect.change(function(e){
+            let selectedValue=$(this).val();
+            if(selectedValue==="others"){
+                connectionStatusSpecificsField.prop('disabled',false)
+            }else{
+                connectionStatusSpecificsField.prop('disabled',true)
+                connectionStatusSpecificsField.val("")
+            }
+        })
+        
+
+
+
+
+        /*
+            Registration Form submitted
+        */
         $("form").submit(function(e){
             e.preventDefault();
             registerBtn.prop('disabled',true);
             registerBtn.html("Registering..")
 
             let data=$(this).serialize()+"&_token={{csrf_token()}}";
-
-            window.setTimeout(function(){
                 $.post("{{route('admin.register-customer')}}",data,function(response){
+                
                     if(response.created==true){
                         Swal.fire('Great!','Customer account was successfully created!','success').then(function(result){
                             if(result.isConfirmed)
@@ -136,29 +189,67 @@
                         })
 
                     }else{
-                        $("#error-firstname").prop('hidden',false);
+                       
                         if(response.errors.firstname){
+                            $("#error-firstname").prop('hidden',false);
                             $("#error-firstname").html(response.errors.firstname)
                             $("input[name='firstname']").addClass('is-invalid')
+                        }else{
+                            $("#error-firstname").prop('hidden',true);
+                            $("input[name='firstname']").removeClass('is-invalid')
                         }
                         
 
-                        $("#error-lastname").prop('hidden',false);
+                      
                         if(response.errors.lastname){
+                            $("#error-lastname").prop('hidden',false);
                             $("#error-lastname").html(response.errors.lastname)
                             $("input[name='lastname']").addClass('is-invalid')
+                        }else{
+                            $("#error-lastname").prop('hidden',true);
+                            $("input[name='lastname']").removeClass('is-invalid')
                         }
 
-                        $("#error-contact-number").prop('hidden',false);
+                       
                         if(response.errors.contact_number){
+                            $("#error-contact-number").prop('hidden',false);
                             $("#error-contact-number").html(response.errors.contact_number)
                             $("input[name='contact_number']").addClass('is-invalid')
+                        }else{
+                            $("#error-contact-number").prop('hidden',true);
+                            $("input[name='contact_number']").removeClass('is-invalid')
                         }
-                        $("#error-purok").prop('hidden',false);
+
+                      
                         if(response.errors.purok){
+                            $("#error-purok").prop('hidden',false);
                             $("#error-purok").html(response.errors.purok)
                             $("input[name='purok']").addClass('is-invalid')
+                        }else{
+                            $("#error-purok").prop('hidden',true);
+                            $("input[name='purok']").removeClass('is-invalid')
                         }
+
+                       
+                        if(response.errors.connection_type_specifics){
+                            $("#error-type-specifics").prop('hidden',false);
+                            $("#error-type-specifics").html(response.errors.connection_type_specifics)
+                            $("input[name='connection_type_specifics']").addClass('is-invalid')
+                        }else{
+                            $("#error-type-specifics").prop('hidden',true);
+                            $("input[name='connection_type_specifics']").removeClass('is-invalid')
+                        }
+
+                       
+                        if(response.errors.connection_status_specifics){
+                            $("#error-status-specifics").prop('hidden',false);
+                            $("#error-status-specifics").html(response.errors.connection_status_specifics)
+                            $("input[name='connection_status_specifics']").addClass('is-invalid')
+                        }else{
+                            $("#error-status-specifics").prop('hidden',true);
+                            $("input[name='connection_status_specifics']").removeClass('is-invalid')
+                        }
+
                     }
                 }).always(function(){
                     registerBtn.prop('disabled',false);
@@ -167,8 +258,6 @@
                     Swal.fire('Ooops!','There seems to be a problem with your internet connection','error');
                 }) 
 
-            },2000)
-           
         })
     })
 
