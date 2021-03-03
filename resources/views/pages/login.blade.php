@@ -8,7 +8,7 @@
     <h1 class="display-3 text-center mt-5">Macrohon Water System</h1>
     <hr>
     <div class="row justify-content-center mb-5">
-        <div class="col-7 col-lg-6 col-xl-5">
+        <div class="col-12 col-md-8 col-lg-6 col-xl-4">
            
             <h1 class="text-center mb-3 mt-3">Sign in</h1>
             @if(old('username'))
