@@ -5,19 +5,19 @@
 
 @section('content')
 <div class="row justify-content-center">
-    <div class="col col-lg-8">
+    <div class="col col-lg-12 col-xl-8">
         <div class="card mt-5 rounded-3 mb-5 shadow">
             <div class="card-header p-4 text-center">
                 <h4><i class="fas fa-user-plus"></i>&nbsp;&nbsp;Register a Customer</h4>
             </div>
-            <div class="card-body px-5">
+            <div class="card-body px-3 px-lg-5">
                 <small class="mb-5 text-danger">Note: (*) Required fields</small>
                 <form action="" method="post" class="mt-4" id="registration-form">
                    
                     <p class="text-primary">Person Information</p>
                     <hr>
-                    <div class="row">
-                        <div class="col mb-2">
+                    <div class="row mb-3">
+                        <div class="col-12 col-lg-4 mb-2">
                             <small class="text-danger">*</small>
                             <input type="text" name="firstname" id="" class="form-control" placeholder="First name" >
                             <small id="error-firstname" class="text-danger" hidden>
@@ -25,11 +25,11 @@
                             </small>
                         </div>
                        
-                        <div class="col">
+                        <div class="col-12 col-lg-4">
                             <small class="text-muted">(optional)</small>
-                            <input type="text" name="middlename" id="" class="form-control mb-3" placeholder="Middle name">
+                            <input type="text" name="middlename" id="" class="form-control" placeholder="Middle name">
                         </div>
-                        <div class="col">
+                        <div class="col-12 col-lg-4">
                             <small class="text-danger">*</small>
                             <input type="text" name="lastname" id="" class="form-control" placeholder="Last name">
                             <small id="error-lastname" class="text-danger" hidden>
@@ -38,7 +38,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col">
+                        <div class="col-12 col-lg-6">
                             <label for=""><small class="text-muted">Civil Status</small> <small class="text-danger">*</small></label>
                             <select name="civil_status" id="civil_status" class="form-select mb-3 mt-2">
                                 @foreach($civilStatuses as $civilStatus)
@@ -46,7 +46,7 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div class="col">
+                        <div class="col-12 col-lg-6">
                             <label for=""><small class="text-muted">Contact Number</small> <small class="text-danger">*</small></label>
                             <input type="number" name="contact_number" id="" class="form-control mt-2" placeholder="09xxxxxxxxx">
                             <small id="error-contact-number" class="text-danger" hidden>
@@ -57,14 +57,14 @@
                     <p class="mt-3 text-primary">Address</p>
                     <hr>
                     <div class="row">
-                        <div class="col">
+                        <div class="col-12 col-lg-6">
                             <label for=""><small class="text-muted">Purok</small> <small class="text-danger">*</small></label>
                             <input type="text" name="purok" id="" class="form-control mt-2">
                             <small id="error-purok" class="text-danger" hidden>
                                 
                             </small>
                         </div>
-                        <div class="col">
+                        <div class="col-12 col-lg-6">
                             <label for=""><small class="text-muted">Barangay</small> <small class="text-danger">*</small></label>
                             <select name="barangay" id="" class="form-select mb-3 mt-2">
                                 @foreach($barangays as $barangay)
@@ -77,7 +77,7 @@
                 
                     <hr>
                     <div class="row">
-                        <div class="col">
+                        <div class="col-12 col-lg-6">
                             <label for=""><small class="text-muted">Connection Type</small>  <small class="text-danger">*</small></label>
                             <select name="connection_type" id="connection-type" class="form-select mb-3 mt-2">
                                 @foreach($connectionTypes as $connectionType)
@@ -85,7 +85,7 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div class="col">
+                        <div class="col-12 col-lg-6">
                             <label for=""><small class="text-muted">If others, please specify</small></label>
                             <input type="text" name="connection_type_specifics" id="connection_type_specifics" class="form-control mt-2" disabled>
                             <small id="error-type-specifics" class="text-danger">
@@ -95,7 +95,7 @@
                     </div>
                     
                     <div class="row">
-                        <div class="col">
+                        <div class="col-12 col-lg-6">
                             <label for=""><small class="text-muted">Connection Status</small>  <small class="text-danger">*</small></label>
                             <select name="connection_status" id="connection-status" class="form-select mb-3 mt-2">
                                 @foreach($connectionStatuses as $connectionStatus)
@@ -103,7 +103,7 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div class="col">
+                        <div class="col-12 col-lg-6">
                             <label for=""><small class="text-muted">If others, please specify</small></label>
                             <input type="text" name="connection_status_specifics" id="connection_status_specifics" class="form-control mt-2" disabled>
                             <small id="error-status-specifics" class="text-danger">
@@ -113,7 +113,7 @@
                       
                     </div>
                 
-                    <div class="d-grid gap-2 col-4 mx-auto mt-4">
+                    <div class="d-grid gap-2 col-4 col-lg-3 mx-auto mt-4">
                         <button class="btn btn-primary py-2" type="Submit" disabled id="register-btn">Register</button>
                     
                     </div>

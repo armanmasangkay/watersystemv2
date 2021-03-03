@@ -50,5 +50,12 @@ class UserLoginTest extends TestCase
 
     }
 
+    public function test_login_view_should_not_contain_navigation_bar()
+    {
+       $response= $this->get(route('login'));
+       $response->assertDontSeeText("Logout");
+      
+    }
+
     
 }
