@@ -3,6 +3,7 @@
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\LogoutUserController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -16,7 +17,7 @@ Route::post('/login',[LoginController::class,'authenticate']);
 
 Route::prefix('admin')->name('admin.')->group(function(){
 
- 
+    Route::post('/logout',[LogoutUserController::class,'logout'])->middleware('auth')->name('logout');
 
     Route::get('/register-customer',[CustomerController::class,'index'])
         ->middleware('auth')

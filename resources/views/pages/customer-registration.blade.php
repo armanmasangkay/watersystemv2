@@ -12,7 +12,7 @@
             </div>
             <div class="card-body px-5">
                 <small class="mb-5 text-danger">Note: (*) Required fields</small>
-                <form action="" method="post" class="mt-4">
+                <form action="" method="post" class="mt-4" id="registration-form">
                    
                     <p class="text-primary">Person Information</p>
                     <hr>
@@ -172,7 +172,7 @@
         /*
             Registration Form submitted
         */
-        $("form").submit(function(e){
+        $("#registration-form").submit(function(e){
             e.preventDefault();
             registerBtn.prop('disabled',true);
             registerBtn.html("Registering..")
