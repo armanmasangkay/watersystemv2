@@ -21,9 +21,21 @@
         <span class="navbar-text">
           <form action="{{route('admin.logout')}}" method="post">
               @csrf
-              <button type="submit" class="btn btn-link">Logout</button>
+              <button type="submit" class="btn btn-link" id="logoutBtn">Logout</button>
           </form>
         </span>
       </div>
     </div>
   </nav>
+
+  <style>
+    #logoutBtn{
+      text-decoration: none;
+      color:rgba(255,255,255,.55);
+      cursor: pointer;
+    }
+    #logoutBtn:hover{
+      color:#fff;
+    }
+
+  </style>

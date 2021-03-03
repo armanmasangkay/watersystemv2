@@ -17,7 +17,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
               </div>
             @endif
-            <div class="card shadow-sm">
+            <div class="card rounded-3 shadow-sm">
                 <div class="card-header p-4">
                 <span class="text-muted"> Note: Please don't share your account to anyone.</span>
                 </div>
