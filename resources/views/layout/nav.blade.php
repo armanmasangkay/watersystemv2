@@ -1,5 +1,5 @@
-<nav class="navbar navbar-expand-md navbar-dark bg-dark">
-    <div class="container-fluid">
+<nav class="navbar navbar-expand-md navbar-dark bg-dark ">
+    <div class="container-fluid px-3">
       <a class="navbar-brand" href="{{route('admin.dashboard')}}">MWS</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -33,9 +33,14 @@
       text-decoration: none;
       color:rgba(255,255,255,.55);
       cursor: pointer;
+      text-align: left;
+      padding: 0;
     }
     #logoutBtn:hover{
       color:#fff;
+    }
+    .navbar-text{
+      height:3.1rem;
     }
 
   </style>
