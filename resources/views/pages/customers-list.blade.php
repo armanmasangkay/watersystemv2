@@ -11,6 +11,8 @@
         <h4 class='text-center'><i class="fas fa-users"></i> Customers</h4>
     </div>
     <div class="card-body">
+
+        @if($customers->count()>0)
         <div class="table-responsive">
             <table class="table table-hover table-bordered">
                 <thead class="table-light">
@@ -43,6 +45,14 @@
             </div> 
 
             {{$customers->links()}}
+          @else
+          <div class="text-muted text-center">
+              <h3><i class="fas fa-user-times"></i></h3>
+              <p>There are no currently registered customer.</p>
+          </div>
+            
+
+          @endif
     </div>
 </div>
 

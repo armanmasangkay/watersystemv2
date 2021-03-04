@@ -23,7 +23,8 @@ class CustomerViewTest extends TestCase
         ]);
         $response=$this->actingAs($user)->get(route('admin.customers'));
         $response->assertOk();
-        $response->assertSeeText("There's no currently registered customer.");
+        $response->assertSeeText("There are no currently registered customer.");
+       
     }
 
     public function test_view_all_customer_can_be_rendered()
