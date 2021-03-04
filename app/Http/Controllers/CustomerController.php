@@ -25,7 +25,14 @@ class CustomerController extends Controller
         ]);
     }
 
-public function store(Request $request)
+    public function showAll()
+    {
+        $customers=Customer::paginate(10);
+        
+        return view('pages.customers-list',['customers'=>$customers]);
+    }
+
+    public function store(Request $request)
     { 
         $brgyCode=BarangayData::getCodeByName($request->barangay);
         $accountNumber=AccountNumber::new(strval($brgyCode),BarangayData::numberOfPeopleOn($request->barangay));

@@ -15,7 +15,9 @@
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
               <li><a class="dropdown-item" href="{{route('admin.register-customer')}}">New</a></li>
+              <li><a class="dropdown-item" href="{{route('admin.customers')}}">View All</a></li>
             </ul>
+        
           </li>
         </ul>
         <span class="navbar-text">
