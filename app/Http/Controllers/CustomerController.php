@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Classes\Facades\AccountNumber;
 use App\Classes\Facades\BarangayData;
+use App\Classes\Facades\CustomerDataHelper;
 use App\Classes\Facades\CustomerRegistrationOptions;
 use App\Exceptions\BarangayDoesNotExistException;
 use App\Models\Customer;
@@ -90,7 +91,6 @@ class CustomerController extends Controller
        $validator=Validator::make($requestsData,$rules,$messages);
 
 
-    
 
        if($validator->fails()){
 
@@ -100,7 +100,11 @@ class CustomerController extends Controller
            ]);
        }
 
-        Customer::create($requestsData);
+
+       $normalizedData=CustomerDataHelper::normalize($requestsData);
+       
+
+        Customer::create($normalizedData);
 
         return response()->json([
             'created'=>true

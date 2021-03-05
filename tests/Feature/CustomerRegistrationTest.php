@@ -13,6 +13,7 @@ class CustomerRegistrationTest extends TestCase
 {
     use RefreshDatabase;
 
+
   
     public function test_can_register_a_customer_with_valid_data()
     {
