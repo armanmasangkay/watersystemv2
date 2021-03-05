@@ -26,5 +26,12 @@ class CustomerFactoryTest extends TestCase
         $this->assertEquals(100,$count);
    }
 
+   public function test_customer_factor_create_a_customer_with_correct_account_format()
+   {
+        $currentYear=date("Y");
+        $customer=Customer::factory()->create(); 
+        $this->assertEquals("020-$currentYear-001",$customer->account_number);
+   }
+
 
 }

@@ -17,7 +17,6 @@ class CustomerDataHelper{
             }
 
         $customerData['firstname']=ucwords(strtolower($customerData['firstname']));
-       
         $customerData['middlename']=ucwords(strtolower($customerData['middlename']));
         $customerData['lastname']=ucwords(strtolower($customerData['lastname']));
         $customerData['purok']=ucwords(strtolower($customerData['purok']));

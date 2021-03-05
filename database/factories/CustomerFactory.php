@@ -19,7 +19,7 @@ class CustomerFactory extends Factory
      */
     protected $model = Customer::class;
 
-    protected $counter=0;
+    protected $counter=1;
 
     /**
      * Define the model's default state.
@@ -30,7 +30,7 @@ class CustomerFactory extends Factory
     {
         $currentYear=date("Y");
         $customerData=[ 
-            'account_number'=>"020-$currentYear-".$this->counter++,
+            'account_number'=>"020-$currentYear-".str_pad($this->counter++,3,'0',STR_PAD_LEFT),
             'firstname'=>$this->faker->firstName,
             'middlename'=>$this->faker->lastName,
             'lastname'=>$this->faker->lastName,
