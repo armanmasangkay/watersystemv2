@@ -19,6 +19,15 @@
             </ul>
         
           </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+             Transactions
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="{{route('admin.new-transaction')}}">New</a></li>
+            </ul>
+        
+          </li>
         </ul>
         <span class="navbar-text">
           <form action="{{route('admin.logout')}}" method="post">
