@@ -9,6 +9,8 @@ class Customer extends Model
 {
     use HasFactory;
 
+    protected $primaryKey="account_number";
+    public $incrementing=false;
     protected $fillable=[
         'account_number',
         'firstname',
