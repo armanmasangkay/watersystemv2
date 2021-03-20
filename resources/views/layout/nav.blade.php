@@ -1,4 +1,6 @@
-<nav class="navbar navbar-expand-md navbar-dark bg-dark ">
+<nav class="navbar navbar-expand-md navbar-light " style="background-color: #e3f2fd;"> 
+
+  {{-- TODO:: Continue with navbar styling --}}
     <div class="container-fluid px-3">
       <a class="navbar-brand" href="{{route('admin.dashboard')}}">MWS</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -32,7 +34,7 @@
         <span class="navbar-text">
           <form action="{{route('admin.logout')}}" method="post">
               @csrf
-              <button type="submit" class="btn btn-link" id="logoutBtn">Logout</button>
+              <button type="submit" class="btn btn-link" id="logoutBtn" style="color:rgba(0,0,0,.55)">Logout</button>
           </form>
         </span>
       </div>

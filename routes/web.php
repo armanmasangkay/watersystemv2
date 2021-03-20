@@ -28,7 +28,6 @@ Route::prefix('admin')->name('admin.')->group(function(){
 
     Route::post('/register-customer',[CustomerController::class,'store'])
             ->middleware('access.authorize');
-
     Route::get('/dashboard',[DashboardController::class,'index'])->name('dashboard');
 
     Route::get('/search-customer',[CustomerSearchController::class,'search'])->name('search-customer');

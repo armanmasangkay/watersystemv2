@@ -5,20 +5,24 @@ namespace App\Http\Controllers;
 use App\Models\Customer;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class CustomerSearchController extends Controller
 {
     public function search(Request $request)
     {
-        try{
-            $customer=Customer::findOrFail($request->account_number);
+        $validator=Validator::make($request->all(),[
+            'account_number'=>'required|exists:customers,account_number'
+        ]);
 
-        }catch(ModelNotFoundException $e)
-        {
-            return view('pages.customer-not-found',['account_number'=>$request->account_number]);
+        if($validator->fails()){
+            return redirect(route('admin.new-transaction'))->withErrors($validator)->withInput();
+           
         }
-     
+        $customer=Customer::find($request->account_number);
 
+        session()->flashInput(['account_number'=>$request->account_number]);
+    
         return view('pages.new-transaction',[
             'customer'=>$customer
         ]);
