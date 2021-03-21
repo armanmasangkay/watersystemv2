@@ -39,5 +39,10 @@ class Customer extends Model
         return Str::title($this->connection_type);
     }
 
+    public function purchaseOption()
+    {
+        return Str::title($this->purchase_option);
+    }
+
     
 }

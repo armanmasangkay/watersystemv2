@@ -36,7 +36,8 @@
             <div class="card-body">
             <h5 class="card-title">{{$customer->fullname()}}</h5>
             <p class="card-text mb-1"><small class="text-muted">Address:</small> {{$customer->address()}}</p>
-            <p class="card-text"><small class="text-muted">Connection type:</small> {{$customer->connectionType()}}</p>
+            <p class="card-text mb-1"><small class="text-muted">Connection type:</small> {{$customer->connectionType()}}</p>
+            <p class="card-text"><small class="text-muted">Purchase Meter Option:</small> {{$customer->purchaseOption()}}</p>
             
             </div>
         </div>
