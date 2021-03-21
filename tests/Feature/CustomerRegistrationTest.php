@@ -100,6 +100,41 @@ class CustomerRegistrationTest extends TestCase
         ]);
     }
 
+    public function test_returns_error_when_purchase_option_provided_is_invalid()
+    {
+        $user=User::factory()->create([
+            'name'=>'Arman Masangkay',
+            'username'=>'amasangkay',
+            'password'=>Hash::make('1234')
+        ]);
+
+        $customerData=[
+            'account_number'=>AccountNumber::new("020",0),
+            'firstname'=>'Arman',
+            'middlename'=>'Macasuhot',
+            'lastname'=>'Masangkay',
+            'civil_status'=>'married',
+            'purok'=>'Purok 1',
+            'barangay'=>"Amparo",
+            'contact_number'=>'09757375747',
+            'connection_type'=>'institutional',
+            'connection_status'=>'active',
+            'purchase_option'=>'invalidpurchaseoption'
+        ];
+
+        $response=$this->actingAs($user)->post(route('admin.register-customer'),$customerData);
+        $response->assertExactJson([
+            'created'=>false,
+            'errors'=>[
+                'purchase_option'=>['Invalid purchase option selected']
+            ]
+
+        ]);
+
+        $this->assertDatabaseCount('customers',0);
+      
+    }
+
     public function test_returns_error_when_civil_status_value_is_not_valid()
     {
         $user=User::factory()->create([
@@ -118,7 +153,8 @@ class CustomerRegistrationTest extends TestCase
             'barangay'=>"Amparo",
             'contact_number'=>'09757375747',
             'connection_type'=>'institutional',
-            'connection_status'=>'active'
+            'connection_status'=>'active',
+            'purchase_option'=>'cash',
         ];
 
         $response=$this->actingAs($user)->post(route('admin.register-customer'),$customerData);
@@ -152,7 +188,8 @@ class CustomerRegistrationTest extends TestCase
             'barangay'=>"Alien Place",
             'contact_number'=>'09757375747',
             'connection_type'=>'institutional',
-            'connection_status'=>'active'
+            'connection_status'=>'active',
+            'purchase_option'=>'cash',
         ];
 
         $response=$this->actingAs($user)->post(route('admin.register-customer'),$customerData);
@@ -186,7 +223,8 @@ class CustomerRegistrationTest extends TestCase
             'barangay'=>"Amparo",
             'contact_number'=>'a9757375747',
             'connection_type'=>'institutional',
-            'connection_status'=>'active'
+            'connection_status'=>'active',
+            'purchase_option'=>'cash',
         ];
 
         $response=$this->actingAs($user)->post(route('admin.register-customer'),$customerData);
@@ -220,7 +258,8 @@ class CustomerRegistrationTest extends TestCase
             'barangay'=>"Amparo",
             'contact_number'=>'0975737574',
             'connection_type'=>'institutional',
-            'connection_status'=>'active'
+            'connection_status'=>'active',
+            'purchase_option'=>'cash',
         ];
 
         $response=$this->actingAs($user)->post(route('admin.register-customer'),$customerData);
@@ -285,7 +324,8 @@ class CustomerRegistrationTest extends TestCase
             'contact_number'=>'09757375747',
             'connection_type'=>'others',
             'connection_type_specifics'=>'',
-            'connection_status'=>'active'
+            'connection_status'=>'active',
+            'purchase_option'=>'cash',
         ];
 
         $response=$this->actingAs($user)->post(route('admin.register-customer'),$customerData);
@@ -321,6 +361,7 @@ class CustomerRegistrationTest extends TestCase
             'connection_type_specifics'=>'',
             'connection_status'=>'others',
             'connection_status_specifics'=>'',
+            'purchase_option'=>'cash',
         ];
 
         $response=$this->actingAs($user)->post(route('admin.register-customer'),$customerData);

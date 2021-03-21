@@ -54,7 +54,7 @@ class CustomerController extends Controller
 
             'connection_status'=>'required',
             'connection_status_specifics'=>'required_if:connection_status,others',
-            'purchase_option'=>'required'
+            'purchase_option'=>'required|in:cash,installment'
         ];
 
         $messages=[
@@ -85,7 +85,8 @@ class CustomerController extends Controller
             'connection_status.required'=>'Connection Status must not be empty',
             'connection_status_specifics.required_if'=>'Specific connection status must be provided if "OTHERS" is selected',
 
-            'purchase_option.required'=>'Purchase meter option must not be empty'
+            'purchase_option.required'=>'Purchase meter option must not be empty',
+            'purchase_option.in'=>'Invalid purchase option selected',
 
         ];
         $requestsData=array_merge($request->all(),['account_number'=>$accountNumber]);
