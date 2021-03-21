@@ -21,7 +21,8 @@ class Customer extends Model
         'barangay',
         'contact_number',
         'connection_type',
-        'connection_status'
+        'connection_status',
+        'purchase_option'
     ];
 
     public function fullname()

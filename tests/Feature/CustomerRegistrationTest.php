@@ -33,7 +33,8 @@ class CustomerRegistrationTest extends TestCase
             'barangay'=>"Amparo",
             'contact_number'=>'09757375747',
             'connection_type'=>'institutional',
-            'connection_status'=>'active'
+            'connection_status'=>'active',
+            'purchase_option'=>'cash'
         ];
 
         $response=$this->actingAs($user)->post(route('admin.register-customer'),$customerData);
@@ -42,7 +43,8 @@ class CustomerRegistrationTest extends TestCase
         ]);
         $this->assertDatabaseHas('customers',[
             'firstname'=>'Arman',
-            'lastname'=>'Masangkay'
+            'lastname'=>'Masangkay',
+            'purchase_option'=>'cash',
         ]);
     }
 
@@ -64,7 +66,8 @@ class CustomerRegistrationTest extends TestCase
             'barangay'=>'',
             'contact_number'=>'',
             'connection_type'=>'',
-            'connection_status'=>''
+            'connection_status'=>'',
+            'purchase_option'=>'',
         ];
         $response=$this->actingAs($user)->post(route('admin.register-customer'),$customerData);
         $response->assertSimilarJson([
@@ -77,7 +80,8 @@ class CustomerRegistrationTest extends TestCase
                'barangay'=>['Barangay must not be empty'],
                'contact_number'=>['Contact number must not be empty'],
                'connection_type'=>['Connection type must not be empty'],
-               'connection_status'=>['Connection Status must not be empty']
+               'connection_status'=>['Connection Status must not be empty'],
+               'purchase_option'=>['Purchase meter option must not be empty']
            ]
         ]);
 

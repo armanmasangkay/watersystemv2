@@ -39,7 +39,8 @@ class CustomerFactory extends Factory
             'barangay'=>'Amparo',
             'contact_number'=>'09757375747',
             'connection_type'=>FakeCustomerData::connectionType(),
-            'connection_status'=>FakeCustomerData::connectionStatus()
+            'connection_status'=>FakeCustomerData::connectionStatus(),
+            'purchase_option'=>'cash'
         ];
         return $customerData;
       

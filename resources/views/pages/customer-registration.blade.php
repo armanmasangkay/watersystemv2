@@ -112,6 +112,20 @@
                         </div>
                       
                     </div>
+
+                    <div class="row justify-content-center">
+                        <div class="col col-md-6 col-xl-5">
+                            <small class="text-muted">Purchase of Meter Option <small class="text-danger">*</small></small>
+                            <select class="form-select mt-2" name="purchase_option">
+                                <option value="" selected>--Please select--</option>
+                                <option value="cash">Cash</option>
+                                <option value="installment">Installment</option>
+                              </select>
+                              <small id="error-purchase-option" class="text-danger">
+                             
+                            </small>
+                        </div>
+                    </div>
                 
                     <div class="d-grid gap-2 col-4 col-lg-3 mx-auto mt-4">
                         <button class="btn btn-primary py-2" type="Submit" disabled id="register-btn">Register</button>
@@ -248,6 +262,15 @@
                         }else{
                             $("#error-status-specifics").prop('hidden',true);
                             $("input[name='connection_status_specifics']").removeClass('is-invalid')
+                        }
+
+                        if(response.errors.purchase_option){
+                            $("#error-purchase-option").prop('hidden',false);
+                            $("#error-purchase-option").html(response.errors.purchase_option)
+                            $("select[name='purchase_option']").addClass('is-invalid')
+                        }else{
+                            $("#error-purchase-option").prop('hidden',true);
+                            $("select[name='purchase_option']").removeClass('is-invalid')
                         }
 
                     }

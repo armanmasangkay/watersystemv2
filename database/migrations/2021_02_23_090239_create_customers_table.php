@@ -24,6 +24,7 @@ class CreateCustomersTable extends Migration
             $table->string('contact_number');
             $table->string('connection_type');
             $table->string('connection_status');
+            $table->string('purchase_option');
             $table->timestamps();
         });
     }
