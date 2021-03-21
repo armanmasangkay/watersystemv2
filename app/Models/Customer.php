@@ -25,9 +25,12 @@ class Customer extends Model
         'purchase_option'
     ];
 
+ 
     public function fullname()
     {
-        return "{$this->firstname} {$this->lastname}";
+        $firstname=Str::title($this->firstname);
+        $lastname=Str::title($this->lastname);
+        return "{$firstname} {$lastname}";
     }
     public function address()
     {
