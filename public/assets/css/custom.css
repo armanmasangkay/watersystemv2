@@ -1,0 +1,21 @@
+/* Feather icon sizing */
+.feather-8{
+    width:8px;
+    height:8px;
+}
+.feather-16{
+    width:16px;
+    height:16px;
+}
+.feather-32{
+    width:32px;
+    height:32px;
+}
+
+.sub-category{
+    margin-left: 1rem;
+}
+
+.sub-category-2{
+    margin-left: 2rem;
+}

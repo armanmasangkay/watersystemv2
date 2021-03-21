@@ -8,7 +8,7 @@
     <div class="col col-lg-12 col-xl-8">
         <div class="card mt-5 rounded-3 mb-5 shadow">
             <div class="card-header p-4 text-center">
-                <h4><i class="fas fa-user-plus"></i>&nbsp;&nbsp;Register a Customer</h4>
+                <h4><i data-feather="users" class="feather-32"></i>&nbsp;&nbsp;Register a Customer</h4>
             </div>
             <div class="card-body px-3 px-lg-5">
                 <small class="mb-5 text-danger">Note: (*) Required fields</small>

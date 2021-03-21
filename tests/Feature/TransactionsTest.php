@@ -37,11 +37,11 @@ class TransactionsTest extends TestCase
         $response=$this->actingAs($user)->get(route('admin.search-customer',[
             'account_number'=>'1231231231'
         ]));
-     
+    
         $response->assertRedirect(route('admin.new-transaction'));
         $response->assertSessionHasInput(['account_number']);
         $response->assertSessionHasErrors([
-            'account_number'
+            'account_number'=>'Account number not found'
         ]);
     
     }

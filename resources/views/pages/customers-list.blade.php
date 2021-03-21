@@ -8,7 +8,7 @@
 
 <div class="card mt-4 shadow">
     <div class="card-header">
-        <h4 class='text-center'><i class="fas fa-users"></i> Customers</h4>
+        <h4 class='text-center'><i data-feather="users" class="feather-32"></i>&nbsp;&nbsp;Customers</h4>
     </div>
     <div class="card-body">
 

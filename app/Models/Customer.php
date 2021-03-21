@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Support\Str;
 class Customer extends Model
 {
     use HasFactory;
@@ -23,6 +23,20 @@ class Customer extends Model
         'connection_type',
         'connection_status'
     ];
+
+    public function fullname()
+    {
+        return "{$this->firstname} {$this->lastname}";
+    }
+    public function address()
+    {
+        return "{$this->purok}, {$this->barangay}";
+    }
+
+    public function connectionType()
+    {
+        return Str::title($this->connection_type);
+    }
 
     
 }

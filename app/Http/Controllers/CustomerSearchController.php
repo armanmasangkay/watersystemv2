@@ -13,6 +13,8 @@ class CustomerSearchController extends Controller
     {
         $validator=Validator::make($request->all(),[
             'account_number'=>'required|exists:customers,account_number'
+        ],[
+           'account_number.exists'=>'Account number not found' 
         ]);
 
         if($validator->fails()){
