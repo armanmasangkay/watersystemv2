@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Transaction;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class TransactionController extends Controller
 {
@@ -35,6 +36,17 @@ class TransactionController extends Controller
      */
     public function store(Request $request)
     {
+
+        $validator=Validator::make($request->all(),[
+            'schedule'=>'required'
+        ]);
+
+        if($validator->fails()){
+            return redirect(route('admin.search-customer',[
+                'account_number'=>$request->customer_id
+            ]))->withErrors($validator);
+        }
+      
         Transaction::create($request->all());
         
         return redirect(route('admin.transactions.create'))->with([

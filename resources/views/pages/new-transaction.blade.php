@@ -4,7 +4,16 @@
 
 
 @section('content')
-
+@if(session('created'))
+<div class="row justify-content-center mt-2">
+    <div class="col">
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>Great!</strong> {{session('message')}}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    </div>
+</div>
+@endif
 <h3 class="mt-5 mb-4 text-center">New Transaction</h3>
 
 <form action="{{route('admin.search-customer')}}" method="get" class="row g-2 justify-content-center">
@@ -24,8 +33,7 @@
     </div>
 </form>
 
-
-@if(isset($customer) && $errors->isEmpty())
+@if(isset($customer))
 
 <div class="row">
     <div class="col col-md-5 col-lg-4 col-xl-3">
@@ -43,25 +51,29 @@
         </div>
     </div>
     <div class="col col-md-7 col-lg-8 col-xl-9">
+
         <div class="card">
+           
             <div class="card-header">
                 <i data-feather="plus" class="feather-16"></i> New Transaction
             </div>
             <div class="card-body">
-                <form action="#" method="post">
+                <form action="{{route('admin.transactions.store')}}" method="post">
+                    @csrf
                     <div class="row">
+                        <input type="hidden" name="customer_id" value="{{$customer->account_number}}">
                         <div class="col col-md-12 col-lg-7 col-xl-6 ">
                             <h6>Type of Service</h6>
                             <hr>
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                                <input class="form-check-input" type="radio" name="type_of_service" id="flexRadioDefault1">
                                 <label class="form-check-label" for="flexRadioDefault1">
                                 New Water Application
                                 </label>
                             </div>
                     
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
+                                <input class="form-check-input" type="radio" name="type_of_service" id="flexRadioDefault2" checked>
                                 <label class="form-check-label" for="flexRadioDefault2">
                                     Transfer of Meter Location
                                 </label>
@@ -88,13 +100,13 @@
 
 
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
+                                <input class="form-check-input" type="radio" name="type_of_service" id="flexRadioDefault2" checked>
                                 <label class="form-check-label" for="flexRadioDefault2">
                                     Reconnection
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
+                                <input class="form-check-input" type="radio" name="type_of_service" id="flexRadioDefault2" checked>
                                 <label class="form-check-label" for="flexRadioDefault2">
                                     Disconnection
                                 </label>
@@ -137,14 +149,14 @@
                             </div>
                             
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
+                                <input class="form-check-input" type="radio" name="type_of_service" id="flexRadioDefault2" checked>
                                 <label class="form-check-label" for="flexRadioDefault2">
                                     Change of Meter
                                 </label>
                             </div>
 
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
+                                <input class="form-check-input" type="radio" name="type_of_service" id="flexRadioDefault2" checked>
                                 <label class="form-check-label" for="flexRadioDefault2">
                                     Others
                                 </label>
@@ -174,10 +186,10 @@
                         <div class="col col-md-12 col-lg-5 col-xl-6">
                             <h6>Additional Remarks / Description</h6>
                             <hr>
-                            <textarea class="form-control mb-3" id="exampleFormControlTextarea1" rows="3"></textarea>
+                            <textarea class="form-control mb-3" name='remarks' id="exampleFormControlTextarea1" rows="3"></textarea>
 
                             <label for="inputAddress" class="form-label">Schedule</label>
-                            <input type="date" class="form-control mb-3" id="inputAddress" placeholder="1234 Main St">
+                            <input type="date"  name='schedule' class="form-control mb-3" id="inputAddress" placeholder="1234 Main St">
                             <button type="submit" class="btn btn-primary">Submit</button>
                            
                         </div>
