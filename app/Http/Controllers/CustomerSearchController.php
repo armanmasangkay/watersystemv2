@@ -18,7 +18,7 @@ class CustomerSearchController extends Controller
         ]);
 
         if($validator->fails()){
-            return redirect(route('admin.new-transaction'))->withErrors($validator)->withInput();
+            return redirect(route('admin.transactions.create'))->withErrors($validator)->withInput();
            
         }
         $customer=Customer::find($request->account_number);

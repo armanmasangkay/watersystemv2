@@ -5,6 +5,7 @@ use App\Http\Controllers\CustomerSearchController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutUserController;
+use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\TransactionsController;
 use Illuminate\Support\Facades\Route;
 
@@ -31,6 +32,8 @@ Route::prefix('admin')->name('admin.')->group(function(){
     Route::get('/dashboard',[DashboardController::class,'index'])->name('dashboard');
 
     Route::get('/search-customer',[CustomerSearchController::class,'search'])->name('search-customer');
+
+    Route::resource('transactions',TransactionController::class)->middleware('auth');
 
 });
 

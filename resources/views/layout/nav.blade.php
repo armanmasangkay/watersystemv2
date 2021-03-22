@@ -27,7 +27,7 @@
              <i data-feather="list" class="feather-16"></i> Transactions
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" href="{{route('admin.new-transaction')}}">New</a></li>
+              <li><a class="dropdown-item" href="{{route('admin.transactions.create')}}">New</a></li>
             </ul>
         
           </li>

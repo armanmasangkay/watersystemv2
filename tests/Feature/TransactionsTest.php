@@ -21,7 +21,7 @@ class TransactionsTest extends TestCase
             'username'=>'amasangkay',
             'password'=>Hash::make('1234')
         ]);
-        $response=$this->actingAs($user)->get(route('admin.new-transaction'));
+        $response=$this->actingAs($user)->get(route('admin.transactions.create'));
         $response->assertViewIs('pages.new-transaction');
         $response->assertOk();
     }
@@ -38,7 +38,7 @@ class TransactionsTest extends TestCase
             'account_number'=>'1231231231'
         ]));
     
-        $response->assertRedirect(route('admin.new-transaction'));
+        $response->assertRedirect(route('admin.transactions.create'));
         $response->assertSessionHasInput(['account_number']);
         $response->assertSessionHasErrors([
             'account_number'=>'Account number not found'
