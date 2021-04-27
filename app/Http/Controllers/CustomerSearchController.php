@@ -18,14 +18,14 @@ class CustomerSearchController extends Controller
         ]);
 
         if($validator->fails()){
-            return redirect(route('admin.transactions.create'))->withErrors($validator)->withInput();
+            return redirect(route('admin.transact.create'))->withErrors($validator)->withInput();
            
         }
         $customer=Customer::find($request->account_number);
 
         session()->flashInput(['account_number'=>$request->account_number]);
     
-        return view('pages.new-transaction',[
+        return view('pages.new-transact',[
             'customer'=>$customer
         ]);
 
