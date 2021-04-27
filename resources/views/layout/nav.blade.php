@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-md navbar-light shadow-sm " style="background-color: #e3f2fd;"> 
 
-    <div class="container-fluid px-3">
+    <div class="container px-3">
       <a class="navbar-brand" href="{{route('admin.dashboard')}}">MWS</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>

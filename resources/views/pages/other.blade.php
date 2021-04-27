@@ -14,9 +14,8 @@
     </div>
 </div>
 @endif
-<h3 class="mt-5 mb-4 text-center">New Transaction</h3>
-
-<form action="{{route('admin.search-customer')}}" method="get" class="row g-2 justify-content-center">
+<h3 class="mt-5 mb-4 text-left">New Transaction</h3>
+<form action="{{route('admin.search-customer')}}" method="get" class="row g-2">
     
     <div class="col-12 col-md-6 col-lg-5 col-xl-4 mb-2">
         <input type="text" name="account_number" class="form-control @error('account_number') is-invalid @enderror" id="" value="{{old('account_number')}}" placeholder="Search Account Number" required>
