@@ -55,7 +55,7 @@
         <div class="card">
            
             <div class="card-header">
-                <i data-feather="plus" class="feather-16"></i> New Transaction
+                <i data-feather="info" class="feather-16"></i> Additional Information
             </div>
             <div class="card-body p-4">
                 <form action="{{route('admin.transactions.store')}}" method="post">
@@ -70,7 +70,7 @@
                             <input type="text"  name='schedule' class="form-control mb-3" id="inputAddress" placeholder="1234 Main St">
 
                             <h6 for="" class="form-label mb-1">Verify contact number</h6>
-                            <small class="text-danger pt-0">Please change the contact number if current number is not the same.</small>
+                            <small class="text-info pt-0">You may update this information if it has changed.</small>
                             <input type="number"  name='schedule' class="form-control mb-3" id="inputAddress" placeholder="09xxxxxxxxx">
 
                             <h6 for="" class="form-label">Initial building inspection schedule</h6>
