@@ -1,6 +1,6 @@
 @extends('layout.main')
 
-@section('title', 'New Transaction')
+@section('title', 'New Connection')
 
 
 @section('content')
@@ -70,7 +70,7 @@
                             <input type="text"  name='schedule' class="form-control mb-3" id="inputAddress" placeholder="1234 Main St">
 
                             <h6 for="" class="form-label mb-1">Verify contact number</h6>
-                            <small class="text-danger pt-0">Please change the contact number if current number is no the same.</small>
+                            <small class="text-danger pt-0">Please change the contact number if current number is not the same.</small>
                             <input type="number"  name='schedule' class="form-control mb-3" id="inputAddress" placeholder="09xxxxxxxxx">
 
                             <h6 for="" class="form-label">Initial building inspection schedule</h6>
