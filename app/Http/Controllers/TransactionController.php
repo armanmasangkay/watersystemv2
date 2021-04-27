@@ -35,16 +35,16 @@ class TransactionController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-
+    {   
         $validator=Validator::make($request->all(),[
-            'schedule'=>'required'
+            'schedule'=>'required|after_or_equal:'.now()->format('Y-m-d'),
+            ''
         ]);
 
         if($validator->fails()){
             return redirect(route('admin.search-customer',[
                 'account_number'=>$request->customer_id
-            ]))->withErrors($validator);
+            ]))->withErrors($validator)->withInput();
         }
       
         Transaction::create($request->all());

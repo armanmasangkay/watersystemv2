@@ -21,7 +21,10 @@ class TransactionsTest extends TestCase
             'username'=>'amasangkay',
             'password'=>Hash::make('1234')
         ]);
+
+    
         $response=$this->actingAs($user)->get(route('admin.transactions.create'));
+
         $response->assertViewIs('pages.new-transaction');
         $response->assertOk();
     }
@@ -37,7 +40,7 @@ class TransactionsTest extends TestCase
         $response=$this->actingAs($user)->get(route('admin.search-customer',[
             'account_number'=>'1231231231'
         ]));
-    
+
         $response->assertRedirect(route('admin.transactions.create'));
         $response->assertSessionHasInput(['account_number']);
         $response->assertSessionHasErrors([
@@ -63,7 +66,6 @@ class TransactionsTest extends TestCase
 
         $response->assertViewIs('pages.new-transaction');
         $response->assertViewHas('customer');
-        $response->assertSessionHasInput('account_number');
         $responseCustomer=$response['customer'];
         $this->assertEquals($responseCustomer->account_number,$customer->account_number);
    }
