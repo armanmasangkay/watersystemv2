@@ -61,6 +61,7 @@
                 <form action="{{route('admin.transactions.store')}}" method="post">
                     @csrf
                     <div class="row">
+                    <input type="hidden" name="type_of_service" value="New Conenctions">
                         <input type="hidden" name="customer_id" value="{{$customer->account_number}}">
                         <div class="col col-md-12 col-lg-7 col-xl-6 ">
 

@@ -39,8 +39,8 @@ class TransactionController extends Controller
         $validator=Validator::make($request->all(),[
             'landmarks'=>'required',
             'contact_number' => 'required|numeric',
-            'initial_building_inspection_schedule' => 'required|date',
-            'initial_water_works_schedule' => 'required|date'
+            'initial_building_inspection_schedule' => 'required|date|after_or_equal:'.now()->format('Y-m-d'),
+            'initial_water_works_schedule' => 'required|date|after_or_equal:'.now()->format('Y-m-d')
         ]);
 
 

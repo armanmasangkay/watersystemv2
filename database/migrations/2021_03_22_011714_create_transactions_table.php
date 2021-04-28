@@ -16,6 +16,7 @@ class CreateTransactionsTable extends Migration
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
             $table->string('customer_id');
+            $table->string('type_of_service');
             $table->string('remarks')->nullable();
             $table->string('landmarks');
             $table->string('contact_number');
