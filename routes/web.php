@@ -7,6 +7,10 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutUserController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\TransactionsController;
+use App\Http\Controllers\BLDGApprovalController;
+use App\Http\Controllers\MTOApprovalController;
+use App\Http\Controllers\WaterWorksApprovalController;
+use App\Http\Controllers\MunicipalEngApprovalController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -35,7 +39,15 @@ Route::prefix('admin')->name('admin.')->group(function(){
 
     Route::resource('transactions',TransactionController::class)->middleware('auth');
 
+    Route::get('/bldg-area/request-approvals',[BLDGApprovalController::class, 'index'])->name('request-approvals')->middleware('auth');
+
+    Route::get('/MTO/request-approvals',[MTOApprovalController::class, 'index'])->name('mto-request-approvals')->middleware('auth');
+
+    Route::get('/water-works/request-approvals',[WaterWorksApprovalController::class, 'index'])->name('waterworks-request-approvals')->middleware('auth');
+
+    Route::get('/ME/request-approvals',[MunicipalEngApprovalController::class, 'index'])->name('me-request-approvals')->middleware('auth');
 });
+
 
 
  

@@ -14,24 +14,8 @@
     </div>
 </div>
 @endif
-<h3 class="mt-5 h4 mb-4 text-left">NEW CONNECTIONS</h3>
-
-<form action="{{route('admin.search-customer')}}" method="get" class="row g-2 form-inline">
-    
-    <div class="col-12 col-md-6 col-lg-5 col-xl-4 mb-2 pr-1">
-
-        <input type="text" name="account_number" class="form-control @error('account_number') is-invalid @enderror" id="" value="{{old('account_number')}}" placeholder="Search Account Number" required>
-        @error('account_number')
-        <div class="invalid-feedback">
-            {{$message}}
-        </div>
-        @enderror
-    </div>
-
-    <div class="col-12 col-md-2">
-       <button type="submit" class="btn btn-primary"><i data-feather="search" class="feather-16"></i> Search </button>
-    </div>
-</form>
+<h3 class="mt-5 h4 mb-4 text-left">{{ $search_heading }}</h3>
+@include('templates.form-search-account')
 
 @if(isset($customer))
 
