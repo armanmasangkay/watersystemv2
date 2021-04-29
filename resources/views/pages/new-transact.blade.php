@@ -61,23 +61,38 @@
                 <form action="{{route('admin.transactions.store')}}" method="post">
                     @csrf
                     <div class="row">
+                    <input type="hidden" name="type_of_service" value="New Connections">
                         <input type="hidden" name="customer_id" value="{{$customer->account_number}}">
                         <div class="col col-md-12 col-lg-7 col-xl-6 ">
+
                             <h6>Additional Remarks / Description</h6>
-                            <textarea class="form-control mb-3" name='remarks' id="exampleFormControlTextarea1" rows="3"></textarea>
-
+                            <textarea class="form-control mb-3" name='remarks' id="exampleFormControlTextarea1" rows="3" value="{{ old('remarks') }}"></textarea>
+              
+                            @error('landmarks')
+                                <small class="text-danger mb-3">{{ $message }}</small>
+                            @enderror  
                             <h6 for="" class="form-label">Landmark</h6>
-                            <input type="text"  name='schedule' class="form-control mb-3" id="inputAddress" placeholder="1234 Main St">
-
+                            <input type="text"  name='landmarks' class="form-control mb-3" id="inputAddress" placeholder="1234 Main St" value="{{ old('landmarks') }}">     
+                            
                             <h6 for="" class="form-label mb-1">Verify contact number</h6>
                             <small class="text-info pt-0">You may update this information if it has changed.</small>
-                            <input type="number"  name='schedule' class="form-control mb-3" id="inputAddress" placeholder="09xxxxxxxxx">
+                            @error('contact_number')
+                                <small class="text-danger mb-3">{{ $message }}</small>
+                            @enderror 
+                            <input type="number"  name='contact_number' class="form-control mb-3" id="inputAddress" placeholder="09xxxxxxxxx" value="{{old('contact_number')}}">                             
 
+                            
+                            @error('initial_building_inspection_schedule')
+                                <small class="text-danger mb-3">{{ $message }}</small>
+                            @enderror
                             <h6 for="" class="form-label">Initial building inspection schedule</h6>
-                            <input type="date"  name='schedule' class="form-control mb-3" id="inputAddress" placeholder="dd/mm/yyyy">
+                            <input type="date"  name='initial_building_inspection_schedule' class="form-control mb-3" id="inputAddress" placeholder="dd/mm/yyyy" value="{{old('initial_building_inspection_schedule')}}">
 
+                            @error('initial_water_works_schedule')
+                                <small class="text-danger mb-3">{{ $message }}</small>
+                            @enderror
                             <h6 for="" class="form-label">Initial water works schedule</h6>
-                            <input type="date"  name='schedule' class="form-control mb-3" id="inputAddress" placeholder="dd/mm/yyyy">
+                            <input type="date"  name='initial_water_works_schedule' class="form-control mb-3" id="inputAddress" placeholder="dd/mm/yyyy" value="{{old('initial_water_works_schedule')}}">                            
 
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </div>

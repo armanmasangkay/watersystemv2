@@ -37,9 +37,12 @@ class TransactionController extends Controller
     public function store(Request $request)
     {   
         $validator=Validator::make($request->all(),[
-            'schedule'=>'required|after_or_equal:'.now()->format('Y-m-d'),
-            ''
+            'landmarks'=>'required',
+            'contact_number' => 'required|numeric',
+            'initial_building_inspection_schedule' => 'required|date|after_or_equal:'.now()->format('Y-m-d'),
+            'initial_water_works_schedule' => 'required|date|after_or_equal:'.now()->format('Y-m-d')
         ]);
+
 
         if($validator->fails()){
             return redirect(route('admin.search-customer',[

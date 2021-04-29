@@ -13,6 +13,9 @@ class Transaction extends Model
         'customer_id',
         'type_of_service',
         'remarks',
-        'schedule'
+        'landmarks',
+        'contact_number',
+        'initial_building_inspection_schedule',
+        'initial_water_works_schedule'
     ];
 }
