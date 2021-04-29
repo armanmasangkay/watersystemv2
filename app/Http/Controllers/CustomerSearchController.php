@@ -26,7 +26,9 @@ class CustomerSearchController extends Controller
         session()->flashInput(['account_number'=>$request->account_number]);
     
         return view('pages.new-transact',[
-            'customer'=>$customer
+            'customer'=>$customer,
+            'route' => 'admin.search-customer',
+            'search_heading' => 'NEW CONNECTIONS'
         ]);
 
     }
