@@ -7,6 +7,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutUserController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\TransactionsController;
+use App\Http\Controllers\ReconnectionController;
 use App\Http\Controllers\BLDGApprovalController;
 use App\Http\Controllers\MTOApprovalController;
 use App\Http\Controllers\WaterWorksApprovalController;
@@ -38,6 +39,9 @@ Route::prefix('admin')->name('admin.')->group(function(){
     Route::get('/search-customer',[CustomerSearchController::class,'search'])->name('search-customer');
 
     Route::resource('transactions',TransactionController::class)->middleware('auth');
+
+    Route::get('re-connection',[ReconnectionController::class, 'index'])->name('reconnection');
+    Route::get('search-customer',[ReconnectionController::class, 'search'])->name('search');
 
     Route::get('/bldg-area/request-approvals',[BLDGApprovalController::class, 'index'])->name('request-approvals')->middleware('auth');
 

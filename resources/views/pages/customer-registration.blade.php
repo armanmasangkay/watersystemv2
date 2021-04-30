@@ -18,20 +18,20 @@
                     <hr>
                     <div class="row mb-3">
                         <div class="col-12 col-lg-4 mb-2">
-                            <small class="text-danger">*</small>
-                            <input type="text" name="firstname" id="" class="form-control" placeholder="First name" >
+                            <label><small class="text-muted">Firstname</small><small class="text-danger"> *</small></label>
+                            <input type="text" name="firstname" id="" class="form-control mt-2" placeholder="First name" >
                             <small id="error-firstname" class="text-danger" hidden>
                                 
                             </small>
                         </div>
                        
                         <div class="col-12 col-lg-4">
-                            <small class="text-muted">(optional)</small>
-                            <input type="text" name="middlename" id="" class="form-control" placeholder="Middle name">
+                            <small class="text-muted">Middlename (optional)</small>
+                            <input type="text" name="middlename" id="" class="form-control mt-2" placeholder="Middle name">
                         </div>
                         <div class="col-12 col-lg-4">
-                            <small class="text-danger">*</small>
-                            <input type="text" name="lastname" id="" class="form-control" placeholder="Last name">
+                            <label><small class="text-muted">Lastname</small><small class="text-danger"> *</small></label>
+                            <input type="text" name="lastname" id="" class="form-control mt-2" placeholder="Last name">
                             <small id="error-lastname" class="text-danger" hidden>
                               
                             </small>

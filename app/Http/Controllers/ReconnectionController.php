@@ -7,8 +7,13 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class CustomerSearchController extends Controller
+class ReconnectionController extends Controller
 {
+    public function index()
+    {
+        return view('pages.reconnection', ['route' => 'admin.search']);
+    }
+
     public function search(Request $request)
     {
         $validator=Validator::make($request->all(),[
@@ -25,9 +30,9 @@ class CustomerSearchController extends Controller
 
         session()->flashInput(['account_number'=>$request->account_number]);
     
-        return view('pages.new-transact',[
+        return view('pages.reconnection',[
             'customer'=>$customer,
-            'route' => 'admin.search-customer'
+            'route' => 'admin.search'
         ]);
 
     }

@@ -25,7 +25,7 @@ class TransactionController extends Controller
      */
     public function create()
     {
-        return view('pages.new-transact', ['route' => 'admin.search-customer', 'search_heading' => 'NEW CONNECTIONS']);
+        return view('pages.new-transact', ['route' => 'admin.search-customer']);
     }
 
     /**
