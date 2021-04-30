@@ -20,8 +20,9 @@ class CreateTransactionsTable extends Migration
             $table->string('remarks')->nullable();
             $table->string('landmarks');
             $table->string('contact_number');
-            $table->date('initial_building_inspection_schedule');
-            $table->date('initial_water_works_schedule');
+            $table->date('building_inspection_schedule');
+            $table->date('water_works_schedule');
+            $table->string('status');
             $table->timestamps();
             $table->foreign('customer_id')->references('account_number')->on('customers')->onDelete('cascade');
         });
