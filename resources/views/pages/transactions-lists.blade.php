@@ -1,18 +1,13 @@
-@extends('layout.approval')
+@extends('layout.main')
 
-@section('title', 'New Connection')
+@section('title', 'New Transaction')
 
 
 @section('content')
-<div class="row">
-    <div class="col-md-12 mt-2">
-        <h3><b>MWS - Macrohon Water System</b></h3>
-    </div>
-</div>
-<div class="row mb-0">
-    @include('templates.user')
+
+<div class="row mb-0 mt-2">
     <div class="col-md-8 pt-2">
-        <h3 class="h4 mb-3 mt-2 text-left"><i data-feather="align-left" class="feather-16 mx-1"></i> Lists of Request for MTO Approvals</h3>
+        <h3 class="h4 mb-3 mt-2 text-left"><i data-feather="align-left" class="feather-16 mx-1"></i> Lists of Transactions</h3>
     </div>
     <div class="col-md-4"></div>
 </div>
@@ -30,8 +25,8 @@
                         <td class="border-bottom pt-3 pb-3"><i data-feather="user" class="mx-1 text-primary" width="18"></i> CLIENT NAME</td>
                         <td class="border-bottom pt-3 pb-3"><i data-feather="activity" class="mx-1 text-primary" width="18"></i> REQ. TYPE</td>
                         <td class="border-bottom pt-3 pb-3"><i data-feather="calendar" class="mx-1 text-primary" width="18"></i> DATE OF REQ.</td>
-                        <td class="border-bottom pt-3 pb-3"><i data-feather="calendar" class="mx-1 text-primary" width="18"></i> INTL. BLDG/AREA INSP. DATE</td>
-                        <td class="border-bottom pt-3 pb-3"><i data-feather="calendar" class="mx-1 text-primary" width="18"></i> INTL. WATER WORKS INSP. DATE</td>
+                        <td class="border-bottom pt-3 pb-3"><i data-feather="calendar" class="mx-1 text-primary" width="18"></i> BLDG/AREA INSP. DATE</td>
+                        <td class="border-bottom pt-3 pb-3"><i data-feather="calendar" class="mx-1 text-primary" width="18"></i> WATER WORKS INSP. DATE</td>
                         <td class="border-bottom pt-3 pb-3"><i data-feather="activity" class="mx-1 text-primary" width="20"></i> ACTIONS</td>
                     </tr>
                 </thead>

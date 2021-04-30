@@ -29,6 +29,7 @@
               <li>
                 <a class="dropdown-item" href="{{route('admin.transactions.create')}}">New Connection</a>
                 <a class="dropdown-item" href="{{route('admin.reconnection')}}">Reconnection</a>
+                <a class="dropdown-item" href="{{route('admin.transactions-lists')}}">List of Transactions</a>
               </li>
             </ul>
         
