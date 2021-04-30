@@ -19,7 +19,7 @@
 
 @if(isset($customer))
 
-<div class="row mb-5">
+<div class="row mb-5 mt-2">
     <div class="col col-md-5 col-xl-3">
         <div class="card">
             <div class="card-header">
