@@ -41,7 +41,7 @@ Route::prefix('admin')->name('admin.')->group(function(){
     Route::resource('transactions',TransactionController::class)->middleware('auth');
 
     Route::get('re-connection',[ReconnectionController::class, 'index'])->name('reconnection');
-    Route::get('search-customer',[ReconnectionController::class, 'search'])->name('search');
+    Route::get('search-customer-info',[ReconnectionController::class, 'search'])->name('search');
 
     Route::get('/bldg-area/request-approvals',[BLDGApprovalController::class, 'index'])->name('request-approvals')->middleware('auth');
 

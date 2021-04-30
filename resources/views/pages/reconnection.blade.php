@@ -14,6 +14,7 @@
     </div>
 </div>
 @endif
+
 <h3 class="mt-5 h4 mb-4 text-left">APPLICATION FOR RECONNECTION</h3>
 @include('templates.form-search-account')
 
