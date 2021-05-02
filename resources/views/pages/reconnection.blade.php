@@ -1,6 +1,6 @@
 @extends('layout.main')
 
-@section('title', 'New Connection')
+@section('title', 'New Transaction')
 
 
 @section('content')
@@ -14,7 +14,8 @@
     </div>
 </div>
 @endif
-<h3 class="mt-5 h4 mb-4 text-left">APPLICATION FOR NEW CONNECTIONS</h3>
+
+<h3 class="mt-5 h4 mb-4 text-left">APPLICATION FOR RECONNECTION</h3>
 @include('templates.form-search-account')
 
 @if(isset($customer))
@@ -47,10 +48,12 @@
                     <div class="row">
                         <input type="hidden" name="customer_id" value="{{$customer->account_number}}">
                         <div class="col col-md-12 col-lg-7 col-xl-6 ">
-                            <h6>Additional Remarks / Description</h6>
+                            <h6 class="form-label mb-1">Additional Remarks / Description</h6>
+                            <small class="text-info pt-0">You may update this information if it has changed.</small>
                             <textarea class="form-control mb-3" name='remarks' id="exampleFormControlTextarea1" rows="3"></textarea>
 
-                            <h6 for="" class="form-label">Landmark</h6>
+                            <h6 for="" class="form-label mb-1">Landmark</h6>
+                            <small class="text-info pt-0">You may update this information if it has changed.</small>
                             <input type="text"  name='schedule' class="form-control mb-3" id="inputAddress" placeholder="1234 Main St">
 
                             <h6 for="" class="form-label mb-1">Verify contact number</h6>
@@ -71,20 +74,6 @@
         </div>
     </div>
 </div>
-
-
 @endif
-
-
-
-
-
-
-
-
-        
-
-
-
 
 @endsection
