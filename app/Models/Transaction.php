@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Customer;
 
 class Transaction extends Model
 {
@@ -13,6 +14,16 @@ class Transaction extends Model
         'customer_id',
         'type_of_service',
         'remarks',
-        'schedule'
+        'landmarks',
+        'contact_number',
+        'building_inspection_schedule',
+        'water_works_schedule',
+        'status'
     ];
+
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class,'customer_id','account_number');
+    }
+
 }

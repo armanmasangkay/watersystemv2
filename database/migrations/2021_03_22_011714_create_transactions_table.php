@@ -18,9 +18,13 @@ class CreateTransactionsTable extends Migration
             $table->string('customer_id');
             $table->string('type_of_service');
             $table->string('remarks')->nullable();
-            $table->date('schedule');
+            $table->string('landmarks');
+            $table->string('contact_number');
+            $table->date('building_inspection_schedule');
+            $table->date('water_works_schedule');
+            $table->string('status');
             $table->timestamps();
-
+            $table->foreign('customer_id')->references('account_number')->on('customers')->onDelete('cascade');
         });
     }
 
