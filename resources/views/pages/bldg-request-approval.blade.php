@@ -45,7 +45,7 @@
                             <td class="pt-2 pb-2">{{ $transaction->building_inspection_schedule }}</td>
                             <td class="pt-2 pb-2">{{ $transaction->water_works_schedule }}</td>
                             <td class="d-flex justify-content-start">
-                                <form action="{{ route('admin.mto-request-approvals-approve') }}" method="post" class="mb-1 mx-0 d-flex">
+                                <form action="{{ route('admin.bld-request-approvals-approve') }}" method="post" class="mb-1 mx-0 d-flex">
                                     @csrf
                                     <input type="date" name="building_inspection_schedule" class="form-control">
                                     <input type="hidden" name="id" value="{{ $transaction->id }}">
@@ -53,9 +53,8 @@
                                 </form>
                                 {{-- <a href="" class="text-primary mb-1 mx-2">
                                 <i data-feather="check" width="20"></i></a> --}}
-                                <form action="{{route('admin.mto-request-approvals-reject')}}" method="post" class="mb-1 mx-0">
+                                <form action="{{route('admin.bld-request-approvals-reject', ['id' => $transaction->id])}}" method="post" class="mb-1 mx-0">
                                     @csrf
-                                    <input type="hidden" name="id" value="{{ $transaction->id }}">
                                     <button type="submit" class="btn btn-xs btn-default text-danger"><i data-feather="x" width="20"></i></button>
                                 </form>
                                 {{-- <a href="" class="text-danger mb-1 mx-2">
