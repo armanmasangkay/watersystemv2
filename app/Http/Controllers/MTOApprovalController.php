@@ -12,4 +12,22 @@ class MTOApprovalController extends Controller
         $transactions = Transaction::where('status', 'mto_approval')->paginate(20);
         return view('pages.mto-request-approval', ['route' => 'admin.mto-request-approvals', 'search_heading' => 'SEARCH REQUEST', 'transactions' => $transactions]);
     }
+
+    public function approve(Request $request)
+    {
+        $transactions = Transaction::find($request->id);
+        $transactions->status = "building_inspection_approval";
+        $transactions->save();
+
+        return redirect(route('admin.mto-request-approvals'));
+    }
+
+    public function reject(Request $request)
+    {
+        $transactions = Transaction::find($request->id);
+        $transactions->status = "reject_mto_approval";
+        $transactions->save();
+
+        return redirect(route('admin.mto-request-approvals'));
+    }
 }

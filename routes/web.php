@@ -42,6 +42,7 @@ Route::prefix('admin')->name('admin.')->group(function(){
     Route::get('/bldg-area/request-approvals',[BLDGApprovalController::class, 'index'])->name('request-approvals')->middleware('auth');
 
     Route::get('/MTO/request-approvals',[MTOApprovalController::class, 'index'])->name('mto-request-approvals')->middleware('auth');
+    Route::post('/MTO/request-approvals/approve', [MTOApprovalController::class, 'approve'])->name('mto-request-approvals-approve')->middleware('auth');
 
     Route::get('/water-works/request-approvals',[WaterWorksApprovalController::class, 'index'])->name('waterworks-request-approvals')->middleware('auth');
 
@@ -50,4 +51,4 @@ Route::prefix('admin')->name('admin.')->group(function(){
 
 
 
- 
+
