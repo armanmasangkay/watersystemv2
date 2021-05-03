@@ -53,7 +53,7 @@
                                 </form>
                                 {{-- <a href="" class="text-primary mb-1 mx-2">
                                 <i data-feather="check" width="20"></i></a> --}}
-                                <form action="" method="post" class="mb-1 mx-0">
+                                <form action="{{route('admin.mto-request-approvals-reject')}}" method="post" class="mb-1 mx-0">
                                     @csrf
                                     <input type="hidden" name="id" value="{{ $transaction->id }}">
                                     <button type="submit" class="btn btn-xs btn-default text-danger"><i data-feather="x" width="20"></i></button>
@@ -85,11 +85,7 @@
                 <div class="pt-2 px-2 pb-2">
                     {{ $transactions->render() }}
                 </div>
-                <style>
-                    .pagination{
-                        margin-bottom: 0px !important;
-                    }
-                </style>
+
             </div>
         </div>
     </div>

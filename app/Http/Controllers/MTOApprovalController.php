@@ -16,7 +16,7 @@ class MTOApprovalController extends Controller
     public function approve(Request $request)
     {
         $transactions = Transaction::find($request->id);
-        $transactions->status = "building_inspection_approval";
+        $transactions->status = "mto_approved";
         $transactions->save();
 
         return redirect(route('admin.mto-request-approvals'));
@@ -25,7 +25,7 @@ class MTOApprovalController extends Controller
     public function reject(Request $request)
     {
         $transactions = Transaction::find($request->id);
-        $transactions->status = "reject_mto_approval";
+        $transactions->status = "mto_rejected";
         $transactions->save();
 
         return redirect(route('admin.mto-request-approvals'));
