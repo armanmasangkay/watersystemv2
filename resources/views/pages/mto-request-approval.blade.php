@@ -36,38 +36,42 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td class="pt-2 pb-2">020-2021-001</td>
-                        <td class="pt-2 pb-2">Nobegin Masub</td>
-                        <td class="pt-2 pb-2">New Connection</td>
-                        <td class="pt-2 pb-2">04-28-2021</td>
-                        <td class="pt-2 pb-2">04-28-2021</td>
-                        <td class="pt-2 pb-2">04-28-2021</td>
-                        <td class="">
-                            <a href="" class="text-primary mb-1 mx-2">
-                            <i data-feather="check" width="20"></i></a>
-                            <a href="" class="text-danger mb-1 mx-2">
-                            <i data-feather="x" width="20"></i></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="pt-2 pb-2">020-2021-002</td>
-                        <td class="pt-2 pb-2">Benj Areten Masub</td>
-                        <td class="pt-2 pb-2">New Connection</td>
-                        <td class="pt-2 pb-2">04-30-2021</td>
-                        <td class="pt-2 pb-2">04-30-2021</td>
-                        <td class="pt-2 pb-2">04-30-2021</td>
-                        <td class="pt-2 pb-2">
-                            <a href="" class="text-primary mb-1 mx-2">
-                            <i data-feather="check" width="20"></i></a>
-                            <a href="" class="text-danger mb-1 mx-2">
-                            <i data-feather="x" width="20"></i></a>
-                        </td>
-                    </tr>
+                    @forelse ($transactions as $transaction)
+                        <tr>
+                            <td class="pt-2 pb-2">{{ $transaction->customer->account_number }}</td>
+                            <td class="pt-2 pb-2">{{ $transaction->customer->fullname() }} </td>
+                            <td class="pt-2 pb-2">{{ $transaction->type_of_service }}</td>
+                            <td class="pt-2 pb-2">{{ $transaction->created_at->format('Y-m-d') }}</td>
+                            <td class="pt-2 pb-2">{{ $transaction->building_inspection_schedule }}</td>
+                            <td class="pt-2 pb-2">{{ $transaction->water_works_schedule }}</td>
+                            <td class="d-flex justify-content-start">
+                                <form action="{{ route('admin.mto-request-approvals-approve') }}" method="post" class="mb-1 mx-0">
+                                    @csrf
+                                    {{-- <input type="date" class="form-control"> --}}
+                                    <input type="hidden" name="id" value="{{ $transaction->id }}">
+                                    <button type="submit" class="btn btn-xs btn-default text-primary"><i data-feather="check" width="20"></i></button>
+                                </form>
+                                {{-- <a href="" class="text-primary mb-1 mx-2">
+                                <i data-feather="check" width="20"></i></a> --}}
+                                <form action="{{route('admin.mto-request-approvals-reject')}}" method="post" class="mb-1 mx-0">
+                                    @csrf
+                                    <input type="hidden" name="id" value="{{ $transaction->id }}">
+                                    <button type="submit" class="btn btn-xs btn-default text-danger"><i data-feather="x" width="20"></i></button>
+                                </form>
+                                {{-- <a href="" class="text-danger mb-1 mx-2">
+                                <i data-feather="x" width="20"></i></a> --}}
+                            </td>
+                        </tr>
+
+                    @empty
+                        <tr>
+                            <td class="pt-2 pb-2 text-center" colspan="8">No records found</td>
+                        </tr>
+                    @endforelse
                 </tbody>
             </table>
-            <div class="pt-2 pb-2 px-2 bg-light">
-                <button class="btn btn-primary rounded-sm">
+            <div class="bg-light mb-0">
+                {{-- <button class="btn btn-primary rounded-sm">
                     <i data-feather="chevrons-left" width="20"></i> Prev
                 </button>
                 <button class="btn btn-default rounded-sm">1</button>
@@ -77,7 +81,11 @@
                 <button class="btn btn-default rounded-sm">5</button>
                 <button class="btn btn-primary rounded-sm"> Next
                     <i data-feather="chevrons-right" width="20"></i>
-                </button>
+                </button> --}}
+                <div class="pt-2 px-2 pb-2">
+                    {{ $transactions->render() }}
+                </div>
+
             </div>
         </div>
     </div>

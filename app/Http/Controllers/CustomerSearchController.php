@@ -11,6 +11,7 @@ class CustomerSearchController extends Controller
 {
     public function search(Request $request)
     {
+
         $validator=Validator::make($request->all(),[
             'account_number'=>'required|exists:customers,account_number'
         ],[

@@ -18,7 +18,6 @@
 <form action="{{route('admin.search-customer')}}" method="get" class="row g-2">
     
     <div class="col-12 col-md-6 col-lg-5 col-xl-4 mb-2">
-
         <input type="text" name="account_number" class="form-control @error('account_number') is-invalid @enderror" id="" value="{{old('account_number')}}" placeholder="Search Account Number" required>
         @error('account_number')
         <div class="invalid-feedback">
@@ -31,7 +30,6 @@
        <button type="submit" class="btn btn-primary w-100"><i data-feather="search" class="feather-16"></i> Search </button>
     </div>
 </form>
-
 @if(isset($customer))
 
 <div class="row">
@@ -42,6 +40,7 @@
             </div>
             <div class="card-body">
             <h5 class="card-title">{{$customer->fullname()}}</h5>
+            <p class="card-text mb-1"><small class="text-muted">Account Number:</small> {{$customer->account_number}}</p>
             <p class="card-text mb-1"><small class="text-muted">Address:</small> {{$customer->address()}}</p>
             <p class="card-text mb-1"><small class="text-muted">Connection type:</small> {{$customer->connectionType()}}</p>
             <p class="card-text"><small class="text-muted">Purchase Meter Option:</small> {{$customer->purchaseOption()}}</p>
@@ -65,14 +64,14 @@
                             <h6>Type of Service</h6>
                             <hr>
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="type_of_service" id="flexRadioDefault1">
+                                <input class="form-check-input" type="radio" name="type_of_service" id="flexRadioDefault1" checked>
                                 <label class="form-check-label" for="flexRadioDefault1">
                                 New Water Application
                                 </label>
                             </div>
                     
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="type_of_service" id="flexRadioDefault2" checked>
+                                <input class="form-check-input" type="radio" name="type_of_service" id="flexRadioDefault2" >
                                 <label class="form-check-label" for="flexRadioDefault2">
                                     Transfer of Meter Location
                                 </label>
@@ -81,14 +80,14 @@
                             {{-- Transfer of meter location options --}}
                             <div class="sub-category">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="flexRadioDefault1" id="flexRadioDefault2" checked>
+                                    <input class="form-check-input" type="radio" name="flexRadioDefault1" id="flexRadioDefault2" >
                                     <label class="form-check-label" for="flexRadioDefault2">
                                         Same Household
                                     </label>
                                 </div>
 
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="flexRadioDefault1" id="flexRadioDefault2" checked>
+                                    <input class="form-check-input" type="radio" name="flexRadioDefault1" id="flexRadioDefault2">
                                     <label class="form-check-label" for="flexRadioDefault2">
                                         Different Household
                                     </label>
@@ -99,13 +98,13 @@
 
 
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="type_of_service" id="flexRadioDefault2" checked>
+                                <input class="form-check-input" type="radio" name="type_of_service" id="flexRadioDefault2">
                                 <label class="form-check-label" for="flexRadioDefault2">
                                     Reconnection
                                 </label>
                             </div>
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="type_of_service" id="flexRadioDefault2" checked>
+                                <input class="form-check-input" type="radio" name="type_of_service" id="flexRadioDefault2">
                                 <label class="form-check-label" for="flexRadioDefault2">
                                     Disconnection
                                 </label>
@@ -114,14 +113,14 @@
                             {{-- Disconnection options --}}
                             <div class="sub-category">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="flexRadioDefault2" id="flexRadioDefault2" checked>
+                                    <input class="form-check-input" type="radio" name="flexRadioDefault2" id="flexRadioDefault2" >
                                     <label class="form-check-label" for="flexRadioDefault2">
                                         Voluntary Request from account holder
                                     </label>
                                 </div>
 
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="flexRadioDefault2" id="flexRadioDefault2" checked>
+                                    <input class="form-check-input" type="radio" name="flexRadioDefault2" id="flexRadioDefault2">
                                     <label class="form-check-label" for="flexRadioDefault2">
                                         Disconnection Order from waterworks
                                     </label>
@@ -148,14 +147,14 @@
                             </div>
                             
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="type_of_service" id="flexRadioDefault2" checked>
+                                <input class="form-check-input" type="radio" name="type_of_service" id="flexRadioDefault2">
                                 <label class="form-check-label" for="flexRadioDefault2">
                                     Change of Meter
                                 </label>
                             </div>
 
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="type_of_service" id="flexRadioDefault2" checked>
+                                <input class="form-check-input" type="radio" name="type_of_service" id="flexRadioDefault2">
                                 <label class="form-check-label" for="flexRadioDefault2">
                                     Others
                                 </label>
@@ -182,14 +181,20 @@
                                 </div>
                             </div>
                         </div>
+                        
                         <div class="col col-md-12 col-lg-5 col-xl-6">
                             <h6>Additional Remarks / Description</h6>
                             <hr>
-                            <textarea class="form-control mb-3" name='remarks' id="exampleFormControlTextarea1" rows="3"></textarea>
-
+                            <textarea class="form-control mb-3" name='remarks' id="exampleFormControlTextarea1" rows="3" placeholder="Optional"></textarea>
+                        
                             <label for="inputAddress" class="form-label">Schedule</label>
-                            <input type="date"  name='schedule' class="form-control mb-3" id="inputAddress" placeholder="1234 Main St">
-                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <input type="date"  name='schedule' class="form-control @error('schedule') is-invalid @enderror" value="{{old('schedule')}}">
+                            @error('schedule')
+                            <div id="validationServerUsernameFeedback" class="invalid-feedback">
+                                {{$message}}
+                            </div>
+                            @enderror
+                            <button type="submit" class="btn btn-primary mt-3">Submit</button>
                            
                         </div>
                     </div>

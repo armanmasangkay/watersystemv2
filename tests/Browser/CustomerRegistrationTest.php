@@ -83,7 +83,7 @@ class CustomerRegistrationTest extends DuskTestCase
                     ->assertVisible('#error-lastname')
                     ->assertVisible('#error-contact-number')
                     ->assertVisible('#error-purok')
-                    
+
         });
     }
 }

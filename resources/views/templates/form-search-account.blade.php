@@ -11,4 +11,10 @@
     <button href="" class="btn btn-primary mb-1">
     <i data-feather="search" width="20"></i>
     Search</button>
+
+    @error('account_number')
+    <div class="invalid-feedback">
+        {{$message}}
+    </div>
+    @enderror
 </form>
