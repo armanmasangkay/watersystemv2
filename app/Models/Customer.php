@@ -52,4 +52,9 @@ class Customer extends Model
     {
         return $this->hasMany(Transaction::class);
     }
+
+    public function hasActiveConnection()
+    {
+        return $this->connection_status==="active";
+    }
 }

@@ -54,17 +54,17 @@
 
                             <h6 for="" class="form-label mb-1">Landmark</h6>
                             <small class="text-info pt-0">You may update this information if it has changed.</small>
-                            <input type="text"  name='schedule' class="form-control mb-3" id="inputAddress" placeholder="1234 Main St">
+                            <input type="text"  name='landmark' class="form-control mb-3" id="inputAddress" placeholder="">
 
                             <h6 for="" class="form-label mb-1">Verify contact number</h6>
                             <small class="text-info pt-0">You may update this information if it has changed.</small>
-                            <input type="number"  name='schedule' class="form-control mb-3" id="inputAddress" placeholder="09xxxxxxxxx">
+                            <input type="number" value="{{$customer->contact_number}}"  name='contact_number' class="form-control mb-3" id="inputAddress" placeholder="09xxxxxxxxx">
 
                             <h6 for="" class="form-label">Initial building inspection schedule</h6>
-                            <input type="date"  name='schedule' class="form-control mb-3" id="inputAddress" placeholder="dd/mm/yyyy">
+                            <input type="date"  name='building_inspection_sched' class="form-control mb-3" id="inputAddress" placeholder="dd/mm/yyyy">
 
                             <h6 for="" class="form-label">Initial water works schedule</h6>
-                            <input type="date"  name='schedule' class="form-control mb-3" id="inputAddress" placeholder="dd/mm/yyyy">
+                            <input type="date"  name='waterworks_inspection_sched' class="form-control mb-3" id="inputAddress" placeholder="dd/mm/yyyy">
 
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </div>

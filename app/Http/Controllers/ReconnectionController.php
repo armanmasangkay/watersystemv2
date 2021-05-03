@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Customer;
+use App\Models\Transaction;
+use App\Rules\NoActiveConnection;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -16,17 +18,28 @@ class ReconnectionController extends Controller
 
     public function search(Request $request)
     {
+
         $validator=Validator::make($request->all(),[
-            'account_number'=>'required|exists:customers,account_number'
+            'account_number'=>['bail','required','exists:customers,account_number',new NoActiveConnection],
         ],[
            'account_number.exists'=>'Account number not found' 
         ]);
 
         if($validator->fails()){
-            return redirect(route('admin.transact.create'))->withErrors($validator)->withInput();
-           
+            return redirect(route('admin.reconnection'))->withErrors($validator)->withInput();
         }
         $customer=Customer::find($request->account_number);
+
+        Transaction::create([
+            'customer_id'=>$customer->account_number,
+            'type_of_service'=>'reconnection',
+            'remarks'=>$request->remarks,
+            'landmarks'=>$request->landmark,
+            'contact_number'=>$request->contact_number,
+            'building_inspection_schedule'=>$request->building_inspection_sched,
+            'water_works_schedule'=>$request->waterworks_inspection_sched,
+            'status'=>'mto_approval'
+        ]);
 
         session()->flashInput(['account_number'=>$request->account_number]);
     

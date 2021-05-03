@@ -41,7 +41,7 @@ Route::prefix('admin')->middleware('auth')->name('admin.')->group(function(){
 
     Route::resource('transactions',TransactionController::class)->middleware('auth');
 
-    Route::get('re-connection',[ReconnectionController::class, 'index'])->name('reconnection');
+    Route::get('reconnection',[ReconnectionController::class, 'index'])->name('reconnection');
     Route::get('search-customer-info',[ReconnectionController::class, 'search'])->name('search');
 
     Route::get('/bldg-area/request-approvals',[BLDGApprovalController::class, 'index'])->name('request-approvals')->middleware('auth');
@@ -51,7 +51,7 @@ Route::prefix('admin')->middleware('auth')->name('admin.')->group(function(){
     Route::post('/mto/request-approvals/reject', [MTOApprovalController::class, 'reject'])->name('mto-request-approvals-reject');
 
     Route::get('/water-works/request-approvals',[WaterWorksApprovalController::class, 'index'])->name('waterworks-request-approvals')->middleware('auth');
-
+ 
     Route::get('/ME/request-approvals',[MunicipalEngApprovalController::class, 'index'])->name('me-request-approvals')->middleware('auth');
 
     Route::get('/transactions-lists',[TransactionListsController::class, 'index'])->name('transactions-lists');
