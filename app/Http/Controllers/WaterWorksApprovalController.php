@@ -26,7 +26,7 @@ class WaterWorksApprovalController extends Controller
         }
 
         $transaction = Transaction::find($request->id);
-        $transaction->building_inspection_schedule = $request->building_inspection_schedule;
+        $transaction->water_works_schedule = $request->building_inspection_schedule;
         $transaction->status = "waterworks_approved";
         $transaction->save();
 
@@ -36,7 +36,7 @@ class WaterWorksApprovalController extends Controller
     public function reject($id)
     {
         $transaction = Transaction::find($id);
-        $transaction->building_inspection_schedule = now()->format('Y-m-d');
+        $transaction->water_works_schedule = now()->format('Y-m-d');
         $transaction->status = "waterworks_rejected";
         $transaction->save();
 

@@ -56,7 +56,7 @@ Route::prefix('admin')->middleware('auth')->name('admin.')->group(function(){
     Route::post('/waterworks/request-approvals/approve', [WaterWorksApprovalController::class, 'approve'])->name('waterworks-request-approvals-approve');
     Route::post('/waterworks/request-approvals/reject/{id}', [WaterWorksApprovalController::class, 'reject'])->name('waterworks-request-approvals-reject');
 
-    Route::get('/ME/request-approvals',[MunicipalEngApprovalController::class, 'index'])->name('me-request-approvals')->middleware('auth');
+    Route::get('/me/request-approvals',[MunicipalEngApprovalController::class, 'index'])->name('me-request-approvals')->middleware('auth');
 
     Route::get('/transactions-lists',[TransactionListsController::class, 'index'])->name('transactions-lists');
 });
