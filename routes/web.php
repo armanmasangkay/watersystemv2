@@ -24,7 +24,7 @@ Route::get('/', function () {
 Route::get('/login',[LoginController::class,'index'])->name('login');
 Route::post('/login',[LoginController::class,'authenticate']);
 
-Route::prefix('admin')->name('admin.')->group(function(){
+Route::prefix('admin')->middleware('auth')->name('admin.')->group(function(){
 
     Route::post('/logout',[LogoutUserController::class,'logout'])->middleware('auth')->name('logout');
     Route::get('/customers',[CustomerController::class,'showAll'])->middleware('auth')->name('customers');
@@ -46,7 +46,9 @@ Route::prefix('admin')->name('admin.')->group(function(){
 
     Route::get('/bldg-area/request-approvals',[BLDGApprovalController::class, 'index'])->name('request-approvals')->middleware('auth');
 
-    Route::get('/MTO/request-approvals',[MTOApprovalController::class, 'index'])->name('mto-request-approvals')->middleware('auth');
+    Route::get('/mto/request-approvals',[MTOApprovalController::class, 'index'])->name('mto-request-approvals')->middleware('auth');
+    Route::post('/mto/request-approvals/approve', [MTOApprovalController::class, 'approve'])->name('mto-request-approvals-approve')->middleware('auth');
+    Route::post('/mto/request-approvals/reject', [MTOApprovalController::class, 'reject'])->name('mto-request-approvals-reject');
 
     Route::get('/water-works/request-approvals',[WaterWorksApprovalController::class, 'index'])->name('waterworks-request-approvals')->middleware('auth');
 
@@ -57,4 +59,4 @@ Route::prefix('admin')->name('admin.')->group(function(){
 
 
 
- 
+
