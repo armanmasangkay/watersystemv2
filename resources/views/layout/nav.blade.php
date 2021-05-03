@@ -1,5 +1,4 @@
 <nav class="navbar navbar-expand-md navbar-light shadow-sm " style="background-color: #e3f2fd;"> 
-
     <div class="container px-3">
       <a class="navbar-brand" href="{{route('admin.dashboard')}}"><strong>MWS</strong></a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -27,9 +26,22 @@
              <i data-feather="align-left" class="feather-16 m-1"></i> Transactions
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" href="{{route('admin.transactions.create')}}">New</a></li>
+              <li>
+                <a class="dropdown-item" href="{{route('admin.transactions.create')}}">New Connection</a>
+                <a class="dropdown-item" href="{{route('admin.reconnection')}}">Reconnection</a>
+                <a class="dropdown-item" href="{{route('admin.transactions-lists')}}">List of Transactions</a>
+              </li>
             </ul>
         
+          </li>
+          <li class="nav-item dropdown pt-1">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i data-feather="settings" class="feather-16 m-1"></i> Settings
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">Water Rates</a></li>
+            </ul>
+            
           </li>
         </ul>
         <span class="navbar-text mt-1">
@@ -60,3 +72,5 @@
     }
 
   </style>
+
+

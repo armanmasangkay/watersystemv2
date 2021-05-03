@@ -7,10 +7,12 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutUserController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\TransactionsController;
+use App\Http\Controllers\ReconnectionController;
 use App\Http\Controllers\BLDGApprovalController;
 use App\Http\Controllers\MTOApprovalController;
 use App\Http\Controllers\WaterWorksApprovalController;
 use App\Http\Controllers\MunicipalEngApprovalController;
+use App\Http\Controllers\TransactionListsController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -39,6 +41,9 @@ Route::prefix('admin')->name('admin.')->group(function(){
 
     Route::resource('transactions',TransactionController::class)->middleware('auth');
 
+    Route::get('re-connection',[ReconnectionController::class, 'index'])->name('reconnection');
+    Route::get('search-customer-info',[ReconnectionController::class, 'search'])->name('search');
+
     Route::get('/bldg-area/request-approvals',[BLDGApprovalController::class, 'index'])->name('request-approvals')->middleware('auth');
 
     Route::get('/MTO/request-approvals',[MTOApprovalController::class, 'index'])->name('mto-request-approvals')->middleware('auth');
@@ -47,6 +52,8 @@ Route::prefix('admin')->name('admin.')->group(function(){
     Route::get('/water-works/request-approvals',[WaterWorksApprovalController::class, 'index'])->name('waterworks-request-approvals')->middleware('auth');
 
     Route::get('/ME/request-approvals',[MunicipalEngApprovalController::class, 'index'])->name('me-request-approvals')->middleware('auth');
+
+    Route::get('/transactions-lists',[TransactionListsController::class, 'index'])->name('transactions-lists');
 });
 
 
