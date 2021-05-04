@@ -18,7 +18,7 @@ class CreateTransactionsTable extends Migration
             $table->string('customer_id');
             $table->string('type_of_service');
             $table->string('remarks')->nullable();
-            $table->string('landmarks');
+            $table->string('landmarks')->nullable();
             $table->string('contact_number');
             $table->date('building_inspection_schedule');
             $table->date('water_works_schedule');

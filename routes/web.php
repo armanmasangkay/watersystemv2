@@ -12,6 +12,7 @@ use App\Http\Controllers\BLDGApprovalController;
 use App\Http\Controllers\MTOApprovalController;
 use App\Http\Controllers\WaterWorksApprovalController;
 use App\Http\Controllers\MunicipalEngApprovalController;
+use App\Http\Controllers\ReconnectionTransactionController;
 use App\Http\Controllers\TransactionListsController;
 use Illuminate\Support\Facades\Route;
 
@@ -43,6 +44,7 @@ Route::prefix('admin')->middleware('auth')->name('admin.')->group(function(){
 
     Route::get('reconnection',[ReconnectionController::class, 'index'])->name('reconnection');
     Route::get('search-customer-info',[ReconnectionController::class, 'search'])->name('search');
+    Route::post('reconnection/transaction/store',[ReconnectionController::class,'storeTransaction'])->name('reconnection.store');
 
     Route::get('/bldg-area/request-approvals',[BLDGApprovalController::class, 'index'])->name('request-approvals')->middleware('auth');
     Route::post('/bldg-area/request-approvals/approve',[BLDGApprovalController::class, 'approve'])->name('bld-request-approvals-approve');
