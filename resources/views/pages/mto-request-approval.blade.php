@@ -41,9 +41,9 @@
                             <td class="pt-2 pb-2">{{ $transaction->customer->account_number }}</td>
                             <td class="pt-2 pb-2">{{ $transaction->customer->fullname() }} </td>
                             <td class="pt-2 pb-2">{{ $transaction->type_of_service }}</td>
-                            <td class="pt-2 pb-2">{{ $transaction->created_at->format('Y-m-d') }}</td>
-                            <td class="pt-2 pb-2">{{ $transaction->building_inspection_schedule }}</td>
-                            <td class="pt-2 pb-2">{{ $transaction->water_works_schedule }}</td>
+                            <td class="pt-2 pb-2">{{ $transaction->created_at->format('M m, Y H:i:s') }}</td>
+                            <td class="pt-2 pb-2">{{ $transaction->buildingInspectionSchedHuman() }}</td>
+                            <td class="pt-2 pb-2">{{ $transaction->waterWorksSchedHuman() }}</td>
                             <td class="d-flex justify-content-start">
                                 <form action="{{ route('admin.mto-request-approvals-approve') }}" method="post" class="mb-1 mx-0">
                                     @csrf
