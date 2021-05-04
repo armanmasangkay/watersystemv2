@@ -13,6 +13,7 @@ use App\Http\Controllers\MTOApprovalController;
 use App\Http\Controllers\WaterWorksApprovalController;
 use App\Http\Controllers\MunicipalEngApprovalController;
 use App\Http\Controllers\TransactionListsController;
+use App\Http\Controllers\TransferOfMeterController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -59,6 +60,9 @@ Route::prefix('admin')->middleware('auth')->name('admin.')->group(function(){
     Route::get('/me/request-approvals',[MunicipalEngApprovalController::class, 'index'])->name('me-request-approvals')->middleware('auth');
 
     Route::get('/transactions-lists',[TransactionListsController::class, 'index'])->name('transactions-lists');
+
+    Route::get('/transfer-meter',[TransferOfMeterController::class, 'index'])->name('transfer-meter');
+    Route::get('/search-info',[TransferOfMeterController::class, 'search'])->name('search-info');
 });
 
 
