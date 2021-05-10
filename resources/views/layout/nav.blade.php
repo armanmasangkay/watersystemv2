@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-md navbar-light shadow-sm " style="background-color: #e3f2fd;"> 
+<nav class="navbar navbar-expand-md navbar-light shadow-sm " style="background-color: #e3f2fd;">
     <div class="container px-3">
       <a class="navbar-brand" href="{{route('admin.dashboard')}}"><strong>MWS</strong></a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -19,7 +19,7 @@
               <li><a class="dropdown-item" href="{{route('admin.register-customer')}}">New</a></li>
               <li><a class="dropdown-item" href="{{route('admin.customers')}}">View All</a></li>
             </ul>
-        
+
           </li>
           <li class="nav-item dropdown pt-1">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -33,7 +33,7 @@
                 <a class="dropdown-item" href="{{route('admin.transfer-meter')}}">Transfer of Meter</a>
               </li>
             </ul>
-        
+
           </li>
           <li class="nav-item dropdown pt-1">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -41,8 +41,9 @@
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
               <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">Water Rates</a></li>
+              <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#surchargeModel">Surcharge</a></li>
             </ul>
-            
+
           </li>
         </ul>
         <span class="navbar-text mt-1">

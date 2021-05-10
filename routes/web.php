@@ -15,6 +15,8 @@ use App\Http\Controllers\MunicipalEngApprovalController;
 use App\Http\Controllers\ReconnectionTransactionController;
 use App\Http\Controllers\TransactionListsController;
 use App\Http\Controllers\TransferOfMeterController;
+use App\Http\Controllers\WaterRateController;
+use App\Http\Controllers\SurchargeController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -65,6 +67,9 @@ Route::prefix('admin')->middleware('auth')->name('admin.')->group(function(){
 
     Route::get('/transfer-meter',[TransferOfMeterController::class, 'index'])->name('transfer-meter');
     Route::get('/search-info',[TransferOfMeterController::class, 'search'])->name('search-info');
+
+    Route::post('/water-rate', [WaterRateController::class, 'update'])->name('water-rate-update');
+    Route::post('/surcharge', [SurchargeController::class, 'update'])->name('surcharge-update');
 });
 
 
