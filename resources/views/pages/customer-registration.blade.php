@@ -210,42 +210,42 @@ function newTransactionRow(currentMonth,nextMonth,currentMonthNumOfDays,nextMont
 {
    return `
             <div class='row px-md-2'>
-                <div class='col-6 col-md-3 col-lg-2 col-xl-1 mt-2 pe-md-1 ps-md-1 ps-lg-1 pe-sm-1 pe-xs-1'>
+                <div class='col-6 col-md-3 col-lg-2 col-xl-1 mt-2 pe-md-1 ps-md-1 ps-lg-1 pe-sm-1 pe-1'>
                     <small class='text-danger'>${currentMonth}</small>
                     <select name='' id='' class='form-select'>
                         ${populateDaysOnMonthOptions(currentMonthNumOfDays)}  
                     </select>
                 
                 </div>
-                <div class='col-6 col-md-3 col-lg-2 col-xl-1 mt-2 ps-md-0 pe-md-0 ps-sm-0'>
+                <div class='col-6 col-md-3 col-lg-2 col-xl-1 mt-2 ps-md-0 pe-md-0 ps-sm-0 ps-0'>
                     <small class='text-danger'>${nextMonth}</small>
                     <select name='' id='' class='form-select'>
                         ${populateDaysOnMonthOptions(nextMonthNumOfDays)} 
                     </select>
                 </div>
 
-                <div class='col-6 col-md-6 col-lg-4 col-xl-2 mt-2 mt-lg-2 mt-md-2 px-lg-1 pe-sm-1 ps-md-1'>
+                <div class='col-6 col-md-6 col-lg-4 col-xl-2 mt-2 mt-lg-2 mt-md-2 px-lg-1 pe-sm-1 ps-md-1 pe-1'>
                     <small class='text-muted'>Meter Reading</small>
                     <input class='form-control' type='number' min=0 id="meter_reading">    
                 </div>
 
-                <div class='col-6 col-md-6 col-lg-4 col-xl-1 mt-2 mt-lg-2 mt-md-2 px-lg-0 ps-md-1 pe-md-0 ps-sm-0'>
+                <div class='col-6 col-md-6 col-lg-4 col-xl-1 mt-2 mt-lg-2 mt-md-2 px-lg-0 ps-md-1 pe-md-0 ps-sm-0 ps-0'>
                     <small class='text-muted'>Consumption</small>
                     <input class='form-control' type='number' value='0.00' min=0 disabled>    
                 </div>
-                <div class='col-6 col-md-6 col-lg-4 col-xl-2 mt-2 mt-md-2 px-lg-1 pe-sm-1 ps-md-1'>
+                <div class='col-6 col-md-6 col-lg-4 col-xl-2 mt-2 mt-md-2 px-lg-1 pe-sm-1 ps-md-1 pe-1'>
                     <small class='text-muted'>Amount</small>
                     <input class='form-control' type='number' value='0.00' min=0 disabled>    
                 </div>
-                <div class='col-6 col-md-6 col-lg-4 col-xl-1 mt-2 mt-md-2 px-lg-0 ps-md-1 pe-md-0 ps-sm-0'>
+                <div class='col-6 col-md-6 col-lg-4 col-xl-1 mt-2 mt-md-2 px-lg-0 ps-md-1 pe-md-0 ps-sm-0 ps-0'>
                     <small class='text-muted'>Surcharge</small>
                     <input class='form-control' type='number' value='0.00' min=0 disabled>    
                 </div>
-                <div class='col-6 col-md-6 col-lg-4 col-xl-2 mt-2 mt-md-2 px-lg-1 pe-sm-1 ps-md-1'>
+                <div class='col-6 col-md-6 col-lg-4 col-xl-2 mt-2 mt-md-2 px-lg-1 pe-sm-1 ps-md-1 pe-1'>
                     <small class='text-muted'>Balance</small>
                     <input class='form-control' type='number' value='0.00' min=0>    
                 </div>
-                <div class='col-6 col-md-6 col-lg-4 col-xl-2 mt-2 mt-md-2 ps-lg-0 ps-md-1 pe-lg-1 ps-sm-0 pe-md-0'>
+                <div class='col-6 col-md-6 col-lg-4 col-xl-2 mt-2 mt-md-2 ps-lg-0 ps-md-1 pe-lg-1 ps-sm-0 pe-md-0 ps-0'>
                     <small class='text-muted'>Total</small>
                     <input class='form-control' type='number' value='0.00' min=0 disabled>    
                 </div>
