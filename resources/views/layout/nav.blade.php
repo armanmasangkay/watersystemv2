@@ -16,7 +16,7 @@
               <i data-feather="users" class="feather-16 m-1"></i> Customer
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" href="{{route('admin.register-customer')}}">New</a></li>
+              <li><a class="dropdown-item" href="{{route('admin.register-customer')}}">Client Data Entry</a></li>
               <li><a class="dropdown-item" href="{{route('admin.customers')}}">View All</a></li>
             </ul>
 

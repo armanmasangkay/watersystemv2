@@ -8,7 +8,7 @@
     <div class="col col-lg-12 col-xl-8">
         <div class="card mt-5 rounded-3 mb-5 shadow">
             <div class="card-header p-4 text-center">
-                <h4><i data-feather="users" class="feather-32"></i>&nbsp;&nbsp;Register a Customer</h4>
+                <h4><i data-feather="users" class="feather-32"></i>&nbsp;&nbsp;Customer Data</h4>
             </div>
             <div class="card-body px-3 px-lg-5">
                 <small class="mb-5 text-danger">Note: (*) Required fields</small>
@@ -113,8 +113,8 @@
                       
                     </div>
 
-                    <div class="row justify-content-center">
-                        <div class="col col-md-6 col-xl-5">
+                    <div class="row">
+                        <div class="col col-md-6 col-xl-6">
                             <small class="text-muted">Purchase of Meter Option <small class="text-danger">*</small></small>
                             <select class="form-select mt-2" name="purchase_option">
                                 <option value="" selected>--Please select--</option>
@@ -125,6 +125,13 @@
                              
                             </small>
                         </div>
+                        <div class="col col-md-6 col-xl-6">
+                            <small class='text-muted'>Ledger</small>
+                            <div class="d-grid gap-2 mt-2">
+                                <button class="btn btn-outline-success" type="button" data-bs-toggle='modal' data-bs-target='#ledgerSetupModal'  id="register-btn">Set up</button>
+                            </div>
+                        </div>
+                            
                     </div>
                 
                     <div class="d-grid gap-2 col-4 col-lg-3 mx-auto mt-4">
@@ -139,10 +146,216 @@
     </div>
 </div>
 
+<!-- 
+LEDGER MODAL
+ -->
+ <div class="modal fade" id="ledgerSetupModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel"><i data-feather="book-open"></i> Ledger Setup</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <h5>Beginning Meter Reading</h5>
+            <div class="row">
+                <div class="col-12 col-md-6 col-lg-4 col-xl-3">
+                    <small class='text-muted'>Current balance</small>
+                    <input class="form-control" type="number" placeholder="Enter balance" min=0>    
+                </div>
+                <div class="col-12 col-md-6 mt-2 col-lg-4 col-xl-3 mt-md-0">
+                    <small class='text-muted'>Date of last payment</small>
+                    <input class="form-control" id="lastPaymentDate" type="date">
+                </div>
+
+            </div>
+           <div id="transactions-header">
+                <h5 class="mt-4">Transactions</h5>
+                
+                <hr>
+           </div>
+            
+            <div id="transactions-container">
+                 
+            </div>  
+            <button type="button" class="btn btn-outline-primary btn-sm mt-4" id="add-more-btn"><i data-feather="plus"></i> Add More</button>
+            
+           
+            
+           
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-success">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
 @endsection
 
 @section('custom-js')
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script>
+const  months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+function populateDaysOnMonthOptions(numberOfDays)
+{
+    options=''
+    for(i=1;i<numberOfDays+1;i++){
+        options=options+`<option value='${i}'>${i}</option>`
+    }
+    return options
+    
+}
+
+function newTransactionRow(currentMonth,nextMonth,currentMonthNumOfDays,nextMonthNumOfDays)
+{
+   return `
+                    <div class='row'>
+                <div class='col-6 col-md-3 col-lg-2 col-xl-1 pe-lg-0'>
+                    <small class='text-danger'>${currentMonth}</small>
+                    <select name='' id='' class='form-select'>
+                          ${populateDaysOnMonthOptions(currentMonthNumOfDays)}  
+
+                    </select>
+                
+                </div>
+                <div class='col-6 col-md-3 col-lg-2 col-xl-1'>
+                    <small class='text-danger'>${nextMonth}</small>
+                    <select name='' id='' class='form-select'>
+                        ${populateDaysOnMonthOptions(nextMonthNumOfDays)} 
+                    </select>
+                </div>
+
+                <div class='col-6 col-md-6 col-lg-4 col-xl-2 mt-2 mt-md-0 '>
+                    <small class='text-muted'>Meter Reading</small>
+                    <input class='form-control' type='number' min=0>    
+                </div>
+
+                <div class='col-6 col-md-6 col-lg-4 col-xl-2 mt-2 mt-md-0'>
+                    <small class='text-muted'>Consumption</small>
+                    <input class='form-control' type='number' value='0.00' min=0 disabled>    
+                </div>
+                <div class='col-6 col-md-6 col-lg-4 col-xl-2 mt-2 mt-md-0 '>
+                    <small class='text-muted'>Amount</small>
+                    <input class='form-control' type='number' value='0.00' min=0 disabled>    
+                </div>
+                <div class='col-6 col-md-6 col-lg-4 col-xl-2 mt-2 mt-md-0'>
+                    <small class='text-muted'>Surcharge</small>
+                    <input class='form-control' type='number' value='0.00' min=0 disabled>    
+                </div>
+                <div class='col-12 col-md-6 col-lg-4 col-xl-2 mt-4 mt-md-0'>
+                    <small class='text-muted'>Total</small>
+                    <input class='form-control' type='number' value='0.00' min=0 disabled>    
+                </div>
+
+            </div>
+            <hr>
+        `
+}
+
+function nextMonthAfter(month,year)
+{
+    let monthIndex=months.indexOf(month)
+
+    monthIndex=monthIndex+1>11?0:monthIndex+1
+
+    return months[monthIndex]
+
+}
+
+function getNumberOfDays(fullYear,monthIndex)
+{
+    return new Date(fullYear,monthIndex+1,0).getDate()
+}
+
+$(document).ready(function(){
+
+    
+    /*
+        Ledger Setup
+    */
+    const transactionsHeader=$("#transactions-header")
+    const transactionsContainer=$("#transactions-container")
+    const lastPaymentDate=$("#lastPaymentDate")
+    const addMoreBtn=$("#add-more-btn")
+
+
+    let previouslyAddedCurrentMonth=''
+    let previouslyAddedNextMonth=''
+    let previouslyAddedCurrentYear=''
+
+    transactionsHeader.hide()
+    addMoreBtn.hide()
+
+    addMoreBtn.click((e)=>{
+        e.preventDefault()
+        newMonth=nextMonthAfter(previouslyAddedCurrentMonth)
+        newNextMonth=nextMonthAfter(previouslyAddedNextMonth)
+        newMonthWithYear=`${newMonth} ${previouslyAddedCurrentYear}`
+        newNextMonthWithYear=newMonth=='Dec'?`${newNextMonth} ${previouslyAddedCurrentYear+1}`:`${newNextMonth} ${previouslyAddedCurrentYear}`
+
+        newMonthNumOfDays=getNumberOfDays(previouslyAddedCurrentYear,months.indexOf(newMonth))
+        newNextMonthNumOfDays=getNumberOfDays(previouslyAddedCurrentYear,months.indexOf(newNextMonth))
+
+        transactionsContainer.append(newTransactionRow(newMonthWithYear,newNextMonthWithYear,newMonthNumOfDays,newNextMonthNumOfDays))
+        previouslyAddedCurrentMonth=newMonth
+        previouslyAddedNextMonth=newNextMonth
+        previouslyAddedCurrentYear=newMonth=='Dec'?previouslyAddedCurrentYear+1:previouslyAddedCurrentYear
+    })
+
+
+
+
+   
+    lastPaymentDate.change(()=>{
+
+       
+        transactionsHeader.show()
+        addMoreBtn.show()
+         //get the selected date
+        let dateSelected=new Date(lastPaymentDate.val())
+        
+
+        transactionsContainer.empty()
+
+         //determine the next month after that date
+        let monthIndex=dateSelected.getMonth()+1
+        let selectedYear=dateSelected.getFullYear()
+
+        monthIndex=monthIndex>11?0:monthIndex
+
+        let nextMonth=months[monthIndex]
+        let currentMonth=months[dateSelected.getMonth()]
+
+        currentMonthWithYear=`${currentMonth} ${selectedYear}`
+        nextMonthWithYear=months[dateSelected.getMonth()]=='Dec'?`${nextMonth} ${selectedYear+1}`:`${nextMonth} ${selectedYear}`
+
+
+        //generate initial transaction
+
+        let currentMonthNumOfDays=getNumberOfDays(selectedYear,dateSelected.getMonth())
+      
+        let nextMonthNumOfDays=getNumberOfDays(selectedYear,monthIndex)
+
+        transactionsContainer.append(newTransactionRow(currentMonthWithYear,nextMonthWithYear,currentMonthNumOfDays,nextMonthNumOfDays))
+
+        previouslyAddedCurrentMonth=currentMonth
+        previouslyAddedNextMonth=nextMonth
+        previouslyAddedCurrentYear=months[dateSelected.getMonth()]=='Dec'?selectedYear+1:selectedYear
+    
+    })
+
+   
+   
+
+
+})
+
+
+
+</script>
 <script>
     $(document).ready(function(){
         const registerBtn=$("#register-btn");
