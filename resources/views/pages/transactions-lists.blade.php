@@ -13,7 +13,7 @@
 </div>
 
 <div class="card">
-    <div class="card-header px-2 bg-light">
+    <div class="card-header px-2 pb-0 bg-light">
         @include('templates.form-search-account')
     </div>
     <div class="card-body p-0">

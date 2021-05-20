@@ -1,6 +1,6 @@
-<form action="{{ route($route) }}" method="get" class="mb-4 form-inline">
+<form action="{{ route($route) }}" method="get" class="mt-2 mb-2 form-inline">
     <!-- <div class="col-12 col-md-6 col-lg-5 col-xl-4 mx-0 p-0 mt-0 mb-0"> -->
-        <input type="text" name="account_number" class="w-25 rounded bg-white border pt-2 pb-2 px-2 
+        <input type="text" name="account_number" class="w-40 rounded bg-white border pt-2 pb-2 px-2 
         @error('account_number') is-invalid @enderror" id="" value="{{old('account_number',$customer->account_number??'')}}" 
         placeholder="Account number" required>
         @error('account_number')

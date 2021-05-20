@@ -13,11 +13,12 @@
           </li>
           <li class="nav-item dropdown pt-1">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              <i data-feather="users" class="feather-16 m-1"></i> Customer
+              <i data-feather="users" class="feather-16 m-1"></i> Consumer
             </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" href="{{route('admin.register-customer')}}">Client Data Entry</a></li>
-              <li><a class="dropdown-item" href="{{route('admin.customers')}}">View All</a></li>
+            <ul class="dropdown-menu px-2" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="{{route('admin.register-customer')}}">New Data Entry</a></li>
+              <li><a class="dropdown-item" href="{{route('admin.consumer-ledger')}}">Ledger Card</a></li>
+              <li><a class="dropdown-item" href="{{route('admin.customers')}}">View Lists</a></li>
             </ul>
 
           </li>
@@ -25,7 +26,7 @@
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
              <i data-feather="align-left" class="feather-16 m-1"></i> Transactions
             </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <ul class="dropdown-menu px-2" aria-labelledby="navbarDropdown">
               <li>
                 <a class="dropdown-item" href="{{route('admin.services.create')}}">New Connection</a>
                 <a class="dropdown-item" href="{{route('admin.reconnection')}}">Reconnection</a>
@@ -39,7 +40,7 @@
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               <i data-feather="settings" class="feather-16 m-1"></i> Settings
             </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <ul class="dropdown-menu px-2" aria-labelledby="navbarDropdown">
               <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">Water Rates</a></li>
               <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#surchargeModel">Surcharge</a></li>
             </ul>
