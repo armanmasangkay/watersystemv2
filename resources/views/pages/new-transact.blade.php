@@ -42,7 +42,7 @@
                 <i data-feather="info" class="feather-16"></i> Additional Information
             </div>
             <div class="card-body p-4">
-                <form action="{{route('admin.transactions.store')}}" method="post">
+                <form action="{{route('admin.services.store')}}" method="post">
                     @csrf
                     <div class="row">
                     <input type="hidden" name="type_of_service" value="New Connections">

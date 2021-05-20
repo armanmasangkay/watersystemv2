@@ -4,14 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use App\Models\Transaction;
+use App\Models\Service;
 
 class WaterWorksApprovalController extends Controller
 {
     public function index()
     {
-        $transactions = Transaction::where('status', 'bldg_approved')->paginate(20);
-        return view('pages.waterworks-request-approval', ['route' => 'admin.waterworks-request-approvals', 'search_heading' => 'SEARCH REQUEST', 'transactions' => $transactions]);
+        $services = Service::where('status', 'bldg_approved')->paginate(20);
+        return view('pages.waterworks-request-approval', ['route' => 'admin.waterworks-request-approvals', 'search_heading' => 'SEARCH REQUEST', 'services' => $services]);
     }
 
     public function approve(Request $request)
@@ -25,20 +25,20 @@ class WaterWorksApprovalController extends Controller
             return back()->withErrors($validator)->withInput();
         }
 
-        $transaction = Transaction::find($request->id);
-        $transaction->water_works_schedule = $request->building_inspection_schedule;
-        $transaction->status = "waterworks_approved";
-        $transaction->save();
+        $services = Service::find($request->id);
+        $services->water_works_schedule = $request->building_inspection_schedule;
+        $services->status = "waterworks_approved";
+        $services->save();
 
         return redirect(route('admin.waterworks-request-approvals'));
     }
 
     public function reject($id)
     {
-        $transaction = Transaction::find($id);
-        $transaction->water_works_schedule = now()->format('Y-m-d');
-        $transaction->status = "waterworks_rejected";
-        $transaction->save();
+        $services = Service::find($id);
+        $services->water_works_schedule = now()->format('Y-m-d');
+        $services->status = "waterworks_rejected";
+        $services->save();
 
         return redirect(route('admin.waterworks-request-approvals'));
     }

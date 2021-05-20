@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
-use App\Models\Transaction;
+use App\Models\Service;
 class Customer extends Model
 {
     use HasFactory;
@@ -48,9 +48,9 @@ class Customer extends Model
         return Str::title($this->purchase_option);
     }
 
-    public function transactions()
+    public function services()
     {
-        return $this->hasMany(Transaction::class);
+        return $this->hasMany(Service::class);
     }
 
     public function hasActiveConnection()

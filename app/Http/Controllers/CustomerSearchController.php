@@ -15,17 +15,17 @@ class CustomerSearchController extends Controller
         $validator=Validator::make($request->all(),[
             'account_number'=>'required|exists:customers,account_number'
         ],[
-           'account_number.exists'=>'Account number not found' 
+           'account_number.exists'=>'Account number not found'
         ]);
 
         if($validator->fails()){
-            return redirect(route('admin.transact.create'))->withErrors($validator)->withInput();
-           
+            return redirect(route('admin.services.create'))->withErrors($validator)->withInput();
+
         }
         $customer=Customer::find($request->account_number);
 
         session()->flashInput(['account_number'=>$request->account_number]);
-    
+
         return view('pages.new-transact',[
             'customer'=>$customer,
             'route' => 'admin.search-customer'
