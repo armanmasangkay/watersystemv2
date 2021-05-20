@@ -39,11 +39,7 @@ Route::prefix('admin')->middleware('auth')->name('admin.')->group(function(){
         ->middleware('auth')
         ->name('register-customer');
 
-<<<<<<< HEAD
-    Route::post('/register-customer',[CustomerController::class,'store'])->name('register-customer-post')
-=======
     Route::post('/register-consumer',[CustomerController::class,'store'])
->>>>>>> cc47fe556bb1ef2d1f0840819f5ab87cfb20e92d
             ->middleware('access.authorize');
     Route::get('/dashboard',[DashboardController::class,'index'])->name('dashboard');
 
