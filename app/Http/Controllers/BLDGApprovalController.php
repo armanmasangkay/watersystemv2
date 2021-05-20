@@ -6,14 +6,14 @@ use App\Models\Customer;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use App\Models\Transaction;
+use App\Models\Service;
 
 class BLDGApprovalController extends Controller
 {
     public function index()
     {
-        $transactions = Transaction::where('status', 'mto_approved')->paginate(20);
-        return view('pages.bldg-request-approval', ['route' => 'admin.request-approvals', 'search_heading' => 'SEARCH REQUEST','transactions' => $transactions]);
+        $services = Service::where('status', 'mto_approved')->paginate(20);
+        return view('pages.bldg-request-approval', ['route' => 'admin.request-approvals', 'search_heading' => 'SEARCH REQUEST','services' => $services]);
     }
 
     public function approve(Request $request)
@@ -27,20 +27,20 @@ class BLDGApprovalController extends Controller
             return back()->withErrors($validator)->withInput();
         }
 
-        $transaction = Transaction::find($request->id);
-        $transaction->building_inspection_schedule = $request->building_inspection_schedule;
-        $transaction->status = "bldg_approved";
-        $transaction->save();
+        $service = Service::find($request->id);
+        $service->building_inspection_schedule = $request->building_inspection_schedule;
+        $service->status = "bldg_approved";
+        $service->save();
 
         return redirect(route('admin.request-approvals'));
     }
 
     public function reject($id)
     {
-        $transaction = Transaction::find($id);
-        $transaction->building_inspection_schedule = now()->format('Y-m-d');
-        $transaction->status = "bldg_rejected";
-        $transaction->save();
+        $service = Service::find($id);
+        $service->building_inspection_schedule = now()->format('Y-m-d');
+        $service->status = "bldg_rejected";
+        $service->save();
 
         return redirect(route('admin.request-approvals'));
     }

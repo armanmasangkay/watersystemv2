@@ -8,10 +8,12 @@ use App\Classes\Facades\CustomerDataHelper;
 use App\Classes\Facades\CustomerRegistrationOptions;
 use App\Exceptions\BarangayDoesNotExistException;
 use App\Models\Customer;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Auth;
 
 class CustomerController extends Controller
 {
@@ -36,8 +38,11 @@ class CustomerController extends Controller
 
     public function getOnlyTransaction($customerId, $requestData)
     {
-        $transaction = Arr::only($requestData, ['last_meter_reading', 'balance', 'last_payment_date']);
+        $transaction = Arr::only($requestData, ['reading_meter', 'balance', 'reading_date']);
+        $transaction = Arr::add($transaction, 'reading_consumption', '0');
+        $transaction = Arr::add($transaction, 'period_covered', 'Beginning Balance');
         $transaction = Arr::add($transaction, 'customer_id', $customerId);
+        $transaction = Arr::add($transaction, 'user_id', Auth::id());
         return $transaction;
     }
 
@@ -48,11 +53,6 @@ class CustomerController extends Controller
 
     public function store(Request $request)
     {
-        $transactions = $this->getOnlyTransaction('1', $request->all());
-        $customerInfo = $this->getOnlyCustomerInformation($request->all());
-
-        return response()->json(['transactions' => $transactions, 'customerInfor' => $customerInfo]);
-
         $brgyCode=BarangayData::getCodeByName($request->barangay);
         $accountNumber=AccountNumber::new(strval($brgyCode),BarangayData::numberOfPeopleOn($request->barangay));
 
@@ -107,7 +107,9 @@ class CustomerController extends Controller
             'purchase_option.in'=>'Invalid purchase option selected',
 
         ];
-        $requestsData=array_merge($request->all(),['account_number'=>$accountNumber]);
+        $customerInfo = $this->getOnlyCustomerInformation($request->all());
+
+        $requestsData=array_merge($customerInfo,['account_number'=>$accountNumber]);
 
 
        $validator=Validator::make($requestsData,$rules,$messages);
@@ -126,7 +128,12 @@ class CustomerController extends Controller
        $normalizedData=CustomerDataHelper::normalize($requestsData);
 
 
-        Customer::create($normalizedData);
+        $customer = Customer::create($normalizedData);
+
+        $transactions = $this->getOnlyTransaction($customer->account_number, $request->all());
+        Transaction::create($transactions);
+
+
 
         return response()->json([
             'created'=>true

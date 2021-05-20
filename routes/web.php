@@ -44,7 +44,7 @@ Route::prefix('admin')->middleware('auth')->name('admin.')->group(function(){
 
     Route::get('/search-customer',[CustomerSearchController::class,'search'])->name('search-customer');
 
-    Route::resource('transactions',TransactionController::class)->middleware('auth');
+
     Route::resource('services', ServiceController::class);
 
     Route::get('reconnection',[ReconnectionController::class, 'index'])->name('reconnection');

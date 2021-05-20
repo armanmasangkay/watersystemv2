@@ -77,9 +77,9 @@ function addDataToForm(form,balance, meterReading,lastPaymentDate)
     form.empty()
     form.append(
         `
-            <input type="hidden" value=${balance.val()} name="balance">
-            <input type="hidden" value=${meterReading.val()} name="last_meter_reading">
-            <input type="hidden" value=${lastPaymentDate.val()} name="last_payment_date">
+            <input type="hidden" value="${balance.val()}" name="balance">
+            <input type="hidden" value="${meterReading.val()}" name="reading_meter">
+            <input type="hidden" value="${lastPaymentDate.val()}" name="reading_date">
         `
     )
 }
