@@ -7,7 +7,7 @@ function populateDaysOnMonthOptions(numberOfDays)
         options=options+`<option value='${i}'>${i}</option>`
     }
     return options
-    
+
 }
 
 function newTransactionRow(currentMonth,nextMonth,currentMonthNumOfDays,nextMonthNumOfDays)
@@ -17,41 +17,41 @@ function newTransactionRow(currentMonth,nextMonth,currentMonthNumOfDays,nextMont
                 <div class='col-6 col-md-3 col-lg-2 col-xl-1 mt-2 pe-md-1 ps-md-1 ps-lg-1 pe-sm-1 pe-1'>
                     <small class='text-danger'>${currentMonth}</small>
                     <select name='' id='' class='form-select'>
-                        ${populateDaysOnMonthOptions(currentMonthNumOfDays)}  
+                        ${populateDaysOnMonthOptions(currentMonthNumOfDays)}
                     </select>
-                
+
                 </div>
                 <div class='col-6 col-md-3 col-lg-2 col-xl-1 mt-2 ps-md-0 pe-md-0 ps-sm-0 ps-0'>
                     <small class='text-danger'>${nextMonth}</small>
                     <select name='' id='' class='form-select'>
-                        ${populateDaysOnMonthOptions(nextMonthNumOfDays)} 
+                        ${populateDaysOnMonthOptions(nextMonthNumOfDays)}
                     </select>
                 </div>
 
                 <div class='col-6 col-md-6 col-lg-4 col-xl-2 mt-2 mt-lg-2 mt-md-2 px-lg-1 pe-sm-1 ps-md-1 pe-1'>
                     <small class='text-muted'>Meter Reading</small>
-                    <input class='form-control' type='number' min=0 id="meter_reading">    
+                    <input class='form-control' type='number' min=0 id="meter_reading">
                 </div>
 
                 <div class='col-6 col-md-6 col-lg-4 col-xl-1 mt-2 mt-lg-2 mt-md-2 px-lg-0 ps-md-1 pe-md-0 ps-sm-0 ps-0'>
                     <small class='text-muted'>Consumption</small>
-                    <input class='form-control' type='number' value='0.00' min=0 disabled>    
+                    <input class='form-control' type='number' value='0.00' min=0 disabled>
                 </div>
                 <div class='col-6 col-md-6 col-lg-4 col-xl-2 mt-2 mt-md-2 px-lg-1 pe-sm-1 ps-md-1 pe-1'>
                     <small class='text-muted'>Amount</small>
-                    <input class='form-control' type='number' value='0.00' min=0 disabled>    
+                    <input class='form-control' type='number' value='0.00' min=0 disabled>
                 </div>
                 <div class='col-6 col-md-6 col-lg-4 col-xl-1 mt-2 mt-md-2 px-lg-0 ps-md-1 pe-md-0 ps-sm-0 ps-0'>
                     <small class='text-muted'>Surcharge</small>
-                    <input class='form-control' type='number' value='0.00' min=0 disabled>    
+                    <input class='form-control' type='number' value='0.00' min=0 disabled>
                 </div>
                 <div class='col-6 col-md-6 col-lg-4 col-xl-2 mt-2 mt-md-2 px-lg-1 pe-sm-1 ps-md-1 pe-1'>
                     <small class='text-muted'>Meter installment balance</small>
-                    <input class='form-control' type='number' value='0.00' min=0>    
+                    <input class='form-control' type='number' value='0.00' min=0>
                 </div>
                 <div class='col-6 col-md-6 col-lg-4 col-xl-2 mt-2 mt-md-2 ps-lg-0 ps-md-1 pe-lg-1 ps-sm-0 pe-md-0 ps-0'>
                     <small class='text-muted'>Total</small>
-                    <input class='form-control' type='number' value='0.00' min=0 disabled>    
+                    <input class='form-control' type='number' value='0.00' min=0 disabled>
                 </div>
             </div>
         `
@@ -72,8 +72,72 @@ function getNumberOfDays(fullYear,monthIndex)
     return new Date(fullYear,monthIndex+1,0).getDate()
 }
 
+function addDataToForm(form,balance, meterReading,lastPaymentDate)
+{
+    form.empty()
+    form.append(
+        `
+            <input type="hidden" value=${balance.val()} name="balance">
+            <input type="hidden" value=${meterReading.val()} name="last_meter_reading">
+            <input type="hidden" value=${lastPaymentDate.val()} name="last_payment_date">
+        `
+    )
+}
+
+function enableSaveButton(saveBtn, balance, meterReading,lastPaymentDate)
+{
+    if(meterReading.val() != "" && balance.val() != "" && lastPaymentDate.val() != "")
+    {
+        saveBtn.removeAttr('disabled')
+    }
+}
+
+function createTransaction(balance, meterReading,lastPaymentDate, transactionsHeader, transactionsContainer, previouslyAddedCurrentMonth, previouslyAddedNextMonth,previouslyAddedCurrentYear){
+    if(meterReading.val() != "" && balance.val() != "" && lastPaymentDate.val() != "")
+    {
+        balance.attr('disabled', 'disabled')
+        meterReading.attr('disabled', 'disabled')
+        transactionsHeader.show()
+        // addMoreBtn.show()
+        //get the selected date
+        let dateSelected=new Date(lastPaymentDate.val())
+
+
+        transactionsContainer.empty()
+
+        //determine the next month after that date
+        let monthIndex=dateSelected.getMonth()+1
+        let selectedYear=dateSelected.getFullYear()
+
+        monthIndex=monthIndex>11?0:monthIndex
+
+        let nextMonth=months[monthIndex]
+        let currentMonth=months[dateSelected.getMonth()]
+
+        currentMonthWithYear=`${currentMonth} ${selectedYear}`
+        nextMonthWithYear=months[dateSelected.getMonth()]=='Dec'?`${nextMonth} ${selectedYear+1}`:`${nextMonth} ${selectedYear}`
+
+
+        //generate initial transaction
+        let currentMonthNumOfDays=getNumberOfDays(selectedYear,dateSelected.getMonth())
+
+        let nextMonthNumOfDays=getNumberOfDays(selectedYear,monthIndex)
+
+
+        transactionsContainer.append(newTransactionRow(currentMonthWithYear,nextMonthWithYear,currentMonthNumOfDays,nextMonthNumOfDays))
+
+
+        previouslyAddedCurrentMonth=currentMonth
+        previouslyAddedNextMonth=nextMonth
+        previouslyAddedCurrentYear=months[dateSelected.getMonth()]=='Dec'?selectedYear+1:selectedYear
+
+    }
+}
+
+
+
 $(document).ready(function(){
-    
+
     /*
         Ledger Setup
     */
@@ -81,6 +145,11 @@ $(document).ready(function(){
     const transactionsContainer=$("#transactions-container")
     const lastPaymentDate=$("#lastPaymentDate")
     const addMoreBtn=$("#add-more-btn")
+    const meterReading = $('#meter-reading')
+    const balance = $('#balance')
+    const closeButton = $('#close-button')
+    const saveButton = $('#save-button')
+    const form = $('#transaction-data')
 
 
     let previouslyAddedCurrentMonth=''
@@ -106,46 +175,33 @@ $(document).ready(function(){
         previouslyAddedCurrentYear=newMonth=='Dec'?previouslyAddedCurrentYear+1:previouslyAddedCurrentYear
     })
 
+
     lastPaymentDate.change(()=>{
+        enableSaveButton(saveButton, balance, meterReading,lastPaymentDate)
+    })
+    meterReading.change(()=>{
+        enableSaveButton(saveButton, balance, meterReading,lastPaymentDate)
+    })
+    balance.change(()=>{
+        enableSaveButton(saveButton, balance, meterReading,lastPaymentDate)
+    })
 
-        transactionsHeader.show()
-        // addMoreBtn.show()
-         //get the selected date
-        let dateSelected=new Date(lastPaymentDate.val())
-        
-
+    closeButton.click(()=>{
+        balance.removeAttr('disabled', 'disabled')
+        meterReading.removeAttr('disabled', 'disabled')
+        transactionsHeader.hide()
         transactionsContainer.empty()
+    })
 
-         //determine the next month after that date
-        let monthIndex=dateSelected.getMonth()+1
-        let selectedYear=dateSelected.getFullYear()
-
-        monthIndex=monthIndex>11?0:monthIndex
-
-        let nextMonth=months[monthIndex]
-        let currentMonth=months[dateSelected.getMonth()]
-
-        currentMonthWithYear=`${currentMonth} ${selectedYear}`
-        nextMonthWithYear=months[dateSelected.getMonth()]=='Dec'?`${nextMonth} ${selectedYear+1}`:`${nextMonth} ${selectedYear}`
-
-
-        //generate initial transaction
-        let currentMonthNumOfDays=getNumberOfDays(selectedYear,dateSelected.getMonth())
-      
-        let nextMonthNumOfDays=getNumberOfDays(selectedYear,monthIndex)
-
-        transactionsContainer.append(newTransactionRow(currentMonthWithYear,nextMonthWithYear,currentMonthNumOfDays,nextMonthNumOfDays))
-
-        previouslyAddedCurrentMonth=currentMonth
-        previouslyAddedNextMonth=nextMonth
-        previouslyAddedCurrentYear=months[dateSelected.getMonth()]=='Dec'?selectedYear+1:selectedYear
-    
+    saveButton.click(()=>{
+        $('#register-btn').removeAttr('disabled')
+        addDataToForm(form,balance, meterReading,lastPaymentDate)
     })
 
     const registerBtn=$("#register-btn");
     const registrationForm=$("form");
 
-    registerBtn.prop('disabled',false);
+    // registerBtn.prop('disabled',false);
 
 
     /*
@@ -174,7 +230,7 @@ $(document).ready(function(){
             connectionStatusSpecificsField.val("")
         }
     })
-        
+
     /*
         Registration Form submitted
     */
@@ -182,10 +238,13 @@ $(document).ready(function(){
         e.preventDefault();
         registerBtn.prop('disabled',true);
         registerBtn.html("Registering..")
+        let registerForm = document.getElementById('registration-form')
+        let actionURI = registerForm.getAttribute('action')
+        let token = document.getElementsByName('_token')[0].value
 
-        let data=$(this).serialize()+"&_token={{csrf_token()}}";
-            $.post("{{route('admin.register-customer')}}",data,function(response){
-            
+        let data=$(this).serialize()+`${token}`;
+            $.post(actionURI,data,function(response){
+                console.log(response)
                 if(response.created==true){
                     Swal.fire('Great!','Customer account was successfully created!','success').then(function(result){
                         if(result.isConfirmed)
@@ -195,7 +254,7 @@ $(document).ready(function(){
                     })
 
                 }else{
-                    
+
                     if(response.errors.firstname){
                         $("#error-firstname").prop('hidden',false);
                         $("#error-firstname").html(response.errors.firstname)
@@ -204,9 +263,9 @@ $(document).ready(function(){
                         $("#error-firstname").prop('hidden',true);
                         $("input[name='firstname']").removeClass('is-invalid')
                     }
-                    
 
-                    
+
+
                     if(response.errors.lastname){
                         $("#error-lastname").prop('hidden',false);
                         $("#error-lastname").html(response.errors.lastname)
@@ -216,7 +275,7 @@ $(document).ready(function(){
                         $("input[name='lastname']").removeClass('is-invalid')
                     }
 
-                    
+
                     if(response.errors.contact_number){
                         $("#error-contact-number").prop('hidden',false);
                         $("#error-contact-number").html(response.errors.contact_number)
@@ -226,7 +285,7 @@ $(document).ready(function(){
                         $("input[name='contact_number']").removeClass('is-invalid')
                     }
 
-                    
+
                     if(response.errors.purok){
                         $("#error-purok").prop('hidden',false);
                         $("#error-purok").html(response.errors.purok)
@@ -236,7 +295,7 @@ $(document).ready(function(){
                         $("input[name='purok']").removeClass('is-invalid')
                     }
 
-                    
+
                     if(response.errors.connection_type_specifics){
                         $("#error-type-specifics").prop('hidden',false);
                         $("#error-type-specifics").html(response.errors.connection_type_specifics)
@@ -246,7 +305,7 @@ $(document).ready(function(){
                         $("input[name='connection_type_specifics']").removeClass('is-invalid')
                     }
 
-                    
+
                     if(response.errors.connection_status_specifics){
                         $("#error-status-specifics").prop('hidden',false);
                         $("#error-status-specifics").html(response.errors.connection_status_specifics)
@@ -271,7 +330,7 @@ $(document).ready(function(){
                 registerBtn.html("Register")
             }).fail(function(){
                 Swal.fire('Ooops!','There seems to be a problem with your internet connection','error');
-            }) 
+            })
 
         })
 

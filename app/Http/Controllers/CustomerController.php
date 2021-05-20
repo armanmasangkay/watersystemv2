@@ -11,13 +11,14 @@ use App\Models\Customer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Arr;
 
 class CustomerController extends Controller
 {
 
     public function index()
     {
-      
+
        return view('pages.customer-registration',[
         'civilStatuses'=>CustomerRegistrationOptions::civilStatuses(),
         'barangays'=>CustomerRegistrationOptions::barangays(),
@@ -29,15 +30,32 @@ class CustomerController extends Controller
     public function showAll()
     {
         $customers=Customer::paginate(10);
-        
+
         return view('pages.customers-list',['customers'=>$customers]);
     }
 
+    public function getOnlyTransaction($customerId, $requestData)
+    {
+        $transaction = Arr::only($requestData, ['last_meter_reading', 'balance', 'last_payment_date']);
+        $transaction = Arr::add($transaction, 'customer_id', $customerId);
+        return $transaction;
+    }
+
+    public function getOnlyCustomerInformation($requestData)
+    {
+        return Arr::except($requestData, ['last_meter_reading', 'balance', 'last_payment_date']);
+    }
+
     public function store(Request $request)
-    { 
+    {
+        $transactions = $this->getOnlyTransaction('1', $request->all());
+        $customerInfo = $this->getOnlyCustomerInformation($request->all());
+
+        return response()->json(['transactions' => $transactions, 'customerInfor' => $customerInfo]);
+
         $brgyCode=BarangayData::getCodeByName($request->barangay);
         $accountNumber=AccountNumber::new(strval($brgyCode),BarangayData::numberOfPeopleOn($request->barangay));
-       
+
         $rules=[
             'account_number'=>'required',
             'firstname'=>'required',
@@ -81,7 +99,7 @@ class CustomerController extends Controller
 
             'connection_type.required'=>'Connection type must not be empty',
             'connection_type_specifics.required_if'=>'Specific connection type must be provided if "OTHERS" is selected',
-                
+
             'connection_status.required'=>'Connection Status must not be empty',
             'connection_status_specifics.required_if'=>'Specific connection status must be provided if "OTHERS" is selected',
 
@@ -90,8 +108,8 @@ class CustomerController extends Controller
 
         ];
         $requestsData=array_merge($request->all(),['account_number'=>$accountNumber]);
-          
-    
+
+
        $validator=Validator::make($requestsData,$rules,$messages);
 
 
@@ -106,7 +124,7 @@ class CustomerController extends Controller
 
 
        $normalizedData=CustomerDataHelper::normalize($requestsData);
-       
+
 
         Customer::create($normalizedData);
 
