@@ -51,3 +51,99 @@
 .text-bold{
     font-weight: bold !important;
 }
+
+.navbar ul li a:hover{
+    color: #2d62c5 !important;
+    font-weight: 500 !important;
+}
+
+.text-muted, .text-secondary{
+    color: #3f3f3f !important;
+}
+
+.navbar ul li a:active{
+    color: #3f3f3f !important;
+    background-color: transparent !important;
+}
+
+.login h2{
+    font-weight: 400 !important;
+}
+
+.login h2, .login h3{
+    transition: all 0.3s ease !important;
+}
+
+.pagination li.active span, .pagination li a{
+    font-size: 1.1rem;
+}
+
+.pagination li span, .pagination li a{
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 8px;
+}
+
+input, select, .btn, .pagination li span, .pagination li a{
+    height: 45px !important;
+}
+
+@media screen and (max-width: 1199px) {
+    .login h2{
+        font-size: 2.8rem !important;
+    }
+}
+
+@media screen and (max-width: 532px) {
+    .login h2{
+        font-size: 2.3rem !important;
+    }
+}
+
+@media screen and (max-width: 475px) {
+    .login h2{
+        font-size: 2.2rem !important;
+    }
+}
+
+@media screen and (max-width: 428px) {
+    .login h2{
+        font-size: 2rem !important;
+    }
+}
+
+@media screen and (max-width: 394px) {
+    .login h2{
+        font-size: 1.9rem !important;
+    }
+}
+
+@media screen and (max-width: 376px) {
+    .login h2{
+        font-size: 1.8rem !important;
+    }
+}
+
+@media screen and (max-width: 367px) {
+    .login h3{
+        font-size: 1.7rem !important;
+    }
+}
+
+@media screen and (max-width: 360px) {
+    .login h2{
+        font-size: 1.7rem !important;
+    }
+}
+
+@media screen and (max-width: 342px) {
+    .login h2{
+        font-size: 1.5rem !important;
+    }
+}
+
+@media screen and (max-width: 280px) {
+    .login h2{
+        font-size: 1.3rem !important;
+    }
+}

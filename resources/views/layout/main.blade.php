@@ -13,6 +13,17 @@
         <div class="container">
             @yield('content')
         </div>
+
+        <div class="container mt-5">
+            <div class="row">
+                <div class="col-md-12">
+                    <h6 class="text-muted text-center">&copy; Macrohon Municipal Water Works - 2021</h6>
+                    <p class="text-muted text-center">Developed by: SLSU-CCSIT Development Team</p>
+                    <p class="text-muted text-center">- or -</p>
+                    <p class="text-muted text-center">For more info visit us at <a href="">https://www.facebook.com/page/JAB Software Solutions</a></p>
+                </div>
+            </div>
+        </div>
         @include('templates.water-rate')
         @include('templates.surcharge')
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>

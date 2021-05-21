@@ -1,18 +1,18 @@
-<nav class="navbar navbar-expand-md navbar-light shadow-sm " style="background-color: #e3f2fd;">
+<nav class="navbar navbar-expand-md navabr-light border-bottom pt-3 pb-3">
     <div class="container px-3">
-      <a class="navbar-brand" href="{{route('admin.dashboard')}}"><strong>MWS</strong></a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
+      <a class="navbar-brand text-dark pe-4" href="{{route('admin.dashboard')}}"><strong>MWS</strong></a>
+      <button class="navbar-toggler border-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span data-feather="align-center" class="text-secondary"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0 pt-lg-0 pt-md-2">
           <li class="nav-item m1-">
-            <a class="nav-link m-1" aria-current="page" href="{{route('admin.dashboard')}}">
+            <a class="nav-link m-1 text-secondary" aria-current="page" href="{{route('admin.dashboard')}}">
               <i data-feather="home" class="feather-16 m-1 mb-1"></i> Home
             </a>
           </li>
           <li class="nav-item dropdown pt-1">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <a class="nav-link dropdown-toggle text-secondary" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               <i data-feather="users" class="feather-16 m-1"></i> Consumer
             </a>
             <ul class="dropdown-menu px-2" aria-labelledby="navbarDropdown">
@@ -23,7 +23,7 @@
 
           </li>
           <li class="nav-item dropdown pt-1">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <a class="nav-link dropdown-toggle text-secondary" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
              <i data-feather="align-left" class="feather-16 m-1"></i> Transactions
             </a>
             <ul class="dropdown-menu px-2" aria-labelledby="navbarDropdown">
@@ -37,7 +37,7 @@
 
           </li>
           <li class="nav-item dropdown pt-1">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <a class="nav-link dropdown-toggle text-secondary" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               <i data-feather="settings" class="feather-16 m-1"></i> Settings
             </a>
             <ul class="dropdown-menu px-2" aria-labelledby="navbarDropdown">
@@ -47,10 +47,10 @@
 
           </li>
         </ul>
-        <span class="navbar-text mt-1">
+        <span class="navbar-text mt-1 pt-0">
           <form action="{{route('admin.logout')}}" method="post">
               @csrf
-              <button type="submit" class="btn btn-link text-danger" id="logoutBtn" style="color:rgba(0,0,0,.55)">
+              <button type="submit" class="btn btn-link text-danger" id="logoutBtn">
                 <i data-feather="log-out" class="feather-16 m-1"></i> Logout
               </button>
           </form>
