@@ -36,26 +36,26 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse ($transactions as $transaction)
+                    @forelse ($services as $service)
                         <tr>
-                            <td class="pt-2 pb-2">{{ $transaction->customer->account_number }}</td>
-                            <td class="pt-2 pb-2">{{ $transaction->customer->fullname() }} </td>
-                            <td class="pt-2 pb-2">{{ $transaction->type_of_service }}</td>
-                            <td class="pt-2 pb-2">{{ $transaction->created_at->format('M m, Y H:i:s') }}</td>
-                            <td class="pt-2 pb-2">{{ $transaction->buildingInspectionSchedHuman() }}</td>
-                            <td class="pt-2 pb-2">{{ $transaction->waterWorksSchedHuman() }}</td>
+                            <td class="pt-2 pb-2">{{ $service->customer->account_number }}</td>
+                            <td class="pt-2 pb-2">{{ $service->customer->fullname() }} </td>
+                            <td class="pt-2 pb-2">{{ $service->type_of_service }}</td>
+                            <td class="pt-2 pb-2">{{ $service->created_at->format('M m, Y H:i:s') }}</td>
+                            <td class="pt-2 pb-2">{{ $service->buildingInspectionSchedHuman() }}</td>
+                            <td class="pt-2 pb-2">{{ $service->waterWorksSchedHuman() }}</td>
                             <td class="d-flex justify-content-start">
                                 <form action="{{ route('admin.mto-request-approvals-approve') }}" method="post" class="mb-1 mx-0">
                                     @csrf
                                     {{-- <input type="date" class="form-control"> --}}
-                                    <input type="hidden" name="id" value="{{ $transaction->id }}">
+                                    <input type="hidden" name="id" value="{{ $service->id }}">
                                     <button type="submit" class="btn btn-xs btn-default text-primary"><i data-feather="check" width="20"></i></button>
                                 </form>
                                 {{-- <a href="" class="text-primary mb-1 mx-2">
                                 <i data-feather="check" width="20"></i></a> --}}
                                 <form action="{{route('admin.mto-request-approvals-reject')}}" method="post" class="mb-1 mx-0">
                                     @csrf
-                                    <input type="hidden" name="id" value="{{ $transaction->id }}">
+                                    <input type="hidden" name="id" value="{{ $service->id }}">
                                     <button type="submit" class="btn btn-xs btn-default text-danger"><i data-feather="x" width="20"></i></button>
                                 </form>
                                 {{-- <a href="" class="text-danger mb-1 mx-2">
@@ -83,7 +83,7 @@
                     <i data-feather="chevrons-right" width="20"></i>
                 </button> --}}
                 <div class="pt-2 px-2 pb-2">
-                    {{ $transactions->render() }}
+                    {{ $services->render() }}
                 </div>
 
             </div>

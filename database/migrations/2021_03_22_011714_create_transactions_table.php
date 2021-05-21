@@ -16,13 +16,19 @@ class CreateTransactionsTable extends Migration
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
             $table->string('customer_id');
-            $table->string('type_of_service');
-            $table->string('remarks')->nullable();
-            $table->string('landmarks')->nullable();
-            $table->string('contact_number');
-            $table->date('building_inspection_schedule');
-            $table->date('water_works_schedule');
-            $table->string('status');
+            $table->string('period_covered');
+            $table->date('reading_date');
+            $table->double('reading_meter');
+            $table->double('reading_consumption');
+            $table->double('billing_amount')->nullable();
+            $table->double('billing_surcharge')->nullable();
+            $table->double('billing_meter_ips')->nullable();
+            $table->double('billing_total')->nullable();
+            $table->string('payment_or_no')->nullable();
+            $table->date('payment_date')->nullable();
+            $table->double('payment_amount')->nullable();
+            $table->double('balance');
+            $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
             $table->foreign('customer_id')->references('account_number')->on('customers')->onDelete('cascade');
         });

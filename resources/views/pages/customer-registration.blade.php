@@ -12,28 +12,28 @@
             </div>
             <div class="card-body px-3 px-lg-5">
                 <small class="mb-5 text-danger">Note: (*) Required fields</small>
-                <form action="" method="post" class="mt-4" id="registration-form">
-                   
+                <form action="{{ route('admin.register-customer-post') }}" method="post" class="mt-4" id="registration-form">
+                    @csrf
                     <p class="text-primary">Person Information</p>
                     <hr>
                     <div class="row mb-1">
                         <div class="col-12 col-lg-4 col-md-6 mb-2 pe-md-1">
                             <label><small class="text-muted">Firstname</small><small class="text-danger"> *</small></label>
-                            <input type="text" name="firstname" id="" class="form-control mt-2" placeholder="First name" >
+                            <input type="text" name="firstname"  class="form-control mt-2" placeholder="First name" >
                             <small id="error-firstname" class="text-danger" hidden>
-                                
+
                             </small>
                         </div>
-                       
+
                         <div class="col-12 col-lg-4 col-md-6 ps-lg-0 pe-lg-0 ps-md-0">
                             <small class="text-muted">Middlename (optional)</small>
-                            <input type="text" name="middlename" id="" class="form-control mt-2 mb-sm-2" placeholder="Middle name">
+                            <input type="text" name="middlename"  class="form-control mt-2 mb-sm-2" placeholder="Middle name">
                         </div>
                         <div class="col-12 col-lg-4 col-md-6 ps-lg-1 pt-md-0 pt-sm-2 pt-xs-2">
                             <label><small class="text-muted">Lastname</small><small class="text-danger"> *</small></label>
-                            <input type="text" name="lastname" id="" class="form-control mt-2" placeholder="Last name">
+                            <input type="text" name="lastname"  class="form-control mt-2" placeholder="Last name">
                             <small id="error-lastname" class="text-danger" hidden>
-                              
+
                             </small>
                         </div>
                     </div>
@@ -48,9 +48,9 @@
                         </div>
                         <div class="col-12 col-md-6 ps-md-0 pt-md-2 pt-sm-2">
                             <label for=""><small class="text-muted">Contact Number</small> <small class="text-danger">*</small></label>
-                            <input type="number" name="contact_number" id="" class="form-control mt-2" placeholder="09xxxxxxxxx">
+                            <input type="number" name="contact_number"  class="form-control mt-2" placeholder="09xxxxxxxxx">
                             <small id="error-contact-number" class="text-danger" hidden>
-                                
+
                             </small>
                         </div>
                     </div>
@@ -59,14 +59,14 @@
                     <div class="row">
                         <div class="col-12 col-lg-6 col-md-6 pe-md-1">
                             <label for=""><small class="text-muted">Purok</small> <small class="text-danger">*</small></label>
-                            <input type="text" name="purok" id="" class="form-control mt-2 mb-md-2 mb-sm-2">
+                            <input type="text" name="purok"  class="form-control mt-2 mb-md-2 mb-sm-2">
                             <small id="error-purok" class="text-danger" hidden>
-                                
+
                             </small>
                         </div>
                         <div class="col-12 col-lg-6 col-md-6 ps-md-0">
                             <label for=""><small class="text-muted">Barangay</small> <small class="text-danger">*</small></label>
-                            <select name="barangay" id="" class="form-select mb-3 mt-2 mb-md-2 mb-sm-2">
+                            <select name="barangay"  class="form-select mb-3 mt-2 mb-md-2 mb-sm-2">
                                 @foreach($barangays as $barangay)
                                 <option value="{{$barangay}}">{{$barangay}}</option>
                                 @endforeach
@@ -84,17 +84,17 @@
                                 @endforeach
                             </select>
                             <small id="error-purok" class="text-danger" hidden>
-                                
+
                             </small>
                         </div>
                         <div class="col-12 col-lg-6 col-md-6 ps-md-0 pt-md-1 pt-sm-2">
                             <label for=""><small class="text-muted">If others, please specify</small></label>
                             <input type="text" name="connection_type_specifics" id="connection_type_specifics" class="form-control mt-2" disabled>
-                            <small id="error-type-specifics" class="text-danger"> 
+                            <small id="error-type-specifics" class="text-danger">
                             </small>
                         </div>
                     </div>
-                    
+
                     <div class="row">
                         <div class="col-12 col-lg-6 col-md-6 pe-md-1 pt-md-0 pt-sm-2">
                             <label for=""><small class="text-muted">Connection Status</small>  <small class="text-danger">*</small></label>
@@ -128,11 +128,15 @@
                         <div class="col-12 col-lg-6 col-md-6 pt-md-2 pt-sm-2">
                             <label class='text-muted'><small>Ledger setup</small></label>
                             <div class="mt-2">
-                                <button class="btn btn-outline-success" type="button" data-bs-toggle='modal' data-bs-target='#ledgerSetupModal'  id="register-btn"><i data-feather="settings" class="feather-18" width="18"></i>&nbsp; Set up now</button>
+                                <button class="btn btn-outline-success" type="button" data-bs-toggle='modal' data-bs-target='#ledgerSetupModal'  id="setup-btn"><i data-feather="settings" class="feather-18" width="18"></i>&nbsp; Set up now</button>
                             </div>
                         </div>
                     </div>
-                
+
+                    <div id="transaction-data">
+
+                    </div>
+
                     <center>
                         <button class="btn btn-primary py-2 mt-5" type="Submit" disabled id="register-btn"><i data-feather="user-plus" class="feather-18" width="18"></i>&nbsp; Register</button>
                     </center>
@@ -142,7 +146,7 @@
     </div>
 </div>
 
-<!-- 
+<!--
 LEDGER MODAL
  -->
 <div class="modal modal-fluid fade" id="ledgerSetupModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -157,11 +161,11 @@ LEDGER MODAL
                 <div class="row">
                     <div class="col-md-4 col-lg-4 col-xl-3 col-sm-6 mb-sm-2 pe-md-1 pe-sm-1">
                         <label class='text-muted'>Previous meter reading</label>
-                        <input class="form-control" type="number" placeholder="Enter meter reading" min=0>    
+                        <input class="form-control" id="meter-reading" type="number" placeholder="Enter meter reading" min=0>
                     </div>
                     <div class="col-md-4 col-lg-4 col-xl-3 col-sm-6 mt-md-0 px-md-0 ps-sm-0">
                         <label class='text-muted'>Amount balance</label>
-                        <input class="form-control" type="number" placeholder="Enter balance" min=0>    
+                        <input class="form-control" type="number" id="balance" placeholder="Enter balance" min=0>
                     </div>
                     <div class="col-md-4 mt-2 col-lg-4 col-xl-3 col-sm-6 mt-md-0 ps-md-1 pe-sm-1">
                         <label class='text-muted'>Date of last payment</label>
@@ -170,18 +174,18 @@ LEDGER MODAL
                 </div>
                 <div id="transactions-header">
                     <h5 class="mt-4 text-muted">Transactions</h5>
-                    
+                    <i id="close-button">X</i>
                     <hr class="text-muted">
                 </div>
-            
+
                 <div id="transactions-container">
-                    
-                </div>  
+
+                </div>
                 <button type="button" class="btn btn-outline-primary btn-sm mt-4" id="add-more-btn"><i data-feather="plus"></i> Add More</button>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-success modal_save" disabled>Save</button>
+                <button type="button" class="btn btn-success modal_save" id="save-button" data-bs-dismiss="modal" disabled>Save</button>
             </div>
         </div>
     </div>
@@ -193,7 +197,7 @@ LEDGER MODAL
 
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
-<script src="{{ asset('assets/js/registration.js') }}"></script>
+<script src="{{ asset('assets/js/registration.js') }}" defer></script>
 
 
 @endsection

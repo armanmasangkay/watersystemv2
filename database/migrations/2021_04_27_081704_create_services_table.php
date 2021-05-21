@@ -15,16 +15,16 @@ class CreateServicesTable extends Migration
     {
         Schema::create('services', function (Blueprint $table) {
             $table->id();
-            $table->string('customer_account_number');
-            $table->foreign('customer_account_number')
-                    ->references('account_number')
-                    ->on('customers');
-            $table->string('description');
-            $table->string('landmark');
-            $table->date('init_building_inspection_sched');
-            $table->date('init_waterworks_inspection_sched');
-            $table->string('type'); //the type of service
+            $table->string('customer_id');
+            $table->string('type_of_service');
+            $table->string('remarks')->nullable();
+            $table->string('landmarks')->nullable();
+            $table->string('contact_number');
+            $table->date('building_inspection_schedule');
+            $table->date('water_works_schedule');
+            $table->string('status');
             $table->timestamps();
+            $table->foreign('customer_id')->references('account_number')->on('customers')->onDelete('cascade');
         });
     }
 

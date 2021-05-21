@@ -13,13 +13,19 @@ class Transaction extends Model
 
     protected $fillable=[
         'customer_id',
-        'type_of_service',
-        'remarks',
-        'landmarks',
-        'contact_number',
-        'building_inspection_schedule',
-        'water_works_schedule',
-        'status'
+        'period_covered',
+        'reading_date',
+        'reading_meter',
+        'reading_consumption',
+        'billing_amount',
+        'billing_surcharge',
+        'billing_meter_ips',
+        'billing_total',
+        'payment_or_no',
+        'payment_date',
+        'payment_amount',
+        'balance',
+        'user_id'
     ];
 
 
@@ -27,22 +33,6 @@ class Transaction extends Model
     {
         return $this->belongsTo(Customer::class,'customer_id','account_number');
     }
-    
-    private function changeDateFormat($dateString)
-    {
-        return Carbon::createFromFormat('Y-m-d',$dateString)->format('M d, Y');
-    }
 
-   
-
-    public function buildingInspectionSchedHuman()
-    {
-        return $this->changeDateFormat($this->building_inspection_schedule);
-    }
-
-    public function waterWorksSchedHuman()
-    {
-        return $this->changeDateFormat($this->water_works_schedule);
-    }
 
 }
