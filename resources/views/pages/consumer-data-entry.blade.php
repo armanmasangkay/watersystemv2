@@ -145,7 +145,7 @@
                                     <input class="form-control mt-2" type="number" placeholder="Enter meter reading" min=0>    
                                 </div>
                                 <div class="col-md-3 mt-md-0 px-md-0 ps-sm-0">
-                                    <label class='text-muted'>Amount Balance <small class="text-danger">*</small></label>
+                                    <label class='text-muted'>Current Balance <small class="text-danger">*</small></label>
                                     <input class="form-control mt-2" type="number" placeholder="Enter balance amount" min=0>    
                                 </div>
                                 <div class="col-md-3 mt-md-0 ps-md-1 pe-sm-1">
@@ -156,7 +156,7 @@
                             <h5 class="text-muted">Meter Installment Payments</h5>
                             <div class="row mt-3 mb-4">
                                 <div class="col-md-3 mb-sm-2 pe-md-1 pe-sm-1">
-                                    <label class='text-muted'>Amount Balance <small class="text-danger">*</small></label>
+                                    <label class='text-muted'>Current Balance <small class="text-danger">*</small></label>
                                     <input class="form-control mt-2" type="number" placeholder="Enter balance amount" min=0>    
                                 </div>
                             </div>
