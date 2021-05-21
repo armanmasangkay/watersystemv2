@@ -20,8 +20,8 @@ class CustomerController extends Controller
 
     public function index()
     {
-
-       return view('pages.customer-registration',[
+      
+       return view('pages.consumer-data-entry',[
         'civilStatuses'=>CustomerRegistrationOptions::civilStatuses(),
         'barangays'=>CustomerRegistrationOptions::barangays(),
         'connectionTypes'=>CustomerRegistrationOptions::connectionTypes(),
