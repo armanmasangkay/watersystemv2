@@ -20,7 +20,7 @@ class CustomerController extends Controller
 
     public function index()
     {
-      
+
        return view('pages.consumer-data-entry',[
         'civilStatuses'=>CustomerRegistrationOptions::civilStatuses(),
         'barangays'=>CustomerRegistrationOptions::barangays(),
@@ -39,6 +39,10 @@ class CustomerController extends Controller
     public function getOnlyTransaction($customerId, $requestData)
     {
         $transaction = Arr::only($requestData, ['reading_meter', 'balance', 'reading_date']);
+        $transaction = Arr::add($transaction, 'billing_meter_ips', $requestData['billing_meter_ips'] ?? '0.00');
+        $transaction = Arr::add($transaction, 'billing_amount', '0.00');
+        $transaction = Arr::add($transaction, 'billing_surcharge', '0.00');
+        $transaction = Arr::add($transaction, 'billing_total', $requestData['balance'] ?? '0.00');
         $transaction = Arr::add($transaction, 'reading_consumption', '0');
         $transaction = Arr::add($transaction, 'period_covered', 'Beginning Balance');
         $transaction = Arr::add($transaction, 'customer_id', $customerId);
@@ -48,7 +52,7 @@ class CustomerController extends Controller
 
     public function getOnlyCustomerInformation($requestData)
     {
-        return Arr::except($requestData, ['last_meter_reading', 'balance', 'last_payment_date']);
+        return Arr::except($requestData, ['reading_meter', 'balance', 'last_payment_date', 'billing_meter_ips']);
     }
 
     public function store(Request $request)
@@ -72,7 +76,11 @@ class CustomerController extends Controller
 
             'connection_status'=>'required',
             'connection_status_specifics'=>'required_if:connection_status,others',
-            'purchase_option'=>'required|in:cash,installment'
+            'purchase_option'=>'required|in:cash,installment,N/A',
+
+            'reading_meter' => 'required',
+            'balance' => 'required|numeric',
+            'reading_date' => 'required|date|before_or_equal:today'
         ];
 
         $messages=[
@@ -106,11 +114,14 @@ class CustomerController extends Controller
             'purchase_option.required'=>'Purchase meter option must not be empty',
             'purchase_option.in'=>'Invalid purchase option selected',
 
+            'reading_meter.required' => 'Meter reading must not be empty',
+            'balance.required' => 'Current balance should not be empty',
+            'reading_date.required' => 'Date of last payment should be before or today'
+
         ];
-        $customerInfo = $this->getOnlyCustomerInformation($request->all());
 
-        $requestsData=array_merge($customerInfo,['account_number'=>$accountNumber]);
-
+        $requestsData=array_merge($request->all(),['account_number'=>$accountNumber]);
+        $customerInfo = $this->getOnlyCustomerInformation($requestsData);
 
        $validator=Validator::make($requestsData,$rules,$messages);
 
@@ -125,7 +136,7 @@ class CustomerController extends Controller
        }
 
 
-       $normalizedData=CustomerDataHelper::normalize($requestsData);
+       $normalizedData=CustomerDataHelper::normalize($customerInfo);
 
 
         $customer = Customer::create($normalizedData);

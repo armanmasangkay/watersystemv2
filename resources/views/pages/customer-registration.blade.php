@@ -19,7 +19,7 @@
                     <div class="row mb-1">
                         <div class="col-12 col-lg-4 col-md-6 mb-2 pe-md-1">
                             <label><small class="text-muted">Firstname</small><small class="text-danger"> *</small></label>
-                            <input type="text" name="firstname"  class="form-control mt-2" placeholder="First name" >
+                            <input type="text" name="firstname"  id="firstname" class="form-control mt-2" placeholder="First name" >
                             <small id="error-firstname" class="text-danger" hidden>
 
                             </small>
@@ -27,11 +27,11 @@
 
                         <div class="col-12 col-lg-4 col-md-6 ps-lg-0 pe-lg-0 ps-md-0">
                             <small class="text-muted">Middlename (optional)</small>
-                            <input type="text" name="middlename"  class="form-control mt-2 mb-sm-2" placeholder="Middle name">
+                            <input type="text" name="middlename" id="middlename" class="form-control mt-2 mb-sm-2" placeholder="Middle name">
                         </div>
                         <div class="col-12 col-lg-4 col-md-6 ps-lg-1 pt-md-0 pt-sm-2 pt-xs-2">
                             <label><small class="text-muted">Lastname</small><small class="text-danger"> *</small></label>
-                            <input type="text" name="lastname"  class="form-control mt-2" placeholder="Last name">
+                            <input type="text" name="lastname" id="lastname" class="form-control mt-2" placeholder="Last name">
                             <small id="error-lastname" class="text-danger" hidden>
 
                             </small>
@@ -48,7 +48,7 @@
                         </div>
                         <div class="col-12 col-md-6 ps-md-0 pt-md-2 pt-sm-2">
                             <label for=""><small class="text-muted">Contact Number</small> <small class="text-danger">*</small></label>
-                            <input type="number" name="contact_number"  class="form-control mt-2" placeholder="09xxxxxxxxx">
+                            <input type="number" name="contact_number" id="contact_number" class="form-control mt-2" placeholder="09xxxxxxxxx">
                             <small id="error-contact-number" class="text-danger" hidden>
 
                             </small>
@@ -59,14 +59,14 @@
                     <div class="row">
                         <div class="col-12 col-lg-6 col-md-6 pe-md-1">
                             <label for=""><small class="text-muted">Purok</small> <small class="text-danger">*</small></label>
-                            <input type="text" name="purok"  class="form-control mt-2 mb-md-2 mb-sm-2">
+                            <input type="text" name="purok" id="purok" class="form-control mt-2 mb-md-2 mb-sm-2">
                             <small id="error-purok" class="text-danger" hidden>
 
                             </small>
                         </div>
                         <div class="col-12 col-lg-6 col-md-6 ps-md-0">
                             <label for=""><small class="text-muted">Barangay</small> <small class="text-danger">*</small></label>
-                            <select name="barangay"  class="form-select mb-3 mt-2 mb-md-2 mb-sm-2">
+                            <select name="barangay" id="barangay" class="form-select mb-3 mt-2 mb-md-2 mb-sm-2">
                                 @foreach($barangays as $barangay)
                                 <option value="{{$barangay}}">{{$barangay}}</option>
                                 @endforeach
