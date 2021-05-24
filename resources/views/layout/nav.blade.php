@@ -16,7 +16,7 @@
               <i data-feather="users" class="feather-16 m-1"></i> Consumer
             </a>
             <ul class="dropdown-menu px-2" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" href="{{route('admin.register-customer')}}">New Data Entry</a></li>
+              <li><a class="dropdown-item" href="{{route('admin.register-customer')}}">Data Entry</a></li>
               <li><a class="dropdown-item" href="{{route('admin.consumer-ledger')}}">Ledger Card</a></li>
               <li><a class="dropdown-item" href="{{route('admin.customers')}}">View Lists</a></li>
             </ul>
