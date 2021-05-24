@@ -26,7 +26,6 @@ Route::get('/', function () {
     return redirect(route('admin.dashboard'));
 })->middleware('auth');
 
-Route::post('register-consumer',[CustomerController::class,'store']);
 
 Route::get('/login',[LoginController::class,'index'])->name('login');
 Route::post('/login',[LoginController::class,'authenticate']);

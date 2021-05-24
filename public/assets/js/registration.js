@@ -324,6 +324,33 @@ $(document).ready(function(){
                         $("select[name='purchase_option']").removeClass('is-invalid')
                     }
 
+                    if(response.errors.reading_meter){
+                        $("#error-reading-meter").prop('hidden',false);
+                        $("#error-reading-meter").html(response.errors.reading_meter)
+                        $("input[name='reading_meter']").addClass('is-invalid')
+                    }else{
+                        $("#error-reading-meter").prop('hidden',true);
+                        $("input[name='reading_meter']").removeClass('is-invalid')
+                    }
+
+                    if(response.errors.balance){
+                        $("#error-balance").prop('hidden',false);
+                        $("#error-balance").html(response.errors.balance)
+                        $("input[name='balance']").addClass('is-invalid')
+                    }else{
+                        $("#error-balance").prop('hidden',true);
+                        $("input[name='balance']").removeClass('is-invalid')
+                    }
+
+                    if(response.errors.reading_date){
+                        $("#error-reading-date").prop('hidden',false);
+                        $("#error-reading-date").html(response.errors.reading_date)
+                        $("input[name='reading_date']").addClass('is-invalid')
+                    }else{
+                        $("#error-reading-date").prop('hidden',true);
+                        $("input[name='reading_date']").removeClass('is-invalid')
+                    }
+
                 }
             }).always(function(){
                 registerBtn.prop('disabled',false);
