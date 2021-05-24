@@ -48,12 +48,11 @@ class CustomerController extends Controller
 
     public function getOnlyCustomerInformation($requestData)
     {
-        return Arr::except($requestData, ['last_meter_reading', 'balance', 'last_payment_date', 'billing_meter_ips']);
+        return Arr::except($requestData, ['reading_meter', 'balance', 'last_payment_date', 'billing_meter_ips']);
     }
 
     public function store(Request $request)
     {
-
         $brgyCode=BarangayData::getCodeByName($request->barangay);
         $accountNumber=AccountNumber::new(strval($brgyCode),BarangayData::numberOfPeopleOn($request->barangay));
 
@@ -74,6 +73,7 @@ class CustomerController extends Controller
             'connection_status'=>'required',
             'connection_status_specifics'=>'required_if:connection_status,others',
             'purchase_option'=>'required|in:cash,installment',
+
             'reading_meter' => 'required',
             'balance' => 'required|numeric',
             'reading_date' => 'required|date|after:yesterday'
@@ -110,15 +110,14 @@ class CustomerController extends Controller
             'purchase_option.required'=>'Purchase meter option must not be empty',
             'purchase_option.in'=>'Invalid purchase option selected',
 
-            'reading_mter' => 'Meter reading must not be empty',
-            'balance' => 'Current balance should not be empty',
-            'reading_date' => 'Date of last payment should be today or later'
+            'reading_meter.required' => 'Meter reading must not be empty',
+            'balance.required' => 'Current balance should not be empty',
+            'reading_date.required' => 'Date of last payment should be today or later'
 
         ];
-        $customerInfo = $this->getOnlyCustomerInformation($request->all());
 
-        $requestsData=array_merge($customerInfo,['account_number'=>$accountNumber]);
-
+        $requestsData=array_merge($request->all(),['account_number'=>$accountNumber]);
+        $customerInfo = $this->getOnlyCustomerInformation($requestsData);
 
        $validator=Validator::make($requestsData,$rules,$messages);
 
@@ -133,7 +132,7 @@ class CustomerController extends Controller
        }
 
 
-       $normalizedData=CustomerDataHelper::normalize($requestsData);
+       $normalizedData=CustomerDataHelper::normalize($customerInfo);
 
 
         $customer = Customer::create($normalizedData);

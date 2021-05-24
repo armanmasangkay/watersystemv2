@@ -242,7 +242,7 @@ $(document).ready(function(){
         let actionURI = registerForm.getAttribute('action')
         let token = document.getElementsByName('_token')[0].value
 
-        let data=$(this).serialize()+`${token}`;
+        let data=$(this).serialize();
             $.post(actionURI,data,function(response){
                 console.log(response)
                 if(response.created==true){
