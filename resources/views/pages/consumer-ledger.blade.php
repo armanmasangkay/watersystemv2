@@ -137,39 +137,64 @@
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title text-muted" id="exampleModalLabel"><i data-feather="book-open"></i> Ledger Setup</h5>
+                <h5 class="modal-title text-muted" id="exampleModalLabel"><i data-feather="file"></i><strong>&nbsp; New Billing Setup</strong></h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
-                <h5 class="text-muted">Beginning Meter Reading</h5>
-                <div class="row">
+            <div class="modal-body p-4">
+                <h5 class="text-muted">Previous Meter Reading</h5>
+                <div class="row mt-3">
                     <div class="col-md-4 col-lg-4 col-xl-3 col-sm-6 mb-sm-2 pe-md-1 pe-sm-1">
-                        <label class='text-muted'>Previous meter reading</label>
-                        <input class="form-control" id="meter-reading" type="number" placeholder="Enter meter reading" min=0>
+                        <label class='text-muted'>Meter reading</label>
+                        <input class="form-control" id="meter-reading" type="number" placeholder="Meter reading" min=0 disabled>
                     </div>
-                    <div class="col-md-4 col-lg-4 col-xl-3 col-sm-6 mt-md-0 px-md-0 ps-sm-0">
-                        <label class='text-muted'>Amount balance</label>
-                        <input class="form-control" type="number" id="balance" placeholder="Enter balance" min=0>
-                    </div>
-                    <div class="col-md-4 mt-2 col-lg-4 col-xl-3 col-sm-6 mt-md-0 ps-md-1 pe-sm-1">
-                        <label class='text-muted'>Date of last payment</label>
-                        <input class="form-control" id="lastPaymentDate" type="date">
-                    </div>
-                </div>
-                <div id="transactions-header">
-                    <h5 class="mt-4 text-muted">Transactions</h5>
-                    <i id="close-button">X</i>
-                    <hr class="text-muted">
                 </div>
 
-                <div id="transactions-container">
+                <h5 class="text-muted mt-4">Current Meter Reading</h5>
+                <div class='row px-md-2 mb-2'>
+                    <div class='col-6 col-md-3 col-lg-2 col-xl-1 mt-2 pe-md-1 ps-md-1 ps-lg-1 pe-sm-1 pe-1'>
+                        <small class='text-danger'>Cur. Mo.</small>
+                        <select name='' id='' class='form-select'>
+                            
+                        </select>
 
+                    </div>
+                    <div class='col-6 col-md-3 col-lg-2 col-xl-1 mt-2 ps-md-0 pe-md-0 ps-sm-0 ps-0'>
+                        <small class='text-danger'>Nxt Mo.</small>
+                        <select name='' id='' class='form-select'>
+                            
+                        </select>
+                    </div>
+
+                    <div class='col-6 col-md-6 col-lg-4 col-xl-2 mt-2 mt-lg-2 mt-md-2 px-lg-1 pe-sm-1 ps-md-1 pe-1'>
+                        <small class='text-muted'>Meter Reading</small>
+                        <input class='form-control' type='number' min=0 id="meter_reading">
+                    </div>
+
+                    <div class='col-6 col-md-6 col-lg-4 col-xl-1 mt-2 mt-lg-2 mt-md-2 px-lg-0 ps-md-1 pe-md-0 ps-sm-0 ps-0'>
+                        <small class='text-muted'>Consumption</small>
+                        <input class='form-control' type='number' value='0.00' min=0 disabled>
+                    </div>
+                    <div class='col-6 col-md-6 col-lg-4 col-xl-2 mt-2 mt-md-2 px-lg-1 pe-sm-1 ps-md-1 pe-1'>
+                        <small class='text-muted'>Amount</small>
+                        <input class='form-control' type='number' value='0.00' min=0 disabled>
+                    </div>
+                    <div class='col-6 col-md-6 col-lg-4 col-xl-1 mt-2 mt-md-2 px-lg-0 ps-md-1 pe-md-0 ps-sm-0 ps-0'>
+                        <small class='text-muted'>Surcharge</small>
+                        <input class='form-control' type='number' value='0.00' min=0 disabled>
+                    </div>
+                    <div class='col-6 col-md-6 col-lg-4 col-xl-2 mt-2 mt-md-2 px-lg-1 pe-sm-1 ps-md-1 pe-1'>
+                        <small class='text-muted'>Meter installment balance</small>
+                        <input class='form-control' type='number' value='0.00' min=0>
+                    </div>
+                    <div class='col-6 col-md-6 col-lg-4 col-xl-2 mt-2 mt-md-2 ps-lg-0 ps-md-1 pe-lg-1 ps-sm-0 pe-md-0 ps-0'>
+                        <small class='text-muted'>Total</small>
+                        <input class='form-control' type='number' value='0.00' min=0 disabled>
+                    </div>
                 </div>
-                <button type="button" class="btn btn-outline-primary btn-sm mt-4" id="add-more-btn"><i data-feather="plus"></i> Add More</button>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-success modal_save" id="save-button" data-bs-dismiss="modal" disabled>Save</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i data-feather="x"></i> Close</button>
+                <button type="button" class="btn btn-primary modal_save" id="save-button" data-bs-dismiss="modal" disabled><i data-feather="check"></i> Save</button>
             </div>
         </div>
     </div>
