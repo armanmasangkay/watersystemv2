@@ -13,6 +13,7 @@ use App\Http\Controllers\MTOApprovalController;
 use App\Http\Controllers\WaterWorksApprovalController;
 use App\Http\Controllers\MunicipalEngApprovalController;
 use App\Http\Controllers\ReconnectionTransactionController;
+use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\TransactionListsController;
 use App\Http\Controllers\TransferOfMeterController;
 use App\Http\Controllers\WaterRateController;
@@ -44,7 +45,8 @@ Route::prefix('admin')->middleware('auth')->name('admin.')->group(function(){
 
     Route::get('/search-consumer',[CustomerSearchController::class,'search'])->name('search-customer');
 
-    Route::resource('transactions',TransactionController::class)->middleware('auth');
+
+    Route::resource('services', ServiceController::class);
 
     Route::get('reconnection',[ReconnectionController::class, 'index'])->name('reconnection');
     Route::get('search-consumer-info',[ReconnectionController::class, 'search'])->name('search');

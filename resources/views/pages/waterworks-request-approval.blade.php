@@ -36,24 +36,24 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse ($transactions as $transaction)
+                    @forelse ($services as $service)
                         <tr>
-                            <td class="pt-2 pb-2">{{ $transaction->customer->account_number }}</td>
-                            <td class="pt-2 pb-2">{{ $transaction->customer->fullname() }} </td>
-                            <td class="pt-2 pb-2">{{ $transaction->type_of_service }}</td>
-                            <td class="pt-2 pb-2">{{ $transaction->created_at->format('Y-m-d') }}</td>
-                            <td class="pt-2 pb-2">{{ $transaction->building_inspection_schedule }}</td>
-                            <td class="pt-2 pb-2">{{ $transaction->water_works_schedule }}</td>
+                            <td class="pt-2 pb-2">{{ $service->customer->account_number }}</td>
+                            <td class="pt-2 pb-2">{{ $service->customer->fullname() }} </td>
+                            <td class="pt-2 pb-2">{{ $service->type_of_service }}</td>
+                            <td class="pt-2 pb-2">{{ $service->created_at->format('Y-m-d') }}</td>
+                            <td class="pt-2 pb-2">{{ $service->building_inspection_schedule }}</td>
+                            <td class="pt-2 pb-2">{{ $service->water_works_schedule }}</td>
                             <td class="d-flex justify-content-start">
                                 <form action="{{ route('admin.waterworks-request-approvals-approve') }}" method="post" class="mb-1 mx-0 d-flex">
                                     @csrf
                                     <input type="date" name="building_inspection_schedule" class="form-control">
-                                    <input type="hidden" name="id" value="{{ $transaction->id }}">
+                                    <input type="hidden" name="id" value="{{ $service->id }}">
                                     <button type="submit" class="btn btn-xs btn-default text-primary"><i data-feather="check" width="20"></i></button>
                                 </form>
                                 {{-- <a href="" class="text-primary mb-1 mx-2">
                                 <i data-feather="check" width="20"></i></a> --}}
-                                <form action="{{route('admin.waterworks-request-approvals-reject', ['id' => $transaction->id])}}" method="post" class="mb-1 mx-0">
+                                <form action="{{route('admin.waterworks-request-approvals-reject', ['id' => $service->id])}}" method="post" class="mb-1 mx-0">
                                     @csrf
                                     <button type="submit" class="btn btn-xs btn-default text-danger"><i data-feather="x" width="20"></i></button>
                                 </form>
@@ -71,7 +71,7 @@
             </table>
             <div class="pt-2 pb-2 px-2 bg-light">
                 <div class="pt-2 px-2 pb-2">
-                    {{ $transactions->render() }}
+                    {{ $services->render() }}
                 </div>
             </div>
         </div>
