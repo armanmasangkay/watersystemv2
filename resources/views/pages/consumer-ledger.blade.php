@@ -14,7 +14,7 @@
                             @include('templates.form-search-account')
                         </div>
                         <div class="col-md-6">
-                            <button class="btn btn-primary mt-2 float-md-end"><i data-feather="user-plus" width="20"></i>&nbsp; New Water Bill</button>
+                            <button class="btn btn-primary mt-2 float-md-end" data-bs-toggle='modal' data-bs-target='#ledgerSetupModal'><i data-feather="user-plus" width="20"></i>&nbsp; New Water Bill</button>
                         </div>
                     </div>
                 </div>
@@ -133,4 +133,54 @@
         </div>
     </div>
 </div>
+<div class="modal modal-fluid fade" id="ledgerSetupModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-muted" id="exampleModalLabel"><i data-feather="book-open"></i> Ledger Setup</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h5 class="text-muted">Beginning Meter Reading</h5>
+                <div class="row">
+                    <div class="col-md-4 col-lg-4 col-xl-3 col-sm-6 mb-sm-2 pe-md-1 pe-sm-1">
+                        <label class='text-muted'>Previous meter reading</label>
+                        <input class="form-control" id="meter-reading" type="number" placeholder="Enter meter reading" min=0>
+                    </div>
+                    <div class="col-md-4 col-lg-4 col-xl-3 col-sm-6 mt-md-0 px-md-0 ps-sm-0">
+                        <label class='text-muted'>Amount balance</label>
+                        <input class="form-control" type="number" id="balance" placeholder="Enter balance" min=0>
+                    </div>
+                    <div class="col-md-4 mt-2 col-lg-4 col-xl-3 col-sm-6 mt-md-0 ps-md-1 pe-sm-1">
+                        <label class='text-muted'>Date of last payment</label>
+                        <input class="form-control" id="lastPaymentDate" type="date">
+                    </div>
+                </div>
+                <div id="transactions-header">
+                    <h5 class="mt-4 text-muted">Transactions</h5>
+                    <i id="close-button">X</i>
+                    <hr class="text-muted">
+                </div>
+
+                <div id="transactions-container">
+
+                </div>
+                <button type="button" class="btn btn-outline-primary btn-sm mt-4" id="add-more-btn"><i data-feather="plus"></i> Add More</button>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-success modal_save" id="save-button" data-bs-dismiss="modal" disabled>Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection
+
+@section('custom-js')
+
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+<script src="{{ asset('assets/js/registration.js') }}" defer></script>
+
+
 @endsection
