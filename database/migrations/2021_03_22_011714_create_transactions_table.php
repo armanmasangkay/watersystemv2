@@ -22,7 +22,7 @@ class CreateTransactionsTable extends Migration
             $table->double('reading_consumption');
             $table->double('billing_amount')->nullable();
             $table->double('billing_surcharge')->nullable();
-            $table->double('billing_meter_ips')->nullable();
+            $table->double('billing_meter_ips')->default(0.00);
             $table->double('billing_total')->nullable();
             $table->string('payment_or_no')->nullable();
             $table->date('payment_date')->nullable();

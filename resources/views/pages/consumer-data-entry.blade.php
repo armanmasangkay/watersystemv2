@@ -156,7 +156,7 @@
                             <h5 class="text-muted">Meter Installment Payments</h5>
                             <div class="row mt-3 mb-4">
                                 <div class="col-md-3 mb-sm-2 pe-md-1 pe-sm-1">
-                                    <label class='text-muted'>Current Balance <small class="text-danger">*</small></label>
+                                    <label class='text-muted'>Current Balance</label>
                                     <input class="form-control mt-2" type="number" placeholder="Enter balance amount" min=0>    
                                 </div>
                             </div>
