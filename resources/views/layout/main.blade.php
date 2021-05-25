@@ -19,8 +19,7 @@
                 <div class="col-md-12">
                     <h6 class="text-muted text-center">&copy; Macrohon Municipal Water Works - 2021</h6>
                     <p class="text-muted text-center">Developed by: SLSU-CCSIT Development Team</p>
-                    <p class="text-muted text-center">- or -</p>
-                    <p class="text-muted text-center">For more info visit us at <a href="">https://www.facebook.com/page/JAB Software Solutions</a></p>
+                    <p class="text-muted text-center">For more info visit us at <a href="https://www.facebook.com/jabsoftware">https://www.facebook.com/jabsoftware</a></p>
                 </div>
             </div>
         </div>
