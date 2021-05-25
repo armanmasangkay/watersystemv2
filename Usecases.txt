@@ -24,7 +24,7 @@ Retrieve a ledger card
 -If not, then we display the default template of the ledger card and an error that the account number does not exist
 -Full name should be displayed as follows, [Lastname], [Firstname] [Middlename]
 -Balance should be updated based on the latest transaction balance
--Transactions should be sorted based on the latest billing date 
+-Transactions should be sorted based on the latest billing date
 
 
 New Water bill
@@ -38,6 +38,6 @@ New Water bill
 -Current meter reading should be greater than the previous meter reading
 -If meter reading inputted is invalid, the meter reading input box should appear red. If valid, display green
 -Upon input of a valid meter reading the consumption, amount,total is automatically calculated but not saved to the database. (Should be saved only when save button is clicked)
--If the previous balance is not paid, then we calculate the surcharge of the previous transaction and total balance. 
+-If the previous balance is not paid, then we calculate the surcharge of the previous transaction and total balance.
 -If data is successfully saved, we refresh the page with the account number showing the updated transaction.
 -If error when saving, we display an error message and the modal will stay and information will not be saved.

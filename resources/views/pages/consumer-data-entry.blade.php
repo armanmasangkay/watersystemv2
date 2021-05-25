@@ -8,6 +8,7 @@
     <div class="col-md-12">
         <h4 class="text-gray"><i data-feather="users" width="35" class="mb-1"></i>&nbsp;&nbsp;Consumer Data Entry</h4>
         <form action="" method="POST" id="registration-form">
+            @csrf
             <div class="card mt-2 rounded-3 pt-2 mt-3">
                 <div class="card-body px-3 px-lg-5">
                     <small class="mb-5 text-danger">Note: (*) Required fields</small>
@@ -21,7 +22,7 @@
                                     <label><small class="text-muted">Firstname</small><small class="text-danger"> *</small></label>
                                     <input type="text" name="firstname" id="" class="form-control mt-2" placeholder="First name" >
                                     <small id="error-firstname" class="text-danger" hidden>
-                                        
+
                                     </small>
                                 </div>
                                 <div class="col-md-3 ps-lg-0 pe-lg-0 ps-md-0">
@@ -32,7 +33,7 @@
                                     <label><small class="text-muted">Lastname</small><small class="text-danger"> *</small></label>
                                     <input type="text" name="lastname" id="" class="form-control mt-2" placeholder="Last name">
                                     <small id="error-lastname" class="text-danger" hidden>
-                                    
+
                                     </small>
                                 </div>
                             </div>
@@ -49,7 +50,7 @@
                                     <label for=""><small class="text-muted">Contact Number</small> <small class="text-danger">*</small></label>
                                     <input type="number" name="contact_number" id="" class="form-control mt-2" placeholder="09xxxxxxxxx">
                                     <small id="error-contact-number" class="text-danger" hidden>
-                                        
+
                                     </small>
                                 </div>
                             </div>
@@ -58,7 +59,7 @@
                                     <label for=""><small class="text-muted">Purok</small> <small class="text-danger">*</small></label>
                                     <input type="text" name="purok" id="" class="form-control mt-2 mb-md-2 mb-sm-2">
                                     <small id="error-purok" class="text-danger" hidden>
-                                        
+
                                     </small>
                                 </div>
                                 <div class="col-md-3 ps-md-0">
@@ -90,13 +91,13 @@
                                         @endforeach
                                     </select>
                                     <small id="error-purok" class="text-danger" hidden>
-                                        
+
                                     </small>
                                 </div>
                                 <div class="col-md-3 ps-md-0 pt-md-1 pt-sm-2">
                                     <label for=""><small class="text-muted">If others, please specify</small></label>
                                     <input type="text" name="connection_type_specifics" id="connection_type_specifics" class="form-control mt-2" disabled>
-                                    <small id="error-type-specifics" class="text-danger"> 
+                                    <small id="error-type-specifics" class="text-danger">
                                     </small>
                                 </div>
                             </div>
@@ -124,6 +125,7 @@
                                         <option value="" selected>--Please select--</option>
                                         <option value="cash">Cash</option>
                                         <option value="installment">Installment</option>
+                                        <option value="N/A">N/A</option>
                                     </select>
                                     <small id="error-purchase-option" class="text-danger">
                                 </div>
@@ -142,29 +144,34 @@
                             <div class="row mt-3 mb-4">
                                 <div class="col-md-3 mb-sm-2 pe-md-1 pe-sm-1">
                                     <label class='text-muted'>Previous Meter Reading <small class="text-danger">*</small></label>
-                                    <input class="form-control mt-2" type="number" placeholder="Enter meter reading" min=0>    
+                                    <input class="form-control mt-2" type="number" id="reading_meter" name="reading_meter" placeholder="Enter meter reading" min=0>
+                                    <small id="error-reading-meter" class="text-danger"></small>
                                 </div>
+
                                 <div class="col-md-3 mt-md-0 px-md-0 ps-sm-0">
                                     <label class='text-muted'>Current Balance <small class="text-danger">*</small></label>
-                                    <input class="form-control mt-2" type="number" placeholder="Enter balance amount" min=0>    
+                                    <input class="form-control mt-2" type="number" id="balance" name="balance" placeholder="Enter balance amount" min=0>
+                                    <small id="error-balance" class="text-danger"></small>
                                 </div>
+
                                 <div class="col-md-3 mt-md-0 ps-md-1 pe-sm-1">
                                     <label class='text-muted'>Date of Last Payment <small class="text-danger">*</small></label>
-                                    <input class="form-control mt-2" id="lastPaymentDate" type="date">
+                                    <input class="form-control mt-2" id="reading_date" name="reading_date" type="date">
+                                    <small id="error-reading-date" class="text-danger"></small>
                                 </div>
                             </div>
                             <h5 class="text-muted">Meter Installment Payments</h5>
                             <div class="row mt-3 mb-4">
                                 <div class="col-md-3 mb-sm-2 pe-md-1 pe-sm-1">
-                                    <label class='text-muted'>Current Balance</label>
-                                    <input class="form-control mt-2" type="number" placeholder="Enter balance amount" min=0>    
+                                    <label class='text-muted'>Current Balance <small class="text-danger">*</small></label>
+                                    <input class="form-control mt-2" type="number" id="billing_meter_ips" name="billing_meter_ips" placeholder="Enter balance amount" min=0>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="row mb-4">
                         <div class="col-md-12">
-                            <button type="button" class="btn btn-primary modal_save"><i data-feather="user-check" width="20"></i>&nbsp; Save</button>
+                            <button type="submit" class="btn btn-primary modal_save"><i data-feather="user-check" width="20"></i>&nbsp; Save</button>
                         </div>
                     </div>
                 </div>
