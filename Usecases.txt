@@ -31,6 +31,7 @@ New Water bill
 --------
 -Should only be accessible only to logged in admin users
 -Cannot add a new water bill without a valid account number
+-The water bill window, should show the current meter balance if any. If not, then don't show the meter balance
 -Automatically determine the next billing covered based on the previous billing date
 -Allow users to override the next billing date
 -Meter reading input is required

@@ -7,6 +7,7 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
 
         <link rel="stylesheet" href="{{asset('assets/css/custom.css')}}">
+        <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"/>
     </head>
     <body class="bg-light bg-gradient">
         @includeWhen(url()->current()!=route('login'),'layout.nav')
@@ -19,8 +20,7 @@
                 <div class="col-md-12">
                     <h6 class="text-muted text-center">&copy; Macrohon Municipal Water Works - 2021</h6>
                     <p class="text-muted text-center">Developed by: SLSU-CCSIT Development Team</p>
-                    <p class="text-muted text-center">- or -</p>
-                    <p class="text-muted text-center">For more info visit us at <a href="">https://www.facebook.com/page/JAB Software Solutions</a></p>
+                    <p class="text-muted text-center">For more info visit us at <a href="https://www.facebook.com/jabsoftware">https://www.facebook.com/jabsoftware</a></p>
                 </div>
             </div>
         </div>
