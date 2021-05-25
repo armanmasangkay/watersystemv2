@@ -75,6 +75,7 @@ Route::prefix('admin')->middleware('auth')->name('admin.')->group(function(){
     Route::post('/surcharge', [SurchargeController::class, 'update'])->name('surcharge-update');
 
     Route::get('/consumer-ledger',[ConsumerLedgerController::class, 'index'])->name('consumer-ledger');
+    Route::get('/consumer-ledger/transactions',[ConsumerLedgerController::class, 'search'])->name('search-transactions');
 });
 
 

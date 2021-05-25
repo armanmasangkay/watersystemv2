@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use App\Models\Service;
+use App\Models\Transaction;
+
 class Customer extends Model
 {
     use HasFactory;
@@ -37,6 +39,10 @@ class Customer extends Model
     {
         return "{$this->purok}, {$this->barangay}";
     }
+    public function account()
+    {
+        return "{$this->account_number}";
+    }
 
     public function connectionType()
     {
@@ -51,6 +57,16 @@ class Customer extends Model
     public function services()
     {
         return $this->hasMany(Service::class);
+    }
+
+    public function transactions()
+    {
+        return $this->hasMany(Transaction::class, 'customer_id')->orderByDesc('created_at');
+    }
+
+    public function balance()
+    {
+        return $this->hasMany(Transaction::class, 'customer_id')->orderByDesc('created_at')->first();
     }
 
     public function hasActiveConnection()
