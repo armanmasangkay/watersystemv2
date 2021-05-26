@@ -16,6 +16,7 @@ class CreateWaterRatesTable extends Migration
         Schema::create('water_rates', function (Blueprint $table) {
             $table->id();
             $table->string('type');
+            $table->unsignedInteger('consumption_max_range');
             $table->double('min_rate');
             $table->double('excess_rate');
             $table->timestamps();
