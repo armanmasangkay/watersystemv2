@@ -137,7 +137,7 @@
                     <div class="row mt-1">
                         <div class="col-md-4 pe-md-0">
                             <label class='text-muted'>Reading date</label>
-                            <input type="text" class="form-control" name="date" value="{{ \Carbon\Carbon::parse($customer['balance']->reading_date)->format('F d, Y') }}" readonly>
+                            <input type="text" class="form-control" name="date" value="{{ isset($customer) ? \Carbon\Carbon::parse($customer['balance']->reading_date)->format('F d, Y') : '' }}" readonly>
                         </div>
                     </div>
 
