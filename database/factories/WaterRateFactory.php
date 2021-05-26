@@ -22,8 +22,9 @@ class WaterRateFactory extends Factory
     public function definition()
     {
         return [
-            'min_rate' => 0,
-            'excess_rate' => 0,
+            'consumption_max_range' => 10,
+            'min_rate' => 65,
+            'excess_rate' => 10,
         ];
 
     }

@@ -3,10 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Customer;
+use App\Models\WaterRate;
 use App\Models\Transaction;
+use App\Models\Surcharge;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
 
 class ConsumerLedgerController extends Controller
 {
@@ -36,15 +40,59 @@ class ConsumerLedgerController extends Controller
         $balance = Transaction::orderByDesc('created_at')->where('customer_id', $account_number)->get();
         $balance = $balance->first();
 
+        $rate = [];
+        
+        $rates = WaterRate::all();
+        
+
+        for($i = 0; $i < count($rates); $i++)
+        {
+            if(Str::title($customer->connection_type) == $rates[$i]->type)
+            {
+                $rate = [
+                    'min_rate' => $rates[$i]->min_rate,
+                    'max_range' => $rates[$i]->consumption_max_range,
+                    'excess_rates' => $rates[$i]->excess_rate
+                ];
+            }
+        }
+
+        $surcharge = Surcharge::all();
+
+        $date = $balance->period_covered != "Beginning Balance" ? explode('-', $balance->period_covered) : explode('/', '/'.$balance->reading_date);
         return view('pages.consumer-ledger',[
             'customer' => [
                 'fullname' => $fullname, 
                 'address' => $address, 
                 'transactions' => $transactions, 
                 'account' => $acc, 
-                'balance' => $balance
+                'balance' => $balance,
+                'connection_type' => $customer->connection_type,
             ],
+            'rates' => $rate,
+            'surcharge' => $surcharge[0]->rate,
+            'last_date' => $date[1],
             'route' => 'admin.search-transactions',
         ]);
+    }
+
+    public function store(Request $request)
+    {
+        $fillable=[
+            'customer_id' => $request->customer_id,
+            'period_covered' => $request->current_month.'-'.$request->next_month,
+            'reading_date' => $request->reading_date,
+            'reading_meter' => $request->reading_meter,
+            'reading_consumption' => $request->consumption,
+            'billing_amount' => $request->amount,
+            'billing_surcharge' => $request->surcharge_amount,
+            'billing_meter_ips' => $request->meter_ips,
+            'billing_total' => $request->total,
+            'balance' => $request->total,
+            'user_id' => Auth::id()
+        ];
+
+        $transactions = Transaction::create($fillable);
+        return response()->json(['created' => true]);
     }
 }
