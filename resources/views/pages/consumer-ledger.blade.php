@@ -178,7 +178,7 @@
 
                         <div class='col-6 col-md-6 col-lg-4 col-xl-1 mt-2 mt-lg-2 mt-md-2 px-lg-0 ps-md-1 pe-md-0 ps-sm-0 ps-0'>
                             <small class='text-muted'>Consumption</small>
-                            <input class='form-control' type='number' id="consumption" name="consumption" min=0 readOnly placeholder="0.00">
+                            <input class='form-control' type='number' id="consumption" name="consumption" min=0 readOnly placeholder="0">
                         </div>
                         <div class='col-6 col-md-6 col-lg-4 col-xl-2 mt-2 mt-md-2 px-lg-1 pe-sm-1 ps-md-1 pe-1'>
                             <small class='text-muted'>Amount</small>
