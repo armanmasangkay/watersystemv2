@@ -46,7 +46,7 @@ $(document).ready(function(){
     });
 
     $('#reading_meter').on('keyup', function(){
-        if(parseFloat($(this).val()) > parseFloat($('#meter-reading').val()))
+        if(parseFloat($(this).val()) >= parseFloat($('#meter-reading').val()))
         {
             const max_range = parseFloat($('input[name="max_range"]').val());
             const min_rates = parseFloat($('input[name="min_rates"]').val());
