@@ -6,7 +6,7 @@
 @section('content')
 <div class="row mt-5">
     <div class="col-md-12">
-        <h4 class="text-gray"><i data-feather="users" width="35" class="mb-1"></i>&nbsp;&nbsp;Consumer Data Entry</h4>
+        <h4 class="text-gray"><i data-feather="users" width="35" class="mb-1"></i>&nbsp;&nbsp;Consumer's Data Entry</h4>
         <form action="" method="POST" id="registration-form">
             @csrf
             <div class="card mt-2 rounded-3 pt-2 mt-3">

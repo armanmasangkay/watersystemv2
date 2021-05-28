@@ -20,10 +20,10 @@ $(document).ready(function(){
                 url: actionURI,
                 data: data,
                 success: function(response){
-                    console.log(response)
                     if(response.created == true){
                         $('#current-month').prop('disabled', true);
                         $('#next-month').prop('disabled', true);
+                        $('#save-billing').html('<i class="far fa-check"></i>&nbsp; Done!');
 
                         Swal.fire('Great!','New billing for client '+ $('input[name="customer_id"]').val() +' was created!','success').then(function(result){
                             if(result.isConfirmed)
@@ -46,7 +46,7 @@ $(document).ready(function(){
     });
 
     $('#reading_meter').on('keyup', function(){
-        if(parseFloat($(this).val()) > parseFloat($('#meter-reading').val()))
+        if(parseFloat($(this).val()) >= parseFloat($('#meter-reading').val()))
         {
             const max_range = parseFloat($('input[name="max_range"]').val());
             const min_rates = parseFloat($('input[name="min_rates"]').val());
@@ -69,10 +69,14 @@ $(document).ready(function(){
             const total = ((surcharge + balance) + (meter_ips + amount_consumption));
 
             $('#total').val(total);
-            $('#save-billing').prop('disabled', false);
+            $('#save-billing').prop('disabled', true);
         }
         else{
-            console.log('error')
+            $('#save-billing').prop('disabled', true);
+            $('#consumption').val(0);
+            $('#surcharge_amount').val('0.00');
+            $('#amount').val('0.00');
+            $('#total').val('0.00');
         }
     });
 
