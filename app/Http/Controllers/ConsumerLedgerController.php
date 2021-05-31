@@ -35,10 +35,12 @@ class ConsumerLedgerController extends Controller
         $acc = $customer->account();
         $fullname = $customer->fullname();
         $address = $customer->address();
-        $transactions = $customer->transactions()->paginate(10)->appends(['account_number'=>$account_number]);
+        // $transactions = $customer->transactions()->orderBy('created_at', 'asc')->paginate(10)->appends(['account_number'=>$account_number]);
 
         $balance = Transaction::orderByDesc('created_at')->where('customer_id', $account_number)->get();
         $balance = $balance->first();
+
+        $transactions = Transaction::orderBy('created_at', 'asc')->where('customer_id', $account_number)->paginate(10);
 
         $rate = [];
         
