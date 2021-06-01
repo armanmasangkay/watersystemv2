@@ -46,7 +46,7 @@ $(document).ready(function(){
     });
 
     $('#reading_meter').on('keyup', function(){
-        if(parseFloat($(this).val()) >= parseFloat($('#meter-reading').val()))
+        if(parseInt($(this).val()) >= parseInt($('#meter-reading').val()))
         {
             const max_range = parseFloat($('input[name="max_range"]').val());
             const min_rates = parseFloat($('input[name="min_rates"]').val());
@@ -58,7 +58,7 @@ $(document).ready(function(){
 
             const surcharge = (payment_or != null ? (balance * surcharge_rate) : 0.00);
 
-            const meter_consumption = parseFloat($(this).val()) - parseFloat($('#meter-reading').val());
+            const meter_consumption = parseInt($(this).val()) - parseInt($('#meter-reading').val());
             const total_consumption = ((meter_consumption - max_range) * excess_rate) + min_rates;
             const amount_consumption = meter_consumption <= max_range ? min_rates : total_consumption;
             
@@ -80,13 +80,17 @@ $(document).ready(function(){
         }
     });
 
-    const btnAllowOverrride = document.querySelector('#allow');
-    const checkbox = document.querySelector('#override');
-    btnAllowOverrride.onclick = () => {
-        if(checkbox.checked){
+    $(document).on('click', '#override', function(){
+        if($(this).is(':checked'))
+        {
             $('#current-month').prop('disabled', false);
             $('#next-month').prop('disabled', false);
         }
-    }
+        else
+        {
+            $('#current-month').prop('disabled', true);
+            $('#next-month').prop('disabled', true);
+        }
+    })
 
 });

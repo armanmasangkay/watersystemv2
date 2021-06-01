@@ -153,8 +153,8 @@
                             <small class='text-primary'>{{ isset($last_date) ? \Carbon\Carbon::parse($last_date)->format('M, Y') : '' }}</small>
                             <select name='current_month' id='current-month' class='form-select' disabled>
                                 @if(isset($customer))
-                                @for($i = 1; $i <= \Carbon\Carbon::parse($customer["balance"]->reading_date)->endOfMonth()->format('d'); $i++)
-                                <option value="{{ \Carbon\Carbon::parse($customer['balance']->reading_date)->format('M '.($i < 10 ? '0'.$i : $i)) }}" {{ \Carbon\Carbon::parse($customer['balance']->reading_date)->format('d') == $i ? 'selected' : '' }}>{{ $i < 10 ? '0'.$i : $i }}</option>
+                                @for($i = 1; $i <= \Carbon\Carbon::parse($last_date)->endOfMonth()->format('d'); $i++)
+                                <option value="{{ \Carbon\Carbon::parse($last_date)->format('M '.($i < 10 ? '0'.$i : $i)) }}" {{ \Carbon\Carbon::parse($last_date)->format('d') == $i ? 'selected' : '' }}>{{ $i < 10 ? '0'.$i : $i }}</option>
                                 @endfor
                                 @endif
                             </select>
@@ -164,8 +164,8 @@
                             <small class='text-primary'>{{ isset($customer) ? \Carbon\Carbon::parse($last_date)->addMonths(1)->format('M, Y') : '' }}</small>
                             <select name='next_month' id='next-month' class='form-select' disabled>
                                 @if(isset($customer))
-                                @for($i = 1; $i <=  \Carbon\Carbon::parse($customer["balance"]->reading_date)->addMonths(1)->endOfMonth()->format('d'); $i++)
-                                <option value="{{ \Carbon\Carbon::parse($customer['balance']->reading_date)->addMonths(1)->format('M '.($i < 10 ? '0'.$i : $i).', Y') }}" {{ \Carbon\Carbon::parse($customer['balance']->reading_date)->format('d') == $i ? 'selected' : '' }}>{{ $i < 10 ? '0'.$i : $i }}</option>
+                                @for($i = 1; $i <=  \Carbon\Carbon::parse($last_date)->addMonths(1)->endOfMonth()->format('d'); $i++)
+                                <option value="{{ \Carbon\Carbon::parse($last_date)->addMonths(1)->format('M '.($i < 10 ? '0'.$i : $i).', Y') }}" {{ \Carbon\Carbon::parse($last_date)->format('d') == $i ? 'selected' : '' }}>{{ $i < 10 ? '0'.$i : $i }}</option>
                                 @endfor
                                 @endif
                             </select>
@@ -200,12 +200,7 @@
                     <div class="row mt-3">
                         <div class="col-md-12 pe-md-0 d-flex justify-content-start align-items-center">
                             <input name="override" id="override" type="checkbox">
-                            <label class='text-muted ms-2'>Override period covered ?</label>
-                        </div>
-                    </div>
-                    <div class="row mt-1">
-                        <div class="col-lg-2 col-md-4 col-sm-12 pe-md-0">
-                            <button type="button" class="btn btn-primary" id="allow">Allow override</button>
+                            <label class='text-muted ms-2'>Allow override period covered date ?</label>
                         </div>
                     </div>
                 </div>
