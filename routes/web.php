@@ -19,6 +19,7 @@ use App\Http\Controllers\TransferOfMeterController;
 use App\Http\Controllers\WaterRateController;
 use App\Http\Controllers\SurchargeController;
 use App\Http\Controllers\ConsumerLedgerController;
+use App\Http\Controllers\SearchedCustomerController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -31,6 +32,9 @@ Route::get('/login',[LoginController::class,'index'])->name('login');
 Route::post('/login',[LoginController::class,'authenticate']);
 
 Route::prefix('admin')->middleware('auth')->name('admin.')->group(function(){
+
+    Route::resource('searched-customers',SearchedCustomerController::class);
+
 
     Route::post('/logout',[LogoutUserController::class,'logout'])->middleware('auth')->name('logout');
     Route::get('/consumers',[CustomerController::class,'showAll'])->middleware('auth')->name('customers');

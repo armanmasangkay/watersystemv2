@@ -33,8 +33,11 @@ class CustomerController extends Controller
     {
         $customers=Customer::paginate(10);
 
+      
         return view('pages.customers-list',['customers'=>$customers]);
     }
+
+
 
     public function getOnlyTransaction($customerId, $requestData)
     {
