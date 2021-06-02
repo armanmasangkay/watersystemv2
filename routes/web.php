@@ -35,7 +35,7 @@ Route::prefix('admin')->middleware('auth')->name('admin.')->group(function(){
 
     Route::resource('searched-customers',SearchedCustomerController::class);
 
-
+    
     Route::post('/logout',[LogoutUserController::class,'logout'])->middleware('auth')->name('logout');
     Route::get('/consumers',[CustomerController::class,'showAll'])->middleware('auth')->name('customers');
     Route::get('/transaction/new',[TransactionsController::class,'index'])->middleware('auth')->name('new-transaction');

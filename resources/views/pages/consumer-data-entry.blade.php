@@ -155,7 +155,7 @@
                                 </div>
 
                                 <div class="col-md-3 mt-md-0 ps-md-1 pe-sm-1">
-                                    <label class='text-muted'>Date of Last Payment <small class="text-danger">*</small></label>
+                                    <label class='text-muted'>Date <small class="text-danger">*</small></label>
                                     <input class="form-control mt-2" id="reading_date" name="reading_date" type="date">
                                     <small id="error-reading-date" class="text-danger"></small>
                                 </div>
