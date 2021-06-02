@@ -40,9 +40,16 @@
                         <div class="col-md-6 d-flex justify-content-between align-items-center pe-5"><span><strong>Address:</strong></span>&nbsp;&nbsp;
                             <input type="text" class="text-bold form-control w-75 fae9d6 rounded-0 border-top-0 border-start-0 border-end-0 border-bottom border-secondary ml-3 pt-1 pb-1" value="{{ isset($customer) ? $customer["address"] : '' }}" readOnly>
                         </div>
-                        <div class="col-md-6 d-flex justify-content-between align-items-center pe-5"><span><strong>Balance as of:</strong></span>&nbsp;&nbsp;
-                            <input type="text" name="balance" class="text-bold form-control w-75 fae9d6 rounded-0 border-top-0 border-start-0 border-end-0 border-bottom border-secondary ml-3 pt-1 pb-1" value="{{ isset($customer) ? date('F j, Y').' - (Php '.toAccounting($customer["balance"]->balance).')' : '' }}" readOnly>
+                        <div class="col-md-6 d-flex justify-content-between align-items-center pe-5"><span><strong>Connection Type:</strong></span>&nbsp;&nbsp;
+                            <input type="text" name="balance" class="text-bold form-control w-75 fae9d6 rounded-0 border-top-0 border-start-0 border-end-0 border-bottom border-secondary ml-3 pt-1 pb-1" value="{{ isset($customer) ? Str::title($customer["connection_type"]) : '' }}" readOnly>
                         </div>
+                    </div>
+                </div>
+                <div class="card-header border-secondary px-4 pb-1 pt-2 f94c7eb">
+                    <div class="row mt-1">
+                        <center>
+                            <h3 class="h5 mb-2 mt-0 text-center"><strong>Balance as of {{ isset($customer) ? date('F j, Y') : '' }}</strong> - <span class="text-danger"><strong>{{ isset($customer) ?'Php '.toAccounting($customer["balance"]->balance) : '' }}</strong></span></h3>
+                        </center>
                     </div>
                 </div>
                 <div class="card-body p-0">
