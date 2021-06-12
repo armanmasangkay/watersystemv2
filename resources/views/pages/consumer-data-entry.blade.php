@@ -7,7 +7,7 @@
 <div class="row mt-5">
     <div class="col-md-12">
         <h4 class="text-gray"><i data-feather="users" width="35" class="mb-1"></i>&nbsp;&nbsp;Consumer's Data Entry</h4>
-        <form action="" method="POST" id="registration-form">
+        <form action="{{route('admin.register-customer.store')}}" method="POST" id="registration-form">
             @csrf
             <div class="card mt-2 rounded-3 pt-2 mt-3">
                 <div class="card-body px-3 px-lg-5">
@@ -20,18 +20,18 @@
                             <div class="row mt-3">
                                 <div class="col-md-3 mb-2 pe-md-1">
                                     <label><small class="text-muted">Firstname</small><small class="text-danger"> *</small></label>
-                                    <input type="text" name="firstname" id="" class="form-control mt-2" placeholder="First name" >
+                                    <input type="text" name="firstname" class="form-control mt-2" placeholder="First name" >
                                     <small id="error-firstname" class="text-danger" hidden>
 
                                     </small>
                                 </div>
                                 <div class="col-md-3 ps-lg-0 pe-lg-0 ps-md-0">
                                     <small class="text-muted">Middlename (optional)</small>
-                                    <input type="text" name="middlename" id="" class="form-control mt-2 mb-sm-2" placeholder="Middle name">
+                                    <input type="text" name="middlename"  class="form-control mt-2 mb-sm-2" placeholder="Middle name">
                                 </div>
                                 <div class="col-md-3 ps-lg-1 pt-md-0 pt-sm-2 pt-xs-2">
                                     <label><small class="text-muted">Lastname</small><small class="text-danger"> *</small></label>
-                                    <input type="text" name="lastname" id="" class="form-control mt-2" placeholder="Last name">
+                                    <input type="text" name="lastname" class="form-control mt-2" placeholder="Last name">
                                     <small id="error-lastname" class="text-danger" hidden>
 
                                     </small>
@@ -55,20 +55,23 @@
                                 </div>
                             </div>
                             <div class="row mb-3">
+                                <div class="col-md-3 ps-md-0">
+                                    <label for=""><small class="text-muted">Barangay</small> <small class="text-danger">*</small></label>
+                                    <select name="barangayCode" id="brgy-dropdown" class="form-select mb-3 mt-2 mb-md-2 mb-sm-2">
+        
+                                    </select>
+                                    <input type="text" name="barangay" hidden>
+                                </div>
                                 <div class="col-md-3 pe-md-1">
                                     <label for=""><small class="text-muted">Purok</small> <small class="text-danger">*</small></label>
-                                    <input type="text" name="purok" id="" class="form-control mt-2 mb-md-2 mb-sm-2">
+                                    <select name="purokCode" id="purok-dropdown" class="form-select mb-3 mt-2 mb-md-2 mb-sm-2">
+                                       
+                                    </select>
+                                    <input type="text" name="purok" hidden>
+    
                                     <small id="error-purok" class="text-danger" hidden>
 
                                     </small>
-                                </div>
-                                <div class="col-md-3 ps-md-0">
-                                    <label for=""><small class="text-muted">Barangay</small> <small class="text-danger">*</small></label>
-                                    <select name="barangay" id="" class="form-select mb-3 mt-2 mb-md-2 mb-sm-2">
-                                        @foreach($barangays as $barangay)
-                                        <option value="{{$barangay}}">{{$barangay}}</option>
-                                        @endforeach
-                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -183,6 +186,7 @@
 @endsection
 
 @section('custom-js')
+<script src="{{ asset('assets/js/location.js') }}"></script>
 
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
