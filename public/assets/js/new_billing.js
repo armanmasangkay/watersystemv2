@@ -69,7 +69,7 @@ $(document).ready(function(){
             const total = ((surcharge + balance) + (meter_ips + amount_consumption));
 
             $('#total').val(total);
-            $('#save-billing').prop('disabled', true);
+            $('#save-billing').prop('disabled', false);
         }
         else{
             $('#save-billing').prop('disabled', true);
