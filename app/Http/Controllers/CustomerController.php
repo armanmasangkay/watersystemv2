@@ -9,6 +9,7 @@ use App\Classes\Facades\CustomerRegistrationOptions;
 use App\Exceptions\BarangayDoesNotExistException;
 use App\Models\Customer;
 use App\Models\Transaction;
+use App\Services\AccountNumberService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -17,24 +18,18 @@ use Illuminate\Support\Facades\Auth;
 
 class CustomerController extends Controller
 {
-
     public function index()
     {
 
-       return view('pages.consumer-data-entry',[
-        'civilStatuses'=>CustomerRegistrationOptions::civilStatuses(),
-        'barangays'=>CustomerRegistrationOptions::barangays(),
-        'connectionTypes'=>CustomerRegistrationOptions::connectionTypes(),
-        'connectionStatuses'=>CustomerRegistrationOptions::connectionStatuses()
-        ]);
     }
 
     public function showAll()
     {
         $customers=Customer::paginate(10);
-
         return view('pages.customers-list',['customers'=>$customers]);
     }
+
+
 
     public function getOnlyTransaction($customerId, $requestData)
     {
@@ -57,8 +52,7 @@ class CustomerController extends Controller
 
     public function store(Request $request)
     {
-        $brgyCode=BarangayData::getCodeByName($request->barangay);
-        $accountNumber=AccountNumber::new(strval($brgyCode),BarangayData::numberOfPeopleOn($request->barangay));
+        $accountNumber=(new AccountNumberService)->generateNew($request->barangayCode,$request->purokCode);
 
         $rules=[
             'account_number'=>'required',
@@ -68,7 +62,6 @@ class CustomerController extends Controller
             'purok'=>'required',
             'barangay'=>[
                 'required',
-                Rule::in(BarangayData::names())
             ],
             'contact_number'=>'required|numeric|digits:11',
             'connection_type'=>'required',
@@ -143,8 +136,6 @@ class CustomerController extends Controller
 
         $transactions = $this->getOnlyTransaction($customer->account_number, $request->all());
         Transaction::create($transactions);
-
-
 
         return response()->json([
             'created'=>true

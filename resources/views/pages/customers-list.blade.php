@@ -13,6 +13,29 @@
           <h4 class='text-center'><i data-feather="users" class="feather-32"></i>&nbsp;&nbsp;Customers</h4>
       </div>
       <div class="card-body">
+        <div class="row">
+          <div class="col-12 col-md-8 col-lg-6 col-xl-4">
+
+            <form action="{{route('admin.searched-customers.index')}}" action="get">
+              <div class="input-group mb-3">
+                <input type="text" name='keyword' value="{{$keyword??''}}" class="form-control @error('keyword')is-invalid @enderror" placeholder="Enter Name / Account #" aria-describedby="button-addon2">
+                <button class="btn btn-outline-primary" type="submit" id="button-addon2">Search</button>
+                @error('keyword')
+                <div id="validationServerUsernameFeedback" class="invalid-feedback">
+                  {{$message}}
+                </div>
+                @enderror
+              </div>
+            
+          </form>
+          </div>
+        </div>
+        @if(isset($keyword))
+        <small>
+          <a href="{{route('admin.customers')}}">Show all</a>
+        </small>
+       
+        @endif
           @if($customers->count()>0)
           <div class="table-responsive">
               <table class="table table-hover table-bordered">
@@ -44,15 +67,15 @@
                   </tbody>
                 </table>
               </div> 
-
+        
               {{$customers->links()}}
+          
             @else
             <div class="text-muted text-center">
                 <h3><i class="fas fa-user-times"></i></h3>
-                <p>There are no currently registered customer.</p>
+                <p>Nothing to show</p>
             </div>
-              
-
+            
             @endif
       </div>
   </div>

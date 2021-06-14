@@ -134,13 +134,33 @@ function createTransaction(balance, meterReading,lastPaymentDate, transactionsHe
     }
 }
 
+function populateBrgyOptions(){
+    let brgyOptions=`<option value="">--Select a barangay--</option>`;
+
+    Object.keys(addresses).forEach((value,index)=>{
+        brgyOptions=brgyOptions+`<option value="${addresses[value].id}">${value}</option>`;
+    });
+    return brgyOptions;
+}
+
+function populatePurokOptions(brgy){
+    let purokOptions=`<option value="">--Select a purok--</option>`;
+    try{
+
+        Object.keys(addresses[brgy].puroks).forEach((value,index)=>{
+            purokOptions=purokOptions+`<option value="${value}">${addresses[brgy].puroks[value]}</option>`;
+        });
+    }catch(err){
+
+    }
+    
+    return purokOptions;
+}
+
 
 
 $(document).ready(function(){
 
-    /*
-        Ledger Setup
-    */
     const transactionsHeader=$("#transactions-header")
     const transactionsContainer=$("#transactions-container")
     const lastPaymentDate=$("#lastPaymentDate")
@@ -158,6 +178,31 @@ $(document).ready(function(){
 
     transactionsHeader.hide()
     addMoreBtn.hide()
+
+    const brgyDropdown=$("#brgy-dropdown");
+    const purokDropdown=$("#purok-dropdown");
+    const brgyCodeTxtField=$("input[name=barangay");
+    const purokCodeTxtField=$("input[name=purok");
+
+    brgyDropdown.append(populateBrgyOptions());
+
+    brgyDropdown.change((e)=>{
+        let selectedBrgy=$("#brgy-dropdown option:selected").val()==""?"":$("#brgy-dropdown option:selected").text();
+        brgyCodeTxtField.val(selectedBrgy);
+        purokDropdown.empty();
+        if(selectedBrgy!=""){
+            purokDropdown.append(populatePurokOptions(selectedBrgy));
+        }
+        
+    })
+
+    purokDropdown.change((e)=>{
+
+        let selectedPurok=$("#purok-dropdown option:selected").val()==""?"":$("#purok-dropdown option:selected").text();
+        purokCodeTxtField.val(selectedPurok);
+    })
+
+
 
     addMoreBtn.click((e)=>{
         e.preventDefault()
