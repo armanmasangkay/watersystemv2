@@ -22,7 +22,8 @@ class ExistingCustomerController extends Controller
      */
     public function index()
     {
-        
+        $customers=Customer::paginate(10);
+        return view('pages.customers-list',['customers'=>$customers]);
     }
 
     /**
