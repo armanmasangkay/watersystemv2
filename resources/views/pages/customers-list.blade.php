@@ -26,7 +26,7 @@
                 </div>
                 @enderror
               </div>
-            
+
           </form>
           </div>
         </div>
@@ -34,7 +34,7 @@
         <small>
           <a href="{{route('admin.customers')}}">Show all</a>
         </small>
-       
+
         @endif
           @if($customers->count()>0)
           <div class="table-responsive">
@@ -51,9 +51,9 @@
                     </tr>
                   </thead>
                   <tbody>
-              
+
                       @foreach ($customers as $customer)
-                      <tr>
+                      <tr style="cursor: pointer;" onclick="location.href='{{ route('admin.search-transactions', ['account_number' => $customer->account_number]) }}'">
                           <th>{{$customer->account_number}}</th>
                           <td>{{$customer->firstname . ' ' .$customer->middlename. ' '.$customer->lastname}}</td>
                           <td>{{Str::ucfirst($customer->civil_status)}}</td>
@@ -63,25 +63,25 @@
                           <td>{{Str::ucfirst($customer->connection_status)}}</td>
                       </tr>
                       @endforeach
-                
+
                   </tbody>
                 </table>
-              </div> 
-        
+              </div>
+
               {{$customers->links()}}
-          
+
             @else
             <div class="text-muted text-center">
                 <h3><i class="fas fa-user-times"></i></h3>
                 <p>Nothing to show</p>
             </div>
-            
+
             @endif
       </div>
   </div>
 </div>
 
- 
+
 
 
 

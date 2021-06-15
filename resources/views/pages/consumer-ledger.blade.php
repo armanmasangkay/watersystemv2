@@ -26,7 +26,7 @@
                 <div class="card-header border-secondary px-2 pb-0 f94c7eb">
                     <h3 class="h5 mb-2 mt-0 text-center"><strong>CONSUMER LEDGER CARD</strong></h3>
                 </div>
-              
+
                 <div class="card-header border-secondary px-4 pb-2 pt-2 bg-light">
                     <div class="row">
                         <div class="col-md-6 d-flex justify-content-between align-items-center pe-5"><span><strong>Name:</strong></span>&nbsp;&nbsp;
@@ -74,7 +74,7 @@
                                     <td class="pt-2 pb-2 text-center eee border-end border-secondary"><strong>DATE</strong></td>
                                     <td class="pt-2 pb-2 text-center eee border-end border-secondary"><strong>AMOUNT</strong></td>
                                     <td class="pt-2 pb-2 text-center eee"><strong>POSTED BY</strong></td>
-                                    
+
                                 </tr>
                             </thead>
                             <tbody>
@@ -124,7 +124,7 @@
                 <input type="hidden" name="or_num" value="{{ isset($customer) ? $customer['balance']->payment_or_no : ''}}">
                 <input type="hidden" name="surcharge" value="{{ isset($surcharge) ? $surcharge : '0'}}">
                 <input type="hidden" name="customer_id" value="{{ isset($customer) ? $customer['account'] : '' }}">
-                
+
                 <div class="modal-header">
                     <h5 class="modal-title text-muted" id="exampleModalLabel"><i data-feather="file"></i><strong>&nbsp; New Billing Setup</strong></h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -138,7 +138,7 @@
                         </div>
                         <div class="col-lg-2 col-md-4 col-sm-6 mb-sm-2 ps-md-0 pe-md-0 ps-sm-1">
                             <label class='text-muted'>Balance</label>
-                            <input class="form-control" id="cur_balance" name="cur_balance" type="number" placeholder="Meter reading" min=0 readonly value="{{ isset($customer) ? toAccounting($customer["balance"]->balance) : '0.00' }}">
+                            <input class="form-control" id="cur_balance" name="cur_balance" type="text" placeholder="Meter reading" min=0 readonly value="{{ isset($customer) ? toAccounting($customer["balance"]->balance) : '0.00' }}">
                         </div>
                     </div>
                     <div class="row mt-1">
