@@ -10,6 +10,7 @@ $(document).ready(function(){
         if($('#reading_date').val() != '')
         {
             $('#save-billing').html('<i class="far fa-spinner fa-spin"></i>&nbsp; Processing ...');
+            $('#save-billing').prop('disabled', true);
             $('#current-month').prop('disabled', false);
             $('#next-month').prop('disabled', false);
 
