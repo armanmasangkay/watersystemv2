@@ -55,14 +55,14 @@
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <div class="col-md-3 ps-md-0">
+                                <div class="col-md-3 pe-md-0">
                                     <label for=""><small class="text-muted">Barangay</small> <small class="text-danger">*</small></label>
                                     <select name="barangayCode" id="brgy-dropdown" class="form-select mb-3 mt-2 mb-md-2 mb-sm-2">
         
                                     </select>
                                     <input type="text" name="barangay" hidden>
                                 </div>
-                                <div class="col-md-3 pe-md-1">
+                                <div class="col-md-3 ps-md-1">
                                     <label for=""><small class="text-muted">Purok</small> <small class="text-danger">*</small></label>
                                     <select name="purokCode" id="purok-dropdown" class="form-select mb-3 mt-2 mb-md-2 mb-sm-2">
                                        
