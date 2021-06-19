@@ -17,7 +17,7 @@
             </a>
             <ul class="dropdown-menu px-2" aria-labelledby="navbarDropdown">
               <li><a class="dropdown-item" href="{{route('admin.existing-customers.create')}}">Data Entry</a></li>
-              <li><a class="dropdown-item" href="{{route('admin.consumer-ledger')}}">Ledger Card</a></li>
+              {{-- <li><a class="dropdown-item" href="{{route('admin.consumer-ledger')}}">Ledger Card</a></li> --}}
               <li><a class="dropdown-item" href="{{route('admin.existing-customers.index')}}">View Lists</a></li>
             </ul>
 
