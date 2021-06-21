@@ -53,7 +53,7 @@
                   <tbody>
 
                       @foreach ($customers as $customer)
-                      <tr style="cursor: pointer;" onclick="location.href='{{ route('admin.search-transactions', ['account_number' => $customer->account_number]) }}'">
+                      <tr style="cursor: pointer;" onclick='location.href=`{{ route("admin.search-transactions", ["account_number" => $customer->account_number]) }}`'>
                           <th>{{$customer->account_number}}</th>
                           <td>{{$customer->firstname . ' ' .$customer->middlename. ' '.$customer->lastname}}</td>
                           <td>{{Str::ucfirst($customer->civil_status)}}</td>
