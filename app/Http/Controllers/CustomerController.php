@@ -42,6 +42,7 @@ class CustomerController extends Controller
         $transaction = Arr::add($transaction, 'period_covered', 'Beginning Balance');
         $transaction = Arr::add($transaction, 'customer_id', $customerId);
         $transaction = Arr::add($transaction, 'user_id', Auth::id());
+        $transaction = Arr::add($transaction, 'posted_by', Auth::id());
         return $transaction;
     }
 

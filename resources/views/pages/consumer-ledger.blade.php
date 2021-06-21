@@ -91,11 +91,11 @@
                                     <td class="pt-2 pb-2 text-center f8d6b0 border-end border-secondary">{{ toAccounting($billing->billing_surcharge) }}</td>
                                     <td class="pt-2 pb-2 text-center f8d6b0 border-end border-secondary">{{ toAccounting($billing->billing_meter_ips) }}</td>
                                     <td class="pt-2 pb-2 text-center f8d6b0 border-end border-secondary">{{ toAccounting($billing->billing_total) }}</td>
-                                    <td class="pt-2 pb-2 text-center bg-white border-end border-secondary">John Clinton Doe</td>
+                                    <td class="pt-2 pb-2 text-center bg-white border-end border-secondary">{{ $billing->user->name }}</td>
                                     <td class="pt-2 pb-2 text-center eee border-end border-secondary">{{ $billing->payment_or_no }}</td>
                                     <td class="pt-2 pb-2 text-center eee border-end border-secondary">{{ $billing->payment_date }}</td>
                                     <td class="pt-2 pb-2 text-center eee border-end border-secondary">{{ !empty($billing->payment_amount) ? toAccounting($billing->payment_amount) : '' }}</td>
-                                    <td class="pt-2 pb-2 text-center eee border-bottom border-secondary">{{ $billing->user->name }}</td>
+                                    <td class="pt-2 pb-2 text-center eee border-bottom border-secondary">{{ !empty($billing->payment_or_no) ? $billing->user->name : '' }}</td>
                                 </tr>
                                 @endforeach
                                 @endif

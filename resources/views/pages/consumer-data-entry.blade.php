@@ -145,19 +145,19 @@
                             <hr class="text-secondary">
                             <h5 class="text-muted">Beginning Meter Reading</h5>
                             <div class="row mt-3 mb-4">
-                                <div class="col-md-3 mb-sm-2 pe-md-1 pe-sm-1">
+                                <div class="col-md-3 mb-sm-2 pe-md-1">
                                     <label class='text-muted'>Previous Meter Reading <small class="text-danger">*</small></label>
                                     <input class="form-control mt-2" type="number" id="reading_meter" name="reading_meter" placeholder="Enter meter reading" min=0>
                                     <small id="error-reading-meter" class="text-danger"></small>
                                 </div>
 
-                                <div class="col-md-3 mt-md-0 px-md-0 ps-sm-0">
+                                <div class="col-md-3 mt-md-0 px-md-0">
                                     <label class='text-muted'>Current Balance <small class="text-danger">*</small></label>
                                     <input class="form-control mt-2" type="number" id="balance" name="balance" placeholder="Enter balance amount" min=0>
                                     <small id="error-balance" class="text-danger"></small>
                                 </div>
 
-                                <div class="col-md-3 mt-md-0 ps-md-1 pe-sm-1">
+                                <div class="col-md-3 mt-md-0 ps-md-1">
                                     <label class='text-muted'>Date <small class="text-danger">*</small></label>
                                     <input class="form-control mt-2" id="reading_date" name="reading_date" type="date">
                                     <small id="error-reading-date" class="text-danger"></small>
@@ -165,7 +165,7 @@
                             </div>
                             <h5 class="text-muted">Meter Installment Payments</h5>
                             <div class="row mt-3 mb-4">
-                                <div class="col-md-3 mb-sm-2 pe-md-1 pe-sm-1">
+                                <div class="col-md-3 mb-sm-2 pe-md-1">
                                     <label class='text-muted'>Current Balance <small class="text-danger">*</small></label>
                                     <input class="form-control mt-2" type="number" id="billing_meter_ips" name="billing_meter_ips" placeholder="Enter balance amount" min=0>
                                 </div>

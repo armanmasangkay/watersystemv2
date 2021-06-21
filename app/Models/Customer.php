@@ -25,7 +25,7 @@ class Customer extends Model
         'contact_number',
         'connection_type',
         'connection_status',
-        'purchase_option'
+        'purchase_option',
     ];
 
 

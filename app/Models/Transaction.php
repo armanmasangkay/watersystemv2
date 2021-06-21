@@ -26,7 +26,8 @@ class Transaction extends Model
         'payment_date',
         'payment_amount',
         'balance',
-        'user_id'
+        'user_id',
+        'posted_by'
     ];
 
     public function customer()
