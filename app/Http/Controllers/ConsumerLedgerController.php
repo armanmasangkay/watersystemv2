@@ -92,7 +92,7 @@ class ConsumerLedgerController extends Controller
             'billing_meter_ips' => $request->meter_ips,
             'billing_total' => $request->total,
             'balance' => $request->total,
-            'user_id' => Auth::id()
+            'posted_by' => Auth::id()
         ];
 
         $transactions = Transaction::create($fillable);
