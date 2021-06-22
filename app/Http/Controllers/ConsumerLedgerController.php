@@ -43,9 +43,9 @@ class ConsumerLedgerController extends Controller
         $transactions = Transaction::orderBy('created_at', 'asc')->where('customer_id', $account_number)->paginate(10);
 
         $rate = [];
-        
+
         $rates = WaterRate::all();
-        
+
 
         for($i = 0; $i < count($rates); $i++)
         {
@@ -65,10 +65,10 @@ class ConsumerLedgerController extends Controller
         // dd($date[1]);
         return view('pages.consumer-ledger',[
             'customer' => [
-                'fullname' => $fullname, 
-                'address' => $address, 
-                'transactions' => $transactions, 
-                'account' => $acc, 
+                'fullname' => $fullname,
+                'address' => $address,
+                'transactions' => $transactions,
+                'account' => $acc,
                 'balance' => $balance,
                 'connection_type' => $customer->connection_type,
             ],
@@ -92,6 +92,7 @@ class ConsumerLedgerController extends Controller
             'billing_meter_ips' => $request->meter_ips,
             'billing_total' => $request->total,
             'balance' => $request->total,
+            'user_id' => Auth::id(),
             'posted_by' => Auth::id()
         ];
 

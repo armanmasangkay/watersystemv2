@@ -2,11 +2,11 @@ $(document).ready(function(){
 
     $("#billing-form").on('submit', function(e){
         e.preventDefault();
-        
+
         let registerForm = document.getElementById('billing-form')
         let actionURI = registerForm.getAttribute('action')
 
-        
+
         if($('#reading_date').val() != '')
         {
             $('#save-billing').html('<i class="far fa-spinner fa-spin"></i>&nbsp; Processing ...');
@@ -62,7 +62,7 @@ $(document).ready(function(){
             const meter_consumption = parseInt($(this).val()) - parseInt($('#meter-reading').val());
             const total_consumption = ((meter_consumption - max_range) * excess_rate) + min_rates;
             const amount_consumption = meter_consumption <= max_range ? min_rates : total_consumption;
-            
+
             $('#consumption').val(meter_consumption);
             $('#surcharge_amount').val(surcharge);
             $('#amount').val(amount_consumption);
