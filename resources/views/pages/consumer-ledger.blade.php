@@ -59,8 +59,7 @@
                                 <tr>
                                     <td class="pt-1 pb-3 text-center bg-white border-end border-secondary" rowspan="2"><strong>PERIOD </br>COVERED</strong></td>
                                     <td class="pt-2 pb-2 text-center f0f0f0 border-end border-secondary" colspan="3"><strong>READING</strong></td>
-                                    <td class="pt-2 pb-2 text-center f8d6b0 border-end border-secondary" colspan="4"><strong>BILLING</strong></td>
-                                    <td class="pt-1 pb-4 text-center bg-white border-end border-secondary" rowspan="2"><strong>POSTED BY</strong></td>
+                                    <td class="pt-2 pb-2 text-center f8d6b0 border-end border-secondary" colspan="5"><strong>BILLING</strong></td>
                                     <td class="pt-2 pb-2 text-center eee border-bottom border-secondary" colspan="4"><strong>PAYMENT</strong></td>
                                 </tr>
                                 <tr>
@@ -71,6 +70,7 @@
                                     <td class="pt-2 pb-2 text-center f8d6b0 border-end border-secondary"><strong>SURCHARGE</strong></td>
                                     <td class="pt-2 pb-2 text-center f8d6b0 border-end border-secondary"><strong>METER IPS</strong></td>
                                     <td class="pt-2 pb-2 text-center f8d6b0 border-end border-secondary"><strong>TOTAL</strong></td>
+                                    <td class="pt-2 pb-2 text-center f8d6b0 border-end border-secondary"><strong>POSTED BY</strong></td>
                                     <td class="pt-2 pb-2 text-center eee border-end border-secondary"><strong>OR NO</strong></td>
                                     <td class="pt-2 pb-2 text-center eee border-end border-secondary"><strong>DATE</strong></td>
                                     <td class="pt-2 pb-2 text-center eee border-end border-secondary"><strong>AMOUNT</strong></td>
@@ -91,7 +91,7 @@
                                     <td class="pt-2 pb-2 text-center f8d6b0 border-end border-secondary">{{ toAccounting($billing->billing_surcharge) }}</td>
                                     <td class="pt-2 pb-2 text-center f8d6b0 border-end border-secondary">{{ toAccounting($billing->billing_meter_ips) }}</td>
                                     <td class="pt-2 pb-2 text-center f8d6b0 border-end border-secondary">{{ toAccounting($billing->billing_total) }}</td>
-                                    <td class="pt-2 pb-2 text-center bg-white border-end border-secondary">{{ $billing->user->name }}</td>
+                                    <td class="pt-2 pb-2 text-center f8d6b0 border-end border-secondary">{{ $billing->user->name }}</td>
                                     <td class="pt-2 pb-2 text-center eee border-end border-secondary">{{ $billing->payment_or_no }}</td>
                                     <td class="pt-2 pb-2 text-center eee border-end border-secondary">{{ $billing->payment_date }}</td>
                                     <td class="pt-2 pb-2 text-center eee border-end border-secondary">{{ !empty($billing->payment_amount) ? toAccounting($billing->payment_amount) : '' }}</td>
