@@ -76,6 +76,7 @@ class ConsumerLedgerController extends Controller
             'surcharge' => $surcharge[0]->rate,
             'last_date' => $date[1],
             'route' => 'admin.search-transactions',
+            'current_transaction_id' => $balance->id
         ]);
     }
 
@@ -88,12 +89,18 @@ class ConsumerLedgerController extends Controller
             'reading_meter' => $request->reading_meter,
             'reading_consumption' => $request->consumption,
             'billing_amount' => $request->amount,
-            'billing_surcharge' => $request->surcharge_amount,
+            'billing_surcharge' => '0.00',
             'billing_meter_ips' => $request->meter_ips,
             'billing_total' => $request->total,
             'balance' => $request->total,
-            'posted_by' => Auth::id()
+            'posted_by' => Auth::id(),
+            'user_id' => Auth::id(),
         ];
+
+        $update_transaction = Transaction::find($request->current_transaction_id);
+        $update_transaction->billing_surcharge = $request->surcharge_amount;
+        $update_transaction->billing_total += $request->surcharge_amount;
+        $update_transaction->update();
 
         $transactions = Transaction::create($fillable);
         return response()->json(['created' => true]);
