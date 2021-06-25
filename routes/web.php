@@ -81,6 +81,7 @@ Route::prefix('admin')->middleware('auth')->name('admin.')->group(function(){
 
     Route::get('/water-rate', [WaterRateController::class, 'getWaterRates'])->middleware('access.authorize');
     Route::post('/water-rate', [WaterRateController::class, 'update'])->name('water-rate-update');
+    Route::get('/surcharge', [SurchargeController::class, 'getSurcharge'])->middleware('access.authorize');
     Route::post('/surcharge', [SurchargeController::class, 'update'])->name('surcharge-update');
 
     Route::get('/consumer-ledger',[ConsumerLedgerController::class, 'index'])->name('consumer-ledger');
