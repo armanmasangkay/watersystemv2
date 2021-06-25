@@ -1,13 +1,10 @@
-$(document).ready(() => {
-    async function getWaterRates(){
-        let water_rates = await fetch('/admin/water-rate');
-        water_rates = await water_rates.json();
-        return await  water_rates;
-    }
+$(document).ready(async() => {
+    let water_rates_value = await fetch('/admin/water-rate');
+    water_rates_value = await water_rates_value.json();
 
     async function setWaterRates(){
         let water_types = document.getElementById('type');
-        let water_rates =await getWaterRates();
+        let water_rates = await water_rates_value;
 
         for(let i = 0 ; i < water_rates.data.reverse().length; i++)
         {
@@ -19,7 +16,7 @@ $(document).ready(() => {
     }
 
     async function WaterTypeChangeValue(){
-        let water_rates = await getWaterRates();
+        let water_rates = await water_rates_value;
         let water_types = document.getElementById('type');
         let min_rate = document.getElementById('min_rate');
         let excess_rate = document.getElementById('excess_rate');
