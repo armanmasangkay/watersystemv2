@@ -39,7 +39,7 @@ Route::prefix('admin')->middleware('auth')->name('admin.')->group(function(){
         'existing-customers'=>ExistingCustomerController::class,
     ]);
 
-    
+
     Route::post('/logout',[LogoutUserController::class,'logout'])->middleware('auth')->name('logout');
     Route::get('/consumers',[CustomerController::class,'showAll'])->middleware('auth')->name('customers');
     Route::get('/transaction/new',[TransactionsController::class,'index'])->middleware('auth')->name('new-transaction');
@@ -79,6 +79,7 @@ Route::prefix('admin')->middleware('auth')->name('admin.')->group(function(){
     Route::get('/transfer-meter',[TransferOfMeterController::class, 'index'])->name('transfer-meter');
     Route::get('/search-info',[TransferOfMeterController::class, 'search'])->name('search-info');
 
+    Route::get('/water-rate', [WaterRateController::class, 'getWaterRates'])->middleware('access.authorize');
     Route::post('/water-rate', [WaterRateController::class, 'update'])->name('water-rate-update');
     Route::post('/surcharge', [SurchargeController::class, 'update'])->name('surcharge-update');
 

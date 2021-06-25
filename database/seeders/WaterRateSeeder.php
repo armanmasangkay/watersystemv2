@@ -14,12 +14,19 @@ class WaterRateSeeder extends Seeder
      */
     public function run()
     {
-        $names = ['Residential', 'Institutional', 'Commercial'];
-        for($x = 0 ; $x < 3 ; $x++)
+        $names = ['Residential', 'Institutional'];
+        for($x = 0 ; $x < 2 ; $x++)
         {
             WaterRate::factory()->create([
                 'type' => $names[$x],
             ]);
         }
+
+        WaterRate::create([
+            'type' => 'Commercial',
+            'consumption_max_range' => 10,
+            'min_rate' => 1.1,
+            'excess_rate' => 0.15,
+        ]);
     }
 }
