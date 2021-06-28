@@ -71,6 +71,7 @@ class ConsumerLedgerController extends Controller
                 'account' => $acc,
                 'balance' => $balance,
                 'connection_type' => $customer->connection_type,
+                'org_name'=>$customer->org_name
             ],
             'rates' => $rate,
             'surcharge' => $surcharge[0]->rate,
