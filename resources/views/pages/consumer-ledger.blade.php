@@ -58,7 +58,7 @@
                         <table class="table mb-0 border-0" style="min-width: 1200px;">
                             <thead>
                                 <tr>
-                                    <td class="pt-1 pb-3 text-center bg-white border-end border-secondary" rowspan="2" colspan="2"><strong>PERIOD </br>COVERED</strong></td>
+                                    <td class="pt-1 pb-3 text-center bg-white border-end border-secondary" rowspan="2"><strong>PERIOD </br>COVERED</strong></td>
                                     <td class="pt-2 pb-2 text-center f0f0f0 border-end border-secondary" colspan="3"><strong>READING</strong></td>
                                     <td class="pt-2 pb-2 text-center f8d6b0 border-end border-secondary" colspan="5"><strong>BILLING</strong></td>
                                     <td class="pt-2 pb-2 text-center eee border-bottom border-secondary" colspan="4"><strong>PAYMENT</strong></td>
@@ -84,7 +84,6 @@
                                 @if(isset($customer))
                                 @foreach($customer["transactions"] as $billing)
                                 <tr>
-                                    <td class="py-0 text-center bg-white border-end border-secondary"><input type="checkbox" name="" id="" class="my-0" {{ !empty($billing->payment_or_no) ? 'checked disabled' : '' }}></td>
                                     <td class="pt-2 pb-1 text-center bg-white border-end border-secondary">{{ $billing->period_covered }}</td>
                                     <td class="pt-2 pb-1 text-center f0f0f0 border-end border-secondary">{{ \Carbon\Carbon::parse($billing->reading_date)->format('m-d-Y') }}</td>
                                     <td class="pt-2 pb-1 text-center f0f0f0 border-end border-secondary">{{ $billing->reading_meter }}</td>

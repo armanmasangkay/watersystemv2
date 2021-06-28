@@ -59,6 +59,11 @@
     </div>
   </nav>
 
+  @auth
+      @include('templates.water-rate')
+      @include('templates.surcharge')
+  @endauth
+
   <style>
     #logoutBtn{
       text-decoration: none;
