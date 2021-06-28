@@ -17,7 +17,19 @@
                             <p class="text-primary mt-4">Personal Information</p>
                             <hr>
                             <h5 class="text-muted">Information Setup</h5>
+                            <div class="row">
+                                <div class="col-12 col-md-6 col-lg-4 col-xl-4">
+                                    <label><small class="text-muted">Organization Name</small><small class="text-muted"> (only if applicable)</small></label>
+                                    <input type="text" name="org_name" class="form-control mt-2" placeholder="Organization Name" >
+                                    <small id="error-organization-name" class="text-danger" hidden>
+                                    </small>
+                                </div>
+                            </div>
+
+                            
                             <div class="row mt-3">
+                                
+
                                 <div class="col-md-3 mb-2 pe-md-1">
                                     <label><small class="text-muted">Firstname</small><small class="text-danger"> *</small></label>
                                     <input type="text" name="firstname" class="form-control mt-2" placeholder="First name" >
