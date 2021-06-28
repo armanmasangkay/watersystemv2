@@ -23,8 +23,8 @@ class WaterRateFactory extends Factory
     {
         return [
             'consumption_max_range' => 10,
-            'min_rate' => 65,
-            'excess_rate' => 10,
+            'min_rate' => 0.65,
+            'excess_rate' => 0.10,
         ];
 
     }
