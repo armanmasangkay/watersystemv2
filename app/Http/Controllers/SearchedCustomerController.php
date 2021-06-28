@@ -17,6 +17,7 @@ class SearchedCustomerController extends Controller
                             ->orWhereRaw("concat(firstname,' ',lastname)=?",$request->keyword)
                             ->orWhereRaw("concat(lastname,' ',firstname)=?",$request->keyword)
                             ->orWhere('account_number','LIKE',"%{$request->keyword}%")
+                            ->orWhere('org_name','LIKE',"%{$request->keyword}%")
                             ->get();
                             
         $customers=new Paginator($customers->all(),10);
