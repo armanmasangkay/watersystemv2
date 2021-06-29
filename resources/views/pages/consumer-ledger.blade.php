@@ -156,9 +156,13 @@
                     <div class="row mt-3">
                         <div class="col-md-4 pe-md-0">
                             <label class='text-muted'>Reading date</label>
-                            <input class="form-control" name="reading_date" id="reading_date" type="date">
+                            <input class="form-control" name="reading_date" id="reading_date" type="date" 
+                            min="{{\Carbon\Carbon::createFromFormat('M d, Y',$last_date)->addMonth()->format('Y-m-01')}}" 
+                            max="{{\Carbon\Carbon::createFromFormat('M d, Y',$last_date)->addMonth()->endOfMonth()->format('Y-m-d')}}">
                         </div>
                     </div>
+                   
+                    
                     <div class='row px-md-2 mb-2 mt-2'>
                         <div class='col-6 col-md-3 col-lg-2 col-xl-1 mt-2 pe-md-1 ps-md-1 ps-lg-1 pe-sm-1 pe-1'>
                             <small class='text-primary'>{{ isset($last_date) ? \Carbon\Carbon::parse($last_date)->format('M, Y') : '' }}</small>
