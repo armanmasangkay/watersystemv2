@@ -32,7 +32,7 @@ Route::get('/', function () {
 Route::get('/login',[LoginController::class,'index'])->name('login');
 Route::post('/login',[LoginController::class,'authenticate']);
 
-Route::prefix('admin')->middleware('auth')->name('admin.')->group(function(){
+Route::middleware('auth')->name('admin.')->group(function(){
 
     Route::resources([
         'searched-customers'=>SearchedCustomerController::class,
