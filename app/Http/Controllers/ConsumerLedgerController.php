@@ -62,7 +62,7 @@ class ConsumerLedgerController extends Controller
         $surcharge = Surcharge::all();
 
         $date = ($balance->period_covered != "Beginning Balance" ? explode('-', $balance->period_covered) : explode('/', '/'.$balance->reading_date));
-        // dd($date[1]);
+    
         return view('pages.consumer-ledger',[
             'customer' => [
                 'fullname' => $fullname,

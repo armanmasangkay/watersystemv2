@@ -153,12 +153,14 @@
                     </div>
 
                     <h5 class="text-muted mt-4">Current Meter Reading</h5>
+                
                     <div class="row mt-3">
                         <div class="col-md-4 pe-md-0">
                             <label class='text-muted'>Reading date</label>
                             <input class="form-control" name="reading_date" id="reading_date" type="date" 
-                            min="{{\Carbon\Carbon::createFromFormat('M d, Y',$last_date)->addMonth()->format('Y-m-01')}}" 
-                            max="{{\Carbon\Carbon::createFromFormat('M d, Y',$last_date)->addMonth()->endOfMonth()->format('Y-m-d')}}">
+                            min="{{\Carbon\Carbon::parse($last_date)->addMonth()->format('Y-m-01')}}" 
+                            max="{{\Carbon\Carbon::parse($last_date)->addMonth()->endOfMonth()->format('Y-m-d')}}">
+    
                         </div>
                     </div>
                    
