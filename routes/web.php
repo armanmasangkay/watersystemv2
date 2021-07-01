@@ -9,6 +9,7 @@ use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\TransactionsController;
 use App\Http\Controllers\ReconnectionController;
 use App\Http\Controllers\BLDGApprovalController;
+use App\Http\Controllers\CashierController;
 use App\Http\Controllers\MTOApprovalController;
 use App\Http\Controllers\WaterWorksApprovalController;
 use App\Http\Controllers\MunicipalEngApprovalController;
@@ -37,6 +38,7 @@ Route::prefix('admin')->middleware('auth')->name('admin.')->group(function(){
     Route::resources([
         'searched-customers'=>SearchedCustomerController::class,
         'existing-customers'=>ExistingCustomerController::class,
+        'cashiers'=>CashierController::class
     ]);
 
 

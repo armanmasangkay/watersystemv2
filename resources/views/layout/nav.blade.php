@@ -41,6 +41,21 @@
 
           </li>
           @endadminonly
+
+
+          <li class="nav-item dropdown pt-1">
+            <a class="nav-link dropdown-toggle text-secondary" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+             <i data-feather="users" class="feather-16 m-1"></i> Accounts
+            </a>
+            <ul class="dropdown-menu px-2" aria-labelledby="navbarDropdown">
+              <li>
+                <a class="dropdown-item" href="{{route('admin.cashiers.index')}}">Cashiers</a>
+              
+              </li>
+            </ul>
+
+          </li>
+
           @adminonly(Auth::user()->role)
           <li class="nav-item dropdown pt-1">
             <a class="nav-link dropdown-toggle text-secondary" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
