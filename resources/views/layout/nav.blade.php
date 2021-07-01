@@ -43,6 +43,7 @@
           @endadminonly
 
 
+          @adminonly(Auth::user()->role)
           <li class="nav-item dropdown pt-1">
             <a class="nav-link dropdown-toggle text-secondary" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
              <i data-feather="users" class="feather-16 m-1"></i> Accounts
@@ -55,6 +56,7 @@
             </ul>
 
           </li>
+          @endadminonly
 
           @adminonly(Auth::user()->role)
           <li class="nav-item dropdown pt-1">

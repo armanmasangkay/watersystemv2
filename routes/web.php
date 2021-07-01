@@ -38,8 +38,10 @@ Route::prefix('admin')->middleware('auth')->name('admin.')->group(function(){
     Route::resources([
         'searched-customers'=>SearchedCustomerController::class,
         'existing-customers'=>ExistingCustomerController::class,
-        'cashiers'=>CashierController::class
+        
     ]);
+
+    Route::resource('cashiers',CashierController::class)->middleware('auth.restrict-cashier');
 
 
     Route::post('/logout',[LogoutUserController::class,'logout'])->middleware('auth')->name('logout');
