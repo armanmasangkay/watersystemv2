@@ -6,11 +6,14 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0 pt-lg-0 pt-md-2">
+
+          @adminonly(Auth::user()->role)
           <li class="nav-item m1-">
             <a class="nav-link m-1 text-secondary" aria-current="page" href="{{route('admin.dashboard')}}">
               <i data-feather="home" class="feather-16 m-1 mb-1"></i> Home
             </a>
           </li>
+          @endadminonly
           <li class="nav-item dropdown pt-1">
             <a class="nav-link dropdown-toggle text-secondary" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               <i data-feather="users" class="feather-16 m-1"></i> Consumer
@@ -22,6 +25,7 @@
             </ul>
 
           </li>
+          @adminonly(Auth::user()->role)
           <li class="nav-item dropdown pt-1">
             <a class="nav-link dropdown-toggle text-secondary" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
              <i data-feather="align-left" class="feather-16 m-1"></i> Transactions
@@ -36,6 +40,8 @@
             </ul>
 
           </li>
+          @endadminonly
+          @adminonly(Auth::user()->role)
           <li class="nav-item dropdown pt-1">
             <a class="nav-link dropdown-toggle text-secondary" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               <i data-feather="settings" class="feather-16 m-1"></i> Settings
@@ -46,6 +52,7 @@
             </ul>
 
           </li>
+          @endadminonly
         </ul>
         <span class="navbar-text mt-1 pt-0">
           <form action="{{route('admin.logout')}}" method="post">

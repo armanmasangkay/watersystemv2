@@ -12,6 +12,10 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
+    public static $ADMIN=1;
+    public static $CASHIER=2;
+
+
     /**
      * The attributes that are mass assignable.
      *
@@ -47,5 +51,10 @@ class User extends Authenticatable
     public function transactions()
     {
         return $this->hasMany(Transaction::class, 'user_id');
+    }
+
+    public function isCashier()
+    {
+        return $this->role==2;
     }
 }

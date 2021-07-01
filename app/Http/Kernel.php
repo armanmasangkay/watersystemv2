@@ -3,6 +3,8 @@
 namespace App\Http;
 
 use App\Http\Middleware\EnsureIsAdmin;
+use App\Http\Middleware\IsCashier;
+use App\Http\Middleware\RestricCashier;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -64,5 +66,6 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'access.authorize'=>EnsureIsAdmin::class,
+        'auth.restrict-cashier'=>RestricCashier::class
     ];
 }
