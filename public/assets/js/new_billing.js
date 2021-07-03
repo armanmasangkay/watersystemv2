@@ -1,5 +1,18 @@
 $(document).ready(function(){
 
+    $('#carbon_date').datepicker({ 
+        autoclose: true, 
+        todayHighlight: true,
+    }).datepicker('update', new Date());
+
+    var date =  new Date($('#carbon_date').val())
+    var newDate = date.toDateString().split(' '),
+        cleanDate = date.toLocaleString('default', { month: 'long' }) + ' ' + newDate[2] + ', ' + newDate[3]
+        numDate = new Date($(this).val()).toLocaleString().split(',')[0]
+
+    $('#reading_date').val(numDate)
+    $('#carbon_date').val(cleanDate)
+
     $("#billing-form").on('submit', function(e){
         e.preventDefault();
         
@@ -26,7 +39,7 @@ $(document).ready(function(){
                         $('#next-month').prop('disabled', true);
                         $('#save-billing').html('<i class="far fa-check"></i>&nbsp; Done!');
 
-                        Swal.fire('Great!','New billing for client '+ $('input[name="customer_id"]').val() +' was created!','success').then(function(result){
+                        Swal.fire('Billing Successfull!','New billing for client '+ $('input[name="customer_id"]').val() +' was created!','success').then(function(result){
                             if(result.isConfirmed)
                             {
                                 window.location.reload();
@@ -63,13 +76,13 @@ $(document).ready(function(){
             const total_consumption = ((meter_consumption - max_range) * excess_rate) + min_rates;
             const amount_consumption = meter_consumption <= max_range ? min_rates : total_consumption;
             
-            $('#consumption').val(meter_consumption);
-            $('#surcharge_amount').val(surcharge);
-            $('#amount').val(amount_consumption);
+            $('#consumption').val(format_number(meter_consumption));
+            $('#surcharge_amount').val(format_number(surcharge));
+            $('#amount').val(format_number(amount_consumption));
 
             const total = ((surcharge + balance) + (meter_ips + amount_consumption));
 
-            $('#total').val(total);
+            $('#total').val(format_number(total));
             $('#save-billing').prop('disabled', false);
         }
         else{
@@ -93,5 +106,19 @@ $(document).ready(function(){
             $('#next-month').prop('disabled', true);
         }
     })
+
+    $('#carbon_date').change(function(){
+        var date =  new Date($(this).val())
+        var newDate = date.toDateString().split(' '),
+            cleanDate = date.toLocaleString('default', { month: 'long' }) + ' ' + newDate[2] + ', ' + newDate[3]
+            numDate = new Date($(this).val()).toLocaleString().split(',')[0]
+
+        $('#carbon_date').val(cleanDate)
+        $('#reading_date').val(numDate)
+    })
+
+    function format_number(n) {
+        return n.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,");
+    }
 
 });

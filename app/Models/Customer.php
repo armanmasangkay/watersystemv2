@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use App\Models\Service;
 use App\Models\Transaction;
+use App\Models\Payments;
 
 class Customer extends Model
 {
@@ -57,6 +58,11 @@ class Customer extends Model
     public function services()
     {
         return $this->hasMany(Service::class);
+    }
+
+    public function payments()
+    {
+        return $this->hasMany(Payments::class, 'transaction_id');
     }
 
     public function transactions()

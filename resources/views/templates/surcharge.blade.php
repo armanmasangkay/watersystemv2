@@ -9,7 +9,7 @@
                 <form action="{{ route('admin.surcharge-update') }}" method="post">
                     @csrf
                     <label for="rate">Surcharge Rate</label>
-                    <input type="number" name="rate" id="rate" class="form-control" placeholder="0.00">
+                    <input type="number" name="rate" id="rate" class="form-control" placeholder="0.00" min=0.0>
                     <button class="btn btn-primary btn-md mt-3"><i data-feather="save" width="20" class="pb-1"></i> Save</button>
                 </form>
             </div>

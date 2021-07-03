@@ -5,12 +5,14 @@ namespace App\Http\Controllers;
 use App\Models\Customer;
 use App\Models\WaterRate;
 use App\Models\Transaction;
+use App\Models\Payments;
 use App\Models\Surcharge;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Response;
 
 class ConsumerLedgerController extends Controller
 {
@@ -60,6 +62,7 @@ class ConsumerLedgerController extends Controller
         }
 
         $surcharge = Surcharge::all();
+        // $payments = Payments
 
         $date = ($balance->period_covered != "Beginning Balance" ? explode('-', $balance->period_covered) : explode('/', '/'.$balance->reading_date));
         // dd($date[1]);
@@ -85,7 +88,7 @@ class ConsumerLedgerController extends Controller
         $fillable=[
             'customer_id' => $request->customer_id,
             'period_covered' => $request->current_month.'-'.$request->next_month,
-            'reading_date' => $request->reading_date,
+            'reading_date' => date('Y-m-d', strtotime($request->reading_date)),
             'reading_meter' => $request->reading_meter,
             'reading_consumption' => $request->consumption,
             'billing_amount' => $request->amount,
@@ -100,6 +103,7 @@ class ConsumerLedgerController extends Controller
         $update_transaction = Transaction::find($request->current_transaction_id);
         $update_transaction->billing_surcharge = $request->surcharge_amount;
         $update_transaction->billing_total += $request->surcharge_amount;
+        $update_transaction->balance += $request->surcharge_amount;
         $update_transaction->update();
 
         $transactions = Transaction::create($fillable);
