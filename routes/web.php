@@ -9,6 +9,7 @@ use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\TransactionsController;
 use App\Http\Controllers\ReconnectionController;
 use App\Http\Controllers\BLDGApprovalController;
+use App\Http\Controllers\CashierController;
 use App\Http\Controllers\MTOApprovalController;
 use App\Http\Controllers\WaterWorksApprovalController;
 use App\Http\Controllers\MunicipalEngApprovalController;
@@ -38,9 +39,12 @@ Route::prefix('admin')->middleware('auth')->name('admin.')->group(function(){
     Route::resources([
         'searched-customers'=>SearchedCustomerController::class,
         'existing-customers'=>ExistingCustomerController::class,
+        
     ]);
 
-    
+    Route::resource('cashiers',CashierController::class)->middleware('auth.restrict-cashier');
+
+
     Route::post('/logout',[LogoutUserController::class,'logout'])->middleware('auth')->name('logout');
     Route::get('/consumers',[CustomerController::class,'showAll'])->middleware('auth')->name('customers');
     Route::get('/transaction/new',[TransactionsController::class,'index'])->middleware('auth')->name('new-transaction');
@@ -50,7 +54,7 @@ Route::prefix('admin')->middleware('auth')->name('admin.')->group(function(){
 
     Route::post('/register-consumer',[CustomerController::class,'store'])
             ->middleware('access.authorize')->name('register-customer.store');
-    Route::get('/dashboard',[DashboardController::class,'index'])->name('dashboard');
+    Route::get('/dashboard',[DashboardController::class,'index'])->name('dashboard')->middleware('auth.restrict-cashier');
 
     Route::get('/search-consumer',[CustomerSearchController::class,'search'])->name('search-customer');
 
@@ -80,7 +84,9 @@ Route::prefix('admin')->middleware('auth')->name('admin.')->group(function(){
     Route::get('/transfer-meter',[TransferOfMeterController::class, 'index'])->name('transfer-meter');
     Route::get('/search-info',[TransferOfMeterController::class, 'search'])->name('search-info');
 
+    Route::get('/water-rate', [WaterRateController::class, 'getWaterRates'])->middleware('access.authorize');
     Route::post('/water-rate', [WaterRateController::class, 'update'])->name('water-rate-update');
+    Route::get('/surcharge', [SurchargeController::class, 'getSurcharge'])->middleware('access.authorize');
     Route::post('/surcharge', [SurchargeController::class, 'update'])->name('surcharge-update');
 
     Route::get('/consumer-ledger',[ConsumerLedgerController::class, 'index'])->name('consumer-ledger');

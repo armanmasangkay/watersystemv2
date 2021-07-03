@@ -15,7 +15,7 @@ class SurchargeSeeder extends Seeder
     public function run()
     {
         Surcharge::create([
-            'rate' => '0'
+            'rate' => '0.1'
         ]);
     }
 }

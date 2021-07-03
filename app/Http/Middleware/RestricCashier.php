@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 
-class EnsureIsAdmin
+class RestricCashier
 {
     /**
      * Handle an incoming request.
@@ -16,14 +16,10 @@ class EnsureIsAdmin
      */
     public function handle(Request $request, Closure $next)
     {
-     
-        if(!auth()->check())
-        {
-            return response()->json([
-                'error'=>'Unauthorized access'
-            ],401);
+        if(auth()->user()->isCashier()){
+            abort(403,"You are not allowed to access this URL.");
         }
-        
+
         return $next($request);
     }
 }

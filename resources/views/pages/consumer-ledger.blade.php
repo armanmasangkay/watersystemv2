@@ -31,7 +31,9 @@
                 <div class="card-header border-secondary px-4 pb-2 pt-2 bg-light">
                     <div class="row">
                         <div class="col-md-6 d-flex justify-content-between align-items-center pe-5"><span><strong>Name:</strong></span>&nbsp;&nbsp;
-                            <input type="text" class="text-bold form-control w-75 fae9d6 rounded-0 border-top-0 border-start-0 border-end-0 border-bottom border-secondary ml-3 pt-1 pb-1" value="{{ isset($customer) ? $customer["fullname"] : '' }}" readOnly>
+                            <input type="text" class="text-bold form-control w-75 fae9d6 rounded-0 border-top-0 border-start-0 border-end-0 border-bottom border-secondary ml-3 pt-1 pb-1" 
+                            value="{{isset($customer)?$customer["org_name"]?$customer["org_name"]:$customer["fullname"]:''}}" 
+                            readOnly>
                         </div>
                         <div class="col-md-6 d-flex justify-content-between align-items-center pe-5"><span><strong>Account No:</strong></span>&nbsp;&nbsp;
                             <input type="text" class="text-bold form-control w-75 fae9d6 rounded-0 border-top-0 border-start-0 border-end-0 border-bottom border-secondary ml-3 pt-1 pb-1" value="{{ isset($customer) ? $customer["account"] : '' }}" readOnly>
@@ -172,8 +174,69 @@
     </div>
 </div>
 
+<<<<<<< HEAD
 @include('templates.newBillingModal')
 @include('templates.paymentModal')
+=======
+                <div class="modal-header">
+                    <h5 class="modal-title text-muted" id="exampleModalLabel"><i data-feather="file"></i><strong>&nbsp; New Billing Setup</strong></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <h5 class="text-muted">Previous Meter Reading</h5>
+                    <div class="row mt-3">
+                        <div class="col-lg-2 col-md-4 col-sm-6 mb-sm-2 pe-md-1 pe-sm-1">
+                            <label class='text-muted'>Meter reading</label>
+                            <input class="form-control" id="meter-reading" name="meter-reading" type="number" placeholder="Meter reading" min=0 readOnly value="{{ isset($customer) ? $customer["balance"]->reading_meter : '' }}">
+                        </div>
+                        <div class="col-lg-2 col-md-4 col-sm-6 mb-sm-2 ps-md-0 pe-md-0 ps-sm-1">
+                            <label class='text-muted'>Balance</label>
+                            <input class="form-control" id="cur_balance" name="cur_balance" type="text" placeholder="Meter reading" min=0 readonly value="{{ isset($customer) ? toAccounting($customer["balance"]->balance) : '0.00' }}">
+                        </div>
+                    </div>
+                    <div class="row mt-1">
+                        <div class="col-md-4 pe-md-0">
+                            <label class='text-muted'>Reading date</label>
+                            <input type="text" class="form-control" name="date" value="{{ isset($customer) ? \Carbon\Carbon::parse($customer['balance']->reading_date)->format('F d, Y') : '' }}" readonly>
+                        </div>
+                    </div>
+
+                    <h5 class="text-muted mt-4">Current Meter Reading</h5>
+                
+                    <div class="row mt-3">
+                        <div class="col-md-4 pe-md-0">
+                            <label class='text-muted'>Reading date</label>
+                            <input class="form-control" name="reading_date" id="reading_date" type="date" 
+                            min="{{\Carbon\Carbon::parse($last_date)->addMonth()->format('Y-m-01')}}" 
+                            max="{{\Carbon\Carbon::parse($last_date)->addMonth()->endOfMonth()->format('Y-m-d')}}">
+    
+                        </div>
+                    </div>
+                   
+                    
+                    <div class='row px-md-2 mb-2 mt-2'>
+                        <div class='col-6 col-md-3 col-lg-2 col-xl-1 mt-2 pe-md-1 ps-md-1 ps-lg-1 pe-sm-1 pe-1'>
+                            <small class='text-primary'>{{ isset($last_date) ? \Carbon\Carbon::parse($last_date)->format('M, Y') : '' }}</small>
+                            <select name='current_month' id='current-month' class='form-select' disabled>
+                                @if(isset($customer))
+                                @for($i = 1; $i <= \Carbon\Carbon::parse($last_date)->endOfMonth()->format('d'); $i++)
+                                <option value="{{ \Carbon\Carbon::parse($last_date)->format('M '.($i < 10 ? '0'.$i : $i)) }}" {{ \Carbon\Carbon::parse($last_date)->format('d') == $i ? 'selected' : '' }}>{{ $i < 10 ? '0'.$i : $i }}</option>
+                                @endfor
+                                @endif
+                            </select>
+
+                        </div>
+                        <div class='col-6 col-md-3 col-lg-2 col-xl-1 mt-2 ps-md-0 pe-md-0 ps-sm-0 ps-0'>
+                            <small class='text-primary'>{{ isset($customer) ? \Carbon\Carbon::parse($last_date)->addMonths(1)->format('M, Y') : '' }}</small>
+                            <select name='next_month' id='next-month' class='form-select' disabled>
+                                @if(isset($customer))
+                                @for($i = 1; $i <=  \Carbon\Carbon::parse($last_date)->addMonths(1)->endOfMonth()->format('d'); $i++)
+                                <option value="{{ \Carbon\Carbon::parse($last_date)->addMonths(1)->format('M '.($i < 10 ? '0'.$i : $i).', Y') }}" {{ \Carbon\Carbon::parse($last_date)->format('d') == $i ? 'selected' : '' }}>{{ $i < 10 ? '0'.$i : $i }}</option>
+                                @endfor
+                                @endif
+                            </select>
+                        </div>
+>>>>>>> a11ccaab8b72be63cde5a736cd26d68a06a80318
 
 @endsection
 

@@ -55,7 +55,15 @@
                       @foreach ($customers as $customer)
                       <tr style="cursor: pointer;" onclick='location.href=`{{ route("admin.search-transactions", ["account_number" => $customer->account_number]) }}`'>
                           <th>{{$customer->account_number}}</th>
+                          @if($customer->isOrgAccount())
+                          <td>
+                            ORG/COMPANY: <strong>{{$customer->org_name}}</strong><br>
+                            <small class="text-muted">Registered by ({{$customer->fullname()}})</small>
+                          </td>
+                          @else
                           <td>{{$customer->firstname . ' ' .$customer->middlename. ' '.$customer->lastname}}</td>
+                          @endif
+                          
                           <td>{{Str::ucfirst($customer->civil_status)}}</td>
                           <td>{{$customer->contact_number}}</td>
                           <td>{{$customer->purok.', '.$customer->barangay}}</td>

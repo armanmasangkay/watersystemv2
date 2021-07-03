@@ -45,9 +45,9 @@ class ConsumerLedgerController extends Controller
         $transactions = Transaction::orderBy('created_at', 'asc')->where('customer_id', $account_number)->paginate(10);
 
         $rate = [];
-        
+
         $rates = WaterRate::all();
-        
+
 
         for($i = 0; $i < count($rates); $i++)
         {
@@ -65,15 +65,16 @@ class ConsumerLedgerController extends Controller
         // $payments = Payments
 
         $date = ($balance->period_covered != "Beginning Balance" ? explode('-', $balance->period_covered) : explode('/', '/'.$balance->reading_date));
-        // dd($date[1]);
+    
         return view('pages.consumer-ledger',[
             'customer' => [
-                'fullname' => $fullname, 
-                'address' => $address, 
-                'transactions' => $transactions, 
-                'account' => $acc, 
+                'fullname' => $fullname,
+                'address' => $address,
+                'transactions' => $transactions,
+                'account' => $acc,
                 'balance' => $balance,
                 'connection_type' => $customer->connection_type,
+                'org_name'=>$customer->org_name
             ],
             'rates' => $rate,
             'surcharge' => $surcharge[0]->rate,

@@ -15,11 +15,11 @@ $(document).ready(function(){
 
     $("#billing-form").on('submit', function(e){
         e.preventDefault();
-        
+
         let registerForm = document.getElementById('billing-form')
         let actionURI = registerForm.getAttribute('action')
 
-        
+
         if($('#reading_date').val() != '')
         {
             $('#save-billing').html('<i class="far fa-spinner fa-spin"></i>&nbsp; Processing ...');
