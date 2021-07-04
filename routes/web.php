@@ -9,6 +9,7 @@ use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\TransactionsController;
 use App\Http\Controllers\ReconnectionController;
 use App\Http\Controllers\BLDGApprovalController;
+use App\Http\Controllers\CashierController;
 use App\Http\Controllers\MTOApprovalController;
 use App\Http\Controllers\WaterWorksApprovalController;
 use App\Http\Controllers\MunicipalEngApprovalController;
@@ -37,7 +38,10 @@ Route::prefix('admin')->middleware('auth')->name('admin.')->group(function(){
     Route::resources([
         'searched-customers'=>SearchedCustomerController::class,
         'existing-customers'=>ExistingCustomerController::class,
+        
     ]);
+
+    Route::resource('cashiers',CashierController::class)->middleware('auth.restrict-cashier');
 
 
     Route::post('/logout',[LogoutUserController::class,'logout'])->middleware('auth')->name('logout');
@@ -49,7 +53,7 @@ Route::prefix('admin')->middleware('auth')->name('admin.')->group(function(){
 
     Route::post('/register-consumer',[CustomerController::class,'store'])
             ->middleware('access.authorize')->name('register-customer.store');
-    Route::get('/dashboard',[DashboardController::class,'index'])->name('dashboard');
+    Route::get('/dashboard',[DashboardController::class,'index'])->name('dashboard')->middleware('auth.restrict-cashier');
 
     Route::get('/search-consumer',[CustomerSearchController::class,'search'])->name('search-customer');
 

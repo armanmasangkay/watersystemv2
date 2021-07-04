@@ -11,7 +11,7 @@
                     <div class="form-group">
                         <label for="type">Type</label>
                         <select name="type" id="type"  class="form-control">
-                            <option value=""></option>
+                            <option value="">--Select a type--</option>
                         </select>
                     </div>
 

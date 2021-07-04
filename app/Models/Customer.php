@@ -26,8 +26,13 @@ class Customer extends Model
         'connection_type',
         'connection_status',
         'purchase_option',
+        'org_name'
     ];
 
+    public function isOrgAccount()
+    {
+        return $this->org_name?true:false;
+    }
 
     public function fullname()
     {

@@ -17,7 +17,8 @@ class LoginController extends Controller
         $credentials=$request->only('username','password');
         if(Auth::attempt($credentials)){
             $request->session()->regenerate(); 
-            return redirect()->intended(route('admin.dashboard'));
+
+           return Auth::user()->isCashier()? redirect()->intended(route('admin.existing-customers.index')):redirect()->intended(route('admin.dashboard'));
         }
 
         return redirect(route('login'))->withInput();

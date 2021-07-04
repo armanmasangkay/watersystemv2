@@ -2,26 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Classes\Facades\AccountNumber;
-use App\Classes\Facades\BarangayData;
 use App\Classes\Facades\CustomerDataHelper;
-use App\Classes\Facades\CustomerRegistrationOptions;
-use App\Exceptions\BarangayDoesNotExistException;
 use App\Models\Customer;
 use App\Models\Transaction;
 use App\Services\AccountNumberService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rule;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 
 class CustomerController extends Controller
 {
-    public function index()
-    {
-
-    }
+ 
 
     public function showAll()
     {

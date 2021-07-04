@@ -17,5 +17,9 @@ class UserSeeder extends Seeder
         User::factory(1)->create([
             'username'=>'admin'
         ]);
+        User::factory(1)->create([
+            'username'=>'cashier',
+            'role'=>User::$CASHIER
+        ]);
     }
 }

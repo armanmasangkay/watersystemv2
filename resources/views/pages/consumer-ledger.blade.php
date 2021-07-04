@@ -30,7 +30,9 @@
                 <div class="card-header border-secondary px-4 pb-2 pt-2 bg-light">
                     <div class="row">
                         <div class="col-md-6 d-flex justify-content-between align-items-center pe-5"><span><strong>Name:</strong></span>&nbsp;&nbsp;
-                            <input type="text" class="text-bold form-control w-75 fae9d6 rounded-0 border-top-0 border-start-0 border-end-0 border-bottom border-secondary ml-3 pt-1 pb-1" value="{{ isset($customer) ? $customer["fullname"] : '' }}" readOnly>
+                            <input type="text" class="text-bold form-control w-75 fae9d6 rounded-0 border-top-0 border-start-0 border-end-0 border-bottom border-secondary ml-3 pt-1 pb-1" 
+                            value="{{isset($customer)?$customer["org_name"]?$customer["org_name"]:$customer["fullname"]:''}}" 
+                            readOnly>
                         </div>
                         <div class="col-md-6 d-flex justify-content-between align-items-center pe-5"><span><strong>Account No:</strong></span>&nbsp;&nbsp;
                             <input type="text" class="text-bold form-control w-75 fae9d6 rounded-0 border-top-0 border-start-0 border-end-0 border-bottom border-secondary ml-3 pt-1 pb-1" value="{{ isset($customer) ? $customer["account"] : '' }}" readOnly>
@@ -153,12 +155,18 @@
                     </div>
 
                     <h5 class="text-muted mt-4">Current Meter Reading</h5>
+                
                     <div class="row mt-3">
                         <div class="col-md-4 pe-md-0">
                             <label class='text-muted'>Reading date</label>
-                            <input class="form-control" name="reading_date" id="reading_date" type="date">
+                            <input class="form-control" name="reading_date" id="reading_date" type="date" 
+                            min="{{\Carbon\Carbon::parse($last_date)->addMonth()->format('Y-m-01')}}" 
+                            max="{{\Carbon\Carbon::parse($last_date)->addMonth()->endOfMonth()->format('Y-m-d')}}">
+    
                         </div>
                     </div>
+                   
+                    
                     <div class='row px-md-2 mb-2 mt-2'>
                         <div class='col-6 col-md-3 col-lg-2 col-xl-1 mt-2 pe-md-1 ps-md-1 ps-lg-1 pe-sm-1 pe-1'>
                             <small class='text-primary'>{{ isset($last_date) ? \Carbon\Carbon::parse($last_date)->format('M, Y') : '' }}</small>
