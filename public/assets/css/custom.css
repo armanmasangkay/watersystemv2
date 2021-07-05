@@ -84,8 +84,20 @@
     padding-top: 8px;
 }
 
-input, select, .btn, .pagination li span, .pagination li a{
+.input, input, select, .btn, .pagination li span, .pagination li a{
     height: 45px !important;
+}
+
+.input > input{
+    height: 39px !important;
+}
+
+.input > #carbon_date{
+    cursor: pointer !important;
+}
+
+.input > #carbon_date{
+    outline: none !important;
 }
 
 @media screen and (max-width: 1199px) {
@@ -146,4 +158,8 @@ input, select, .btn, .pagination li span, .pagination li a{
     .login h2{
         font-size: 1.3rem !important;
     }
+}
+
+.form-control:disabled, .form-control[readonly] {
+    background-color: #fff;
 }
