@@ -27,7 +27,7 @@ class CustomerController extends Controller
     {
         $transaction = Arr::only($requestData, ['reading_meter', 'balance', 'reading_date']);
         $transaction = Arr::add($transaction, 'billing_meter_ips', $requestData['billing_meter_ips'] ?? '0.00');
-        $transaction = Arr::add($transaction, 'billing_amount', '0.00');
+        $transaction = Arr::add($transaction, 'billing_amount', $requestData['balance'] ?? '0.00');
         $transaction = Arr::add($transaction, 'billing_surcharge', '0.00');
         $transaction = Arr::add($transaction, 'billing_total', $requestData['balance'] ?? '0.00');
         $transaction = Arr::add($transaction, 'reading_consumption', '0');

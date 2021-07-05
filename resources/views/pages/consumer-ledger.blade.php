@@ -15,6 +15,7 @@
                         </div>
                         @if(isset($customer))
                         <div class="col-md-6">
+                            <button class="btn btn-success mt-2 ms-1 float-md-end" id="paymentBtn"><i data-feather="user-check" width="20"></i>&nbsp; Payment</button>
                             <button class="btn btn-primary mt-2 float-md-end" data-bs-toggle='modal' data-bs-target='#ledgerSetupModal'><i data-feather="user-plus" width="20"></i>&nbsp; New Water Bill</button>
                         </div>
                         @endif
@@ -50,7 +51,7 @@
                 <div class="card-header border-secondary px-4 pb-1 pt-2 f94c7eb">
                     <div class="row mt-1">
                         <center>
-                            <h3 class="h5 mb-2 mt-0 text-center"><strong>Balance as of {{ isset($customer) ? date('F j, Y') : '' }}</strong> - <span class="text-danger"><strong>{{ isset($customer) ?'Php '.toAccounting($customer["balance"]->balance) : '' }}</strong></span></h3>
+                            <h3 class="h5 mb-2 mt-0 text-center"><strong>Balance as of {{ isset($customer) ? date('F j, Y') : '' }}</strong> - <span class="text-danger" id="currentBalance"><strong>{{ isset($customer) ?'Php '.toAccounting($customer["balance"]->balance) : '' }}</strong></span></h3>
                         </center>
                     </div>
                 </div>
@@ -59,45 +60,101 @@
                         <table class="table mb-0 border-0" style="min-width: 1200px;">
                             <thead>
                                 <tr>
-                                    <td class="pt-1 pb-3 text-center bg-white border-end border-secondary" rowspan="2"><strong>PERIOD </br>COVERED</strong></td>
-                                    <td class="pt-2 pb-2 text-center f0f0f0 border-end border-secondary" colspan="3"><strong>READING</strong></td>
-                                    <td class="pt-2 pb-2 text-center f8d6b0 border-end border-secondary" colspan="5"><strong>BILLING</strong></td>
-                                    <td class="pt-2 pb-2 text-center eee border-bottom border-secondary" colspan="4"><strong>PAYMENT</strong></td>
+                                    <td class="pt-0 pb-4 text-center bg-white border-end border-secondary" rowspan="2"><strong>PERIOD </br>COVERED</strong></td>
+                                    <td class="pt-3 pb-3 text-center f0f0f0 border-end border-secondary" colspan="3"><strong>READING</strong></td>
+                                    <td class="pt-3 pb-3 text-center f8d6b0 border-end border-secondary" colspan="6"><strong>BILLING</strong></td>
+                                    <td class="pt-3 pb-3 text-center eee border-bottom border-secondary" colspan="4"><strong>PAYMENT</strong></td>
                                 </tr>
                                 <tr>
                                     <td class="pt-2 pb-2 text-center f0f0f0 border-end border-secondary"><strong>DATE</strong></td>
-                                    <td class="pt-2 pb-2 text-center f0f0f0 border-end border-secondary"><strong>METER READING</strong></td>
-                                    <td class="pt-2 pb-2 text-center f0f0f0 border-end border-secondary"><strong>CONSUMPTION</strong></td>
+                                    <td class="pt-2 pb-2 text-center f0f0f0 border-end border-secondary"><strong>MTR. READING</strong></td>
+                                    <td class="pt-2 pb-2 text-center f0f0f0 border-end border-secondary"><strong>CONSUMP</strong></td>
                                     <td class="pt-2 pb-2 text-center f8d6b0 border-end border-secondary"><strong>AMOUNT</strong></td>
                                     <td class="pt-2 pb-2 text-center f8d6b0 border-end border-secondary"><strong>SURCHARGE</strong></td>
                                     <td class="pt-2 pb-2 text-center f8d6b0 border-end border-secondary"><strong>METER IPS</strong></td>
                                     <td class="pt-2 pb-2 text-center f8d6b0 border-end border-secondary"><strong>TOTAL</strong></td>
+                                    <td class="pt-2 pb-2 text-center f8d6b0 border-end border-secondary"><strong>BAL.</strong></td>
                                     <td class="pt-2 pb-2 text-center f8d6b0 border-end border-secondary"><strong>POSTED BY</strong></td>
-                                    <td class="pt-2 pb-2 text-center eee border-end border-secondary"><strong>OR NO</strong></td>
-                                    <td class="pt-2 pb-2 text-center eee border-end border-secondary"><strong>DATE</strong></td>
+                                    <td class="pt-2 pb-2 text-center eee border-end border-secondary"><strong>OR NUMBER</strong></td>
+                                    <td class="pt-2 pb-2 text-center eee border-end border-secondary"><strong>PAYMENT DATE</strong></td>
                                     <td class="pt-2 pb-2 text-center eee border-end border-secondary"><strong>AMOUNT</strong></td>
                                     <td class="pt-2 pb-2 text-center eee border-bottom border-secondary"><strong>POSTED BY</strong></td>
                                     
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php function toAccounting($num){ return number_format($num, 2, '.', ','); } ?>
+                                <?php 
+                                    $amount = 0.00;
+                                    $count = 0;
+                                    function toAccounting($num){ return number_format($num, 2, '.', ','); } 
+                                    function orNumbers($or) { return $or."/"; }
+                                ?>
                                 @if(isset($customer))
                                 @foreach($customer["transactions"] as $billing)
                                 <tr>
-                                    <td class="pt-2 pb-2 text-center bg-white border-end border-secondary">{{ $billing->period_covered }}</td>
-                                    <td class="pt-2 pb-2 text-center f0f0f0 border-end border-secondary">{{ \Carbon\Carbon::parse($billing->reading_date)->format('m-d-Y') }}</td>
-                                    <td class="pt-2 pb-2 text-center f0f0f0 border-end border-secondary">{{ $billing->reading_meter }}</td>
-                                    <td class="pt-2 pb-2 text-center f0f0f0 border-end border-secondary">{{ $billing->reading_consumption }}</td>
-                                    <td class="pt-2 pb-2 text-center f8d6b0 border-end border-secondary">{{ toAccounting($billing->billing_amount) }}</td>
-                                    <td class="pt-2 pb-2 text-center f8d6b0 border-end border-secondary">{{ toAccounting($billing->billing_surcharge) }}</td>
-                                    <td class="pt-2 pb-2 text-center f8d6b0 border-end border-secondary">{{ toAccounting($billing->billing_meter_ips) }}</td>
-                                    <td class="pt-2 pb-2 text-center f8d6b0 border-end border-secondary">{{ toAccounting($billing->billing_total) }}</td>
-                                    <td class="pt-2 pb-2 text-center f8d6b0 border-end border-secondary">{{ $billing->user->name }}</td>
-                                    <td class="pt-2 pb-2 text-center eee border-end border-secondary">{{ $billing->payment_or_no }}</td>
-                                    <td class="pt-2 pb-2 text-center eee border-end border-secondary">{{ $billing->payment_date }}</td>
-                                    <td class="pt-2 pb-2 text-center eee border-end border-secondary">{{ !empty($billing->payment_amount) ? toAccounting($billing->payment_amount) : '' }}</td>
-                                    <td class="pt-2 pb-2 text-center eee border-bottom border-secondary">{{ !empty($billing->payment_or_no) ? $billing->user->name : '' }}</td>
+                                    <td class="pt-2 pb-2 text-center bg-white border-end border-secondary"><small>{{ $billing->period_covered }}</small></td>
+                                    <td class="pt-2 pb-2 text-center f0f0f0 border-end border-secondary"><small>{{ \Carbon\Carbon::parse($billing->reading_date)->format('m-d-Y') }}</small></td>
+                                    <td class="pt-2 pb-2 text-center f0f0f0 border-end border-secondary"><small>{{ $billing->reading_meter }}</small></td>
+                                    <td class="pt-2 pb-2 text-center f0f0f0 border-end border-secondary"><small>{{ $billing->reading_consumption }}</small></td>
+                                    <td class="pt-2 pb-2 text-center f8d6b0 border-end border-secondary"><small>{{ toAccounting($billing->billing_amount) }}</small></td>
+                                    <td class="pt-2 pb-2 text-center f8d6b0 border-end border-secondary"><small>{{ toAccounting($billing->billing_surcharge) }}</small></td>
+                                    <td class="pt-2 pb-2 text-center f8d6b0 border-end border-secondary"><small>{{ toAccounting($billing->billing_meter_ips) }}</small></td>
+                                    <td class="pt-2 pb-2 text-center f8d6b0 border-end border-secondary"><small>{{ toAccounting($billing->billing_total) }}</small></td>
+                                    <td class="pt-2 pb-2 text-center f8d6b0 border-end border-secondary"><small>{{ toAccounting($billing->balance) }}</small></td>
+                                    <td class="pt-2 pb-2 text-center f8d6b0 border-end border-secondary"><small>{{ $billing->user->name }}</small></td>
+                                    <td class="pt-2 pb-2 text-center eee border-end border-secondary">
+                                        <small>
+                                        @foreach($billing->payments as $payment)
+                                            @if($payment->transaction_id == $billing->id)
+                                                <?php $count += 1; ?>
+                                                @if($count >= 1)
+                                                {{ "[". $payment->or_no . "]" }}
+                                                @else
+                                                {{ $payment->or_no }}
+                                                @endif
+                                            @endif
+                                        @endforeach
+                                        </small>
+                                    </td>
+                                    <td class="pt-2 pb-2 text-center eee border-end border-secondary">
+                                        <small>
+                                        @foreach($billing->payments as $payment)
+                                            @if($payment->transaction_id == $billing->id)
+                                                @if($count > 1)
+                                                {{ "[". \Carbon\Carbon::parse($payment->payment_date)->format('F d, Y') . "]" }}
+                                                @else
+                                                {{ \Carbon\Carbon::parse($payment->payment_date)->format('F d, Y') }}
+                                                @endif
+                                            @endif
+                                        @endforeach
+                                        </small>
+                                    </td>
+                                    <td class="pt-2 pb-2 text-center eee border-end border-secondary">
+                                        <small>
+                                        @foreach($billing->payments as $payment)
+                                            @if($payment->transaction_id == $billing->id)
+                                                @if($count > 1)
+                                                {{ "[". toAccounting($payment->payment_amount) . "]" }}
+                                                @else
+                                                {{ toAccounting($payment->payment_amount) }}
+                                                @endif
+                                            @endif
+                                        @endforeach
+                                        </small>
+                                    </td>
+                                    <td class="pt-2 pb-2 text-center eee border-bottom border-secondary">
+                                        <small>
+                                        @foreach($billing->payments as $payment)
+                                            @if($payment->transaction_id == $billing->id)
+                                                @if($count > 1)
+                                                {{ "[". $payment->user->name."]" }}
+                                                @else
+                                                {{ $payment->user->name }}
+                                                @endif
+                                            @endif
+                                        @endforeach
+                                        </small>
+                                    </td>
                                 </tr>
                                 @endforeach
                                 @endif
@@ -116,19 +173,11 @@
         </div>
     </div>
 </div>
-<div class="modal modal-fluid fade" id="ledgerSetupModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl">
-        <div class="modal-content">
-            <form action="{{ route('admin.save-billing') }}" method="post" id="billing-form">
-                @csrf
-                <input type="hidden" name="connection_type" value="{{ isset($customer)?$customer['connection_type'] : ''}}">
-                <input type="hidden" name="min_rates" value="{{ isset($rates) ? $rates['min_rate'] : '0'}}">
-                <input type="hidden" name="excess_rate" value="{{ isset($rates) ? $rates['excess_rates'] : '0'}}">
-                <input type="hidden" name="max_range" value="{{ isset($rates) ? $rates['max_range'] : '0'}}">
-                <input type="hidden" name="or_num" value="{{ isset($customer) ? $customer['balance']->payment_or_no : ''}}">
-                <input type="hidden" name="surcharge" value="{{ isset($surcharge) ? $surcharge : '0'}}">
-                <input type="hidden" name="customer_id" value="{{ isset($customer) ? $customer['account'] : '' }}">
 
+<<<<<<< HEAD
+@include('templates.newBillingModal')
+@include('templates.paymentModal')
+=======
                 <div class="modal-header">
                     <h5 class="modal-title text-muted" id="exampleModalLabel"><i data-feather="file"></i><strong>&nbsp; New Billing Setup</strong></h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -187,48 +236,8 @@
                                 @endif
                             </select>
                         </div>
+>>>>>>> a11ccaab8b72be63cde5a736cd26d68a06a80318
 
-                        <div class='col-6 col-md-6 col-lg-4 col-xl-2 mt-2 mt-lg-2 mt-md-2 px-lg-1 pe-sm-1 ps-md-1 pe-1'>
-                            <small class='text-muted'>Meter Reading</small>
-                            <input class='form-control' type='number' min=0 id="reading_meter" name="reading_meter">
-                        </div>
-
-                        <div class='col-6 col-md-6 col-lg-4 col-xl-1 mt-2 mt-lg-2 mt-md-2 px-lg-0 ps-md-1 pe-md-0 ps-sm-0 ps-0'>
-                            <small class='text-muted'>Consumption</small>
-                            <input class='form-control' type='number' id="consumption" name="consumption" min=0 readOnly placeholder="0">
-                        </div>
-                        <div class='col-6 col-md-6 col-lg-4 col-xl-2 mt-2 mt-md-2 px-lg-1 pe-sm-1 ps-md-1 pe-1'>
-                            <small class='text-muted'>Amount</small>
-                            <input class='form-control' type='number' id="amount" name="amount" min=0 readOnly placeholder="0.00">
-                        </div>
-                        <div class='col-6 col-md-6 col-lg-4 col-xl-1 mt-2 mt-md-2 px-lg-0 ps-md-1 pe-md-0 ps-sm-0 ps-0'>
-                            <small class='text-muted'>Surcharge</small>
-                            <input class='form-control' type='number' name="surcharge_amount" id="surcharge_amount" value='0.00' min=0 readonly>
-                        </div>
-                        <div class='col-6 col-md-6 col-lg-4 col-xl-2 mt-2 mt-md-2 px-lg-1 pe-sm-1 ps-md-1 pe-1'>
-                            <small class='text-muted'>Meter installment balance</small>
-                            <input class='form-control' type='number' name="meter_ips" id="meter-ips" placeholder='0.00' min=0 value="{{ isset($customer) ? toAccounting($customer["balance"]->billing_meter_ips) : '0.00' }}">
-                        </div>
-                        <div class='col-6 col-md-6 col-lg-4 col-xl-2 mt-2 mt-md-2 ps-lg-0 ps-md-1 pe-lg-1 ps-sm-0 pe-md-0 ps-0'>
-                            <small class='text-muted'>Total</small>
-                            <input class='form-control' type='number' id="total" name="total" placeholder='0.00' min=0 readonly>
-                        </div>
-                    </div>
-                    <div class="row mt-3">
-                        <div class="col-md-12 pe-md-0 d-flex justify-content-start align-items-center">
-                            <input name="override" id="override" type="checkbox">
-                            <label class='text-muted ms-2'>Allow override period covered date ?</label>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i data-feather="x"></i> Close</button>
-                    <button type="submit" class="btn btn-primary" id="save-billing" disabled><i data-feather="check"></i> Save</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
 @endsection
 
 @section('custom-js')
@@ -236,6 +245,6 @@
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
 <script src="{{ asset('assets/js/new_billing.js') }}" defer></script>
-
+<script src="{{ asset('assets/js/payments.js') }}" defer></script>
 
 @endsection

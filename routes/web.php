@@ -22,6 +22,7 @@ use App\Http\Controllers\SurchargeController;
 use App\Http\Controllers\ConsumerLedgerController;
 use App\Http\Controllers\ExistingCustomerController;
 use App\Http\Controllers\SearchedCustomerController;
+use App\Http\Controllers\PaymentController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -91,6 +92,9 @@ Route::prefix('admin')->middleware('auth')->name('admin.')->group(function(){
     Route::get('/consumer-ledger',[ConsumerLedgerController::class, 'index'])->name('consumer-ledger');
     Route::get('/consumer-ledger/transactions',[ConsumerLedgerController::class, 'search'])->name('search-transactions');
     Route::post('/consumer-ledger/transactions/save-billing',[ConsumerLedgerController::class,'store'])->middleware('access.authorize')->name('save-billing');
+
+    Route::post('/consumer-ledger/balance/payment/{id}',[PaymentController::class,'getBalance'])->middleware('access.authorize')->name('get-balance');
+    Route::post('/consumer-ledger/balance/payment/save/{id}',[PaymentController::class,'save_payment'])->middleware('access.authorize')->name('save-payment');
 });
 
 

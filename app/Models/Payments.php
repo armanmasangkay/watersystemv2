@@ -6,30 +6,26 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Customer;
 use App\Models\User;
-use App\Models\Payments;
-use Carbon\Carbon;
+use App\Models\Transaction;
 
-class Transaction extends Model
+class Payments extends Model
 {
     use HasFactory;
 
     protected $fillable=[
         'customer_id',
-        'period_covered',
-        'reading_date',
-        'reading_meter',
-        'reading_consumption',
-        'billing_amount',
-        'billing_surcharge',
-        'billing_meter_ips',
-        'billing_total',
-        'payment_or_no',
+        'transaction_id',
+        'or_no',
         'payment_date',
         'payment_amount',
         'balance',
         'user_id',
-        'posted_by'
     ];
+
+    public function transaction()
+    {
+        return $this->belongsTo(Transaction::class,'id','transaction_id');
+    }
 
     public function customer()
     {
@@ -39,10 +35,5 @@ class Transaction extends Model
     public function user()
     {
         return $this->belongsTo(User::class,'user_id','id');
-    }
-
-    public function payments()
-    {
-        return $this->hasMany(Payments::class, 'transaction_id');
     }
 }
