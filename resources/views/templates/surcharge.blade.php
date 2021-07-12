@@ -9,10 +9,6 @@
                 <form action="{{ route('admin.surcharge-update') }}" id="surcharge_form" method="post">
                     @csrf
                     <label for="rate">Surcharge Rate</label>
-<<<<<<< HEAD
-                    <input type="number" name="rate" id="rate" class="form-control" placeholder="0.00" min=0.0>
-                    <button class="btn btn-primary btn-md mt-3"><i data-feather="save" width="20" class="pb-1"></i> Save</button>
-=======
                     <div class="input-group">
                         <input type="number" name="surcharge_rate" id="surcharge_rate" class="form-control" placeholder="0.00">
                         <div class="input-group-text">
@@ -20,7 +16,6 @@
                         </div>
                     </div>
                     <button type="submit" class="btn btn-primary btn-md mt-3"><i data-feather="save" width="20" class="pb-1"></i> Save</button>
->>>>>>> a11ccaab8b72be63cde5a736cd26d68a06a80318
                 </form>
             </div>
         </div>
