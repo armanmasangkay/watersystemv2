@@ -39,7 +39,7 @@ Route::prefix('admin')->middleware('auth')->name('admin.')->group(function(){
     Route::resources([
         'searched-customers'=>SearchedCustomerController::class,
         'existing-customers'=>ExistingCustomerController::class,
-        
+
     ]);
 
     Route::resource('cashiers',CashierController::class)->middleware('auth.restrict-cashier');
@@ -84,9 +84,9 @@ Route::prefix('admin')->middleware('auth')->name('admin.')->group(function(){
     Route::get('/transfer-meter',[TransferOfMeterController::class, 'index'])->name('transfer-meter');
     Route::get('/search-info',[TransferOfMeterController::class, 'search'])->name('search-info');
 
-    Route::get('/water-rate', [WaterRateController::class, 'getWaterRates'])->middleware('access.authorize');
+    Route::get('/water-rate', [WaterRateController::class, 'getWaterRates'])->middleware('access.authorize')->name('water-rate-get');
     Route::post('/water-rate', [WaterRateController::class, 'update'])->name('water-rate-update');
-    Route::get('/surcharge', [SurchargeController::class, 'getSurcharge'])->middleware('access.authorize');
+    Route::get('/surcharge', [SurchargeController::class, 'getSurcharge'])->middleware('access.authorize')->name('surcharge-get');
     Route::post('/surcharge', [SurchargeController::class, 'update'])->name('surcharge-update');
 
     Route::get('/transaction/update/{account_id}/{id}', [TransactionController::class, 'edit']);

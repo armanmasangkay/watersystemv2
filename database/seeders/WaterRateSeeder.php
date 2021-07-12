@@ -25,8 +25,8 @@ class WaterRateSeeder extends Seeder
         WaterRate::create([
             'type' => 'Commercial',
             'consumption_max_range' => 10,
-            'min_rate' => 1.1,
-            'excess_rate' => 0.15,
+            'min_rate' => 110,
+            'excess_rate' => 15,
         ]);
     }
 }
