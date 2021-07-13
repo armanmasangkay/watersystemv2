@@ -20,7 +20,7 @@ class RatesTest extends TestCase
     }
     public function test_return_water_rates_if_the_user_is_authenticated(){
         $user = User::factory()->create();
-        Artisan::call('db:seed --class=WaterRateSeeder');
+        Artisan::call('migrate:refresh --seed');
         $response = $this->actingAs($user)->get(route('admin.water-rate-get'));
 
         $data1 = ["id" => 1, "type" => "Residential", "consumption_max_range" => 10, "min_rate" => 65, "excess_rate" => 10];
@@ -39,7 +39,7 @@ class RatesTest extends TestCase
     }
     public function test_return_surcharge_rate_if_the_user_is_authenticated(){
         $user = User::factory()->create();
-        Artisan::call('db:seed --class=SurchargeSeeder');
+        Artisan::call('migrate:refresh --seed');
         $response = $this->actingAs($user)->get(route('admin.surcharge-get'));
         $data = ["id" => 1, "rate" => 0.1];
 

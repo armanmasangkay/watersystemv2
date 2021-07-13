@@ -26,7 +26,8 @@ class SurchargeController extends Controller
 
         $rate = $request->surcharge_rate? $request->surcharge_rate : '0';
 
-        $surcharge = Surcharge::find(1);
+        $Getsurcharge = Surcharge::all();
+        $surcharge = Surcharge::find($Getsurcharge[0]->id);
 
         $surcharge->rate = $rate / 100;
         $surcharge->save();
