@@ -65,7 +65,7 @@ class ConsumerLedgerController extends Controller
         // $payments = Payments
 
         $date = ($balance->period_covered != "Beginning Balance" ? explode('-', $balance->period_covered) : explode('/', '/'.$balance->reading_date));
-    
+
         return view('pages.consumer-ledger',[
             'customer' => [
                 'fullname' => $fullname,
