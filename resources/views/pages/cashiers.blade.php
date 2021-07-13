@@ -12,7 +12,7 @@
 <h3 class="mt-4">List of Cashiers</h3>
 
 
-<a class="btn btn-outline-primary btn-sm mb-3" href="{{route('admin.cashiers.create')}}"><i data-feather="user-plus" class="feather-16 m-1"></i> Register new</a>
+<a class="btn btn-primary mb-3 pb-2 pt-2" href="{{route('admin.cashiers.create')}}"><i data-feather="user-plus" class="feather-20 mx-1 pb-1 pt-1"></i> Register new</a>
 
 <div class="table-responsive">
     <table class="table table-bordered">
