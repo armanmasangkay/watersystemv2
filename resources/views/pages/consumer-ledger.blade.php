@@ -36,7 +36,7 @@
                             readOnly>
                         </div>
                         <div class="col-md-6 d-flex justify-content-between align-items-center pe-5"><span><strong>Account No:</strong></span>&nbsp;&nbsp;
-                            <input type="text" class="text-bold form-control w-75 fae9d6 rounded-0 border-top-0 border-start-0 border-end-0 border-bottom border-secondary ml-3 pt-1 pb-1" value="{{ isset($customer) ? $customer["account"] : '' }}" readOnly>
+                            <input type="text" class="text-bold form-control w-75 fae9d6 rounded-0 border-top-0 border-start-0 border-end-0 border-bottom border-secondary ml-3 pt-1 pb-1" id="account_number" value="{{ isset($customer) ? $customer["account"] : '' }}" readOnly>
                         </div>
                     </div>
                     <div class="row mt-1">
@@ -63,7 +63,8 @@
                                     <td class="pt-0 pb-4 text-center bg-white border-end border-secondary" rowspan="2"><strong>PERIOD </br>COVERED</strong></td>
                                     <td class="pt-3 pb-3 text-center f0f0f0 border-end border-secondary" colspan="3"><strong>READING</strong></td>
                                     <td class="pt-3 pb-3 text-center f8d6b0 border-end border-secondary" colspan="6"><strong>BILLING</strong></td>
-                                    <td class="pt-3 pb-3 text-center eee border-bottom border-secondary" colspan="4"><strong>PAYMENT</strong></td>
+                                    <td class="pt-3 pb-3 text-center eee border-bottom border-end border-secondary" colspan="4"><strong>PAYMENT</strong></td>
+                                    <td class="pt-0 pb-4 text-center bg-white border-bottom border-secondary" rowspan="2"><strong>EDIT </br>BILLING</strong></td>
                                 </tr>
                                 <tr>
                                     <td class="pt-2 pb-2 text-center f0f0f0 border-end border-secondary"><strong>DATE</strong></td>
@@ -78,8 +79,7 @@
                                     <td class="pt-2 pb-2 text-center eee border-end border-secondary"><strong>OR NUMBER</strong></td>
                                     <td class="pt-2 pb-2 text-center eee border-end border-secondary"><strong>PAYMENT DATE</strong></td>
                                     <td class="pt-2 pb-2 text-center eee border-end border-secondary"><strong>AMOUNT</strong></td>
-                                    <td class="pt-2 pb-2 text-center eee border-end border-secondary"><strong>POSTED BY</strong></td>
-                                    <td class="pt-2 pb-2 text-center eee border-bottom border-secondary"><strong>Action</strong></td>
+                                    <td class="pt-2 pb-2 text-center eee border-bottom border-end border-secondary"><strong>POSTED BY</strong></td>
 
                                 </tr>
                             </thead>
@@ -93,15 +93,15 @@
                                 @if(isset($customer))
                                 @foreach($customer["transactions"] as $billing)
                                 <tr>
-                                    <td class="pt-2 pb-2 text-center bg-white border-end border-secondary"><small>{{ $billing->period_covered }}</small></td>
-                                    <td class="pt-2 pb-2 text-center f0f0f0 border-end border-secondary"><small>{{ \Carbon\Carbon::parse($billing->reading_date)->format('m-d-Y') }}</small></td>
-                                    <td class="pt-2 pb-2 text-center f0f0f0 border-end border-secondary"><small>{{ $billing->reading_meter }}</small></td>
-                                    <td class="pt-2 pb-2 text-center f0f0f0 border-end border-secondary"><small>{{ $billing->reading_consumption }}</small></td>
-                                    <td class="pt-2 pb-2 text-center f8d6b0 border-end border-secondary"><small>{{ toAccounting($billing->billing_amount) }}</small></td>
-                                    <td class="pt-2 pb-2 text-center f8d6b0 border-end border-secondary"><small>{{ toAccounting($billing->billing_surcharge) }}</small></td>
-                                    <td class="pt-2 pb-2 text-center f8d6b0 border-end border-secondary"><small>{{ toAccounting($billing->billing_meter_ips) }}</small></td>
-                                    <td class="pt-2 pb-2 text-center f8d6b0 border-end border-secondary"><small>{{ toAccounting($billing->billing_total) }}</small></td>
-                                    <td class="pt-2 pb-2 text-center f8d6b0 border-end border-secondary"><small>{{ toAccounting($billing->balance) }}</small></td>
+                                    <td id="tdpc-{{ $billing->period_covered }}" class="pt-2 pb-2 text-center bg-white border-end border-secondary"><small>{{ $billing->period_covered }}</small></td>
+                                    <td id="tdrd-{{ $billing->period_covered }}" class="pt-2 pb-2 text-center f0f0f0 border-end border-secondary"><small>{{ \Carbon\Carbon::parse($billing->reading_date)->format('m-d-Y') }}</small></td>
+                                    <td id="tdrm-{{ $billing->period_covered }}" class="pt-2 pb-2 text-center f0f0f0 border-end border-secondary"><small>{{ $billing->reading_meter }}</small></td>
+                                    <td id="tdrc-{{ $billing->period_covered }}" class="pt-2 pb-2 text-center f0f0f0 border-end border-secondary"><small>{{ $billing->reading_consumption }}</small></td>
+                                    <td id="tdba-{{ $billing->period_covered }}" class="pt-2 pb-2 text-center f8d6b0 border-end border-secondary"><small>{{ toAccounting($billing->billing_amount) }}</small></td>
+                                    <td id="tdbs-{{ $billing->period_covered }}" class="pt-2 pb-2 text-center f8d6b0 border-end border-secondary"><small>{{ toAccounting($billing->billing_surcharge) }}</small></td>
+                                    <td id="tdmb-{{ $billing->period_covered }}" class="pt-2 pb-2 text-center f8d6b0 border-end border-secondary"><small>{{ toAccounting($billing->billing_meter_ips) }}</small></td>
+                                    <td id="tdbt-{{ $billing->period_covered }}" class="pt-2 pb-2 text-center f8d6b0 border-end border-secondary"><small>{{ toAccounting($billing->billing_total) }}</small></td>
+                                    <td id="tdbb-{{ $billing->period_covered }}" class="pt-2 pb-2 text-center f8d6b0 border-end border-secondary"><small>{{ toAccounting($billing->balance) }}</small></td>
                                     <td class="pt-2 pb-2 text-center f8d6b0 border-end border-secondary"><small>{{ $billing->user->name }}</small></td>
                                     <td class="pt-2 pb-2 text-center eee border-end border-secondary">
                                         <small>
@@ -143,18 +143,25 @@
                                         @endforeach
                                         </small>
                                     </td>
-                                    <td class="pt-2 pb-2 text-center eee border-bottom border-secondary">
+                                    <td class="pt-2 pb-2 text-center eee border-bottom border-end border-secondary">
                                         <small>
                                         @foreach($billing->payments as $payment)
                                             @if($payment->transaction_id == $billing->id)
                                                 @if($count > 1)
                                                 {{ "[". $payment->user->name."]" }}
+                                                <?php $count++; ?>
                                                 @else
                                                 {{ $payment->user->name }}
+                                                <?php $count = 0; ?>
                                                 @endif
                                             @endif
                                         @endforeach
                                         </small>
+                                    </td>
+                                    <td class="pt-2 pb-2 text-center bg-white border-bottom border-secondary">
+                                        @if($billing->payments->count() == 0)
+                                            <a href="#" class="text-primary" data-id="{{ $billing->id }}" id="edit"><i data-feather="edit-3" class="feather-18 me-1"></i> Edit</a>
+                                        @endif
                                     </td>
                                 </tr>
                                 @endforeach
@@ -175,64 +182,9 @@
     </div>
 </div>
 
-                <div class="modal-header">
-                    <h5 class="modal-title text-muted" id="exampleModalLabel"><i data-feather="file"></i><strong>&nbsp; New Billing Setup</strong></h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body p-4">
-                    <h5 class="text-muted">Previous Meter Reading</h5>
-                    <div class="row mt-3">
-                        <div class="col-lg-2 col-md-4 col-sm-6 mb-sm-2 pe-md-1 pe-sm-1">
-                            <label class='text-muted'>Meter reading</label>
-                            <input class="form-control" id="meter-reading" name="meter-reading" type="number" placeholder="Meter reading" min=0 readOnly value="{{ isset($customer) ? $customer["balance"]->reading_meter : '' }}">
-                        </div>
-                        <div class="col-lg-2 col-md-4 col-sm-6 mb-sm-2 ps-md-0 pe-md-0 ps-sm-1">
-                            <label class='text-muted'>Balance</label>
-                            <input class="form-control" id="cur_balance" name="cur_balance" type="text" placeholder="Meter reading" min=0 readonly value="{{ isset($customer) ? toAccounting($customer["balance"]->balance) : '0.00' }}">
-                        </div>
-                    </div>
-                    <div class="row mt-1">
-                        <div class="col-md-4 pe-md-0">
-                            <label class='text-muted'>Reading date</label>
-                            <input type="text" class="form-control" name="date" value="{{ isset($customer) ? \Carbon\Carbon::parse($customer['balance']->reading_date)->format('F d, Y') : '' }}" readonly>
-                        </div>
-                    </div>
-
-                    <h5 class="text-muted mt-4">Current Meter Reading</h5>
-
-                    <div class="row mt-3">
-                        <div class="col-md-4 pe-md-0">
-                            <label class='text-muted'>Reading date</label>
-                            <input class="form-control" name="reading_date" id="reading_date" type="date"
-                            min="{{\Carbon\Carbon::parse($last_date)->addMonth()->format('Y-m-01')}}"
-                            max="{{\Carbon\Carbon::parse($last_date)->addMonth()->endOfMonth()->format('Y-m-d')}}">
-
-                        </div>
-                    </div>
-
-
-                    <div class='row px-md-2 mb-2 mt-2'>
-                        <div class='col-6 col-md-3 col-lg-2 col-xl-1 mt-2 pe-md-1 ps-md-1 ps-lg-1 pe-sm-1 pe-1'>
-                            <small class='text-primary'>{{ isset($last_date) ? \Carbon\Carbon::parse($last_date)->format('M, Y') : '' }}</small>
-                            <select name='current_month' id='current-month' class='form-select' disabled>
-                                @if(isset($customer))
-                                @for($i = 1; $i <= \Carbon\Carbon::parse($last_date)->endOfMonth()->format('d'); $i++)
-                                <option value="{{ \Carbon\Carbon::parse($last_date)->format('M '.($i < 10 ? '0'.$i : $i)) }}" {{ \Carbon\Carbon::parse($last_date)->format('d') == $i ? 'selected' : '' }}>{{ $i < 10 ? '0'.$i : $i }}</option>
-                                @endfor
-                                @endif
-                            </select>
-
-                        </div>
-                        <div class='col-6 col-md-3 col-lg-2 col-xl-1 mt-2 ps-md-0 pe-md-0 ps-sm-0 ps-0'>
-                            <small class='text-primary'>{{ isset($customer) ? \Carbon\Carbon::parse($last_date)->addMonths(1)->format('M, Y') : '' }}</small>
-                            <select name='next_month' id='next-month' class='form-select' disabled>
-                                @if(isset($customer))
-                                @for($i = 1; $i <=  \Carbon\Carbon::parse($last_date)->addMonths(1)->endOfMonth()->format('d'); $i++)
-                                <option value="{{ \Carbon\Carbon::parse($last_date)->addMonths(1)->format('M '.($i < 10 ? '0'.$i : $i).', Y') }}" {{ \Carbon\Carbon::parse($last_date)->format('d') == $i ? 'selected' : '' }}>{{ $i < 10 ? '0'.$i : $i }}</option>
-                                @endfor
-                                @endif
-                            </select>
-                        </div>
+@include('templates.newBillingModal')
+@include('templates.paymentModal')
+@include('templates.editBillingModal')
 
 @endsection
 
@@ -242,5 +194,6 @@
 
 <script src="{{ asset('assets/js/new_billing.js') }}" defer></script>
 <script src="{{ asset('assets/js/payments.js') }}" defer></script>
+<script src="{{ asset('assets/js/edit_billing.js') }}" defer></script>
 
 @endsection

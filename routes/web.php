@@ -23,6 +23,7 @@ use App\Http\Controllers\ConsumerLedgerController;
 use App\Http\Controllers\ExistingCustomerController;
 use App\Http\Controllers\SearchedCustomerController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\EditBillingController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -96,6 +97,9 @@ Route::prefix('admin')->middleware('auth')->name('admin.')->group(function(){
 
     Route::post('/consumer-ledger/balance/payment/{id}',[PaymentController::class,'getBalance'])->middleware('access.authorize')->name('get-balance');
     Route::post('/consumer-ledger/balance/payment/save/{id}',[PaymentController::class,'save_payment'])->middleware('access.authorize')->name('save-payment');
+
+    Route::post('/consumer-ledger/billing/transaction/{id}',[EditBillingController::class,'getBill'])->middleware('access.authorize')->name('get-bill');
+    Route::post('/consumer-ledger/billing/transaction/update/{id}',[EditBillingController::class,'updateBill'])->middleware('access.authorize')->name('update-billing');
 });
 
 

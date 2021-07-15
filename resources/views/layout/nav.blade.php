@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-md navabr-light border-bottom pt-3 pb-3">
+  <nav class="navbar navbar-expand-md navabr-light border-bottom pt-3 pb-3">
     <div class="container{{ Request::is('admin/consumer-ledger/*') ? '-fluid px-5' : ' px-3' }}">
       <a class="navbar-brand text-dark pe-4" href="{{route('admin.dashboard')}}"><strong>MWS</strong></a>
       <button class="navbar-toggler border-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -6,7 +6,6 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0 pt-lg-0 pt-md-2">
-
           @adminonly(Auth::user()->role)
           <li class="nav-item m1-">
             <a class="nav-link m-1 text-secondary" aria-current="page" href="{{route('admin.dashboard')}}">
@@ -23,7 +22,6 @@
               {{-- <li><a class="dropdown-item" href="{{route('admin.consumer-ledger')}}">Ledger Card</a></li> --}}
               <li><a class="dropdown-item" href="{{route('admin.existing-customers.index')}}">View Lists</a></li>
             </ul>
-
           </li>
           @adminonly(Auth::user()->role)
           <li class="nav-item dropdown pt-1">
@@ -38,7 +36,6 @@
                 <a class="dropdown-item" href="{{route('admin.transfer-meter')}}">Transfer of Meter</a>
               </li>
             </ul>
-
           </li>
           @endadminonly
 
@@ -54,7 +51,6 @@
               
               </li>
             </ul>
-
           </li>
           @endadminonly
 
@@ -67,7 +63,6 @@
               <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">Water Rates</a></li>
               <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#surchargeModel">Surcharge</a></li>
             </ul>
-
           </li>
           @endadminonly
         </ul>

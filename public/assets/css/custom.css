@@ -7,6 +7,18 @@
     width:16px;
     height:16px;
 }
+.feather-18{
+    width:18px;
+    height:18px;
+}
+.feather-20{
+    width:20px;
+    height:auto;
+}
+.feather-30{
+    width:30px;
+    height:auto;
+}
 .feather-32{
     width:32px;
     height:32px;
@@ -84,8 +96,12 @@
     padding-top: 8px;
 }
 
-.input, input, select, .btn, .pagination li span, .pagination li a{
+.input, input, select, button.btn, .pagination li span, .pagination li a{
     height: 45px !important;
+}
+
+a.btn{
+    font-size: 15px;
 }
 
 .input > input{
