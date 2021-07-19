@@ -2,95 +2,79 @@
 
 @section('title', 'Customers')
 
-
 @section('content')
 
-
 <div class="container mt-5">
-    <div class="card mt-4 shadow-sm">
-      <!--  -->
-      <div class="card-header">
-          <h4 class='text-center'><i data-feather="users" class="feather-32"></i>&nbsp;&nbsp;Customers</h4>
-      </div>
-      <div class="card-body">
-        <div class="row">
-          <div class="col-12 col-md-8 col-lg-6 col-xl-4">
-
-            <form action="{{route('admin.searched-customers.index')}}" action="get">
-              <div class="input-group mb-3">
-                <input type="text" name='keyword' value="{{$keyword??''}}" class="form-control @error('keyword')is-invalid @enderror" placeholder="Enter Name / Account #" aria-describedby="button-addon2">
-                <button class="btn btn-outline-primary" type="submit" id="button-addon2">Search</button>
-                @error('keyword')
-                <div id="validationServerUsernameFeedback" class="invalid-feedback">
-                  {{$message}}
+    <h5 class="text-secondary h4"><i data-feather="align-right" class="mb-1 feather-30 me-1"></i> Lists of Counsumers</h5>
+    <div class="card border-secondary">
+        <div class="card-header border-0 px-2 pb-0 pt-3 bg-white">
+            <div class="row">
+                <div class="col-lg-5 col-md-7 col-sm-8 pe-md-0 pe-md-5">
+                    <form action="{{route('admin.searched-customers.index')}}" action="get">
+                        <div class="input-group mb-3">
+                            <input type="text" name='keyword' value="{{$keyword??''}}" class="form-control @error('keyword')is-invalid @enderror" placeholder="Enter name or account #" aria-describedby="button-addon2">
+                            <button class="btn btn-primary" type="submit" id="button-addon2"><i data-feather="search" class="feather-20 me-1"></i> Search</button>
+                            @error('keyword')
+                            <div id="validationServerUsernameFeedback" class="invalid-feedback">
+                              {{$message}}
+                            </div>
+                            @enderror
+                        </div>
+                    </form>
                 </div>
-                @enderror
-              </div>
-
-          </form>
-          </div>
-        </div>
-        @if(isset($keyword))
-        <small>
-          <a href="{{route('admin.customers')}}">Show all</a>
-        </small>
-
-        @endif
-          @if($customers->count()>0)
-          <div class="table-responsive">
-              <table class="table table-hover table-bordered">
-                  <thead class="table-light">
-                    <tr>
-                      <th scope="col">Acc #</th>
-                      <th scope="col">Fullname</th>
-                      <th scope="col">Civil Status</th>
-                      <th scope="col">Contact #</th>
-                      <th scope="col">Address</th>
-                      <th scope="col">Connection Type</th>
-                      <th scope="col">Connection Status</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-
-                      @foreach ($customers as $customer)
-                      <tr style="cursor: pointer;" onclick='location.href=`{{ route("admin.search-transactions", ["account_number" => $customer->account_number]) }}`'>
-                          <th>{{$customer->account_number}}</th>
-                          @if($customer->isOrgAccount())
-                          <td>
-                            ORG/COMPANY: <strong>{{$customer->org_name}}</strong><br>
-                            <small class="text-muted">Registered by ({{$customer->fullname()}})</small>
-                          </td>
-                          @else
-                          <td>{{$customer->firstname . ' ' .$customer->middlename. ' '.$customer->lastname}}</td>
-                          @endif
-                          
-                          <td>{{Str::ucfirst($customer->civil_status)}}</td>
-                          <td>{{$customer->contact_number}}</td>
-                          <td>{{$customer->purok.', '.$customer->barangay}}</td>
-                          <td>{{Str::ucfirst($customer->connection_type)}}</td>
-                          <td>{{Str::ucfirst($customer->connection_status)}}</td>
-                      </tr>
-                      @endforeach
-
-                  </tbody>
-                </table>
-              </div>
-
-              {{$customers->links()}}
-
-            @else
-            <div class="text-muted text-center">
-                <h3><i class="fas fa-user-times"></i></h3>
-                <p>Nothing to show</p>
+                <div class="col-lg-7 col-md-5 col-sm-4" align="right">
+                    @if(isset($keyword))
+                    <small>
+                        <a class="btn btn-primary mb-3 pb-2 pt-2" href="{{route('admin.customers')}}"><i data-feather="align-center" class="feather-20 mx-1 pb-1 pt-1"></i> Show all</a>
+                    </small>
+                    @endif
+                </div>
             </div>
-
-            @endif
-      </div>
-  </div>
+        </div>
+        <div class="card-body p-0">
+            <div class="table-responsive border-top border-secondary">
+                <table class="table table-hover {{ ($customers->count() < 10) ? 'mb-0' : '' }}">
+                    <thead class="table-light">
+                        <tr>
+                            <th class="text-secondary py-3">Account #</th>
+                            <th class="text-secondary py-3">Fullname</th>
+                            <th class="text-secondary py-3">Civil Status</th>
+                            <th class="text-secondary py-3">Contact #</th>
+                            <th class="text-secondary py-3">Address</th>
+                            <th class="text-secondary py-3">Connection Type</th>
+                            <th class="text-secondary py-3">Connection Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if($customers->count()>0)
+                        @foreach ($customers as $customer)
+                        <tr style="cursor: pointer;" onclick='location.href=`{{ route("admin.search-transactions", ["account_number" => $customer->account_number]) }}`'>
+                            <td class="text-primary border-secondary {{ ($customers->count() < 2) ? 'border-bottom-0' : '' }} "><strong>{{$customer->account_number}}</strong></td>
+                            @if($customer->isOrgAccount())
+                            <td class="text-secondary border-secondary {{ ($customers->count() < 2) ? 'border-bottom-0' : '' }} ">
+                              ORG/COMPANY: <strong>{{$customer->org_name}}</strong><br>
+                              <small class="text-muted">Registered by ({{$customer->fullname()}})</small>
+                            </td>
+                            @else
+                            <td class="text-secondary border-secondary {{ ($customers->count() < 2) ? 'border-bottom-0' : '' }} ">{{$customer->firstname . ' ' .$customer->middlename. ' '.$customer->lastname}}</td>
+                            @endif
+                            
+                            <td class="text-secondary border-secondary {{ ($customers->count() < 2) ? 'border-bottom-0' : '' }} ">{{Str::ucfirst($customer->civil_status)}}</td>
+                            <td class="text-secondary border-secondary {{ ($customers->count() < 2) ? 'border-bottom-0' : '' }} ">{{$customer->contact_number}}</td>
+                            <td class="text-secondary border-secondary {{ ($customers->count() < 2) ? 'border-bottom-0' : '' }} ">{{$customer->purok.', '.$customer->barangay}}</td>
+                            <td class="text-secondary border-secondary {{ ($customers->count() < 2) ? 'border-bottom-0' : '' }} ">{{Str::ucfirst($customer->connection_type)}}</td>
+                            <td class="text-secondary border-secondary {{ ($customers->count() < 2) ? 'border-bottom-0' : '' }} ">{{Str::ucfirst($customer->connection_status)}}</td>
+                        </tr>
+                        @endforeach
+                        @else
+                        <tr>
+                          <td class="text-center text-secondary py-3 {{ ($customers->count() < 1) ? 'border-bottom-0' : '' }}" colspan="7"><i data-feather="user-x" class="feather-20 me-1"></i> No records to display</td>
+                        </tr>
+                        @endif
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>
-
-
-
-
-
 @endsection
