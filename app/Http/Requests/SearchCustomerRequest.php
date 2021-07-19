@@ -23,6 +23,8 @@ class SearchCustomerRequest extends FormRequest
      */
     public function rules()
     {
+
+        $this->redirect=route('admin.searched-customers.index');
         return [
             'keyword'=>'required'
         ];

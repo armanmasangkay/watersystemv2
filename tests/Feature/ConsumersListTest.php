@@ -32,12 +32,7 @@ class ConsumersListTest extends TestCase
             'org_name'=>'Sample org name'
         ]);
 
-        $user=User::create([
-            'name'=>'Arman Masangkay',
-            'username'=>'amasangkay',
-            'password'=>Hash::make('1234'),
-            'role'=>User::$ADMIN
-        ]);
+        $user=User::factory()->create();
         
         $response=$this->actingAs($user)
                        ->get(route('admin.existing-customers.index'));
@@ -46,6 +41,8 @@ class ConsumersListTest extends TestCase
         $response->assertViewHas('customers');
         $this->assertInstanceOf(LengthAwarePaginator::class,$response->viewData('customers'));
     }
+
+    
     public function test_reroute_to_login_page_when_not_authenticated()
     {  
         $response=$this->get(route('admin.existing-customers.index'));
