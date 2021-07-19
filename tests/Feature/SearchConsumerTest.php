@@ -27,15 +27,21 @@ class SearchConsumerTest extends TestCase
     public function test_view_if_a_valid_keyword_is_supplied()
     {
         $user=User::factory()->create();
-
-
         $response=$this->actingAs($user)
                        ->get(route('admin.searched-customers.index').'?keyword=Arman');
-
         $response->assertViewIs('pages.customers-list');
         $response->assertViewHasAll([
             'customers',
             'keyword'
         ]);
     }
+
+    public function test_search_customer_uri_is_not_accessible_to_unauthenticated_user()
+    {
+        $user=User::factory()->create();
+        $response=$this->get(route('admin.searched-customers.index').'?keyword=Arman'); 
+        $response->assertRedirect(route('login'));
+    }
+
+
 }
