@@ -12,8 +12,6 @@ class SearchConsumerTest extends TestCase
 {
     use RefreshDatabase;
 
-
-    //TODO: Fix this
     public function test_should_redirect_back_with_errors_when_keyword_is_not_supplied()
     {
         $user=User::factory()->create();
@@ -24,5 +22,20 @@ class SearchConsumerTest extends TestCase
         $response->assertRedirect(route('admin.searched-customers.index'))
                  ->assertSessionHasErrors('keyword');
 
+    }
+
+    public function test_view_if_a_valid_keyword_is_supplied()
+    {
+        $user=User::factory()->create();
+
+
+        $response=$this->actingAs($user)
+                       ->get(route('admin.searched-customers.index').'?keyword=Arman');
+
+        $response->assertViewIs('pages.customers-list');
+        $response->assertViewHasAll([
+            'customers',
+            'keyword'
+        ]);
     }
 }
