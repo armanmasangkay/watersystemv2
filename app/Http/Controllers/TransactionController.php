@@ -83,7 +83,7 @@ class TransactionController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    private function getLastTransaction($account_id, $transaction_id){
+    private function getLastTransactionBalance($account_id, $transaction_id){
         $transaction = Transaction::where('customer_id', $account_id)->get();
         $lastTransaction = [];
         for($x = 0 ; $x <  count($transaction); $x++){
@@ -96,9 +96,6 @@ class TransactionController extends Controller
             }
         }
         return $lastBalance;
-    }
-    private function getTransactionToBeUpdate($transaction_id){
-        return Transaction::find($transaction_id);
     }
 
     public function edit($account_id, $id)
