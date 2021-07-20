@@ -5,7 +5,7 @@
 @section('content')
 
 <div class="container mt-5">
-    <h5 class="text-secondary h4"><i data-feather="align-right" class="mb-1 feather-30 me-1"></i> Lists of Counsumers</h5>
+    <h5 class="text-secondary h4"><i data-feather="align-right" class="mb-1 feather-30 me-1"></i> Lists of Consumers</h5>
     <div class="card border-secondary">
         <div class="card-header border-0 px-2 pb-0 pt-3 bg-white">
             <div class="row">
