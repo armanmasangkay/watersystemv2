@@ -21,8 +21,8 @@ $(document).ready(async() => {
         let min_rate = document.getElementById('min_rate');
         let excess_rate = document.getElementById('excess_rate');
 
-        min_rate.value = Math.round(water_rates.data[water_types.value - 1].min_rate * 100);
-        excess_rate.value = Math.round(water_rates.data[water_types.value - 1].excess_rate * 100);
+        min_rate.value = water_rates.data[water_types.value - 1].min_rate;
+        excess_rate.value = water_rates.data[water_types.value - 1].excess_rate;
     }
 
     function AddDangerBorder(elementId)

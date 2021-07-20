@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Auth;
 
 class CustomerController extends Controller
 {
- 
+
 
     public function showAll()
     {

@@ -31,8 +31,8 @@
                 <div class="card-header border-secondary px-4 pb-2 pt-2 bg-light">
                     <div class="row">
                         <div class="col-md-6 d-flex justify-content-between align-items-center pe-5"><span><strong>Name:</strong></span>&nbsp;&nbsp;
-                            <input type="text" class="text-bold form-control w-75 fae9d6 rounded-0 border-top-0 border-start-0 border-end-0 border-bottom border-secondary ml-3 pt-1 pb-1" 
-                            value="{{isset($customer)?$customer["org_name"]?$customer["org_name"]:$customer["fullname"]:''}}" 
+                            <input type="text" class="text-bold form-control w-75 fae9d6 rounded-0 border-top-0 border-start-0 border-end-0 border-bottom border-secondary ml-3 pt-1 pb-1"
+                            value="{{isset($customer)?$customer["org_name"]?$customer["org_name"]:$customer["fullname"]:''}}"
                             readOnly>
                         </div>
                         <div class="col-md-6 d-flex justify-content-between align-items-center pe-5"><span><strong>Account No:</strong></span>&nbsp;&nbsp;
@@ -80,14 +80,14 @@
                                     <td class="pt-2 pb-2 text-center eee border-end border-secondary"><strong>PAYMENT DATE</strong></td>
                                     <td class="pt-2 pb-2 text-center eee border-end border-secondary"><strong>AMOUNT</strong></td>
                                     <td class="pt-2 pb-2 text-center eee border-bottom border-end border-secondary"><strong>POSTED BY</strong></td>
-                                    
+
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php 
+                                <?php
                                     $amount = 0.00;
                                     $count = 0;
-                                    function toAccounting($num){ return number_format($num, 2, '.', ','); } 
+                                    function toAccounting($num){ return number_format($num, 2, '.', ','); }
                                     function orNumbers($or) { return $or."/"; }
                                 ?>
                                 @if(isset($customer))

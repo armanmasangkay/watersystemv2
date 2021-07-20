@@ -65,7 +65,7 @@ class ConsumerLedgerController extends Controller
         // $payments = Payments
 
         $date = ($balance->period_covered != "Beginning Balance" ? explode('-', $balance->period_covered) : explode('/', '/'.$balance->reading_date));
-    
+
         return view('pages.consumer-ledger',[
             'customer' => [
                 'fullname' => $fullname,
@@ -102,10 +102,12 @@ class ConsumerLedgerController extends Controller
         ];
 
         $update_transaction = Transaction::find($request->current_transaction_id);
+
         $update_transaction->billing_surcharge = $request->surcharge_amount;
         $update_transaction->billing_total += $request->surcharge_amount;
         $update_transaction->balance += $request->surcharge_amount;
         $update_transaction->update();
+
 
         $transactions = Transaction::create($fillable);
         return response()->json(['created' => true]);

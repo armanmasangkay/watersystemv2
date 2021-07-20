@@ -36,11 +36,8 @@ class WaterRateController extends Controller
 
         $water_rate = WaterRate::find($requestData['type']);
 
-        $min_rate = $requestData['min_rate'] / 100;
-        $excess_rate = $requestData['excess_rate'] / 100;
-
-        $water_rate->min_rate = $min_rate;
-        $water_rate->excess_rate = $excess_rate;
+        $water_rate->min_rate = $request->min_rate;
+        $water_rate->excess_rate = $requestData['excess_rate'];
         $water_rate->save();
 
         return response()->json(['updated' => true, 'message' => "$water_rate->type has been successfully updated"]);

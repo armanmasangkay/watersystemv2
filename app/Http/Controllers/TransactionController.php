@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Transaction;
+use ErrorException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -81,9 +82,26 @@ class TransactionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+
+    private function getLastTransactionBalance($account_id, $transaction_id){
+        $transaction = Transaction::where('customer_id', $account_id)->get();
+        $lastTransaction = [];
+        for($x = 0 ; $x <  count($transaction); $x++){
+            if($transaction[$x]->id == $transaction_id){
+                try{
+                    $lastBalance = $transaction[$x - 1];
+                }catch(ErrorException $e){
+                    $lastBalance = $transaction[$x];
+                }
+            }
+        }
+        return $lastBalance;
+    }
+
+    public function edit($account_id, $id)
     {
-        //
+        return $this->getTransactionToBeUpdate($id);
+        // $this->getLastTransaction($account_id, $id);
     }
 
     /**
