@@ -26,7 +26,7 @@ class SearchConsumerTest extends TestCase
     {
         $user=User::factory()->create();
         $response=$this->actingAs($user)
-                       ->get(route('admin.searched-customers.index').'?keyword=Arman');
+                       ->get(route('admin.searched-customers.index',['keyword','Arman']));
         $response->assertViewIs('pages.customers-list');
         $response->assertViewHasAll([
             'customers',
