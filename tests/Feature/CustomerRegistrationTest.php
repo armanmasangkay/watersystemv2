@@ -46,7 +46,7 @@ class CustomerRegistrationTest extends TestCase
         $response->assertJson(['created' => false]);
     }
 
-    public function test_fail_to_register_if_date_is_beyond(){
+    public function test_fail_to_register_if_date_is_beyond_today(){
         $user = User::factory()->create();
         $this->actingAs($user);
 

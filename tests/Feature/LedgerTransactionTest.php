@@ -38,9 +38,7 @@ class LedgerTransactionTest extends TestCase
         ]);
   }
 
-    private function get_customer(){
-        return Customer::all();
-    }
+
     private function get_transaction($customer){
         return Transaction::where('customer_id', $customer->account_number)->latest()->first();
     }
@@ -50,25 +48,54 @@ class LedgerTransactionTest extends TestCase
         return $user;
     }
 
-    private function get_surcharge(){
-        Artisan::call('db:seed --class=SurchargeSeeder');
-        return Surcharge::all();
+
+    public function test_display_consumer_ledger(){
+        Artisan::call('migrate --seed');
+        $user = $this->create_user_admin();
+        $this->create_customer_with_transaction();
+        $customer = Customer::where('account_number', '!=', '')->first();
+
+        $response = $this->actingAs($user)->get(route('admin.search-transactions',['account_number' => $customer->account_number]),[
+            'account_number' => $customer->account_number
+        ]);
+
+        $response->assertSessionHasNoErrors();
+        $response->assertViewIs('pages.consumer-ledger');
+        $response->assertViewHasAll(['customer', 'rates', 'surcharge', 'last_date', 'route', 'current_transaction_id']);
+
+    }
+
+    public function test_fail_if_consumer_account_number_is_invalid_or_consumer_doesnt_exist(){
+        Artisan::call('migrate --seed');
+        $user = $this->create_user_admin();
+        $this->create_customer_with_transaction();
+        $customer = Customer::where('account_number', '!=', '')->first();
+
+        $response = $this->actingAs($user)->get(route('admin.search-transactions',['account_number' => '123211321']),[
+            'account_number' =>'123211321'
+        ]);
+
+
+        $response->assertSessionHasErrors(['account_number.exists']);
+        $response->assertRedirect(route('admin.consumer-ledger'));
     }
 
     public function test_success_adding_new_billing_transaction(){
+        Artisan::call('migrate --seed');
         $this->create_customer_with_transaction();
         $user = $this->create_user_admin();
-        $customer = $this->get_customer();
-        $recentTransaction = $this->get_transaction($customer[0]);
-        $surcharge = $this->get_surcharge();
+        $customer = Customer::where('account_number', '!=', '')->first();
+
+        $recentTransaction = $this->get_transaction($customer);
+        $surcharge = Surcharge::where('id', '!=', '')->first();
         $date = Carbon::now();
         $nextMonthDate = Carbon::now()->addMonth();
 
 
         $response = $this->actingAs($user)->post(route('admin.save-billing'),[
             'current_transaction_id' => $recentTransaction->id,
-            'surcharge_amount' => $recentTransaction->billing_amount * $surcharge[0]->rate,
-            'customer_id' => $customer[0]->account_number,
+            'surcharge_amount' => $recentTransaction->billing_amount * $surcharge->rate,
+            'customer_id' => $customer->account_number,
             'current_month' => $date->format('F'). ' '. $date->format('d'),
             'next_month' => $nextMonthDate->format('F') . ' '. $date->format('d'),
             'consumption' => 0.00,
@@ -76,11 +103,13 @@ class LedgerTransactionTest extends TestCase
             'reading_meter' => 101,
             'amount' => 65,
             'meter_ips' => '0.00',
-            'total' => 65 + ($recentTransaction->billing_amount * $surcharge[0]->rate),
+            'total' => 65 + ($recentTransaction->billing_amount * $surcharge->rate),
         ]);
 
 
         $this->assertDatabaseCount('transactions',2);
         $response->assertJson(['created' => true]);
     }
+
+
 }
