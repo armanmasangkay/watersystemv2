@@ -27,12 +27,7 @@ class SearchConsumerTest extends TestCase
         $response=$this->actingAs($user)
                        ->get(route('admin.searched-customers.index',['keyword','Arman']));
 
-        // dd($response->dump());
-        $response->assertViewIs('pages.customers-list');
-        $response->assertViewHasAll([
-            'customers',
-            'keyword'
-        ]);
+        $response->assertRedirect();
     }
 
     public function test_search_customer_uri_is_not_accessible_to_unauthenticated_user()
