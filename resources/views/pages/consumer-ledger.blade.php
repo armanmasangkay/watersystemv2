@@ -176,6 +176,9 @@
                             @endif
                         </div>
                     </div>
+            
+                    <a href="{{route('admin.ledger.export',['account_number'=>$customer['account']])}}" class="mt-5"> Export Ledger</a>
+
                 </div>
             </div>
         </div>

@@ -1,5 +1,7 @@
 <?php
 
+use App\Exports\CustomersExport;
+use App\Exports\LedgerExport;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\CustomerSearchController;
 use App\Http\Controllers\DashboardController;
@@ -24,6 +26,7 @@ use App\Http\Controllers\ExistingCustomerController;
 use App\Http\Controllers\SearchedCustomerController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\EditBillingController;
+use App\Services\CustomersFromKeyword;
 use Illuminate\Support\Facades\Route;
 
 
@@ -35,6 +38,9 @@ Route::get('/', function () {
 Route::get('/login',[LoginController::class,'index'])->name('login');
 Route::post('/login',[LoginController::class,'authenticate']);
 
+
+
+
 Route::prefix('admin')->middleware('auth')->name('admin.')->group(function(){
 
     Route::resources([
@@ -42,6 +48,27 @@ Route::prefix('admin')->middleware('auth')->name('admin.')->group(function(){
         'existing-customers'=>ExistingCustomerController::class,
 
     ]);
+
+
+    // Export URLs
+    Route::get('/customers/export/{keyword?}',function($keyword=null){
+    
+        $customersExport=new CustomersExport();
+
+        if($keyword)
+        {   
+            $customers=(new CustomersFromKeyword)->get($keyword);
+            return $customersExport->withData($customers)->download("$keyword.xlsx");
+        }
+        return $customersExport->download('customers.xlsx');
+    })->name('customers.export');
+
+    Route::get('/ledger/export/{account_number}',function($account_number){
+        
+            return (new LedgerExport)->withAccountNumber($account_number)->download("$account_number ledger.xlsx");
+    
+    })->name('ledger.export');
+
 
     Route::resource('cashiers',CashierController::class)->middleware('auth.restrict-cashier');
 

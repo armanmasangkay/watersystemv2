@@ -47,6 +47,9 @@
                     </thead>
                     <tbody>
                         @if($customers->count()>0)
+
+
+
                         @foreach ($customers as $customer)
                         <tr style="cursor: pointer;" onclick='location.href=`{{ route("admin.search-transactions", ["account_number" => $customer->account_number]) }}`'>
                             <td class="text-primary border-secondary {{ ($customers->count() < 2) ? 'border-bottom-0' : '' }} "><strong>{{$customer->account_number}}</strong></td>
@@ -73,8 +76,16 @@
                         @endif
                     </tbody>
                 </table>
+                
             </div>
+            
         </div>
+   
     </div>
+    {{-- Export link --}}
+    <div>
+        <a href="{{route('admin.customers.export',['keyword'=>isset($keyword)?$keyword:''])}}" class="mt-5"> Export data</a>
+    </div>
+
 </div>
 @endsection
