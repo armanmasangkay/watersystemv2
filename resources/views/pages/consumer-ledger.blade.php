@@ -168,17 +168,21 @@
                                 @endif
                             </tbody>
                         </table>
-                        <div class="pt-3 pb-3 px-2 bg-light">
-                            @if(isset($customer))
-                            {{ $customer["transactions"]->links() }}
-                            @else
-                            <h5 class="text-center text-secondary">No records to display</h5>
-                            @endif
+                        <div class="pt-3 pb-2 px-2 bg-light">
+                            <div class="d-flex justify-content-between">
+                                <div class="float-left">
+                                    @if(isset($customer))
+                                    {{ $customer["transactions"]->links() }}
+                                    @else
+                                    <h5 class="text-center text-secondary">No records to display</h5>
+                                    @endif
+                                </div>
+                                <div class="float-md-end mb-1">
+                                    <a href="{{route('admin.ledger.export',['account_number'=>$customer['account']])}}" class="btn btn-secondary py-2"><i data-feather="download" class="feather-20 me-1 pb-1"></i> Export Ledger</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
-            
-                    <a href="{{route('admin.ledger.export',['account_number'=>$customer['account']])}}" class="mt-5"> Export Ledger</a>
-
                 </div>
             </div>
         </div>
