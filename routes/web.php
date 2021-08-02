@@ -113,6 +113,10 @@ Route::prefix('admin')->middleware('auth')->name('admin.')->group(function(){
     Route::post('/consumer-ledger/billing/transaction/update/{id}',[EditBillingController::class,'updateBill'])->middleware('access.authorize')->name('update-billing');
 });
 
+Route::get('/field-personnel/meter-reading', function(){
+    return view('field-personnel.pages.meter-reading');
+});
+
 
 
 
