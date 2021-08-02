@@ -179,3 +179,90 @@ a.btn{
 .form-control:disabled, .form-control[readonly] {
     background-color: #fff;
 }
+
+body.offcanvas-active{
+	overflow:hidden;
+}
+
+body.offcanvas-active .navbar-nav{
+    margin-top: 20px !important;
+    padding-left: 10px;
+}
+
+.offcanvas-header{ display:none; }
+
+.screen-darken{
+	height: 100%;
+	width:0%;
+	z-index: 30;
+	position: fixed;
+	top: 0;
+	right: 0;
+	opacity:0;
+	visibility:hidden;
+	background-color: rgba(34, 34, 34, 0.6);
+	transition:opacity .2s linear, visibility 0.2s, width 2s ease-in;
+}
+
+.screen-darken.active{
+	z-index:10; 
+	transition:opacity .3s ease, width 0s;
+    opacity:1;
+    width:100%;
+    visibility:visible;
+}
+
+.form-search{
+    overflow: hidden;
+}
+
+.form-search.hidden{
+    transition: height .3s ease-out;
+    height: 0px;
+}
+
+.form-search.active{
+    transition: height .3s ease-in;
+    height: 60px;
+}
+
+.btn.close{
+    display: none;
+}
+
+.btn.close.show{
+    display: block;
+}
+
+.btn.search.hidden{
+    display: none;
+}
+
+@media all and (max-width: 991px) {
+	
+	.offcanvas-header{ display:block; }
+
+	.mobile-offcanvas{
+		visibility: hidden;
+		transform:translateX(-100%);
+	    border-radius:0; 
+		display:block;
+	    position: fixed;
+	    top: 0; left:0;
+	    height: 100%;
+	    z-index: 1200;
+	    width:80%;
+	    overflow-y: scroll;
+	    overflow-x: hidden;
+	    transition: visibility .3s ease-in-out, transform .3s ease-in-out;
+	}
+
+	.mobile-offcanvas.show{
+		visibility: visible;
+    	transform: translateX(0);
+	}
+	.mobile-offcanvas .container, .mobile-offcanvas .container-fluid{
+		display: block;
+	}
+
+}	
