@@ -24,9 +24,12 @@ class PaymentController extends Controller
         
         for($i = 0; $i < count($transaction); $i++)
         {
-            $update = Transaction::findOrFail($transaction[$i]['id']);
-            $update->balance -= $amount;
-            $update->update();
+            if($transaction[$i]['balance'] > 0)
+            {
+                $update = Transaction::findOrFail($transaction[$i]['id']);
+                $update->balance -= $amount;
+                $update->update();
+            }
         }
 
         $data = [

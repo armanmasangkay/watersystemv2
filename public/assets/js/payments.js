@@ -10,7 +10,7 @@ $(document).ready(function()
         cleanDate = date.toLocaleString('default', { month: 'long' }) + ' ' + newDate[2] + ', ' + newDate[3]
         numDate = new Date($('#carbon_date_billing').val()).toLocaleString().split(',')[0]
 
-    $('#reading_date').val(numDate)
+    $('#payment_date').val(numDate)
     $('#carbon_date').val(cleanDate)
     
     $(document).on('click', '#paymentBtn', function()
@@ -149,6 +149,6 @@ $(document).ready(function()
             numDate = new Date($(this).val()).toLocaleString().split(',')[0]
 
         $('#carbon_date').val(cleanDate)
-        $('#reading_date').val(numDate)
+        $('#payment_date').val(numDate)
     })
 })
