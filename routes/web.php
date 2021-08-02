@@ -101,7 +101,6 @@ Route::prefix('admin')->middleware('auth')->name('admin.')->group(function(){
     Route::get('/surcharge', [SurchargeController::class, 'getSurcharge'])->middleware('access.authorize')->name('surcharge-get');
     Route::post('/surcharge', [SurchargeController::class, 'update'])->name('surcharge-update');
 
-    Route::get('/transaction/update/{account_id}/{id}', [TransactionController::class, 'edit']);
     Route::get('/consumer-ledger',[ConsumerLedgerController::class, 'index'])->name('consumer-ledger');
     Route::get('/consumer-ledger/transactions',[ConsumerLedgerController::class, 'search'])->name('search-transactions');
     Route::post('/consumer-ledger/transactions/save-billing',[ConsumerLedgerController::class,'store'])->middleware('access.authorize')->name('save-billing');
