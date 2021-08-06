@@ -50,7 +50,7 @@ class LedgerExport implements FromCollection,WithHeadings,WithMapping
             $transactions->billing_surcharge,
             $transactions->billing_meter_ips,
             $transactions->billing_total,
-            $transactions->posted_by,
+            $transactions->posted,
             $transactions->payment_or_no,
             $transactions->payment_date,
             $transactions->payment_amount,
