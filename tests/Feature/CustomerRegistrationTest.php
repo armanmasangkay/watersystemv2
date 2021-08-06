@@ -24,14 +24,13 @@ class CustomerRegistrationTest extends TestCase
             'barangays'=>CustomerRegistrationOptions::barangays(),
             'connectionTypes'=>CustomerRegistrationOptions::connectionTypes(),
             'connectionStatuses'=>CustomerRegistrationOptions::connectionStatuses()
-            ]);
+        ]);
     }
 
 
 
     public function test_organization_name_is_saved_if_field_is_not_empty()
     {
-
         $user = User::factory()->create();
         $this->actingAs($user);
         $date = Carbon::now();
