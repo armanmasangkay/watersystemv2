@@ -11,7 +11,7 @@ class WaterRateController extends Controller
     private function customValidator($requestData)
     {
         $validator = Validator::make($requestData,[
-            // 'id'=>'required',
+            'id'=>'required',
             'type' => 'required',
             'min_rate' => 'required|numeric|min:0',
             'excess_rate' => 'required|numeric|min:0'
@@ -35,7 +35,7 @@ class WaterRateController extends Controller
         $requestData['excess_rate'] = $requestData['excess_rate'] ? $requestData['excess_rate'] : '0';
  
         $water_rate = WaterRate::find($request->id);
-        // dd($water_rate);
+     
         $water_rate->min_rate = $request->min_rate;
         $water_rate->excess_rate = $requestData['excess_rate'];
         $water_rate->save();

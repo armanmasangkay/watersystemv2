@@ -91,10 +91,25 @@ class RatesTest extends TestCase
             'type'=>'Residential',
             'consumption_max_range'=>10,
             'min_rate'=>10,
-            'excess_rate'=>100
+            'excess_rate'=>1000
         ]);
+
+        $this->assertDatabaseHas('water_rates',['excess_rate'=>1000]);
       
         $response->assertJson(['updated'=>true]);
+    }
+
+    public function test_should_not_update_if_id_is_not_provided()
+    {
+        $user = User::factory()->create();
+        $response=$this->actingAs($user)->post(route('admin.water-rate-update'),[
+            'type'=>'Residential',
+            'consumption_max_range'=>10,
+            'min_rate'=>10,
+            'excess_rate'=>1000
+        ]);
+        $response->assertJson(['updated'=>false]);
+        $response->assertJsonValidationErrors(['id']);
     }
 
     
