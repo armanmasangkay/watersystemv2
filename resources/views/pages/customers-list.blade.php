@@ -83,8 +83,8 @@
    
     </div>
     {{-- Export link --}}
-    <div>
-        <a href="{{route('admin.customers.export',['keyword'=>isset($keyword)?$keyword:''])}}" class="mt-5"> Export data</a>
+    <div class="pt-2">
+        <a href="{{route('admin.customers.export',['keyword'=>isset($keyword)?$keyword:''])}}" class="btn btn-secondary py-2"><i data-feather="download" class="feather-20 me-1 pb-1"></i> Export Data</a>
     </div>
 
 </div>
