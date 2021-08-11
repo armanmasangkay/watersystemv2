@@ -111,5 +111,31 @@ class LedgerTransactionTest extends TestCase
         $response->assertJson(['created' => true]);
     }
 
+    public function test_fail_if_adding_new_billing_transaction_missing_any_required_data(){
+        Artisan::call('migrate --seed');
+        $this->create_customer_with_transaction();
+        $user = $this->create_user_admin();
+        $customer = Customer::where('account_number', '!=', '')->first();
+
+        $recentTransaction = $this->get_transaction($customer);
+        $surcharge = Surcharge::where('id', '!=', '')->first();
+        $date = Carbon::now();
+        $nextMonthDate = Carbon::now()->addMonth();
+
+
+        $response = $this->actingAs($user)->post(route('admin.save-billing'),[
+            'surcharge_amount' => $recentTransaction->billing_amount * $surcharge->rate,
+            'current_month' => $date->format('F'). ' '. $date->format('d'),
+            'reading_date' => $date,
+            'reading_meter' => 101,
+            'amount' => 65,
+            'meter_ips' => '0.00',
+            'total' => 65 + ($recentTransaction->billing_amount * $surcharge->rate),
+        ]);
+
+
+        $this->assertDatabaseCount('transactions',1);
+        $response->assertJson(['created' => false]);
+    }
 
 }

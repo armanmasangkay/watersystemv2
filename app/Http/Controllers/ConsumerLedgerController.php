@@ -86,6 +86,23 @@ class ConsumerLedgerController extends Controller
 
     public function store(Request $request)
     {
+
+        $validator = Validator::make($request->all(), [
+            'customer_id' => 'required',
+            'current_month' => 'required',
+            'next_month' => 'required',
+            'reading_date' => 'required',
+            'reading_meter' => 'required',
+            'consumption' => 'required',
+            'amount' => 'required',
+            'meter_ips' => 'required',
+            'total' => 'required',
+        ]);
+
+        if($validator->fails()){
+            return response()->json(['created' => false, 'errors' => $validator->errors()]);
+        }
+
         $fillable=[
             'customer_id' => $request->customer_id,
             'period_covered' => $request->current_month.'-'.$request->next_month,
@@ -100,6 +117,8 @@ class ConsumerLedgerController extends Controller
             'posted_by' => Auth::id(),
             'user_id' => Auth::id(),
         ];
+
+
 
         $update_transaction = Transaction::find($request->current_transaction_id);
 

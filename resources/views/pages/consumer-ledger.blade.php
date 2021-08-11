@@ -178,7 +178,9 @@
                                     @endif
                                 </div>
                                 <div class="float-md-end mb-1">
-                                    <a href="{{route('admin.ledger.export',['account_number'=>$customer['account']])}}" class="btn btn-secondary py-2"><i data-feather="download" class="feather-20 me-1 pb-1"></i> Export Ledger</a>
+                                    @if(isset($customer))
+                                        <a href="{{route('admin.ledger.export',['account_number'=>$customer['account']])}}" class="btn btn-secondary py-2"><i data-feather="download" class="feather-20 me-1 pb-1"></i> Export Ledger</a>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -189,9 +191,11 @@
     </div>
 </div>
 
-@include('templates.newBillingModal')
-@include('templates.paymentModal')
-@include('templates.editBillingModal')
+@if(isset($customer))
+    @include('templates.newBillingModal')
+    @include('templates.paymentModal')
+    @include('templates.editBillingModal')
+@endif
 
 @endsection
 
