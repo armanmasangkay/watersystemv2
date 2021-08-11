@@ -78,7 +78,7 @@
     </div>
   </nav>
 
-  @auth
+@auth
       @include('templates.water-rate')
       @include('templates.surcharge')
   @endauth

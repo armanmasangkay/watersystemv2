@@ -22,6 +22,7 @@ class WaterRateFactory extends Factory
     public function definition()
     {
         return [
+            'type'=>'Residential',
             'consumption_max_range' => 10,
             'min_rate' => 65,
             'excess_rate' => 10,

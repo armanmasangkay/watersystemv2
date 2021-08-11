@@ -17,7 +17,7 @@ class SurchargeController extends Controller
     public function update(Request $request)
     {
         $validator = Validator::make($request->all(),[
-            'surcharge_rate' => 'required|numeric'
+            'surcharge_rate' => 'required|numeric|min:0'
         ]);
 
         if($validator->fails()){
