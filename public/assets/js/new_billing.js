@@ -47,7 +47,12 @@ $(document).ready(function(){
                         })
                     }
                     else{
-                        Swal.fire('Ooops!',"There was an error on saving the consumer's bill!")
+                        Swal.fire('Ooops!',response.msg).then(function(result){
+                            if(result.isConfirmed)
+                            {
+                                window.location.reload();
+                            }
+                        })
                     }
                 }
             })
@@ -85,6 +90,21 @@ $(document).ready(function(){
 
             $('#total').val(total.toFixed(2));
             $('#save-billing').prop('disabled', false);
+
+            let data = $('#billing-form').serialize();
+            var APP_CSRF = $("input[name='_token']").val();
+
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': APP_CSRF
+                },
+                type: 'POST',
+                url: "/get/computed/water-bill",
+                data: {'reading_meter' : $('input[name="reading_meter"]').val(), customer_id: $('#account_number').val()},
+                success: function(response){
+                    
+                }
+            })
         }
         else{
             $('#save-billing').prop('disabled', true);

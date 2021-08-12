@@ -27,6 +27,8 @@ use App\Http\Controllers\SearchedCustomerController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\EditBillingController;
 use App\Http\Controllers\ExportsController;
+use App\Http\Controllers\FieldMeterReadingController;
+use App\Http\Controllers\WaterBill;
 use App\Services\CustomersFromKeyword;
 use Illuminate\Support\Facades\Route;
 
@@ -38,8 +40,6 @@ Route::get('/', function () {
 
 Route::get('/login',[LoginController::class,'index'])->name('login');
 Route::post('/login',[LoginController::class,'authenticate']);
-
-
 
 
 Route::prefix('admin')->middleware('auth')->name('admin.')->group(function(){
@@ -112,10 +112,12 @@ Route::prefix('admin')->middleware('auth')->name('admin.')->group(function(){
     Route::post('/consumer-ledger/billing/transaction/update/{id}',[EditBillingController::class,'updateBill'])->middleware('access.authorize')->name('update-billing');
 });
 
-Route::get('/field-personnel/meter-reading', function(){
-    return view('field-personnel.pages.meter-reading');
-});
 
+Route::get('/field-personnel/meter-reading',[FieldMeterReadingController::class, 'index'])->name('field-reading');
+Route::get('/field-personnel/meter-reading/search/consumer',[FieldMeterReadingController::class, 'search'])->name('search');
+Route::post('/field-personnel/meter-reading/save',[FieldMeterReadingController::class, 'store'])->name('save-meter-billing');
+
+Route::post('/get/computed/water-bill',[WaterBill::class, 'computeWaterBill'])->name('water-bill');
 
 
 

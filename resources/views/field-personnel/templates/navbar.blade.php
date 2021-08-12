@@ -15,10 +15,11 @@
             <a class="navbar-brand text-primary" href="#"><strong>MWS - @yield('title')</strong></a>
 
             <ul class="navbar-nav">
-                <li class="nav-item active"> <a class="nav-link text-secondary" href="#"><i data-feather="home" class="feather-18 me-2"></i> Home </a> </li>
-                <li class="nav-item"><a class="nav-link text-secondary" href="#"><i data-feather="info" class="feather-18 me-2"></i> About </a></li>
-                <li class="nav-item"><a class="nav-link text-secondary" href="#"><i data-feather="activity" class="feather-18 me-2"></i> Services </a></li>
-                <li class="nav-item"><a class="nav-link text-secondary" href="#"><i data-feather="log-out" class="feather-18 me-2"></i> Sign-out </a></li>
+                <li class="nav-item my-md-0 my-1"><a class="nav-link text-secondary" href="#"><i data-feather="home" class="feather-18 me-2"></i> Home Page </a></li>
+                <li class="nav-item my-md-0 my-1"><a class="nav-link text-secondary" href="{{ route('field-reading') }}"><i data-feather="info" class="feather-18 me-2"></i> Meter Reading </a></li>
+                <li class="nav-item my-md-0 my-1"><a class="nav-link text-secondary" href="#"><i data-feather="activity" class="feather-18 me-2"></i> Services </a></li>
+                <li class="nav-item my-md-0 my-1"> <a class="nav-link text-secondary" href="#"><i data-feather="key" class="feather-18 me-2"></i> Reset Password </a> </li>
+                <li class="nav-item my-md-0 my-1"><a class="nav-link text-secondary" href="#"><i data-feather="log-out" class="feather-18 me-2"></i> Sign-out </a></li>
                 <!-- <li class="nav-item dropdown">
                     <a class="nav-link  dropdown-toggle text-secondary" href="#" data-bs-toggle="dropdown">  More items  </a>
                     <ul class="dropdown-menu">

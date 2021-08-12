@@ -22,7 +22,7 @@
                     <div class="row mt-3">
                         <div class="col-lg-4 col-md-6 mb-sm-2 pe-md-1 pe-sm-1">
                             <label class='text-muted'>Meter Reading</label>
-                            <input class="form-control" id="meter-reading" name="meter-reading" type="number" placeholder="Meter reading" min=0 readOnly value="{{ isset($customer) ? $customer["balance"]->reading_meter : '' }}">
+                            <input class="form-control" id="meter-reading" name="meter_reading" type="number" placeholder="Meter reading" min=0 readOnly value="{{ isset($customer) ? $customer["balance"]->reading_meter : '' }}">
                         </div>
                         <div class="col-lg-4 col-md-6 mb-sm-2 ps-md-0 pe-md-0 ps-sm-1">
                             <label class='text-muted'>Balance</label>

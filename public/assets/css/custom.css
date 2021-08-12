@@ -265,4 +265,13 @@ body.offcanvas-active .navbar-nav{
 		display: block;
 	}
 
+    .navbar-brand{
+        position: relative;
+        top: 2rem;
+    }
+
+    .navbar-nav{
+        position: relative;
+        top: 3rem;
+    }
 }	
