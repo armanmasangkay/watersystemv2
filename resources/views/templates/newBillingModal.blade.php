@@ -26,7 +26,7 @@
                         </div>
                         <div class="col-lg-4 col-md-6 mb-sm-2 ps-md-0 pe-md-0 ps-sm-1">
                             <label class='text-muted'>Balance</label>
-                            <input class="form-control" id="cur_balance" name="cur_balance" type="text" placeholder="Meter reading" min=0 readonly value="{{ isset($customer) ? toAccounting($customer["balance"]->balance) : '0.00' }}">
+                            <input class="form-control" id="cur_balance" name="cur_balance" type="text" placeholder="Meter reading" min=0 readonly value="{{ isset($customer) ? \App\Classes\Facades\NumberHelper::toAccounting($customer["balance"]->balance) : '0.00' }}">
                         </div>
                     </div>
                     <div class="row mt-1">
@@ -41,7 +41,7 @@
                         <div class="col-md-4 pe-md-0">
                             <label class='text-muted'>Reading date (dd/mm/yyyy) <span class="text-danger"><strong>*</strong></span></label>
                             <div class="form-control date d-flex justify-content-between align-items-center input" id="datepicker">
-                                <input type="text" class="w-100 border-0" id="carbon_date_billing" readonly value="{{ \Carbon\Carbon::now()->format('F d, Y') }}"> 
+                                <input type="text" class="w-100 border-0" id="carbon_date_billing" readonly value="{{ \Carbon\Carbon::now()->format('F d, Y') }}">
                                 <span class="input-group-addon calendar"><i data-feather="calendar" width="20"></i></span>
                                 <input type="hidden" class="border-0 date" name="reading_date" id="reading_date" readonly>
                             </div>
@@ -89,7 +89,7 @@
                         </div>
                         <div class='col-6 col-md-6 col-lg-4 col-xl-2 mt-2 mt-md-2 px-lg-1 pe-sm-1 ps-md-1 pe-1'>
                             <small class='text-muted'>Meter IPS Balance <span class="text-danger"><strong>*</strong></span></small>
-                            <input class='form-control' type='number' name="meter_ips" id="meter-ips" placeholder='0.00' min=0 value="{{ isset($customer) ? toAccounting($customer["balance"]->billing_meter_ips) : '0.00' }}">
+                            <input class='form-control' type='number' name="meter_ips" id="meter-ips" placeholder='0.00' min=0 value="{{ isset($customer) ? \App\Classes\Facades\NumberHelper::toAccounting($customer["balance"]->billing_meter_ips) : '0.00' }}">
                         </div>
                         <div class='col-6 col-md-6 col-lg-4 col-xl-2 mt-2 mt-md-2 ps-lg-0 ps-md-1 pe-lg-1 ps-sm-0 pe-md-0 ps-0'>
                             <small class='text-muted'>Total</small>

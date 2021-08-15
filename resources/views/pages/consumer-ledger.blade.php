@@ -51,7 +51,7 @@
                 <div class="card-header border-secondary px-4 pb-1 pt-2 f94c7eb">
                     <div class="row mt-1">
                         <center>
-                            <h3 class="h5 mb-2 mt-0 text-center"><strong>Balance as of {{ isset($customer) ? date('F j, Y') : '' }}</strong> - <span class="text-danger" id="currentBalance"><strong>{{ isset($customer) ?'Php '.toAccounting($customer["balance"]->balance) : '' }}</strong></span></h3>
+                            <h3 class="h5 mb-2 mt-0 text-center"><strong>Balance as of {{ isset($customer) ? date('F j, Y') : '' }}</strong> - <span class="text-danger" id="currentBalance"><strong>{{ isset($customer) ?'Php '. \App\Classes\Facades\NumberHelper::toAccounting($customer["balance"]->balance) : '' }}</strong></span></h3>
                         </center>
                     </div>
                 </div>
@@ -87,8 +87,8 @@
                                 <?php
                                     $amount = 0.00;
                                     $count = 0;
-                                    function toAccounting($num){ return number_format($num, 2, '.', ','); }
-                                    function orNumbers($or) { return $or."/"; }
+
+
                                 ?>
                                 @if(isset($customer))
                                 @foreach($customer["transactions"] as $billing)
@@ -97,11 +97,11 @@
                                     <td id="tdrd-{{ $billing->period_covered }}" class="pt-2 pb-2 text-center f0f0f0 border-end border-secondary"><small>{{ \Carbon\Carbon::parse($billing->reading_date)->format('m-d-Y') }}</small></td>
                                     <td id="tdrm-{{ $billing->period_covered }}" class="pt-2 pb-2 text-center f0f0f0 border-end border-secondary"><small>{{ $billing->reading_meter }}</small></td>
                                     <td id="tdrc-{{ $billing->period_covered }}" class="pt-2 pb-2 text-center f0f0f0 border-end border-secondary"><small>{{ $billing->reading_consumption }}</small></td>
-                                    <td id="tdba-{{ $billing->period_covered }}" class="pt-2 pb-2 text-center f8d6b0 border-end border-secondary"><small>{{ toAccounting($billing->billing_amount) }}</small></td>
-                                    <td id="tdbs-{{ $billing->period_covered }}" class="pt-2 pb-2 text-center f8d6b0 border-end border-secondary"><small>{{ toAccounting($billing->billing_surcharge) }}</small></td>
-                                    <td id="tdmb-{{ $billing->period_covered }}" class="pt-2 pb-2 text-center f8d6b0 border-end border-secondary"><small>{{ toAccounting($billing->billing_meter_ips) }}</small></td>
-                                    <td id="tdbt-{{ $billing->period_covered }}" class="pt-2 pb-2 text-center f8d6b0 border-end border-secondary"><small>{{ toAccounting($billing->billing_total) }}</small></td>
-                                    <td id="tdbb-{{ $billing->period_covered }}" class="pt-2 pb-2 text-center f8d6b0 border-end border-secondary"><small>{{ toAccounting($billing->balance) }}</small></td>
+                                    <td id="tdbs-{{ $billing->period_covered }}" class="pt-2 pb-2 text-center f8d6b0 border-end border-secondary"><small>{{ \App\Classes\Facades\NumberHelper::toAccounting($billing->billing_surcharge) }}</small></td>
+                                    <td id="tdba-{{ $billing->period_covered }}" class="pt-2 pb-2 text-center f8d6b0 border-end border-secondary"><small>{{ \App\Classes\Facades\NumberHelper::toAccounting($billing->billing_amount) }}</small></td>
+                                    <td id="tdmb-{{ $billing->period_covered }}" class="pt-2 pb-2 text-center f8d6b0 border-end border-secondary"><small>{{ \App\Classes\Facades\NumberHelper::toAccounting($billing->billing_meter_ips) }}</small></td>
+                                    <td id="tdbt-{{ $billing->period_covered }}" class="pt-2 pb-2 text-center f8d6b0 border-end border-secondary"><small>{{ \App\Classes\Facades\NumberHelper::toAccounting($billing->billing_total) }}</small></td>
+                                    <td id="tdbb-{{ $billing->period_covered }}" class="pt-2 pb-2 text-center f8d6b0 border-end border-secondary"><small>{{ \App\Classes\Facades\NumberHelper::toAccounting($billing->balance) }}</small></td>
                                     <td class="pt-2 pb-2 text-center f8d6b0 border-end border-secondary"><small>{{ $billing->user->name }}</small></td>
                                     <td class="pt-2 pb-2 text-center eee border-end border-secondary">
                                         <small>
@@ -135,9 +135,9 @@
                                         @foreach($billing->payments as $payment)
                                             @if($payment->transaction_id == $billing->id)
                                                 @if($count > 1)
-                                                {{ "[". toAccounting($payment->payment_amount) . "]" }}
+                                                {{ "[". \App\Classes\Facades\NumberHelper::toAccounting($payment->payment_amount) . "]" }}
                                                 @else
-                                                {{ toAccounting($payment->payment_amount) }}
+                                                {{ \App\Classes\Facades\NumberHelper::toAccounting($payment->payment_amount) }}
                                                 @endif
                                             @endif
                                         @endforeach

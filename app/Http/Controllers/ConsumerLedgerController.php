@@ -89,14 +89,15 @@ class ConsumerLedgerController extends Controller
 
         $validator = Validator::make($request->all(), [
             'customer_id' => 'required',
+            'current_transaction_id' => 'required',
             'current_month' => 'required',
             'next_month' => 'required',
             'reading_date' => 'required',
-            'reading_meter' => 'required',
-            'consumption' => 'required',
-            'amount' => 'required',
-            'meter_ips' => 'required',
-            'total' => 'required',
+            'reading_meter' => 'required|numeric|gt:0',
+            'consumption' => 'required|numeric',
+            'amount' => 'required|numeric|gt:0',
+            'meter_ips' => 'required|numeric',
+            'total' => 'required|numeric|gt:0',
         ]);
 
         if($validator->fails()){
