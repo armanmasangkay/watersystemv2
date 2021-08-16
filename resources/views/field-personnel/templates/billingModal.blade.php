@@ -22,27 +22,28 @@
                 <input class='form-control' type='hidden' id="total" name="total" placeholder='0.00' min=0 readonly>
                 <input type="hidden" name="id" value="{{ Auth::id() }}">
 
-                <div class="modal-header">
-                    <h5 class="modal-title text-muted" id="exampleModalLabel"><i data-feather="info"></i><strong>&nbsp; Meter Reading</strong></h5>
+                <div class="modal-header border-0">
+                    <h5 class="modal-title text-muted" id="exampleModalLabel"><i data-feather="file"></i><strong>&nbsp; Billing Setup</strong></h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body p-4">
-                    <h6 class="text-danger">Note: Fields with (*) is required.</h6>
-                    <h5 class="text-muted mt-4">Meter Reading</h5>
-                    <div class="row mt-3 mb-2">
+                <div class="modal-body p-3">
+                    <p class="text-danger">Note: Fields with (*) is required.</p>
+                    <h3 class="text-muted mt-4"><strong>Meter Reading</strong></h3>
+                    <div class="row mt-3 mb-2 px-3">
                         <div class="col-lg-4 col-md-6 mb-sm-2 pe-md-1 pe-sm-1">
-                            <label class='text-muted'>Meter Reading <span class="text-danger">*</span></label>
-                            <input class="form-control" id="reading_meter" name="reading_meter" type="number" placeholder="0" min=0 value="">
+                            <label class='text-muted'>Enter Meter Reading <span class="text-danger">*</span></label>
+                            <input class="form-control mt-1" id="reading_meter" name="reading_meter" type="number" placeholder="0" min=0 value="">
                         </div>
                         <div class="col-lg-4 col-md-6 mb-sm-2 ps-md-0 pe-md-0 ps-sm-1">
-                            <label class='text-muted mt-1'>Reading Date <span class="text-danger">*</span></label>
-                            <input class="form-control" id="read-date" name="read_date" type="text" placeholder="mm/dd/yyyy" min=0 readonly value="{{ \Carbon\Carbon::parse(date('Y-m-d'))->format('F d, Y') }}">
+                            <label class='text-muted mt-2'>Reading Date <span class="text-danger">*</span></label>
+                            <input class="form-control mt-1" id="read-date" name="read_date" type="text" placeholder="mm/dd/yyyy" min=0 readonly value="{{ \Carbon\Carbon::parse(date('Y-m-d'))->format('F d, Y') }}">
+                            <p class="text-info pb-0 mb-1" style="font-size: 13px;">This date is be based on your device setup date.</p>
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i data-feather="x"></i> Close</button>
-                    <button type="submit" class="btn btn-primary" id="save-billing" disabled><i data-feather="check"></i> Save</button>
+                <div class="modal-footer pb-0 justify-content-start border-0">
+                    <button type="submit" class="btn btn-primary pe-3" id="save-billing" disabled><i data-feather="check"></i> Save</button>
+                    <button type="button" class="btn btn-secondary pe-3" data-bs-dismiss="modal"><i data-feather="x"></i> Close</button>
                 </div>
             </form>
         </div>
