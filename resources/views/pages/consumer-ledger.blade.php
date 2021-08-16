@@ -95,8 +95,8 @@
                                 <tr>
                                     <td id="tdpc-{{ $billing->period_covered }}" class="pt-2 pb-2 text-center bg-white border-end border-secondary"><small>{{ $billing->period_covered }}</small></td>
                                     <td id="tdrd-{{ $billing->period_covered }}" class="pt-2 pb-2 text-center f0f0f0 border-end border-secondary"><small>{{ \Carbon\Carbon::parse($billing->reading_date)->format('m-d-Y') }}</small></td>
-                                    <td id="tdrm-{{ $billing->period_covered }}" class="pt-2 pb-2 text-center f0f0f0 border-end border-secondary"><small>{{ $billing->reading_meter }}</small></td>
-                                    <td id="tdrc-{{ $billing->period_covered }}" class="pt-2 pb-2 text-center f0f0f0 border-end border-secondary"><small>{{ $billing->reading_consumption }}</small></td>
+                                    <td id="tdrm-{{ $billing->period_covered }}" class="pt-2 pb-2 text-center f0f0f0 border-end border-secondary"><small>{{ $billing->reading_meter.' Cu. M' }}</small></td>
+                                    <td id="tdrc-{{ $billing->period_covered }}" class="pt-2 pb-2 text-center f0f0f0 border-end border-secondary"><small>{{ $billing->reading_consumption.' Cu. M' }}</small></td>
                                     <td id="tdba-{{ $billing->period_covered }}" class="pt-2 pb-2 text-center f8d6b0 border-end border-secondary"><small>{{ toAccounting($billing->billing_amount) }}</small></td>
                                     <td id="tdbs-{{ $billing->period_covered }}" class="pt-2 pb-2 text-center f8d6b0 border-end border-secondary"><small>{{ toAccounting($billing->billing_surcharge) }}</small></td>
                                     <td id="tdmb-{{ $billing->period_covered }}" class="pt-2 pb-2 text-center f8d6b0 border-end border-secondary"><small>{{ toAccounting($billing->billing_meter_ips) }}</small></td>

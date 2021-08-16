@@ -30,6 +30,11 @@ class EditBillingController extends Controller
 
     public function updateBill(Request $request, $transaction_id)
     {
+        if($request->current_meter < $request->edit_meter_reading_bal)
+        {
+            return response()->json(['created' => false, 'msg' => 'Current meter reading should not be less than the previous meter reading.']);
+        }
+
         $reading_meter = 0;
         $update_transaction = Transaction::find($request->edit_curr_transaction_id);
 

@@ -57,7 +57,12 @@ $(document).ready(function(){
                         })
                     }
                     else{
-                        Swal.fire('Ooops!',"There was an error on saving the consumer's bill!")
+                        Swal.fire('Ooops!',response.msg).then(function(result){
+                            if(result.isConfirmed)
+                            {
+                                window.location.reload();
+                            }
+                        })
                     }
                 }
             })
