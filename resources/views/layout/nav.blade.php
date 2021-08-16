@@ -61,7 +61,7 @@
             </a>
             <ul class="dropdown-menu px-2" aria-labelledby="navbarDropdown">
               <li>
-                <a class="dropdown-item" href="#">New</a>
+                <a class="dropdown-item" href="{{route('admin.services.create')}}">New</a>
               
               </li>
             </ul>

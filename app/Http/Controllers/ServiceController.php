@@ -25,7 +25,7 @@ class ServiceController extends Controller
      */
     public function create()
     {
-        return view('pages.new-transact', ['route' => 'admin.search-customer']);
+        return view('pages.add-service', ['route' => 'admin.search-customer']);
     }
 
     /**
