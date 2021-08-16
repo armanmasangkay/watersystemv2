@@ -17,7 +17,7 @@ use Tests\TestCase;
 class FieldMeterReadingTest extends TestCase
 {
     use RefreshDatabase;
-    
+
     public function test_can_search_consumer_with_transactions()
     {
         $customer = Customer::factory()->create([
@@ -25,17 +25,16 @@ class FieldMeterReadingTest extends TestCase
         ]);
         $user = User::factory()->create();
         WaterRate::factory()->create();
-        Surcharge::create([
-            'rate'=>'0.10'
-        ]);
+        Surcharge::factory()->create();
 
         $transaction = Transaction::factory()->create([
             'customer_id' => $customer->account_number,
-            'user_id' => $user->id
+            'user_id' => $user->id,
+            'posted_by' => $user->id
         ]);
 
         $response = $this->get(route('search',['account_number'=>$transaction->customer_id]));
-     
+
         $response->assertSessionHasNoErrors();
         $response->assertViewIs('field-personnel.pages.meter-reading');
         $response->assertViewHasAll(['customer', 'rates', 'surcharge', 'last_date', 'current_transaction_id']);
@@ -80,8 +79,9 @@ class FieldMeterReadingTest extends TestCase
             'posted_by' => $user->id
         ]);
 
+
         $response = $this->post(route('save-meter-billing',[
-            'reading_meter' => 107, 
+            'reading_meter' => 107,
             'customer_id' => $customer->account_number,
             'current_month' => 'Aug 09',
             'next_month' => 'Sept 09, 2021',
@@ -92,8 +92,8 @@ class FieldMeterReadingTest extends TestCase
             'meter_ips' => 0.00,
             'total' => 65.00,
             'balance' => 65.00,
-            'auth_id' => $user->id,
-            'auth_id' => $user->id,
+            'id' => $user->id,
+            'id' => $user->id,
             'current_transaction_id' => $transaction->id,
             'payment_or_no' => '',
             'payment_date' => null,
