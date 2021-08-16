@@ -7,6 +7,7 @@ use App\Models\WaterRate;
 use App\Models\Transaction;
 use App\Models\Payments;
 use App\Models\Surcharge;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -14,7 +15,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
 
-class ConsumerLedgerController extends Controller
+class FieldMeterReadingController extends Controller
 {
     public $waterbill;
 
@@ -27,22 +28,20 @@ class ConsumerLedgerController extends Controller
 
     public function index()
     {
-        return view('pages.consumer-ledger', ['route' => 'admin.search-transactions']);
+        return view('field-personnel.pages.meter-reading');
     }
 
     public function search(Request $request)
     {
         $account_number=$request->account_number??$request->account_number;
-
+        
         try{
             $customer=Customer::findOrFail($account_number);
-
         }catch(ModelNotFoundException $e){
-            return redirect(route('admin.consumer-ledger'))->withErrors([
+            return back()->withErrors([
                 'account_number.exists'=>'Account number not found'
             ])->withInput();
         }
-
         $acc = $customer->account();
         $fullname = $customer->fullname();
         $address = $customer->address();
@@ -75,7 +74,7 @@ class ConsumerLedgerController extends Controller
 
         $date = ($balance->period_covered != "Beginning Balance" ? explode('-', $balance->period_covered) : explode('/', '/'.$balance->reading_date));
 
-        return view('pages.consumer-ledger',[
+        return view('field-personnel.pages.meter-reading',[
             'customer' => [
                 'fullname' => $fullname,
                 'address' => $address,
@@ -88,31 +87,12 @@ class ConsumerLedgerController extends Controller
             'rates' => $rate,
             'surcharge' => $surcharge[0]->rate,
             'last_date' => $date[1],
-            'route' => 'admin.search-transactions',
             'current_transaction_id' => $balance->id
         ]);
     }
 
     public function store(Request $request)
     {
-
-        $validator = Validator::make($request->all(), [
-            'customer_id' => 'required',
-            'current_transaction_id' => 'required',
-            'current_month' => 'required',
-            'next_month' => 'required',
-            'reading_date' => 'required',
-            'reading_meter' => 'required|numeric|gt:0',
-            'consumption' => 'required|numeric',
-            'amount' => 'required|numeric|gt:0',
-            'meter_ips' => 'required|numeric',
-            'total' => 'required|numeric|gt:0',
-        ]);
-
-        if($validator->fails()){
-            return response()->json(['created' => false, 'errors' => $validator->errors()]);
-        }
-
         if($request->reading_meter < $request->meter_reading)
         {
             return response()->json(['created' => false, 'msg' => 'Current meter reading should not be less than the previous meter reading.']);
@@ -125,7 +105,7 @@ class ConsumerLedgerController extends Controller
         $fillable=[
             'customer_id' => $this->waterbill->balance->customer_id,
             'period_covered' => $this->waterbill->computed_total['date'],
-            'reading_date' => date('Y-m-d', strtotime($request->reading_date)),
+            'reading_date' => date('Y-m-d', strtotime($request->read_date)),
             'reading_meter' => $request->reading_meter,
             'reading_consumption' => $this->waterbill->computed_total['meter_consumption'],
             'billing_amount' => $this->toAccounting($this->waterbill->computed_total['amount_consumption']),
@@ -133,8 +113,8 @@ class ConsumerLedgerController extends Controller
             'billing_meter_ips' => $this->toAccounting($this->waterbill->balance->billing_meter_ips),
             'billing_total' => $this->toAccounting($this->waterbill->computed_total['total']),
             'balance' => $this->toAccounting($this->waterbill->computed_total['total']),
-            'posted_by' => Auth::id(),
-            'user_id' => Auth::id(),
+            'posted_by' => $request->id,
+            'user_id' => $request->id,
         ];
 
         $update_transaction = Transaction::findOrFail($this->waterbill->balance->id);
@@ -143,28 +123,6 @@ class ConsumerLedgerController extends Controller
         $update_transaction->billing_total += $this->toAccounting($this->waterbill->computed_total['surcharge']);
         $update_transaction->balance += $this->toAccounting($this->waterbill->computed_total['surcharge']);
         $update_transaction->update();
-
-        // $fillable=[
-        //     'customer_id' => $request->customer_id,
-        //     'period_covered' => $request->current_month.'-'.$request->next_month,
-        //     'reading_date' => date('Y-m-d', strtotime($request->reading_date)),
-        //     'reading_meter' => $request->reading_meter,
-        //     'reading_consumption' => $request->consumption,
-        //     'billing_amount' => $request->amount,
-        //     'billing_surcharge' => '0.00',
-        //     'billing_meter_ips' => $request->meter_ips,
-        //     'billing_total' => $request->total,
-        //     'balance' => $request->total,
-        //     'posted_by' => Auth::id(),
-        //     'user_id' => Auth::id(),
-        // ];
-
-        // $update_transaction = Transaction::find($request->current_transaction_id);
-
-        // $update_transaction->billing_surcharge = $request->surcharge_amount;
-        // $update_transaction->billing_total += $request->surcharge_amount;
-        // $update_transaction->balance += $request->surcharge_amount;
-        // $update_transaction->update();
 
 
         $transactions = Transaction::create($fillable);

@@ -17,7 +17,8 @@ use Tests\TestCase;
 class LedgerTransactionTest extends TestCase
 {
     use RefreshDatabase;
-  private function create_customer_with_transaction(){
+
+    private function create_customer_with_transaction(){
         $user = User::factory()->create();
         $this->actingAs($user);
         $date = Carbon::now();
@@ -37,7 +38,7 @@ class LedgerTransactionTest extends TestCase
             'reading_date' => $date->toDateString(),
             'billing_meter_ips' => '100'
         ]);
-  }
+    }
 
 
     private function get_transaction($customer){
@@ -187,7 +188,6 @@ class LedgerTransactionTest extends TestCase
             'total' => 65 + ($recentTransaction->billing_amount * $surcharge->rate),
         ]);
 
-        $response->dump();
         $this->assertDatabaseCount('transactions',1);
         $response->assertJson(['created' => false, 'errors' => array('reading_meter' => [])]);
     }
