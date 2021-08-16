@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use App\Models\Transaction;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class PaymentController extends Controller
 {
@@ -19,9 +20,20 @@ class PaymentController extends Controller
 
     public function save_payment(Request $request, $account_number)
     {
+
+        $validator = Validator::make($request->all(),[
+            'orNum' => 'required',
+            'inputedAmount' => 'required|numeric|gt:0'
+        ]);
+
+        if($validator->fails()){
+            return response()->json(['created' => false, 'errors' => $validator->errors()], 400);
+        }
+
+
         $transaction = Transaction::where(['customer_id' =>$account_number])->get()->toArray();
         $amount = ($request->inputedAmount >= $request->totalAmount ? $request->totalAmount : $request->inputedAmount);
-        
+
         for($i = 0; $i < count($transaction); $i++)
         {
             if($transaction[$i]['balance'] > 0)
@@ -42,7 +54,7 @@ class PaymentController extends Controller
             'user_id' => Auth::id()
         ];
         Payments::create($data);
-        
+
         return Response::json(['created' => true]);
     }
 }

@@ -30,11 +30,20 @@ class Transaction extends Model
         'user_id',
         'posted_by'
     ];
+    private   function toAccounting($num)
+    {
+        return number_format($num, 2, '.', ',');
+    }
 
+    public function paymentAmountFormatted()
+    {
+        return $this->toAccounting($this->payment_amount);
+    }
     public function customer()
     {
         return $this->belongsTo(Customer::class,'customer_id','account_number');
     }
+
 
     public function user()
     {
