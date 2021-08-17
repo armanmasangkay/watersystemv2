@@ -72,7 +72,7 @@ Route::prefix('admin')->middleware(['auth', 'auth.allowed-user'])->name('admin.'
     Route::post('/register-consumer',[CustomerController::class,'store'])
             ->middleware('access.authorize')->name('register-customer.store');
 
-    Route::get('/dashboard',[DashboardController::class,'index'])->name('dashboard')->middleware('auth.restrict-cashier');
+    Route::get('/dashboard',[DashboardController::class,'index'])->middleware('auth.restrict-cashier')->name('dashboard');
 
     Route::get('/search-consumer',[CustomerSearchController::class,'search'])->name('search-customer');
 
