@@ -22,14 +22,15 @@ class LoginController extends Controller
             {
                 return redirect()->intended(route('admin.existing-customers.index'));
             }
-
-            if(Auth::user()->isReader())
+            else if(Auth::user()->isReader())
             {
                 return redirect()->intended(route('home'));
             }
-
-            return redirect()->intended(route('admin.dashboard'));
+            else
+            {
+                return redirect()->intended(route('admin.dashboard'));
         //    return Auth::user()->isCashier() ? redirect()->intended(route('admin.existing-customers.index')):redirect()->intended(route('admin.dashboard'));
+            }
         }
 
         return redirect(route('login'))->withInput();

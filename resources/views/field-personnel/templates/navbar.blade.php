@@ -26,7 +26,7 @@
                         <button class="btn-close float-end"></button>
                     </div>
                 </div>
-                <a class="navbar-brand text-secondary pb-2 border-md-bottom border-lg-2 border-secondary" href="#"><strong>MWS - @yield('title')</strong></a>
+                <a class="navbar-brand text-secondary pb-2 border-md-bottom border-lg-2 border-secondary" href="#"><strong>MWS <span class="d-block d-lg-none"> - @yield('title')</span></strong></a>
 
                 <ul class="navbar-nav ms-lg-3">
                     <li class="nav-item my-md-0 my-1"><a class="nav-link text-secondary" href="#"><i data-feather="home" class="feather-18 me-2"></i> Home Page </a></li>
