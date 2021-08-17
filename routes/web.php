@@ -124,6 +124,7 @@ Route::prefix('admin')->middleware('auth')->name('admin.')->group(function(){
 });
 
 
+Route::get('/field-personnel/home',[FieldMeterReadingController::class, 'index'])->name('home');
 Route::get('/field-personnel/meter-reading',[FieldMeterReadingController::class, 'index'])->name('field-reading');
 Route::get('/field-personnel/meter-reading/search/consumer',[FieldMeterReadingController::class, 'search'])->name('search');
 Route::post('/field-personnel/meter-reading/save',[FieldMeterReadingController::class, 'store'])->name('save-meter-billing');
