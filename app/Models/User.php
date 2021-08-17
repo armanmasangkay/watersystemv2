@@ -14,6 +14,7 @@ class User extends Authenticatable
 
     public static $ADMIN=1;
     public static $CASHIER=2;
+    public static $READER=3;
 
 
     /**

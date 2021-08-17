@@ -1,5 +1,5 @@
   <nav class="navbar navbar-expand-md navabr-light border-bottom pt-3 pb-3">
-    <div class="container{{ Request::is('admin/consumer-ledger/*') ? '-fluid px-5' : ' px-3' }}">
+    <div class="container{{ Request::is('admin/consumer-ledger*') ? '-fluid px-5' : ' px-3' }}">
       <a class="navbar-brand text-dark pe-4" href="{{route('admin.dashboard')}}"><strong>MWS</strong></a>
       <button class="navbar-toggler border-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span data-feather="align-center" class="text-secondary"></span>
@@ -48,7 +48,8 @@
             <ul class="dropdown-menu px-2" aria-labelledby="navbarDropdown">
               <li>
                 <a class="dropdown-item" href="{{route('admin.cashiers.index')}}">Cashiers</a>
-              
+                <a class="dropdown-item" href="{{route('admin.reader')}}">Meter Reader</a>
+                <a class="dropdown-item" href="{{route('admin.admin')}}">System Admin</a>
               </li>
             </ul>
           </li>
