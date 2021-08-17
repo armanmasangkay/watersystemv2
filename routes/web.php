@@ -63,12 +63,13 @@ Route::prefix('admin')->middleware('auth')->name('admin.')->group(function(){
     Route::post('/logout',[LogoutUserController::class,'logout'])->middleware('auth')->name('logout');
     Route::get('/consumers',[CustomerController::class,'showAll'])->middleware('auth')->name('customers');
     Route::get('/transaction/new',[TransactionsController::class,'index'])->middleware('auth')->name('new-transaction');
-    Route::get('/register-consumer',[CustomerController::class,'index'])
-        ->middleware('auth')
-        ->name('register-customer');
+    // Route::get('/register-consumer',[CustomerController::class,'index'])
+    //     ->middleware('auth')
+    //     ->name('register-customer');
 
     Route::post('/register-consumer',[CustomerController::class,'store'])
             ->middleware('access.authorize')->name('register-customer.store');
+
     Route::get('/dashboard',[DashboardController::class,'index'])->name('dashboard')->middleware('auth.restrict-cashier');
 
     Route::get('/search-consumer',[CustomerSearchController::class,'search'])->name('search-customer');

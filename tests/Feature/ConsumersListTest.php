@@ -48,4 +48,13 @@ class ConsumersListTest extends TestCase
         $response=$this->get(route('admin.existing-customers.index'));
         $response->assertRedirect(route('login'));
     }
+    public function test_is_accessible_to_cashier_account()
+    {
+        $cashier=User::factory()->create([
+            'role'=>User::$CASHIER
+        ]);
+
+        $response=$this->actingAs($cashier)->get(route('admin.existing-customers.index'));
+        $response->assertOk();
+    }
 }

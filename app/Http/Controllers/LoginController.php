@@ -28,7 +28,7 @@ class LoginController extends Controller
                 return redirect()->intended(route('home'));
             }
 
-            return redirect()->intended(route('admin.dashboard'))
+            return redirect()->intended(route('admin.dashboard'));
         //    return Auth::user()->isCashier() ? redirect()->intended(route('admin.existing-customers.index')):redirect()->intended(route('admin.dashboard'));
         }
 

@@ -21,7 +21,18 @@ class TransactionFactory extends Factory
      */
     public function definition()
     {
+        $rand_num = rand(100,105);
         return [
+            // 'reading_meter' => rand(100,105),
+            // 'balance' => $rand_num,
+            // 'reading_date' => now(),
+            // 'reading_consumption' =>0,
+            // 'billing_amount' => $rand_num,
+            // 'billing_surcharge' => 0,
+            // 'billing_meter_ips' => $rand_num,
+            // 'billing_total' => $rand_num,
+            // 'balance' => $rand_num,
+
             'customer_id' => '012-2021-0001',
             'period_covered' => 'Beginning Balance',
             'reading_date' => date('Y-m-d',strtotime("today")),

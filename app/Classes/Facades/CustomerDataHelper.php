@@ -10,14 +10,18 @@ class CustomerDataHelper{
        
         if(!array_key_exists('firstname',$customerData) ||  
         !array_key_exists('lastname',$customerData) ||
-        !array_key_exists('middlename',$customerData) ||
+       
         !array_key_exists('purok',$customerData))
             {
                 throw new ExpectedKeyNotFoundException();
             }
 
+     
         $customerData['firstname']=ucwords(strtolower($customerData['firstname']));
-        $customerData['middlename']=ucwords(strtolower($customerData['middlename']));
+        if(isset($customerData['middlename']))
+        {
+            $customerData['middlename']=ucwords(strtolower($customerData['middlename']));
+        }
         $customerData['lastname']=ucwords(strtolower($customerData['lastname']));
         $customerData['purok']=ucwords(strtolower($customerData['purok']));
         return $customerData;

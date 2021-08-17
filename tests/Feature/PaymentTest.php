@@ -5,7 +5,9 @@ namespace Tests\Feature;
 use App\Models\User;
 use Illuminate\Support\Carbon;
 use App\Models\Customer;
+use App\Models\Surcharge;
 use App\Models\Transaction;
+use App\Models\WaterRate;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -57,12 +59,94 @@ class PaymentTest extends TestCase
         $orNum = Str::random(8);
         $response = $this->post(route('admin.save-payment', ['id' => $customer->account_number]),[
             'orNum' => $orNum,
-            'inputedAmoung' => 101,
+            'inputedAmount' => 101,
             'totalAmount' => $transaction->billing_total,
             'curr_transaction_id' => $transaction->id,
             'payment_date' => now()
         ]);
 
         $response->assertJson(['created' => true]);
+    }
+
+    public function test_or_num_should_be_required(){
+        WaterRate::factory()->create();
+        WaterRate::factory()->create(['type' => 'Commercial']);
+        WaterRate::factory()->create(['type' => 'Institutional']);
+        Surcharge::factory()->create();
+        $this->create_customer_with_transaction();
+        $customer = Customer::where('account_number', '!=', '')->first();
+        $transaction = Transaction::where('id', '!=', '')->first();
+
+        $orNum = Str::random(8);
+        $response = $this->post(route('admin.save-payment', ['id' => $customer->account_number]),[
+            'inputedAmount' => 101,
+            'totalAmount' => $transaction->billing_total,
+            'curr_transaction_id' => $transaction->id,
+            'payment_date' => now()
+        ]);
+
+        $response->assertJson(['created' => false, 'errors' => ["orNum" => []]]);
+    }
+
+    public function test_inputed_amount_should_be_required(){
+        WaterRate::factory()->create();
+        WaterRate::factory()->create(['type' => 'Commercial']);
+        WaterRate::factory()->create(['type' => 'Institutional']);
+        Surcharge::factory()->create();
+        $this->create_customer_with_transaction();
+        $customer = Customer::where('account_number', '!=', '')->first();
+        $transaction = Transaction::where('id', '!=', '')->first();
+
+        $orNum = Str::random(8);
+        $response = $this->post(route('admin.save-payment', ['id' => $customer->account_number]),[
+            'orNum' => $orNum,
+            'totalAmount' => $transaction->billing_total,
+            'curr_transaction_id' => $transaction->id,
+            'payment_date' => now()
+        ]);
+
+        $response->assertJson(['created' => false, 'errors' => ["inputedAmount" => []]]);
+    }
+
+    public function test_inputed_amount_should_be_numeric(){
+        WaterRate::factory()->create();
+        WaterRate::factory()->create(['type' => 'Commercial']);
+        WaterRate::factory()->create(['type' => 'Institutional']);
+        Surcharge::factory()->create();
+        $this->create_customer_with_transaction();
+        $customer = Customer::where('account_number', '!=', '')->first();
+        $transaction = Transaction::where('id', '!=', '')->first();
+
+        $orNum = Str::random(8);
+        $response = $this->post(route('admin.save-payment', ['id' => $customer->account_number]),[
+            'orNum' => $orNum,
+            'inputed_amount' => 'sample',
+            'totalAmount' => $transaction->billing_total,
+            'curr_transaction_id' => $transaction->id,
+            'payment_date' => now()
+        ]);
+
+        $response->assertJson(['created' => false, 'errors' => ["inputedAmount" => []]]);
+    }
+
+    public function test_inputed_amount_should_be_greater_than_or_not_equal_to_zero(){
+        WaterRate::factory()->create();
+        WaterRate::factory()->create(['type' => 'Commercial']);
+        WaterRate::factory()->create(['type' => 'Institutional']);
+        Surcharge::factory()->create();
+        $this->create_customer_with_transaction();
+        $customer = Customer::where('account_number', '!=', '')->first();
+        $transaction = Transaction::where('id', '!=', '')->first();
+
+        $orNum = Str::random(8);
+        $response = $this->post(route('admin.save-payment', ['id' => $customer->account_number]),[
+            'orNum' => $orNum,
+            'inputed_amount' => 0,
+            'totalAmount' => $transaction->billing_total,
+            'curr_transaction_id' => $transaction->id,
+            'payment_date' => now()
+        ]);
+
+        $response->assertJson(['created' => false, 'errors' => ["inputedAmount" => []]]);
     }
 }

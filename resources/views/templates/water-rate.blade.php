@@ -8,6 +8,8 @@
             <div class="modal-body pb-4 px-5">
                 <form action="{{ route('admin.water-rate-update') }}" id="water_rate_form" method="post">
                     @csrf
+
+                    <input type="text" name="id" id="rate-id" hidden>
                     <div class="form-group">
                         <label for="type">Type</label>
                         <select name="type" id="type"  class="form-control">
