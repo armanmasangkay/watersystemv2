@@ -382,6 +382,6 @@ class CustomerRegistrationTest extends TestCase
 
         $response->assertJson(['created'=> true]);
         $this->assertDatabaseCount('customers',1);
-       
+
     }
 }

@@ -29,6 +29,7 @@ use App\Http\Controllers\EditBillingController;
 use App\Http\Controllers\ExportsController;
 use App\Http\Controllers\FieldMeterReadingController;
 use App\Http\Controllers\FieldMeterServicesController;
+use App\Http\Controllers\NewConnectionController;
 use App\Http\Controllers\WaterBill;
 use App\Services\CustomersFromKeyword;
 use Illuminate\Support\Facades\Route;
@@ -48,7 +49,7 @@ Route::prefix('admin')->middleware('auth')->name('admin.')->group(function(){
     Route::resources([
         'searched-customers'=>SearchedCustomerController::class,
         'existing-customers'=>ExistingCustomerController::class,
-
+        'new-connection' => NewConnectionController::class,
     ]);
 
 
