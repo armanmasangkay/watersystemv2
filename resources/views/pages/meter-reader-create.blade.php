@@ -1,13 +1,13 @@
 @extends('layout.main')
-@section('title', 'Cashiers')
+
+@section('title', 'New Meter Readers')
 
 @section('content')
 
 <div class="row mt-3 justify-content-center">
-    
     <div class="col-12 col-md-8 col-lg-5 col-xl-4">
-        <h3 class='text-center mt-3'>New Cashier Account</h3>
-        <form action="{{route('admin.cashiers.store')}}" class="mt-5" method="post">
+        <h3 class='text-center mt-3'>New Meter Readers Account</h3>
+        <form action="{{route('admin.reader-store')}}" class="mt-5" method="post">
             @csrf
             <div class="mb-2">
                 <span class="form-label">Full Name</span>

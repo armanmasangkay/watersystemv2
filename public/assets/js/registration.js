@@ -412,4 +412,17 @@ $(document).ready(function(){
                 $('.modal_save').removeAttr('disabled')
             }
         })
+
+        $(document).on('change', '#purchase_option', function(){
+            if($(this).val() == "installment" || $(this).val() == 'N/A')
+            {
+                $('#billing_meter_ips').val(0)
+                $('#billing_meter_ips').prop('readonly', true)
+            }
+            else
+            {
+                $('#billing_meter_ips').val('')
+                $('#billing_meter_ips').removeAttr('readonly')
+            }
+        })
     })
