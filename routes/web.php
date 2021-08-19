@@ -72,9 +72,11 @@ Route::prefix('admin')->middleware('auth')->name('admin.')->group(function(){
 
     Route::get('/search-consumer',[CustomerSearchController::class,'search'])->name('search-customer');
 
+    Route::get('/services/search',[ServiceController::class,'search'])->name('services.search');
 
     Route::resource('services', ServiceController::class);
 
+  
     Route::get('reconnection',[ReconnectionController::class, 'index'])->name('reconnection');
     Route::get('search-consumer-info',[ReconnectionController::class, 'search'])->name('search');
     Route::post('reconnection/transaction/store',[ReconnectionController::class,'storeTransaction'])->name('reconnection.store');

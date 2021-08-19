@@ -2,22 +2,48 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Customer;
 use App\Models\Service;
 use App\Services\Options;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 class ServiceController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+  
+
+
+
+    private function getServices()
+    {
+        return (new Options)->getServices();
+    }
+
+
     public function index()
     {
-        //
+        
     }
+
+    public function search(Request $request)
+    {
+
+        try{
+            $customer= Customer::findOrFail($request->account_number);
+            return view('pages.add-service', [
+                'route' => 'admin.search-customer',
+                'services'=>$this->getServices(),
+                'customer'=>$customer
+            ]);
+        }catch(ModelNotFoundException $e){
+            return back()->withErrors([
+                    'account_number'=>'Account number not found!'
+                ])->withInput();
+        }
+      
+    }
+
 
     /**
      * Show the form for creating a new resource.
@@ -25,13 +51,10 @@ class ServiceController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
-
-
-        
+    { 
         return view('pages.add-service', [
             'route' => 'admin.search-customer',
-            'services'=>(new Options)->getServices()
+            'services'=>$this->getServices()
         ]);
     }
 

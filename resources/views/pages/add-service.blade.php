@@ -5,13 +5,21 @@
 
 <h4 class="mt-3 mb-4"><i data-feather="tool" class=""></i> Add New Service</h4>
 
+
 <div class="row justify-content-center">
     <div class="col-12 col-md-4 ">
-
-        <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="Account #" aria-label="Recipient's username" aria-describedby="button-addon2">
-            <button class="btn btn-primary" type="button" id="button-addon2">Search</button>
-        </div>
+        <form action="{{route('admin.services.search')}}" method="get">
+            <div class="input-group mb-3">
+                    <input name="account_number" type="text" class="form-control @error('account_number')is-invalid @enderror" 
+                    placeholder="Account #" value="{{old('account_number')}}" required>
+                    <button class="btn btn-primary" type="submit" id="button-addon2">Search</button>
+                    @error('account_number')
+                    <div class="invalid-feedback">
+                        {{$message}}
+                    </div>
+                    @enderror
+            </div>
+        </form>
         <div class="mt-4">
             <small class="text-muted">New Account?</small>
             <a href="#" class="btn btn-outline-secondary btn-sm">Create New Connection</a>
