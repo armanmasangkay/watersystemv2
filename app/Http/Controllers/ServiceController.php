@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Service;
+use App\Services\Options;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -25,7 +26,13 @@ class ServiceController extends Controller
      */
     public function create()
     {
-        return view('pages.add-service', ['route' => 'admin.search-customer']);
+
+
+        
+        return view('pages.add-service', [
+            'route' => 'admin.search-customer',
+            'services'=>(new Options)->getServices()
+        ]);
     }
 
     /**
