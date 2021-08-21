@@ -6,8 +6,11 @@
         <div class="d-flex justify-content-between align-items-center pb-2 pe-2">
             <button data-trigger="navbar_main" class="d-lg-none btn btn-white mt-2 d-flex justify-content-between align-items-center mb-2" type="button"><i data-feather="align-center" class="feather-18 me-2"></i><strong>MENU</strong></button>
             @if(Request::is('field-personnel/meter-reading*') || Request::is('field-personnel/meter-services*'))
-            <button class="btn d-lg-none btn-primary btn-sm mt-2 me-1 search mb-2" style="height: 35px !important;"><i data-feather="search" class="feather-18"></i></button>
-            <button class="btn d-lg-none btn-sm btn-white mt-2 close mb-2 me-1" style="height: 35px !important;"><i data-feather="x" class="feather-20"></i></button>
+            <div class="d-flex justify-content-between align-items-center">
+                <button class="btn d-lg-none btn-light border btn-sm mt-2 me-1 help mb-2" style="height: 35px !important;"><i data-feather="help-circle" class="feather-18 me-1"></i> Ask Help</button>
+                <button class="btn d-lg-none btn-primary btn-sm mt-2 me-1 search mb-2" style="height: 35px !important;"><i data-feather="search" class="feather-18"></i></button>
+                <button class="btn d-lg-none btn-sm border btn-white mt-2 close mb-2 me-1" style="height: 35px !important;"><i data-feather="x" class="feather-20"></i></button>
+            </div>
             @endif
         </div>
         <nav id="navbar_main" class="mobile-offcanvas navbar navbar-expand-lg navbar-dark bg-white">
@@ -46,6 +49,7 @@
                     </li>
                     <li class="nav-item my-md-0 my-1 d-md-block d-lg-none"> <a class="nav-link text-secondary" href="#"><i data-feather="key" class="feather-18 me-2"></i> Reset Password </a> </li>
                     <li class="nav-item my-md-0 my-1 d-md-block d-lg-none"><a class="nav-link text-secondary" href="#"><i data-feather="log-out" class="feather-18 me-2"></i> Sign-out </a></li>
+                    <li class="nav-item my-md-0 my-1 d-md-block d-lg-none mt-4"><a class="nav-link text-primary btn-light border text-center rounded w-50" href="#"><i data-feather="help-circle" class="feather-18 me-2"></i> Ask Help </a></li>
                 </ul>
                 <form action="" class="float-bottom d-lg-none">
                     <button class="btn btn-primary"><i data-feather="repeat" class="feather-18 mb-1 me-2"></i> Synchronize Data</button>

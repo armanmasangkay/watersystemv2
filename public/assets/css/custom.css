@@ -382,7 +382,15 @@ body.offcanvas-active .navbar-nav{
     word-break: break-all;
 }
 
+#print table tr td svg{
+    width: 230px !important;
+}
+
 @media print{
+    #print{
+        display: block !important;
+    }
+
     #reading, .nav-mobile{
         display: none;
     }
