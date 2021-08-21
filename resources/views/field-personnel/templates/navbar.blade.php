@@ -1,7 +1,7 @@
 
 
 <span class="screen-darken"></span>
-<div class="container-fluid bg-white nav px-0 border-md-bottom border-sm-bottom border-bottom border-lg-0">
+<div class="container-fluid bg-white nav nav-mobile px-0 border-md-bottom border-sm-bottom border-bottom border-lg-0">
     <div class="container px-0">
         <div class="d-flex justify-content-between align-items-center pb-2 pe-2">
             <button data-trigger="navbar_main" class="d-lg-none btn btn-white mt-2 d-flex justify-content-between align-items-center mb-2" type="button"><i data-feather="align-center" class="feather-18 me-2"></i><strong>MENU</strong></button>

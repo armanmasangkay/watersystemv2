@@ -12,7 +12,7 @@
         function orNumbers($or) { return $or."/"; }
     ?>
 
-    <div class="mt-3">
+    <div class="mt-3" id="reading">
         <div class="row">
             <div class="col-12 col-sm-8 col-md-6 col-lg-6 form-search hidden pt-1">
                 <form action="{{ route('search') }}" method="get" class="d-flex justify-content-between align-items-center mb-lg-0">
@@ -102,6 +102,164 @@
             </div>
         </div>
         @endif
+    </div>
+
+    <div id="print">
+        <div class="row">
+            <div class="container p-1">
+                <div class="col-md-4 offset-md-4">
+                    <table class="table">
+                        <tr>
+                            <td colspan="3" class="border-bottom-0 pt-1 ps-3">
+                                <img src="{{ asset('assets/img/logo-macrohon_black.png') }}" class="m-0 d-inline-block ms-2" alt="logo">
+                                <div class="text-left ps-0  d-inline-block">
+                                    <span style="font-size: 10px;">Municipality of Macrohon</span>
+                                    <h6 class="mb-0"><strong>MACROHON WATER</strong></h6>
+                                    <small style="font-size: 9px;">Macrohon Municipal Waterworks System</small><br>
+                                    <small style="font-size: 7px;">San Vicente (Poblacion), Macrohon, Southern Leyte</small><br>
+                                    <small style="font-size: 8px;">Contact : (053) 589 0285/09173129873</small><br>
+                                    <small style="font-size: 8px;">Email : macrohon@outlook.ph</small>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3" class="ps-5 pt-2 border-bottom-0"><h6 class="me-3">STATEMENT OF ACCOUNT</h6></td>
+                        </tr>
+                        <tr>
+                            <td  colspan="3" class="text-left py-0 border-bottom-0">-----------------------------------------</td>
+                        </tr>
+                        <tr>
+                            <td class="py-0 ps-3 border-bottom-0 i-data">&nbsp;Account No.</td>
+                            <td colspan="2" class="py-0 border-bottom-0 i-data">: <span>110-1234-000</span></td>
+                        </tr>
+                        <tr>
+                            <td class="py-0 ps-3 border-bottom-0 i-data">&nbsp;Name</td>
+                            <td colspan="2" class="py-0 border-bottom-0 i-data">: <span>Nobegin Masob Jr.</span></td>
+                        </tr>
+                        <tr>
+                            <td class="py-0 ps-3 border-bottom-0 i-data">&nbsp;Address</td>
+                            <td colspan="2" class="py-0 border-bottom-0 i-data">: <span>Bugasong, Libagon</span></td>
+                        </tr>
+                        <tr>
+                            <td class="py-0 ps-3 border-bottom-0 i-data">&nbsp;Classification</td>
+                            <td colspan="2" class="py-0 border-bottom-0 i-data">: <span>Residential</span></td>
+                        </tr>
+                        <tr>
+                            <td class="py-0 ps-3 border-bottom-0 i-data">&nbsp;Meter S/N</td>
+                            <td colspan="2" class="py-0 border-bottom-0 i-data">: <span>1001</span></td>
+                        </tr>
+                        -<tr>
+                            <td  colspan="3" class="text-left py-0 border-bottom-0">-----------------------------------------</td>
+                        </tr>
+                        <tr>
+                            <td class="py-0 ps-3 border-bottom-0 i-data">&nbsp;Bill No.</td>
+                            <td colspan="2" class="py-0 border-bottom-0 i-data">: <span>0001</span></td>
+                        </tr>
+                        <tr>
+                            <td class="py-0 ps-3 border-bottom-0 i-data">&nbsp;Billing Month</td>
+                            <td colspan="2" class="py-0 border-bottom-0 i-data">: <span>Aug. 20</span></td>
+                        </tr>
+                        <tr>
+                            <td class="py-0 ps-3 border-bottom-0 i-data">&nbsp;Billing Period</td>
+                            <td colspan="2" class="py-0 border-bottom-0 i-data">: <span class="me-3 pe-3">Aug. 20-Sept. 20, 2021</span></td>
+                        </tr>
+                        <tr>
+                            <td class="py-0 ps-3 border-bottom-0 i-data">&nbsp;Due Date</td>
+                            <td colspan="2" class="py-0 border-bottom-0 i-data">: <span>Sept. 19</span></td>
+                        </tr>
+                        <tr>
+                            <td  colspan="3" class="text-left py-0 border-bottom-0">-----------------------------------------</td>
+                        </tr>
+                        <tr>
+                            <td class="py-0 ps-3 border-bottom-0 i-data">&nbsp;Current Reading</td>
+                            <td colspan="2" class="py-0 border-bottom-0 text-right i-data">: <span>105 Cu.M</span></td>
+                        </tr>
+                        <tr>
+                            <td class="py-0 ps-3 border-bottom-0 i-data">&nbsp;Previous Reading</td>
+                            <td colspan="2" class="py-0 border-bottom-0 text-right i-data">: <span>100 Cu.M</span></td>
+                        </tr>
+                        <tr>
+                            <td class="py-0 ps-3 border-bottom-0 i-data">&nbsp;Cu.M Consumed</td>
+                            <td colspan="2" class="py-0 border-bottom-0 i-data">: <span>5 Cu.M</span></td>
+                        </tr>
+                        <tr>
+                            <td  colspan="3" class="text-left py-0 border-bottom-0">-----------------------------------------</td>
+                        </tr>
+                        <tr>
+                            <td class="pb-1 ps-3 border-bottom-0 i-data">&nbsp;CURRENT BILL</td>
+                            <td colspan="2" class="pb-1 border-bottom-0 pe-3 i-data pe-4" align="left">
+                                <span class="pe-3 pb-2" style="font-size: 14px; border-bottom: 1px solid #000;"><strong> Php 65.00</strong>&nbsp;&nbsp;</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="pt-3 pb-0 ps-3 border-bottom-0 i-data">&nbsp;Bal. from Last Bill</td>
+                            <td colspan="2" class="pt-3 pb-0 border-bottom-0 pe-3 i-data pe-4" align="left">Php<span> 0.00</span></td>
+                        </tr>
+                        <tr>
+                            <td class="py-0 ps-3 border-bottom-0 i-data">&nbsp;Surcharge (10%)</td>
+                            <td colspan="2" class="py-0 border-bottom-0 pe-3 i-data pe-4" align="left"><span class="invisible">Php</span> <span>0.00</span></td>
+                        </tr>
+                        <tr>
+                            <td class="py-0 ps-3 border-bottom-0 i-data">&nbsp;Meter Installment</td>
+                            <td colspan="2" class="pt-0 pb-2 border-bottom-0 pe-3 i-data pe-4" align="left">
+                                <span class="pe-4 pb-2" style="border-bottom: 1px solid #000;">
+                                    <span class="invisible">Php</span> <span class="pe-3">0.00</span>&nbsp;
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="pt-3 ps-3 border-bottom-0 i-data"><strong>&nbsp;TOTAL DUE</strong></td>
+                            <td colspan="2" class="pt-3 border-bottom-0 pe-3 i-data" align="left">
+                                <span class="w-50 pb-2" style="border-bottom: 3px solid #000;">
+                                    <span class="pe-4 pb-2 me-0" style="font-size: 14px;"><strong>Php 65.00</strong></span>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td  colspan="3" class="text-left pt-2 pb-0 border-bottom-0">-----------------------------------------</td>
+                        </tr>
+                        <tr>
+                            <td class="pt-2 ps-3 border-bottom-0 reader"><small style="font-size: 11px;">&nbsp;Meter Reader</small></td>
+                            <td colspan="2" class="pt-1 border-bottom-0 reader">: <small style="font-size: 11px;">Nobegin Masob</small></td>
+                        </tr>
+                        <tr>
+                            <td class="pt-1 ps-3 border-bottom-0 reader"><small style="font-size: 11px;">&nbsp;DateTime Read</small></td>
+                            <td colspan="2" class="py-0 border-bottom-0 pe-3 reader">: <small style="font-size: 11px;">{{ date('Y M d, h:m a', strtotime('now')) }}</small></td>
+                        </tr>
+                        <tr>
+                            <td  colspan="3" class="text-left py-0 border-bottom-0">-----------------------------------------</td>
+                        </tr>
+                        <tr>
+                            <td  colspan="3" class="text-left ps-5 py-3 border-bottom-0"><strong>IMPORTANT REMINDERS</strong></td>
+                        </tr>
+                        <tr>
+                            <td  colspan="3" class="text-left border-bottom-0 py-1 px-3 info-rem"><small style="font-size: 12px;">&nbsp;• A surcharge at 10% of the amount due is <br>
+                                &nbsp;&nbsp;added if bill is paid after due date.</small>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td  colspan="3" class="text-left border-bottom-0 py-1 px-3 info-rem"><small style="font-size: 12px;">&nbsp;• Disconnection shall follow without further <br>
+                                &nbsp;&nbsp;notice if no payment has been made within <br>&nbsp;&nbsp;15 days after due date.</small>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td  colspan="3" class="text-left border-bottom-0 py-1 px-3 info-rem"><small style="font-size: 12px;">&nbsp;• Please report immediately any leaking <br>
+                                &nbsp;&nbsp;and/or defective water meter to avoid <br>&nbsp;&nbsp;incurring high water charges.</small>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td  colspan="3" class="text-left border-bottom-0 py-1 px-3 info-rem"><small style="font-size: 12px;">&nbsp;•  For account reconciliations, kindly ask for <br>
+                                &nbsp;&nbsp;assistance through our contact number <br>
+                                &nbsp;&nbsp;above. You may also visit us at the Ground <br>&nbsp;&nbsp;Floor of the Municipal Hall</small>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td  colspan="3" class="text-left pt-3 border-bottom-0">-----------------------------------------</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
 
     @include('field-personnel.templates.billingModal')

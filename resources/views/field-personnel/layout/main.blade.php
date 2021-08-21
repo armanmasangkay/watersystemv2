@@ -17,7 +17,7 @@
             @yield('content')
         </div>
 
-        <div class="container mt-5">
+        <div class="container mt-5" id="footer">
             <div class="row">
                 <div class="col-md-12">
                     <h6 class="text-muted text-center">&copy; Macrohon Municipal Water Works - 2021</h6>
