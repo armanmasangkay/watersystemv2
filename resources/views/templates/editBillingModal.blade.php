@@ -2,7 +2,7 @@
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
           
-            <form action="{{ route('admin.update-billing', ['id' => $current_transaction_id]) }}" method="post" id="edit-billing-form">
+            <form action="{{ isset($current_transaction_id) ? route('admin.update-billing', ['id' => $current_transaction_id]):'' }}" method="post" id="edit-billing-form">
                 @csrf
                 <input type="hidden" name="edit_connection_type" value="{{ isset($customer)?$customer['connection_type'] : ''}}">
                 <input type="hidden" name="edit_min_rates" value="{{ isset($rates) ? $rates['min_rate'] : '0'}}">
@@ -47,7 +47,7 @@
                         <div class="col-md-4 ps-md-1 pe-md-0">
                             <label class='text-muted'>Reading date (dd/mm/yyyy) <span class="text-danger"><strong>*</strong></span></label>
                             <div class="form-control date d-flex justify-content-between align-items-center input" id="datepicker">
-                                <input type="text" class="w-100 border-0" id="edit_carbon_date_billing" value="{{ \Carbon\Carbon::now()->format('F d, Y') }}"> 
+                                <input type="text" class="w-100 border-0" id="edit_carbon_date_billing" value="{{ \Carbon\Carbon::now()->format('F d, Y') }}">
                                 <span class="input-group-addon calendar"><i data-feather="calendar" width="20"></i></span>
                                 <input type="hidden" class="border-0 date" name="edit_reading_date" id="edit_reading_date" readonly>
                             </div>
@@ -95,7 +95,7 @@
                         </div>
                         <div class='col-6 col-md-6 col-lg-4 col-xl-2 mt-2 mt-md-2 px-lg-1 pe-sm-1 ps-md-1 pe-1'>
                             <small class='text-muted'>Meter IPS Balance <span class="text-danger"><strong>*</strong></span></small>
-                            <input class='form-control' type='number' name="edit_meter_ips" id="edit_meter-ips" readonly placeholder='0.00' min=0 value="{{ isset($customer) ? toAccounting($customer["balance"]->billing_meter_ips) : '0.00' }}">
+                            <input class='form-control' type='number' name="edit_meter_ips" id="edit_meter-ips" readonly placeholder='0.00' min=0 value="{{ isset($customer) ? \App\Classes\Facades\NumberHelper::toAccounting($customer["balance"]->billing_meter_ips) : '0.00' }}">
                         </div>
                         <div class='col-6 col-md-6 col-lg-4 col-xl-2 mt-2 mt-md-2 ps-lg-0 ps-md-1 pe-lg-1 ps-sm-0 pe-md-0 ps-0'>
                             <small class='text-muted'>Total</small>

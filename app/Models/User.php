@@ -14,6 +14,7 @@ class User extends Authenticatable
 
     public static $ADMIN=1;
     public static $CASHIER=2;
+    public static $READER=3;
 
 
     /**
@@ -56,5 +57,15 @@ class User extends Authenticatable
     public function isCashier()
     {
         return $this->role==2;
+    }
+
+    public function isReader()
+    {
+        return $this->role==3;
+    }
+
+    public function isAdmin()
+    {
+        return $this->role==1;
     }
 }

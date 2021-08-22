@@ -17,7 +17,8 @@ class RestricCashier
     public function handle(Request $request, Closure $next)
     {
         if(auth()->user()->isCashier()){
-            abort(403,"You are not allowed to access this URL.");
+            // abort(403,"You are not allowed to access this URL.");
+            return redirect(route('admin.existing-customers.index'));
         }
 
         return $next($request);

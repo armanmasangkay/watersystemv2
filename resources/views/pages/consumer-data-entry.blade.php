@@ -136,7 +136,7 @@
                             <div class="row mb-4">
                                 <div class="col-md-3 pe-md-1 pt-md-0 pt-sm-2">
                                     <label class="text-muted"><small>Purchase of Meter Option</small> <small class="text-danger">*</small></label>
-                                    <select class="form-select mt-2" name="purchase_option">
+                                    <select class="form-select mt-2" name="purchase_option" id="purchase_option">
                                         <option value="" selected>--Please select--</option>
                                         <option value="cash">Cash</option>
                                         <option value="installment">Installment</option>
