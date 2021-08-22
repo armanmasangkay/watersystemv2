@@ -16,9 +16,7 @@ class Service extends Model
         'type_of_service',
         'remarks',
         'landmarks',
-        'contact_number',
-        'building_inspection_schedule',
-        'water_works_schedule',
+        'work_schedule',
         'status'
     ];
 

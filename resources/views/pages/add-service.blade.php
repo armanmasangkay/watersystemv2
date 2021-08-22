@@ -28,9 +28,17 @@
         </div>
     </div>
     <div class="col-12 col-md-8">
-
+        @if(session('created'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>Great!</strong> {{session('message')}}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        @endif
         @if(isset($customer))
-        <form action="#" method="post">
+        <form action="{{route('admin.services.store')}}" method="post">
+            @csrf
+
+            <input type="text" name='account_number' value="{{$customer->account_number}}" hidden/>
             <h5>Applicant Information</h5>
             <hr>
             
@@ -55,15 +63,27 @@
             </div>
             
             <small class="text-muted">Service Type</small>
-            <select class="form-select form-select-sm" required>
-
+            <select class="form-select form-select-sm  @error('service_type') is-invalid @enderror" name="service_type" required>
+               
                 @foreach($services as $value=>$name)    
-                <option value={{$value}}>{{$name}}</option>
+                <option value={{$value}}  @if($value==old('service_type'))selected @endif>{{$name}}</option>
                 @endforeach
             </select>
+            @error('service_type')
+            <div class="invalid-feedback">
+                {{$message}}
+            </div>
+            @enderror
     
             <small class="text-muted">Remarks</small>
-            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+            <textarea class="form-control @error('remarks')is-invalid @enderror" rows="3" name="remarks"></textarea>
+            @error('remarks')
+            <div class="invalid-feedback">
+                {{$message}}
+            </div>
+            @enderror
+
+
             <div class="row mt-3">
                 <div class="col-12 col-lg-6">
                     <small class="text-muted mt-4">Address</small>
@@ -71,7 +91,7 @@
                 </div>
                 <div class="col-12 col-lg-6">
                     <small class="text-muted">Landmark</small>
-                    <input class="form-control" type="text"/>
+                    <input class="form-control" type="text" name="landmark" />
                 </div>
                 
             </div>
@@ -79,7 +99,12 @@
             <div class="row">
                 <div class="col-12 col-md-8 col-lg-5">
                     <small class="text-muted">Service Schedule</small>
-                    <input class="form-control" type="date" required/>
+                    <input class="form-control  @error('service_schedule') is-invalid @enderror" type="date" name="service_schedule" required/>
+                    @error('service_schedule')
+                    <div class="invalid-feedback">
+                        {{$message}}
+                    </div>
+                    @enderror
                 </div>
             </div>
            
