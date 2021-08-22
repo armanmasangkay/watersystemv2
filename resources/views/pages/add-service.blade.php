@@ -11,7 +11,9 @@
         <form action="{{route('admin.services.search')}}" method="get">
             <div class="input-group mb-3">
                     <input name="account_number" type="text" class="form-control @error('account_number')is-invalid @enderror" 
-                    placeholder="Account #" value="{{old('account_number')}}" required>
+                    placeholder="Account #" 
+                    value="{{old('account_number')?old('account_number'):(isset($customer)?$customer->account_number:'')}}" 
+                    required>
                     <button class="btn btn-primary" type="submit" id="button-addon2">Search</button>
                     @error('account_number')
                     <div class="invalid-feedback">
@@ -26,6 +28,8 @@
         </div>
     </div>
     <div class="col-12 col-md-8">
+
+        @if(isset($customer))
         <form action="#" method="post">
             <h5>Applicant Information</h5>
             <hr>
@@ -83,7 +87,10 @@
             <button type="submit" class="btn btn-primary mt-3">Submit</button>
 
         </form>
-       
+        @else
+                <p class="text-info text-center"> <i data-feather="alert-circle"></i> Please search for an Account Number first</p>
+        @endif
+
     </div>
 
 

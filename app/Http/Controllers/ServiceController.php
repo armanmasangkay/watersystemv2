@@ -29,6 +29,7 @@ class ServiceController extends Controller
     public function search(Request $request)
     {
 
+     
         try{
             $customer= Customer::findOrFail($request->account_number);
             return view('pages.add-service', [
@@ -37,7 +38,7 @@ class ServiceController extends Controller
                 'customer'=>$customer
             ]);
         }catch(ModelNotFoundException $e){
-            return back()->withErrors([
+            return redirect(route('admin.services.create'))->withErrors([
                     'account_number'=>'Account number not found!'
                 ])->withInput();
         }
@@ -45,25 +46,17 @@ class ServiceController extends Controller
     }
 
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     { 
+
+        //TODO : Show search for account number note when haven't search for an account number yet
         return view('pages.add-service', [
             'route' => 'admin.search-customer',
             'services'=>$this->getServices()
         ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function store(Request $request)
     {
 
