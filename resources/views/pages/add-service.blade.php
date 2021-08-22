@@ -37,25 +37,25 @@
             <div class="row">
                 <div class="col">
                     <small class="text-muted">Name</small>
-                    <h6>Arman M. Masangkay</h6>
+                    <h6>{{$customer->fullname()}}</h6>
                 </div>
                 <div class="col">
                     <small class="text-muted">Civil Status</small>
-                    <h6>Married</h6>
+                    <h6>{{$customer->civilStatus()}}</h6>
                 </div>
                 <div class="col">
                     <small class="text-muted">Connection Type</small>
-                    <h6>Residential</h6>
+                    <h6>{{$customer->connectionType()}}</h6>
                 </div>
                 <div class="col">
                     <small class="text-muted">Contact #</small>
-                    <h6>09757375747</h6>
+                    <h6>{{$customer->contact_number}}</h6>
                 </div>
 
             </div>
             
             <small class="text-muted">Service Type</small>
-            <select class="form-select form-select-sm" aria-label="Default select example">
+            <select class="form-select form-select-sm" required>
 
                 @foreach($services as $value=>$name)    
                 <option value={{$value}}>{{$name}}</option>
@@ -67,7 +67,7 @@
             <div class="row mt-3">
                 <div class="col-12 col-lg-6">
                     <small class="text-muted mt-4">Address</small>
-                    <h6>Taliwa, Malitbog So. Leyte</h6>
+                    <h6>{{$customer->address()}}</h6>
                 </div>
                 <div class="col-12 col-lg-6">
                     <small class="text-muted">Landmark</small>
@@ -79,7 +79,7 @@
             <div class="row">
                 <div class="col-12 col-md-8 col-lg-5">
                     <small class="text-muted">Service Schedule</small>
-                    <input class="form-control" type="date"/>
+                    <input class="form-control" type="date" required/>
                 </div>
             </div>
            
