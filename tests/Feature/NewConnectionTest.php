@@ -40,6 +40,7 @@ class NewConnectionTest extends TestCase
         $this->assertDatabaseHas('customers', ['firstname' => 'Julius Amfil']);
         $this->assertDatabaseCount('customers', 1);
         $this->assertDatabaseCount('transaction_logs', 1);
+        $this->assertDatabaseCount('services', 1);
     }
 
     public function test_save_to_database_if_organization_name_is_provided()
@@ -66,6 +67,7 @@ class NewConnectionTest extends TestCase
         $this->assertDatabaseCount('customers', 1);
         $this->assertDatabaseCount('transaction_logs', 1);
         $this->assertDatabaseHas('transaction_logs', ['customer_organization_name' => 'SLSU']);
+        $this->assertDatabaseCount('services', 1);
     }
 
     public function test_should_fail_if_contact_number_is_less_than_or_greater_than_eleven_digits_(){
@@ -89,5 +91,30 @@ class NewConnectionTest extends TestCase
         $response->assertJson(['created' => false, 'errors' => ['contact_number' => []]]);
         $this->assertDatabaseCount('customers', 0);
         $this->assertDatabaseCount('transaction_logs', 0);
+        $this->assertDatabaseCount('services', 0);
+    }
+
+    public function test_should_fail_if_contact_number_is_user_input_string(){
+        $user = User::factory()->create();
+        $response = $this->actingAs($user)->post(route('admin.new-connection.store'),[
+            'org_name' => 'SLSU',
+            'firstname' => 'Julius Amfil',
+            'middlename' => 'Enoc',
+            'lastname' => 'Dublado',
+            'civil_status' => 'single',
+            'contact_number' => 'sample',
+            'barangayCode' => '01',
+            'barangay' => 'Aguinaldo',
+            'purokCode' => '01',
+            'purok' => 'Purok Lapok',
+            'connection_type' => 'commercial',
+            'connection_status' => 'inactive',
+            'purchase_option' => 'cash',
+        ]);
+
+        $response->assertJson(['created' => false, 'errors' => ['contact_number' => []]]);
+        $this->assertDatabaseCount('customers', 0);
+        $this->assertDatabaseCount('transaction_logs', 0);
+        $this->assertDatabaseCount('services', 0);
     }
 }

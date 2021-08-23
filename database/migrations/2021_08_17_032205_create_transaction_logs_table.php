@@ -20,7 +20,7 @@ class CreateTransactionLogsTable extends Migration
             $table->string('customer_middlename')->nullable();
             $table->string('customer_lastname');
             $table->string('type_of_transaction');
-            $table->foreignId('issued_by')->references('id')->on('users')->onDelete('cascade');
+            $table->foreignId('issued_by')->references('id')->on('users')->onDelete(null);
             $table->timestamps();
         });
     }

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Classes\Facades\CustomerRegistrationOptions;
 use App\Http\Requests\NewConnectionRequest;
 use App\Models\Customer;
+use App\Models\Service;
 use App\Models\TransactionLog;
 use Illuminate\Support\Facades\Auth;
 
@@ -25,7 +26,13 @@ class NewConnectionController extends Controller
         $requestData = $request->all();
         $requestData['connection_status'] = 'inactive';
 
-        Customer::create($requestData);
+        $customer = Customer::create($requestData);
+        Service::create([
+            'customer_id' => $customer->account_number,
+            'type_of_service' => 'new_connection',
+            'contact_number' => $requestData['contact_number'],
+            'status' => 'new_connection'
+        ]);
         TransactionLog::create([
             'customer_organization_name' => $requestData['org_name'] ?? '',
             'customer_firstname' => $requestData['firstname'],

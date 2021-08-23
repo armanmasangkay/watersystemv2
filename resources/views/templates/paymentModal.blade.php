@@ -1,8 +1,8 @@
 <div class="modal modal-fluid fade paymentModal" id="paymentModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
-        <div class="modal-content">
-            <input type="hidden" name="route" value="{{ route('admin.get-balance', ['id' => $customer['account']]) }}">
-            <form action="{{ route('admin.save-payment', ['id' => $customer['account']]) }}" method="post" id="payment-form">
+        <div class="modal-content">           
+            <input type="hidden" name="route" value="{{ isset($customer['transactions']) ? route('admin.get-balance', ['id' => $customer['account']]) : '' }}">
+            <form action="{{ isset($customer['transactions']) ? route('admin.save-payment', ['id' => $customer['account']]):'' }}" method="post" id="payment-form">
                 @csrf
                 <!-- <input type="hidden" name="connection_type" value="{{ isset($customer)?$customer['connection_type'] : ''}}"> -->
                 <!-- <input type="hidden" name="min_rates" value="{{ isset($rates) ? $rates['min_rate'] : '0'}}">

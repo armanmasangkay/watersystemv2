@@ -1,8 +1,8 @@
 <div class="modal modal-fluid fade" id="editBillingSetupModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
-
-            <form action="{{ route('admin.update-billing', ['id' => $current_transaction_id]) }}" method="post" id="edit-billing-form">
+          
+            <form action="{{ isset($current_transaction_id) ? route('admin.update-billing', ['id' => $current_transaction_id]):'' }}" method="post" id="edit-billing-form">
                 @csrf
                 <input type="hidden" name="edit_connection_type" value="{{ isset($customer)?$customer['connection_type'] : ''}}">
                 <input type="hidden" name="edit_min_rates" value="{{ isset($rates) ? $rates['min_rate'] : '0'}}">

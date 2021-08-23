@@ -13,7 +13,7 @@
     </head>
     <body class="bg-light bg-gradient">
         @includeWhen(url()->current()!=route('login'),'layout.nav')
-        <div class="container{{ Request::is('admin/consumer-ledger/*') ? '-fluid px-4' : '' }}">
+        <div class="container{{ Request::is('admin/consumer-ledger*') ? '-fluid px-4' : '' }}">
             @yield('content')
         </div>
 

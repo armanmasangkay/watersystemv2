@@ -4,7 +4,7 @@
 
 @section('content')
 
-<div class="container{{ Request::is('admin/consumer-ledger/*') ? '-fluid px-4' : '' }} mt-5">
+<div class="container{{ Request::is('admin/consumer-ledger*') ? '-fluid px-4' : '' }} mt-5">
     <div class="row">
         <div class="col-md-12">
             <div class="card border-secondary">
@@ -90,7 +90,7 @@
 
 
                                 ?>
-                                @if(isset($customer))
+                                @if(isset($customer["transactions"]))
                                 @foreach($customer["transactions"] as $billing)
                                 <tr>
                                     <td id="tdpc-{{ $billing->period_covered }}" class="pt-2 pb-2 text-center bg-white border-end border-secondary"><small>{{ $billing->period_covered }}</small></td>
@@ -168,20 +168,22 @@
                                 @endif
                             </tbody>
                         </table>
-                        <div class="pt-3 pb-2 px-2 bg-light">
-                            <div class="d-flex justify-content-between">
-                                <div class="float-left">
-                                    @if(isset($customer))
+                        <div class="{{ isset($customer['transactions']) ? 'pt-3 pb-2' : 'pt-2 pb-1' }} px-2 bg-light">
+                            <div class="{{ isset($customer['transactions']) ? 'd-flex justify-content-between' : 'float-center' }}">
+                                <div class="{{ isset($customer['transactions']) ? 'float-left' : 'float-center' }}">
+                                    @if(isset($customer["transactions"]))
                                     {{ $customer["transactions"]->links() }}
                                     @else
-                                    <h5 class="text-center text-secondary">No records to display</h5>
+                                    <h6 class="text-center text-secondary">No records to display</h6>
                                     @endif
                                 </div>
+                                @if(isset($customer["transactions"]))
                                 <div class="float-md-end mb-1">
                                     @if(isset($customer))
                                         <a href="{{route('admin.ledger.export',['account_number'=>$customer['account']])}}" class="btn btn-secondary py-2"><i data-feather="download" class="feather-20 me-1 pb-1"></i> Export Ledger</a>
                                     @endif
                                 </div>
+                                @endif
                             </div>
                         </div>
                     </div>

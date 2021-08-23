@@ -4,8 +4,9 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
-class RestricCashier
+class AllowedAccessGroupAdmin
 {
     /**
      * Handle an incoming request.
@@ -16,11 +17,11 @@ class RestricCashier
      */
     public function handle(Request $request, Closure $next)
     {
-        if(auth()->user()->isCashier()){
-            // abort(403,"You are not allowed to access this URL.");
-            return redirect(route('admin.existing-customers.index'));
+        if ( (Auth::check() && Auth::user()->isAdmin()) || (Auth::check() && Auth::user()->isCashier()) )
+        {
+            return $next($request);
         }
 
-        return $next($request);
+        return redirect(route('home'));
     }
 }
