@@ -53,7 +53,7 @@
         </div>
         @if(!isset($customer))
         <div class="card px-3 mt-2">
-            <p class="text-info pt-3 info-txt"><i data-feather="info" class="feather-18 mb-1"></i> Note: Search customer then add new bill or click tag consumer to continue</p>
+            <p class="text-info pt-3 info-txt"><i data-feather="info" class="feather-18 mb-1"></i> Note: Search a customer to show account information and add a bill.</p>
             <div class="row mt-1 parent mb-3 d-block d-lg-none" id="parent">
                 <div class="col-xs-12 d-flex justify-content-start align-items-center mt-2">
                     <button type="button" id="search" class="search btn btn-primary d-flex justify-content-between align-items-center"><i data-feather="search" class="feather-18 me-2"></i> Search Customer</button>

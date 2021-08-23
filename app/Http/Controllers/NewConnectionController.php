@@ -25,12 +25,11 @@ class NewConnectionController extends Controller
 
         $requestData = $request->all();
         $requestData['connection_status'] = 'inactive';
-
         $customer = Customer::create($requestData);
         Service::create([
             'customer_id' => $customer->account_number,
             'type_of_service' => 'new_connection',
-            'contact_number' => $requestData['contact_number'],
+            'contact_number' => $customer->contact_number,
             'status' => 'new_connection'
         ]);
         TransactionLog::create([

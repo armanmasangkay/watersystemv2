@@ -2,66 +2,85 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Customer;
 use App\Models\Service;
+use App\Rules\RedundantService;
+use App\Services\Options;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 class ServiceController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+  
+
+
+
+    private function getServices()
+    {
+        return (new Options)->getServices();
+    }
+
+
     public function index()
     {
-        //
+        
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function search(Request $request)
+    {  
+        try{
+            $customer= Customer::findOrFail($request->account_number);
+            return view('pages.add-service', [
+                'route' => 'admin.search-customer',
+                'services'=>$this->getServices(),
+                'customer'=>$customer
+            ]);
+        }catch(ModelNotFoundException $e){
+            return redirect(route('admin.services.create'))->withErrors([
+                    'account_number'=>'Account number not found!'
+                ])->withInput();
+        }
+      
+    }
+
+
     public function create()
-    {
-        return view('pages.new-transact', ['route' => 'admin.search-customer']);
+    { 
+
+        return view('pages.add-service', [
+            'route' => 'admin.search-customer',
+            'services'=>$this->getServices()
+        ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function store(Request $request)
     {
+        $messages=[
+            'remarks.required_if'=>"Remarks field is required if 'Other' is selected on Service Type field"
+        ];
 
-        $validator=Validator::make($request->all(),[
-            'contact_number' => 'required|numeric',
-            'building_inspection_schedule' => 'required|date|after_or_equal:'.now()->format('Y-m-d'),
-            'water_works_schedule' => 'required|date|after_or_equal:'.now()->format('Y-m-d')
-        ]);
+       $request->validate([
+           'account_number'=>'required',
+           'service_type'=>['required',new RedundantService],
+           'remarks'=>'required_if:service_type,others',
+           'service_schedule'=>'required|date|after_or_equal:today'
+       ],$messages);
 
+       Service::create([
+            'customer_id'=>$request->account_number,
+            'type_of_service'=>$request->service_type,
+            'remarks'=>$request->remarks,
+            'landmarks'=>$request->landmark,
+            'work_schedule'=>$request->service_schedule,
+            'status'=>'pending'
+       ]);
 
-        if($validator->fails()){
-            return redirect(route('admin.search-customer',[
-                'account_number'=>$request->customer_id
-            ]))->withErrors($validator)->with([
-                'remarks' => $request->remarks,
-                'landmarks' => $request->landmarks,
-                'contact_number' => $request->contact_number,
-                'building_inspection_schedule' => $request->building_inspection_schedule,
-                'water_works_schedule' => $request->water_works_schedule,
-            ]);
-        }
-
-        Service::create($request->all());
-
-        return redirect(route('admin.transactions.create'))->with([
-            'created'=>true,
-            'message'=>'Successfully created a new transaction.'
-        ]);
+       return back()->with([
+           'created'=>true,
+           'message'=>'A service was successfully created for this customer!'
+       ]);
     }
 
     /**

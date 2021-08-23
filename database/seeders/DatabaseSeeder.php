@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             // CustomerSeeder::class,
             WaterRateSeeder::class,
             SurchargeSeeder::class,
+            ServicesListSeeder::class,
         ]);
 
     }
