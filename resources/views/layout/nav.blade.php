@@ -34,7 +34,7 @@
                 <a class="dropdown-item" href="{{route('admin.reconnection')}}">Reconnection</a>
                 <a class="dropdown-item" href="{{route('admin.transactions-lists')}}">List of Transactions</a>
                 <a class="dropdown-item" href="{{route('admin.transfer-meter')}}">Transfer of Meter</a>
-                <a class="dropdown-item" href="{{route('admin.transfer-meter')}}">List of Services</a>
+                <a class="dropdown-item" href="{{route('admin.services-list.index')}}">List of Services</a>
               </li>
             </ul>
           </li>
