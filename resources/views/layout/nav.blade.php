@@ -24,7 +24,7 @@
             </ul>
           </li>
           @adminonly(Auth::user()->role)
-          <li class="nav-item dropdown pt-1">
+          {{-- <li class="nav-item dropdown pt-1">
             <a class="nav-link dropdown-toggle text-secondary" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
              <i data-feather="align-left" class="feather-16 m-1"></i> Transactions
             </a>
@@ -36,7 +36,7 @@
                 <a class="dropdown-item" href="{{route('admin.transfer-meter')}}">Transfer of Meter</a>
               </li>
             </ul>
-          </li>
+          </li> --}}
           @endadminonly
 
 
@@ -54,6 +54,21 @@
             </ul>
           </li>
           @endadminonly
+
+          @adminonly(Auth::user()->role)
+          <li class="nav-item dropdown pt-1">
+            <a class="nav-link dropdown-toggle text-secondary" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+             <i data-feather="tool" class="feather-16 m-1"></i> Services
+            </a>
+            <ul class="dropdown-menu px-2" aria-labelledby="navbarDropdown">
+              <li>
+                <a class="dropdown-item" href="{{route('admin.services.create')}}">New</a>
+              
+              </li>
+            </ul>
+          </li>
+          @endadminonly
+
 
           @adminonly(Auth::user()->role)
           <li class="nav-item dropdown pt-1">

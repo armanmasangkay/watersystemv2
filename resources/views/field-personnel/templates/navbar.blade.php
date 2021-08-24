@@ -35,7 +35,7 @@
                     <li class="nav-item my-md-0 my-1"><a class="nav-link text-secondary" href="#"><i data-feather="home" class="feather-18 me-2"></i> Home Page </a></li>
                     <li class="nav-item my-md-0 my-1"><a class="nav-link text-secondary" href="{{ route('field-reading') }}"><i data-feather="info" class="feather-18 me-2"></i> Meter Reading </a></li>
                     <li class="nav-item my-md-0 my-1"><a class="nav-link text-secondary" href="{{ route('meter-services') }}"><i data-feather="activity" class="feather-18 me-2"></i> Water Services </a></li>
-                    <li class="nav-item my-md-0 d-none d-lg-block my-1"><a class="nav-link text-secondary" href="#"><i data-feather="repeat" class="feather-18 me-2"></i> Sysnc Data </a></li>
+                    <li class="nav-item my-md-0 d-none d-lg-block my-1"><a class="nav-link text-secondary" href="#"><i data-feather="repeat" class="feather-18 me-2"></i> Sync Data </a></li>
                     <li class="nav-item dropdown my-md-0 my-1 d-none d-lg-block">
                         <a class="nav-link dropdown-toggle text-secondary" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <i data-feather="user" class="feather-16 m-1"></i> Account

@@ -35,6 +35,11 @@ class Customer extends Model
         return $this->org_name?true:false;
     }
 
+    public function civilStatus()
+    {
+        return Str::title($this->civil_status);
+    }
+
     public function fullname()
     {
         $firstname=Str::title($this->firstname);
