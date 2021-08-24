@@ -10,17 +10,23 @@ use Illuminate\Support\Facades\Auth;
 
 class EditBillingController extends Controller
 {
+    public $waterbill;
+
+    public function __construct()
+    {
+        $this->waterbill = new WaterBill();
+    }
+    
     public function getBill(Request $request, $transaction_id)
     {
         $prev_meter = 0;
         $prev_bal = 0;
         $balance = Transaction::where('id', $transaction_id)->get();
-        $prev = Transaction::where('id', ($transaction_id - 1))->get();
-        foreach($prev as $prev_trans)
-        {
-            $prev_meter = $prev_trans->reading_meter;
-            $prev_bal = $prev_trans->balance;
-        }
+        $prev = Transaction::orderByDesc('id')->where('id','<', $transaction_id)->get();
+        $prev = $prev->first();
+
+        $prev_meter = $prev->reading_meter;
+        $prev_bal = $prev->balance;
 
         $nxt_trans_update = Transaction::orderBy('created_at', 'asc')->where(['customer_id' => $request->customer_id])->where('id', '>', $transaction_id)->get();
         $nxt_trans_update = $nxt_trans_update->first();
@@ -35,15 +41,27 @@ class EditBillingController extends Controller
             return response()->json(['created' => false, 'msg' => 'Current meter reading should not be less than the previous meter reading.']);
         }
 
+        $prv_trans_update = Transaction::orderByDesc('created_at')->where(['customer_id' => $request->edit_customer_id])->where('id', '<', $request->edit_curr_transaction_id)->get();
+        $prv_trans_update = $prv_trans_update->first();
+
+        $amount_bal = $prv_trans_update->balance;
+        $amount_total = $prv_trans_update->billing_total;
+
         $reading_meter = 0;
         $update_transaction = Transaction::find($request->edit_curr_transaction_id);
 
-        $update_transaction->billing_surcharge = ($request->edit_meter_reading >= $request->current_meter) ? ($update_transaction->billing_surcharge + ($request->edit_surcharge_amount - $update_transaction->billing_surcharge)) :
-                                                    ($update_transaction->billing_surcharge - ($update_transaction->billing_surcharge - $request->edit_surcharge_amount));
-        $update_transaction->billing_total = ($request->edit_meter_reading >= $request->current_meter) ? ($request->billing_total + ($request->billing_total - $request->edit_total)) :
-                                                ($request->billing_total - ($request->billing_total - $request->edit_total));
-        $update_transaction->balance = ($request->edit_meter_reading >= $request->current_meter) ? ($request->billing_total + ($request->billing_total - $request->edit_total)) :
-                                        ($request->billing_total - ($request->billing_total - $request->edit_total));
+        $update_transaction->billing_surcharge = ($request->edit_meter_reading < $request->current_meter) ? 
+                                                (($amount_bal + $request->edit_amount) * $this->waterbill->surcharge[0]->rate) : 
+                                                (($amount_bal - $request->edit_amount) * $this->waterbill->surcharge[0]->rate);
+
+        $update_transaction->billing_total = ($request->edit_meter_reading < $request->current_meter) ? 
+                                            ($amount_total + $request->edit_amount) + (($amount_total + $request->edit_amount) * $this->waterbill->surcharge[0]->rate) : 
+                                            ($amount_total - $request->edit_amount) + (($amount_total - $request->edit_amount) * $this->waterbill->surcharge[0]->rate);
+
+        $update_transaction->balance = ($request->edit_meter_reading < $request->current_meter) ? 
+                                        (($amount_bal + $request->edit_amount)) + (($amount_bal + $request->edit_amount) * $this->waterbill->surcharge[0]->rate) : 
+                                        (($amount_bal - $request->edit_amount)) + (($amount_bal - $request->edit_amount) * $this->waterbill->surcharge[0]->rate); 
+
         $update_transaction->billing_amount = $request->edit_amount;
         $update_transaction->reading_consumption = $request->edit_consumption;
         $update_transaction->reading_meter = $request->edit_reading_meter;
@@ -52,31 +70,40 @@ class EditBillingController extends Controller
 
         $reading_amount = $reading_meter * $request->edit_excess_rate;
 
-        $nxt_trans_update = Transaction::where(['customer_id' => $request->edit_customer_id])->where('id', '>', $request->edit_curr_transaction_id)->get()->toArray();
+        $nxt_trans_update = Transaction::orderBy('id', 'asc')->where(['customer_id' => $request->edit_customer_id])->where('id', '>', $request->edit_curr_transaction_id)->get()->toArray();
+        
 
         for($i = 0; $i < count($nxt_trans_update); $i++)
         {
+            $this->waterbill->getConnectionType($nxt_trans_update[$i]['customer_id']);
+            $prv_trans = Transaction::orderBy('id','desc')->where(['customer_id' => $request->edit_customer_id])->where('id', '<', $nxt_trans_update[$i]['id'])->get();
+            $prv_trans = $prv_trans->first();
+
             $reading_meter = ($request->edit_reading_meter >= $request->current_meter) ? ($request->edit_reading_meter - $request->current_meter) : ($request->current_meter - $request->edit_reading_meter);
             $update = Transaction::find($nxt_trans_update[$i]['id']);
 
-            $consumption = ($request->edit_reading_meter <= $request->current_meter) ? ($nxt_trans_update[$i]['reading_consumption'] + $reading_meter) :
-                            ($nxt_trans_update[$i]['reading_consumption'] - $reading_meter);
+            $consumption = ($nxt_trans_update[$i]['reading_meter'] >= $request->edit_reading_meter) ? ($nxt_trans_update[$i]['reading_meter'] - $request->edit_reading_meter) : 0;
+
             $billing_amount = ($request->edit_reading_meter <= $request->current_meter) ? ($nxt_trans_update[$i]['billing_amount'] + $reading_amount) :
                             ($nxt_trans_update[$i]['billing_amount'] - $reading_amount);
 
-            $amount = ($billing_amount + $request->edit_total);
-            $surcharge = ($amount * $request->edit_surcharge);
+            
+            $amount = ($consumption > $this->waterbill->rate['max_range']) ? 
+                    ($this->waterbill->rate['min_rate'] + (($consumption - $this->waterbill->rate['max_range']) * ($this->waterbill->rate['excess_rates']))) : 
+                    $this->waterbill->rate['min_rate'];
 
-            $update->balance = ($request->edit_reading_meter <= $request->current_meter) ? ($nxt_trans_update[$i]['billing_total'] + $reading_amount) :
-                                ($nxt_trans_update[$i]['billing_total'] - $reading_amount);
-            $update->billing_total = ($request->edit_reading_meter <= $request->current_meter) ? ($nxt_trans_update[$i]['billing_total'] + $reading_amount) :
-                                        ($nxt_trans_update[$i]['billing_total'] - $reading_amount);
-            $update->billing_surcharge = ($nxt_trans_update[$i]['billing_surcharge'] > 0 ? $surcharge : 0);
-            $update->billing_amount = ($nxt_trans_update[$i]['billing_amount'] > $request->edit_min_rates ? $billing_amount : $request->edit_min_rates);
-            $update->reading_consumption = $consumption;
+            $surcharge = (($amount + $prv_trans->balance) * $this->waterbill->surcharge[0]->rate);
+            $balance = ($amount + $prv_trans->balance) + $surcharge;
+            $bill_total = ($amount + $prv_trans->billing_total) + $surcharge;
+
+            $update->balance = $balance >= 0 ? $balance : 0;
+            $update->billing_total = $bill_total >= 0 ? $bill_total : 0;
+            $update->billing_surcharge = $nxt_trans_update[$i]['billing_surcharge'] > 0 ? $surcharge : 0;
+            $update->billing_amount = $amount >= 0 ? $amount : 0;
+            $update->reading_consumption = ($consumption >= 0 ? $consumption : 0);
             $update->update();
         }
 
-        return Response::json(['created' => true/*, 'data' => ($a)*/]);
+        return Response::json(['created' => true, 'data' => $this->waterbill->rate]);
     }
 }

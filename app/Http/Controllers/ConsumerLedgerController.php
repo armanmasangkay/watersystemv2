@@ -124,24 +124,24 @@ class ConsumerLedgerController extends Controller
 
         $fillable=[
             'customer_id' => $this->waterbill->balance->customer_id,
-            'period_covered' => $this->waterbill->computed_total['date'],
-            'reading_date' => date('Y-m-d', strtotime($request->reading_date)),
+            'period_covered' => $request->current_month.'-'.$request->next_month,
+            'reading_date' => date('Y-m-d', strtotime($request->read_date)),
             'reading_meter' => $request->reading_meter,
             'reading_consumption' => $this->waterbill->computed_total['meter_consumption'],
-            'billing_amount' => $this->toAccounting($this->waterbill->computed_total['amount_consumption']),
+            'billing_amount' => $this->waterbill->computed_total['amount_consumption'],
             'billing_surcharge' => '0.00',
-            'billing_meter_ips' => $this->toAccounting($this->waterbill->balance->billing_meter_ips),
-            'billing_total' => $this->toAccounting($this->waterbill->computed_total['total']),
-            'balance' => $this->toAccounting($this->waterbill->computed_total['total']),
+            'billing_meter_ips' => $this->waterbill->balance->billing_meter_ips,
+            'billing_total' => $this->waterbill->computed_total['total'],
+            'balance' => $this->waterbill->computed_total['total'],
             'posted_by' => Auth::id(),
             'user_id' => Auth::id(),
         ];
 
         $update_transaction = Transaction::findOrFail($this->waterbill->balance->id);
 
-        $update_transaction->billing_surcharge = $this->toAccounting($this->waterbill->computed_total['surcharge']);
-        $update_transaction->billing_total += $this->toAccounting($this->waterbill->computed_total['surcharge']);
-        $update_transaction->balance += $this->toAccounting($this->waterbill->computed_total['surcharge']);
+        $update_transaction->billing_surcharge = $this->waterbill->computed_total['surcharge'];
+        $update_transaction->billing_total += $this->waterbill->computed_total['surcharge'];
+        $update_transaction->balance += $this->waterbill->computed_total['surcharge'];
         $update_transaction->update();
 
         // $fillable=[
@@ -168,6 +168,6 @@ class ConsumerLedgerController extends Controller
 
 
         $transactions = Transaction::create($fillable);
-        return response()->json(['created' => true]);
+        return response()->json(['created' => true/*, 'data' => $this->waterbill->computed_total*/]);
     }
 }

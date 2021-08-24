@@ -34,6 +34,7 @@ $(document).ready(function(){
                 url: actionURI,
                 data: data,
                 success: function(response){
+                    console.log(response)
                     if(response.created == true){
                         $('#current-month').prop('disabled', true);
                         $('#next-month').prop('disabled', true);

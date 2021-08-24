@@ -277,10 +277,13 @@ body.offcanvas-active .navbar-nav{
     margin-left: 0 !important;
 }
 
-@media all and (max-width: 991px) {
-	.nav{
-        height: 6.5vh;
+@media (pointer:none), (pointer:coarse) {
+    .nav{
+        height: 8.5vh;
     }
+}
+
+@media all and (max-width: 991px) {
 
 	.offcanvas-header{ display:block; }
 
@@ -350,4 +353,64 @@ body.offcanvas-active .navbar-nav{
 
 .nav-lg-auto{
     right: 0;
+}
+
+#print{
+    overflow: hidden;
+}
+
+#print table tr td img{
+    height: 80px;
+    position: relative;
+    top: -30px;
+}
+
+#print table tr td{
+    color: #000;
+    font-weight: 500;
+}
+
+#print table tr td.i-data{
+    font-size: 12px !important;
+}
+
+#print table tr td.r-data{
+    font-size: 12px !important;
+}
+
+#print table tr td.info-rem{
+    word-break: break-all;
+}
+
+#print table tr td svg{
+    width: 230px !important;
+}
+
+@media print{
+    #print{
+        display: block !important;
+    }
+
+    #reading, .nav-mobile{
+        display: none;
+    }
+
+    #footer, #footer div{
+        padding-left: 0 !important;
+    }
+
+    #footer h6{
+        font-size: 12px;
+    }
+
+    #footer p{
+        font-size: 11px;
+    }
+
+    #footer h6.text-muted, 
+    #footer p.text-muted, 
+    #footer p.text-muted a{
+        color: #000 !important;
+        font-weight: 500;
+    }
 }

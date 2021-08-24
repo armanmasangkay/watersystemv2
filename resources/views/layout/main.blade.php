@@ -6,7 +6,7 @@
 
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
-        <link rel="stylesheet" href="{{asset('assets/css/custom.css')}}">
+        <link rel="stylesheet" href="{{asset('assets/css/custom.css?v=1.0')}}">
         <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"/>
         <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.css" rel="stylesheet" type="text/css" />
 
@@ -17,7 +17,7 @@
             @yield('content')
         </div>
 
-        <div class="container mt-5">
+        <div class="container mt-5" id="footer">
             <div class="row">
                 <div class="col-md-12">
                     <h6 class="text-muted text-center">&copy; Macrohon Municipal Water Works - 2021</h6>

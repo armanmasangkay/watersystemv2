@@ -1,6 +1,21 @@
 $(document).ready(function(){
 
-    $("#billing-form").on('submit', function(e){
+    $('#print-bill').click(function(){
+        if($(this).attr('data-enable') == 1)
+        {
+            $('#reload').attr('data-enable', 1)
+            window.print()
+        }
+    })
+
+    $('#reload').click(function(){
+        if($(this).attr('data-enable') == 1)
+        {
+            window.location.reload()
+        }
+    })
+
+    $(document).on('submit', '#billing-form', function(e){
         e.preventDefault();
 
         let registerForm = document.getElementById('billing-form')
@@ -20,12 +35,14 @@ $(document).ready(function(){
                 data: data,
                 success: function(response){
                     if(response.created == true){
+                        console.log(response)
                         $('#save-billing').html('<i class="far fa-check"></i>&nbsp; Done!');
 
                         Swal.fire('Billing Successfull!','New billing for client '+ $('input[name="customer_id"]').val() +' was created!','success').then(function(result){
                             if(result.isConfirmed)
                             {
-                                window.location.reload();
+                                $('#print-bill').attr('data-enable', 1)
+                                $('#ledgerSetupModal').modal('hide')
                             }
                         })
                     }
@@ -51,6 +68,8 @@ $(document).ready(function(){
 
         if(parseInt($(this).val()) >= parseInt($('#meter-reading').val()))
         {
+            $('#mtr_cur').text($(this).val() + ' Cu.M');
+
             const max_range = parseFloat($('input[name="max_range"]').val());
             const min_rates = parseFloat($('input[name="min_rates"]').val());
             const excess_rate = parseFloat($('input[name="billing_excess_rate"]').val());
@@ -66,12 +85,16 @@ $(document).ready(function(){
             const amount_consumption = meter_consumption <= max_range ? min_rates : total_consumption;
             
             $('#consumption').val(meter_consumption);
+            $('#mtr_con').text(meter_consumption + ' Cu.M');
             $('#surcharge_amount').val(surcharge.toFixed(2));
+            $('#mtr_sur').text(surcharge.toFixed(2));
             $('#amount').val(amount_consumption.toFixed(2));
+            $('#mtr_cur_bill').text('Php '+ amount_consumption.toFixed(2));
 
             const total = ((surcharge + balance) + (meter_ips + amount_consumption));
 
             $('#total').val(total.toFixed(2));
+            $('#mtr_due').text('Php ' + total.toFixed(2));
             $('#save-billing').prop('disabled', false);
 
             let data = $('#billing-form').serialize();

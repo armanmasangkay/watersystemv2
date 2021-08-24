@@ -108,11 +108,11 @@ class FieldMeterReadingController extends Controller
             'reading_date' => date('Y-m-d', strtotime($request->read_date)),
             'reading_meter' => $request->reading_meter,
             'reading_consumption' => $this->waterbill->computed_total['meter_consumption'],
-            'billing_amount' => $this->toAccounting($this->waterbill->computed_total['amount_consumption']),
+            'billing_amount' => $this->waterbill->computed_total['amount_consumption'],
             'billing_surcharge' => '0.00',
-            'billing_meter_ips' => $this->toAccounting($this->waterbill->balance->billing_meter_ips),
-            'billing_total' => $this->toAccounting($this->waterbill->computed_total['total']),
-            'balance' => $this->toAccounting($this->waterbill->computed_total['total']),
+            'billing_meter_ips' => $this->waterbill->balance->billing_meter_ips,
+            'billing_total' => $this->waterbill->computed_total['total'],
+            'balance' => $this->waterbill->computed_total['total'],
             'posted_by' => $request->id,
             'user_id' => $request->id,
         ];
@@ -126,6 +126,6 @@ class FieldMeterReadingController extends Controller
 
 
         $transactions = Transaction::create($fillable);
-        return response()->json(['created' => true]);
+        return response()->json(['created' => true, 'data'=>$fillable]);
     }
 }

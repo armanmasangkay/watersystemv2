@@ -157,6 +157,8 @@ $(document).ready(function(){
                         $('#edit_total').val(format_number(element.billing_total));
                     })
                     
+                    $('input[name="edit_meter_reading_bal"]').val(responseData.meter) 
+
                     $('#editBillingSetupModal').modal('show')
                     nxt_mtr = responseData.nxt_mtr
                     
