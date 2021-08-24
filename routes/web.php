@@ -31,7 +31,9 @@ use App\Http\Controllers\ExportsController;
 use App\Http\Controllers\FieldMeterController;
 use App\Http\Controllers\FieldMeterReadingController;
 use App\Http\Controllers\FieldMeterServicesController;
+use App\Http\Controllers\NewConnectionController;
 use App\Http\Controllers\MeterReaderController;
+use App\Http\Controllers\ServiceListController;
 use App\Http\Controllers\WaterBill;
 use App\Services\CustomersFromKeyword;
 use Illuminate\Support\Facades\Auth;
@@ -52,9 +54,10 @@ Route::prefix('admin')->middleware(['auth', 'auth.allowed-user'])->name('admin.'
     Route::resources([
         'searched-customers'=>SearchedCustomerController::class,
         'existing-customers'=>ExistingCustomerController::class,
-
+        'new-connection' => NewConnectionController::class,
     ]);
 
+    Route::get('/service-list', [ServiceListController::class, 'index'])->name('services-list.index');
 
     // Export URLs
     Route::get('/customers/export/{keyword?}',[ExportsController::class,'exportCustomers'])->name('customers.export');
@@ -126,6 +129,7 @@ Route::prefix('admin')->middleware(['auth', 'auth.allowed-user'])->name('admin.'
     Route::get('/new', [AdminController::class, 'index'])->middleware('access.authorize')->name('admin');
     Route::get('/new/create', [AdminController::class, 'create'])->middleware('access.authorize')->name('admin-create');
     Route::post('/new/store', [AdminController::class, 'store'])->middleware('access.authorize')->name('admin-store');
+
 });
 
 Route::middleware('auth', 'auth.allowed-reader')->group(function(){

@@ -19,7 +19,8 @@ class CreateServicesTable extends Migration
             $table->string('type_of_service');
             $table->string('remarks')->nullable();
             $table->string('landmarks')->nullable();
-            $table->date('work_schedule');
+            $table->string('contact_number');
+            $table->date('work_schedule')->nullable();
             $table->date('date_completed')->nullable();
             $table->string('status');
             $table->timestamps();
