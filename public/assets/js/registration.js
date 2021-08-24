@@ -396,6 +396,15 @@ $(document).ready(function(){
                         $("input[name='reading_date']").removeClass('is-invalid')
                     }
 
+                    if(response.errors.meter_serial_number){
+                        $("#error-meter_serial_number").prop('hidden',false);
+                        $("#error-meter_serial_number").html(response.errors.meter_serial_number)
+                        $("input[name='meter_serial_number']").addClass('is-invalid')
+                    }else{
+                        $("#error-meter_serial_number").prop('hidden',true);
+                        $("input[name='meter_serial_number']").removeClass('is-invalid')
+                    }
+
                 }
             }).always(function(){
                 registerBtn.prop('disabled',false);

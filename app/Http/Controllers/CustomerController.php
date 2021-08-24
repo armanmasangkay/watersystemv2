@@ -47,6 +47,7 @@ class CustomerController extends Controller
     public function store(StoreCustomerRequest $request)
     {
        $normalizedData=CustomerDataHelper::normalize($request->all());
+       $normalizedData['meter_number']=$request->meter_serial_number;
         $customer = Customer::create($normalizedData);
         $transactions = $this->getOnlyTransaction($customer->account_number, $request->all());
         Transaction::create($transactions);
