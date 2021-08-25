@@ -11,7 +11,8 @@ class ConnectionTypeHelper{
             'change_of_meter'=>'Change of Meter',
             'transfer_of_ownership'=>'Transfer of Ownership',
             'disconnection'=>'Disconnection',
-            'others'=>'Others'
+            'others'=>'Others',
+            'pending' => 'Pending'
         ];
 
         return $data[$value];
