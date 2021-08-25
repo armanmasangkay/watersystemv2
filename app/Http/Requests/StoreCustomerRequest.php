@@ -35,7 +35,7 @@ class StoreCustomerRequest extends FormRequest
         $errors = (new ValidationException($validator))->errors();
 
         throw new HttpResponseException(
-            response()->json([ 'created'=>false,'errors' => $errors], JsonResponse::HTTP_UNPROCESSABLE_ENTITY)
+            response()->json([ 'created'=>false,'errors' => $errors])
         );
     }
 
@@ -109,6 +109,7 @@ class StoreCustomerRequest extends FormRequest
             'balance' => 'required|numeric|min:0',
             'reading_date' => 'required|date|before_or_equal:today',
             'billing_meter_ips' => 'required|numeric|min:0',
+            'meter_serial_number'=>'required'
 
         ];
     }

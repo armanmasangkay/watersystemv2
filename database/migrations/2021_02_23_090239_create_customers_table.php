@@ -26,6 +26,7 @@ class CreateCustomersTable extends Migration
             $table->string('connection_status');
             $table->string('purchase_option');
             $table->string('org_name')->nullable();
+            $table->string('meter_number')->nullable();
             $table->timestamps();
         });
     }

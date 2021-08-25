@@ -97,4 +97,13 @@ class WaterBill extends Controller{
             'date' => Carbon::parse($date[1])->format('M d').'-'.Carbon::parse($date[1])->addMonths(1)->format('M d, Y')
         ];
     }
+
+    public function editAmount($consumption)
+    {
+        $amount = ($consumption >= $this->rate['max_range']) ? 
+                    ((($consumption - $this->rate['max_range']) * ($this->rate['excess_rates'])) + $this->rate['min_rate']) : 
+                    $this->rate['min_rate'];
+
+        return $amount;
+    }
 }

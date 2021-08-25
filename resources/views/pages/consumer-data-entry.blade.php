@@ -145,6 +145,14 @@
                                     <small id="error-purchase-option" class="text-danger">
                                 </div>
                             </div>
+                            <div class="row">
+                                <div class="col-12 col-md-5 col-lg-4">
+                                    <label for=""><small class="text-muted">Meter Serial Number</small></label>
+                                    <input type="text" name="meter_serial_number" id="meter_serial_number" class="form-control mt-2" placeholder="XXXXXX">
+                                    <small id="error-meter_serial_number" class="text-danger">
+                                    </small>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
