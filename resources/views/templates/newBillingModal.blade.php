@@ -7,7 +7,7 @@
                 <input type="hidden" name="min_rates" value="{{ isset($rates) ? $rates['min_rate'] : '0'}}">
                 <input type="hidden" name="billing_excess_rate" value="{{ isset($rates) ? $rates['excess_rates'] : '0'}}">
                 <input type="hidden" name="max_range" value="{{ isset($rates) ? $rates['max_range'] : '0'}}">
-                <input type="hidden" name="or_num" value="{{ isset($customer) ? $customer['balance']->payment_or_no : ''}}">
+                <input type="hidden" name="or_num" value="{{ isset($customer) ? ($customer['balance'] != null ? $customer['balance']->payment_or_no : '') : ''}}">
                 <input type="hidden" name="surcharge" value="{{ isset($surcharge) ? $surcharge : '0'}}">
                 <input type="hidden" name="customer_id" value="{{ isset($customer) ? $customer['account'] : '' }}">
                 <input type="hidden" name="current_transaction_id" value="{{ isset($current_transaction_id) ? $current_transaction_id : '' }}">
@@ -22,17 +22,17 @@
                     <div class="row mt-3">
                         <div class="col-lg-4 col-md-6 mb-sm-2 pe-md-1 pe-sm-1">
                             <label class='text-muted'>Meter Reading</label>
-                            <input class="form-control" id="meter-reading" name="meter_reading" type="number" placeholder="Meter reading" min=0 readOnly value="{{ isset($customer) ? $customer["balance"]->reading_meter : '' }}">
+                            <input class="form-control" id="meter-reading" name="meter_reading" type="number" placeholder="Meter reading" min=0 readOnly value="{{ isset($customer) ? ($customer['balance'] != null ? $customer['balance']->reading_meter : '') : '' }}">
                         </div>
                         <div class="col-lg-4 col-md-6 mb-sm-2 ps-md-0 pe-md-0 ps-sm-1">
                             <label class='text-muted'>Balance</label>
-                            <input class="form-control" id="cur_balance" name="cur_balance" type="text" placeholder="Meter reading" min=0 readonly value="{{ isset($customer) ? \App\Classes\Facades\NumberHelper::toAccounting($customer["balance"]->balance) : '0.00' }}">
+                            <input class="form-control" id="cur_balance" name="cur_balance" type="text" placeholder="Meter reading" min=0 readonly value="{{ isset($customer) ? ($customer['balance'] != null ? \App\Classes\Facades\NumberHelper::toAccounting($customer['balance']->balance) : '0.00') : '0.00' }}">
                         </div>
                     </div>
                     <div class="row mt-1">
                         <div class="col-md-4 pe-md-0">
                             <label class='text-muted'>Reading Date</label>
-                            <input type="text" class="form-control" name="date" value="{{ isset($customer) ? \Carbon\Carbon::parse($customer['balance']->reading_date)->format('F d, Y') : '' }}" readonly>
+                            <input type="text" class="form-control" name="date" value="{{ isset($customer) ? ($customer['balance'] != null ? \Carbon\Carbon::parse($customer['balance']->reading_date)->format('F d, Y'):'') : '' }}" readonly>
                         </div>
                     </div>
 
@@ -89,7 +89,7 @@
                         </div>
                         <div class='col-6 col-md-6 col-lg-4 col-xl-2 mt-2 mt-md-2 px-lg-1 pe-sm-1 ps-md-1 pe-1'>
                             <small class='text-muted'>Meter IPS Balance <span class="text-danger"><strong>*</strong></span></small>
-                            <input class='form-control' type='number' name="meter_ips" id="meter-ips" placeholder='0.00' min=0 value="{{ isset($customer) ? \App\Classes\Facades\NumberHelper::toAccounting($customer["balance"]->billing_meter_ips) : '0.00' }}">
+                            <input class='form-control' type='number' name="meter_ips" id="meter-ips" placeholder='0.00' min=0 value="{{ isset($customer) ? ($customer['balance'] != null  ? \App\Classes\Facades\NumberHelper::toAccounting($customer['balance']->billing_meter_ips):'0.00' ) : '0.00' }}">
                         </div>
                         <div class='col-6 col-md-6 col-lg-4 col-xl-2 mt-2 mt-md-2 ps-lg-0 ps-md-1 pe-lg-1 ps-sm-0 pe-md-0 ps-0'>
                             <small class='text-muted'>Total</small>

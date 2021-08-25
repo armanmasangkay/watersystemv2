@@ -2,13 +2,13 @@
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
           
-            <form action="{{ isset($current_transaction_id) ? route('admin.update-billing', ['id' => $current_transaction_id]):'' }}" method="post" id="edit-billing-form">
+            <form action="{{ isset($current_transaction_id) ? route('admin.update-billing'):'' }}" method="post" id="edit-billing-form">
                 @csrf
                 <input type="hidden" name="edit_connection_type" value="{{ isset($customer)?$customer['connection_type'] : ''}}">
                 <input type="hidden" name="edit_min_rates" value="{{ isset($rates) ? $rates['min_rate'] : '0'}}">
                 <input type="hidden" name="edit_excess_rate" value="{{ isset($rates) ? $rates['excess_rates'] : '0'}}">
                 <input type="hidden" name="edit_max_range" value="{{ isset($rates) ? $rates['max_range'] : '0'}}">
-                <input type="hidden" name="edit_or_num" value="{{ isset($customer) ? $customer['balance']->payment_or_no : ''}}">
+                <input type="hidden" name="edit_or_num" value="{{ isset($customer) ? ($customer['balance'] != null ? $customer['balance']->payment_or_no : '') : ''}}">
                 <input type="hidden" name="edit_surcharge" value="{{ isset($surcharge) ? $surcharge : '0'}}">
                 <input type="hidden" name="edit_customer_id" value="{{ isset($customer) ? $customer['account'] : '' }}">
                 <input type="hidden" name="edit_curr_transaction_id" value="{{ isset($current_transaction_id) ? $current_transaction_id : '' }}">
@@ -34,7 +34,7 @@
                     <div class="row mt-1">
                         <div class="col-md-4 pe-md-0">
                             <label class='text-muted'>Reading Date</label>
-                            <input type="text" class="form-control" name="edit_date" value="{{ isset($customer) ? \Carbon\Carbon::parse($customer['balance']->reading_date)->format('F d, Y') : '' }}" readonly>
+                            <input type="text" class="form-control" name="edit_date" value="{{ isset($customer) ? ($customer['balance'] != null ? \Carbon\Carbon::parse($customer['balance']->reading_date)->format('F d, Y'):'') : '' }}" readonly>
                         </div>
                     </div>
 
@@ -95,7 +95,7 @@
                         </div>
                         <div class='col-6 col-md-6 col-lg-4 col-xl-2 mt-2 mt-md-2 px-lg-1 pe-sm-1 ps-md-1 pe-1'>
                             <small class='text-muted'>Meter IPS Balance <span class="text-danger"><strong>*</strong></span></small>
-                            <input class='form-control' type='number' name="edit_meter_ips" id="edit_meter-ips" readonly placeholder='0.00' min=0 value="{{ isset($customer) ? \App\Classes\Facades\NumberHelper::toAccounting($customer["balance"]->billing_meter_ips) : '0.00' }}">
+                            <input class='form-control' type='number' name="edit_meter_ips" id="edit_meter-ips" readonly placeholder='0.00' min=0 value="{{ isset($customer) ? ($customer['balance'] != null ? \App\Classes\Facades\NumberHelper::toAccounting($customer['balance']->billing_meter_ips):'0.00') : '0.00' }}">
                         </div>
                         <div class='col-6 col-md-6 col-lg-4 col-xl-2 mt-2 mt-md-2 ps-lg-0 ps-md-1 pe-lg-1 ps-sm-0 pe-md-0 ps-0'>
                             <small class='text-muted'>Total</small>

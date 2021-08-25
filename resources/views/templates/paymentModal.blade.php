@@ -4,12 +4,7 @@
             <input type="hidden" name="route" value="{{ isset($customer['transactions']) ? route('admin.get-balance', ['id' => $customer['account']]) : '' }}">
             <form action="{{ isset($customer['transactions']) ? route('admin.save-payment', ['id' => $customer['account']]):'' }}" method="post" id="payment-form">
                 @csrf
-                <!-- <input type="hidden" name="connection_type" value="{{ isset($customer)?$customer['connection_type'] : ''}}"> -->
-                <!-- <input type="hidden" name="min_rates" value="{{ isset($rates) ? $rates['min_rate'] : '0'}}">
-                <input type="hidden" name="excess_rate" value="{{ isset($rates) ? $rates['excess_rates'] : '0'}}">
-                <input type="hidden" name="max_range" value="{{ isset($rates) ? $rates['max_range'] : '0'}}">
-                <input type="hidden" name="or_num" value="{{ isset($customer) ? $customer['balance']->payment_or_no : ''}}">
-                <input type="hidden" name="surcharge" value="{{ isset($surcharge) ? $surcharge : '0'}}"> -->
+   
                 <input type="hidden" name="customer_id" value="{{ isset($customer) ? $customer['account'] : '' }}">
                 <input type="hidden" name="curr_transaction_id" value="">
 
@@ -23,11 +18,11 @@
                     <div class="row mt-3">
                         <div class="col-lg-4 col-md-6 mb-sm-2 pe-md-1 pe-sm-1">
                             <label class='text-muted'>Meter Reading</label>
-                            <input class="form-control" id="meter_reading" name="meter_reading" type="number" placeholder="Meter reading" min=0 readOnly value="{{ isset($customer) ? $customer["balance"]->reading_meter : '' }}">
+                            <input class="form-control" id="meter_reading" name="meter_reading" type="number" placeholder="Meter reading" min=0 readOnly value="{{ isset($customer) ? ($customer['balance'] != null  ? $customer['balance']->reading_meter:'') : '' }}">
                         </div>
                         <div class="col-lg-4 col-md-6 mb-sm-2 ps-md-0 pe-md-0 ps-sm-1">
                             <label class='text-muted'>Previous Balance</label>
-                            <input class="form-control" id="curr_balance" name="curr_balance" type="text" placeholder="Meter reading" min=0 readonly value="{{ isset($customer) ? \App\Classes\Facades\NumberHelper::toAccounting($customer["balance"]->balance) : '0.00' }}">
+                            <input class="form-control" id="curr_balance" name="curr_balance" type="text" placeholder="Meter reading" min=0 readonly value="{{ isset($customer) ? ($customer['balance'] != null ? \App\Classes\Facades\NumberHelper::toAccounting($customer['balance']->balance):'0.00') : '0.00' }}">
                         </div>
                     </div>
                     <div class="row mt-1">

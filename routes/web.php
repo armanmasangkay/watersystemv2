@@ -134,7 +134,7 @@ Route::prefix('admin')->middleware(['auth', 'auth.allowed-user'])->name('admin.'
     Route::post('/consumer-ledger/balance/payment/{id}',[PaymentController::class,'getBalance'])->middleware('access.authorize')->name('get-balance');
     Route::post('/consumer-ledger/balance/payment/save/{id}',[PaymentController::class,'save_payment'])->middleware('access.authorize')->name('save-payment');
     Route::post('/consumer-ledger/billing/transaction/{id}',[EditBillingController::class,'getBill'])->middleware('access.authorize')->name('get-bill');
-    Route::post('/consumer-ledger/billing/transaction/update/{id}',[EditBillingController::class,'updateBill'])->middleware('access.authorize')->name('update-billing');
+    Route::post('/consumer-ledger/billing/transaction/update',[EditBillingController::class,'updateBill'])->middleware('access.authorize')->name('update-billing');
     // END CUSTOMER LEDGER
 
     // READER ACCOUNT CREATION

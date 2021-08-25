@@ -15,7 +15,9 @@
                         </div>
                         @if(isset($customer))
                         <div class="col-md-6">
+                            @if($customer['balance'] != null)
                             <button class="btn btn-success mt-2 ms-1 float-md-end" id="paymentBtn"><i data-feather="user-check" width="20"></i>&nbsp; Payment</button>
+                            @endif
                             <button class="btn btn-primary mt-2 float-md-end" data-bs-toggle='modal' data-bs-target='#ledgerSetupModal'><i data-feather="user-plus" width="20"></i>&nbsp; New Water Bill</button>
                         </div>
                         @endif
@@ -51,7 +53,7 @@
                 <div class="card-header border-secondary px-4 pb-1 pt-2 f94c7eb">
                     <div class="row mt-1">
                         <center>
-                            <h3 class="h5 mb-2 mt-0 text-center"><strong>Balance as of {{ isset($customer) ? date('F j, Y') : '' }}</strong> - <span class="text-danger" id="currentBalance"><strong>{{ isset($customer) ?'Php '. \App\Classes\Facades\NumberHelper::toAccounting($customer["balance"]->balance) : '' }}</strong></span></h3>
+                            <h3 class="h5 mb-2 mt-0 text-center"><strong>Balance as of {{ isset($customer) ? date('F j, Y') : '' }}</strong> - <span class="text-danger" id="currentBalance"><strong>{{ isset($customer) ? ($customer['balance'] != null  ? ('Php '. \App\Classes\Facades\NumberHelper::toAccounting($customer["balance"]->balance)) : 'Php 0.00') : 'Php 0.00' }}</strong></span></h3>
                         </center>
                     </div>
                 </div>

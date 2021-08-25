@@ -34,7 +34,7 @@ class EditBillingController extends Controller
         return Response::json(['getBill' => true, 'acc' => $request->customer_id, 'bal' => $balance, 'meter' => $prev_meter, 'balance' => $prev_bal, 'nxt_mtr' => !empty($nxt_trans_update->reading_meter) ? $nxt_trans_update->reading_meter : 0]);
     }
 
-    public function updateBill(Request $request, $transaction_id)
+    public function updateBill(Request $request)
     {
         if($request->current_meter < $request->edit_meter_reading_bal)
         {

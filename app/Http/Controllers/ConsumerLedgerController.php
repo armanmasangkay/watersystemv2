@@ -71,9 +71,13 @@ class ConsumerLedgerController extends Controller
         }
 
         $surcharge = Surcharge::all();
+        $dates = [];
         // $payments = Payments
-
-        $date = ($balance->period_covered != "Beginning Balance" ? explode('-', $balance->period_covered) : explode('/', '/'.$balance->reading_date));
+        if(!empty($balance->period_covered))
+        {
+            $date = ($balance->period_covered != "Beginning Balance" ? explode('-', $balance->period_covered) : explode('/', '/'.$balance->reading_date));
+            $dates = $date[1];
+        }
 
         return view('pages.consumer-ledger',[
             'customer' => [
@@ -81,15 +85,15 @@ class ConsumerLedgerController extends Controller
                 'address' => $address,
                 'transactions' => $transactions,
                 'account' => $acc,
-                'balance' => $balance,
+                'balance' => !empty($balance) ? $balance : '',
                 'connection_type' => $customer->connection_type,
                 'org_name'=>$customer->org_name
             ],
             'rates' => $rate,
             'surcharge' => $surcharge[0]->rate,
-            'last_date' => $date[1],
+            'last_date' => !empty($dates) ? $dates : '',
             'route' => 'admin.search-transactions',
-            'current_transaction_id' => $balance->id
+            'current_transaction_id' => !empty($balance->id) ? $balance->id : 0
         ]);
     }
 
