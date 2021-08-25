@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\FieldMeterServiceRequest;
 use Illuminate\Http\Request;
 use App\Models\Customer;
+use App\Models\Service;
 use App\Models\WaterRate;
 use App\Models\Transaction;
 use App\Models\Surcharge;
@@ -20,7 +22,7 @@ class FieldMeterServicesController extends Controller
     public function search(Request $request)
     {
         $account_number=$request->account_number??$request->account_number;
-        
+
         try{
             $customer=Customer::findOrFail($account_number);
         }catch(ModelNotFoundException $e){
@@ -40,5 +42,21 @@ class FieldMeterServicesController extends Controller
                 'org_name'=>$customer->org_name
             ]
         ]);
+    }
+
+    public function store(FieldMeterServiceRequest $request){
+
+        // $customer = Customer::where('account_number', $request->account_number);
+        $customer = Customer::find($request->account_number);
+
+        Service::create([
+            'customer_id' => $customer->account_number,
+            'type_of_service' => $request->type_of_service,
+            'contact_number' => $customer->contact_number,
+            'status' => 'pending_waterworks_inspection'
+        ]);
+
+        return response()->json(['created' => true]);
+
     }
 }

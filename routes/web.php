@@ -83,7 +83,7 @@ Route::prefix('admin')->middleware(['auth', 'auth.allowed-user'])->name('admin.'
 
     Route::resource('services', ServiceController::class);
 
-  
+
     Route::get('reconnection',[ReconnectionController::class, 'index'])->name('reconnection');
     Route::get('search-consumer-info',[ReconnectionController::class, 'search'])->name('search');
     Route::post('reconnection/transaction/store',[ReconnectionController::class,'storeTransaction'])->name('reconnection.store');
@@ -142,6 +142,7 @@ Route::middleware('auth', 'auth.allowed-reader')->group(function(){
 
     Route::get('/field-personnel/meter-services',[FieldMeterServicesController::class, 'index'])->middleware('access.authorize')->name('meter-services');
     Route::get('/field-personnel/meter-services/search/consumer',[FieldMeterServicesController::class, 'search'])->middleware('access.authorize')->name('services-search-customer');
+    Route::post('/field-personnel/meter-services',[FieldMeterServicesController::class, 'store'])->middleware('access.authorize')->name('meter-services.store');
 
 });
 
