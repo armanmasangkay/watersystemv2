@@ -1,13 +1,13 @@
 @extends('layout.main')
 
-@section('title', 'Register a Customer')
+@section('title', 'New Connection')
 
 
 @section('content')
 <div class="row mt-5">
     <div class="col-md-12">
-        <h4 class="text-gray"><i data-feather="users" width="35" class="mb-1"></i>&nbsp;&nbsp;Consumer's Data Entry</h4>
-        <form action="{{route('admin.register-customer.store')}}" method="POST" id="registration-form">
+        <h4 class="text-gray"><i data-feather="users" width="35" class="mb-1"></i>&nbsp;&nbsp;New Connection Entry</h4>
+        <form action="{{route('admin.new-connection.store')}}" method="POST" id="registration_form">
             @csrf
             <div class="card mt-2 rounded-3 pt-2 mt-3">
                 <div class="card-body px-3 px-lg-5">
@@ -26,9 +26,9 @@
                                 </div>
                             </div>
 
-                            
+
                             <div class="row mt-3">
-                                
+
 
                                 <div class="col-md-3 mb-2 pe-md-1">
                                     <label><small class="text-muted">Firstname</small><small class="text-danger"> *</small></label>
@@ -70,17 +70,20 @@
                                 <div class="col-md-3 pe-md-0">
                                     <label for=""><small class="text-muted">Barangay</small> <small class="text-danger">*</small></label>
                                     <select name="barangayCode" id="brgy-dropdown" class="form-select mb-3 mt-2 mb-md-2 mb-sm-2">
-        
+
                                     </select>
                                     <input type="text" name="barangay" hidden>
+                                    <small id="error-barangay" class="text-danger" hidden>
+
+                                    </small>
                                 </div>
                                 <div class="col-md-3 ps-md-1">
                                     <label for=""><small class="text-muted">Purok</small> <small class="text-danger">*</small></label>
                                     <select name="purokCode" id="purok-dropdown" class="form-select mb-3 mt-2 mb-md-2 mb-sm-2">
-                                       
+
                                     </select>
                                     <input type="text" name="purok" hidden>
-    
+
                                     <small id="error-purok" class="text-danger" hidden>
 
                                     </small>
@@ -112,16 +115,16 @@
                                 <div class="col-md-3 ps-md-0 pt-md-1 pt-sm-2">
                                     <label for=""><small class="text-muted">If others, please specify</small></label>
                                     <input type="text" name="connection_type_specifics" id="connection_type_specifics" class="form-control mt-2" disabled>
-                                    <small id="error-type-specifics" class="text-danger">
+                                    <small id="error-connection_type_specifics" class="text-danger">
                                     </small>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-3 pe-md-1 pt-md-0 pt-sm-2">
                                     <label for=""><small class="text-muted">Connection Status</small>  <small class="text-danger">*</small></label>
-                                    <select name="connection_status" id="connection-status" class="form-select mb-sm-2 mt-2">
+                                    <select name="connection_status" id="connection_status" class="form-select mb-sm-2 mt-2">
                                         @foreach($connectionStatuses as $connectionStatus)
-                                        <option value="{{$connectionStatus}}">{{Str::ucfirst($connectionStatus)}}</option>
+                                            <option value="{{$connectionStatus}}">{{Str::ucfirst($connectionStatus)}}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -142,52 +145,7 @@
                                         <option value="installment">Installment</option>
                                         <option value="N/A">N/A</option>
                                     </select>
-                                    <small id="error-purchase-option" class="text-danger">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-12 col-md-5 col-lg-4">
-                                    <label for=""><small class="text-muted">Meter Serial Number</small></label>
-                                    <input type="text" name="meter_serial_number" id="meter_serial_number" class="form-control mt-2" placeholder="XXXXXX">
-                                    <small id="error-meter_serial_number" class="text-danger">
-                                    </small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="card mt-3 rounded-3">
-                <div class="card-body px-3 px-lg-5">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <p class="mt-2 text-primary">Ledger Setup</p>
-                            <hr class="text-secondary">
-                            <h5 class="text-muted">Beginning Meter Reading</h5>
-                            <div class="row mt-3 mb-4">
-                                <div class="col-md-3 mb-sm-2 pe-md-1">
-                                    <label class='text-muted'>Previous Meter Reading <small class="text-danger">*</small></label>
-                                    <input class="form-control mt-2" type="number" id="reading_meter" name="reading_meter" placeholder="Enter meter reading" min=0>
-                                    <small id="error-reading-meter" class="text-danger"></small>
-                                </div>
-
-                                <div class="col-md-3 mt-md-0 px-md-0">
-                                    <label class='text-muted'>Current Balance <small class="text-danger">*</small></label>
-                                    <input class="form-control mt-2" type="number" id="balance" name="balance" placeholder="Enter balance amount" min=0>
-                                    <small id="error-balance" class="text-danger"></small>
-                                </div>
-
-                                <div class="col-md-3 mt-md-0 ps-md-1">
-                                    <label class='text-muted'>Date <small class="text-danger">*</small></label>
-                                    <input class="form-control mt-2" id="reading_date" name="reading_date" type="date">
-                                    <small id="error-reading-date" class="text-danger"></small>
-                                </div>
-                            </div>
-                            <h5 class="text-muted">Meter Installment Payments</h5>
-                            <div class="row mt-3 mb-4">
-                                <div class="col-md-3 mb-sm-2 pe-md-1">
-                                    <label class='text-muted'>Current Balance <small class="text-danger">*</small></label>
-                                    <input class="form-control mt-2" type="number" id="billing_meter_ips" name="billing_meter_ips" placeholder="Enter balance amount" min=0>
+                                    <small id="error-purchase_option" class="text-danger">
                                 </div>
                             </div>
                         </div>
@@ -210,7 +168,13 @@
 
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
-<script src="{{ asset('assets/js/registration.js') }}"></script>
+<script>
+    connection_status[0].remove();
+    connection_status[1].remove();
+    connection_status.value = "inactive";
+</script>
+
+<script src="{{ asset('assets/js/new_connection.js') }}"></script>
 
 
 @endsection

@@ -10,9 +10,9 @@
     <div class="col-12 col-md-4 ">
         <form action="{{route('admin.services.search')}}" method="get">
             <div class="input-group mb-3">
-                    <input name="account_number" type="text" class="form-control @error('account_number')is-invalid @enderror" 
-                    placeholder="Account #" 
-                    value="{{old('account_number')?old('account_number'):(isset($customer)?$customer->account_number:'')}}" 
+                    <input name="account_number" type="text" class="form-control @error('account_number')is-invalid @enderror"
+                    placeholder="Account #"
+                    value="{{old('account_number')?old('account_number'):(isset($customer)?$customer->account_number:'')}}"
                     required>
                     <button class="btn btn-primary" type="submit" id="button-addon2">Search</button>
                     @error('account_number')
@@ -24,7 +24,7 @@
         </form>
         <div class="mt-4">
             <small class="text-muted">New Account?</small>
-            <a href="#" class="btn btn-outline-secondary btn-sm">Create New Connection</a>
+            <a href="{{ route('admin.new-connection.create')}}" class="btn btn-outline-secondary btn-sm">Create New Connection</a>
         </div>
     </div>
     <div class="col-12 col-md-8">
@@ -41,7 +41,7 @@
             <input type="text" name='account_number' value="{{$customer->account_number}}" hidden/>
             <h5>Applicant Information</h5>
             <hr>
-            
+
             <div class="row">
                 <div class="col">
                     <small class="text-muted">Name</small>
@@ -61,11 +61,11 @@
                 </div>
 
             </div>
-            
+
             <small class="text-muted">Service Type</small>
             <select class="form-select form-select-sm  @error('service_type') is-invalid @enderror" name="service_type" required>
-               
-                @foreach($services as $value=>$name)    
+
+                @foreach($services as $value=>$name)
                 <option value={{$value}}  @if($value==old('service_type'))selected @endif>{{$name}}</option>
                 @endforeach
             </select>
@@ -74,7 +74,7 @@
                 {{$message}}
             </div>
             @enderror
-    
+
             <small class="text-muted">Remarks</small>
             <textarea class="form-control @error('remarks')is-invalid @enderror" rows="3" name="remarks"></textarea>
             @error('remarks')
@@ -93,9 +93,9 @@
                     <small class="text-muted">Landmark</small>
                     <input class="form-control" type="text" name="landmark" />
                 </div>
-                
+
             </div>
-           
+
             <div class="row">
                 <div class="col-12 col-md-8 col-lg-5">
                     <small class="text-muted">Service Schedule</small>
@@ -107,7 +107,7 @@
                     @enderror
                 </div>
             </div>
-           
+
 
             <button type="submit" class="btn btn-primary mt-3">Submit</button>
 

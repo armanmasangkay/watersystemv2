@@ -8,7 +8,7 @@ use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Validation\ValidationException;
 
-class StoreCustomerRequest extends FormRequest
+class NewConnectionRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -20,23 +20,12 @@ class StoreCustomerRequest extends FormRequest
         return true;
     }
 
-
     protected function prepareForValidation()
     {
         $accountNumber=(new AccountNumberService)->generateNew($this->barangayCode,$this->purokCode);
         $this->merge([
             'account_number' => $accountNumber,
         ]);
-    }
-
-
-    protected function failedValidation($validator)
-    {
-        $errors = (new ValidationException($validator))->errors();
-
-        throw new HttpResponseException(
-            response()->json([ 'created'=>false,'errors' => $errors])
-        );
     }
 
     public function messages()
@@ -69,16 +58,18 @@ class StoreCustomerRequest extends FormRequest
             'connection_status.required'=>'Connection Status must not be empty',
             'connection_status_specifics.required_if'=>'Specific connection status must be provided if "OTHERS" is selected',
 
-            'purchase_option.required'=>'Purchase meter option must not be empty',
-            'purchase_option.in'=>'Invalid purchase option selected',
-
-            'reading_meter.required' => 'Meter reading must not be empty',
-            'balance.required' => 'Current balance should not be empty',
-            'reading_date.required' => 'Date of last payment should be before or today'
-
         ];
-    
-        
+
+
+    }
+
+    protected function failedValidation($validator)
+    {
+        $errors = (new ValidationException($validator))->errors();
+
+        throw new HttpResponseException(
+            response()->json([ 'created'=>false,'errors' => $errors], JsonResponse::HTTP_UNPROCESSABLE_ENTITY)
+        );
     }
 
     /**
@@ -104,13 +95,6 @@ class StoreCustomerRequest extends FormRequest
             'connection_status'=>'required',
             'connection_status_specifics'=>'required_if:connection_status,others',
             'purchase_option'=>'required|in:cash,installment,N/A',
-
-            'reading_meter' => 'required|numeric|min:0',
-            'balance' => 'required|numeric|min:0',
-            'reading_date' => 'required|date|before_or_equal:today',
-            'billing_meter_ips' => 'required|numeric|min:0',
-            'meter_serial_number'=>'required'
-
         ];
     }
 }

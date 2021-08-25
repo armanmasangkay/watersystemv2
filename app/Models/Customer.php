@@ -27,7 +27,8 @@ class Customer extends Model
         'connection_type',
         'connection_status',
         'purchase_option',
-        'org_name'
+        'org_name',
+        'meter_number'
     ];
 
     public function isOrgAccount()
