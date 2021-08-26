@@ -16,15 +16,6 @@ class WaterWorksApprovalController extends Controller
 
     public function approve(Request $request)
     {
-        // $validator = Validator::make($request->all(),[
-        //     'building_inspection_schedule'=> 'required|date|after_or_equal:'.now()->format('Y-m-d')
-        // ]);
-
-        // if($validator->fails())
-        // {
-        //     return back()->withErrors($validator)->withInput();
-        // }
-
         $services = Service::findOrFail($request->id);
         $services->status = "waterworks_approved";
         $services->save();
@@ -35,7 +26,7 @@ class WaterWorksApprovalController extends Controller
     public function reject($id)
     {
         $services = Service::findOrFail($id);
-        $services->status = "denied_waterworks_request";
+        $services->status = "denied_waterworks_inspection";
         $services->save();
 
         return redirect(route('admin.waterworks-request-approvals'));

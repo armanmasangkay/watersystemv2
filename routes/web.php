@@ -87,6 +87,8 @@ Route::prefix('admin')->middleware(['auth', 'auth.allowed-user'])->name('admin.'
     // BUILDING INSPECTOR ALLOWED ACCESS ONLY
     Route::middleware('auth.allowed-bldg-inspector')->group(function(){
         Route::get('/bldg-area/request-approvals',[BLDGApprovalController::class, 'index'])->name('request-approvals');
+        Route::get('/bldg-area/request-approvals/undo',[BLDGApprovalController::class, 'undo'])->name('undo');
+        Route::post('/bldg-area/request-approvals/undo/{id}',[BLDGApprovalController::class, 'undoStatus'])->name('undo-status');
         Route::post('/bldg-area/request-approvals/approve',[BLDGApprovalController::class, 'approve'])->name('bld-request-approvals-approve');
         Route::post('/bldg-area/request-approvals/reject/{id}',[BLDGApprovalController::class, 'reject'])->name('bld-request-approvals-reject');
     });

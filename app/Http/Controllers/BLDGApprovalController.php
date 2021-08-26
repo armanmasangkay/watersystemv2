@@ -13,20 +13,11 @@ class BLDGApprovalController extends Controller
     public function index()
     {
         $services = Service::where('status', 'pending_building_inspection')->paginate(20);
-        return view('pages.bldg-request-approval', ['route' => 'admin.request-approvals', 'search_heading' => 'SEARCH REQUEST','services' => $services]);
+        return view('pages.bldg-request-approval', ['route' => 'admin.undo', 'text' => ['Lists of Request for Building/Area Inspections', 'View Approved Request'], 'search_heading' => 'SEARCH REQUEST','services' => $services]);
     }
 
     public function approve(Request $request)
     {
-        // $validator = Validator::make($request->all(),[
-        //     'building_inspection_schedule'=> 'required|date|after_or_equal:'.now()->format('Y-m-d')
-        // ]);
-
-        // if($validator->fails())
-        // {
-        //     return back()->withErrors($validator)->withInput();
-        // }
-
         $service = Service::findOrFail($request->id);
         $service->status = "pending_waterworks_inspection";
         $service->save();
@@ -37,7 +28,22 @@ class BLDGApprovalController extends Controller
     public function reject($id)
     {
         $service = Service::findOrFail($id);
-        $service->status = "denied_request_bldg_inspection";
+        $service->status = "denied_building_inspection";
+        $service->save();
+
+        return redirect(route('admin.request-approvals'));
+    }
+
+    public function undo()
+    {
+        $services = Service::where('status', 'denied_building_inspection')->paginate(20);
+        return view('pages.bldg-request-approval', ['route' => 'admin.request-approvals', 'text' => ['Lists of Denied Request for Building/Area Inspections', 'Return Back'], 'search_heading' => 'SEARCH REQUEST','services' => $services]);
+    }
+
+    public function undoStatus($id)
+    {
+        $service = Service::findOrFail($id);
+        $service->status = "pending_building_inspection";
         $service->save();
 
         return redirect(route('admin.request-approvals'));

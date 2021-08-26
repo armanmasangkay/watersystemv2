@@ -3,22 +3,24 @@
 @section('title', 'Building Inspection Request')
 
 @section('content')
-<div class="row">
-    <div class="col-md-12 mt-2">
-        <h3 class="text-secondary"><b>MWS - Macrohon Water System</b></h3>
-    </div>
-</div>
 <div class="row mb-0">
     @include('templates.user')
     <div class="col-md-8 pt-2">
-        <h3 class="h4 mb-3 mt-2 text-left text-secondary"><i data-feather="align-left" class="feather-16 mx-1"></i> Lists of Request for Building/Area Inspections</h3>
+        <h3 class="h4 mb-3 mt-2 text-left text-secondary"><i data-feather="align-left" class="feather-16 mx-1"></i> {{ $text[0] }}</h3>
     </div>
     <div class="col-md-4"></div>
 </div>
 
 <div class="card shadow-sm">
     <div class="card-header px-2 bg-white pt-1 pb-0">
-        @include('templates.form-search-account')
+        <div class="row">
+            <div class="col-md-6 py-0">
+                @include('templates.form-search-account')
+            </div>
+            <div class="col-md-6 pt-md-2">
+                <a href="{{ route($route) }}" class="btn btn-secondary float-md-end" style="height: 45px; padding-top: 10px;">{{ $text[1] }}</a>
+            </div>
+        </div>
     </div>
     <div class="card-body p-0">
         <div class="table-responsive p-0">
@@ -27,8 +29,8 @@
                     <tr>
                         <td class="border-bottom pt-3 pb-3 text-secondary"><strong><i data-feather="bar-chart-2" class="mx-1 text-primary" width="18"></i> ACCOUNT NO</strong></td>
                         <td class="border-bottom pt-3 pb-3 text-secondary"><strong><i data-feather="user" class="mx-1 text-primary" width="18"></i> CLIENT NAME</strong></td>
-                        <td class="border-bottom pt-3 pb-3 text-secondary"><strong><i data-feather="activity" class="mx-1 text-primary" width="18"></i> REQ. TYPE</strong></td>
-                        <td class="border-bottom pt-3 pb-3 text-secondary"><strong><i data-feather="calendar" class="mx-1 text-primary" width="18"></i> DATE OF REQ.</strong></td>
+                        <td class="border-bottom pt-3 pb-3 text-secondary"><strong><i data-feather="activity" class="mx-1 text-primary" width="18"></i> REQUEST TYPE</strong></td>
+                        <td class="border-bottom pt-3 pb-3 text-secondary"><strong><i data-feather="calendar" class="mx-1 text-primary" width="18"></i> DATE OF REQUEST</strong></td>
                         <td class="border-bottom pt-3 pb-3 text-secondary"><strong><i data-feather="activity" class="mx-1 text-primary" width="20"></i> ACTIONS</strong></td>
                     </tr>
                 </thead>
@@ -41,20 +43,22 @@
                             <td class="pt-2 pb-2 ps-3">{{ $service->serviceType() }}</td>
                             <td class="pt-2 pb-2 ps-3">{{ \Carbon\Carbon::parse($service->created_at)->format('F d, Y') }}</td>
                             <td class="d-flex justify-content-start py-2">
+                                @if($service->status == 'pending_building_inspection')
                                 <form action="{{ route('admin.bld-request-approvals-approve') }}" method="post" class="mb-1 mx-0 d-flex">
                                     @csrf
-                                    <!-- <input type="date" name="building_inspection_schedule" class="form-control"> -->
                                     <input type="hidden" name="id" value="{{ $service->id }}">
                                     <button type="submit" class="border-0 bg-white text-primary"><i data-feather="check" width="20"></i> Approve</button>
                                 </form>
-                                {{-- <a href="" class="text-primary mb-1 mx-2">
-                                <i data-feather="check" width="20"></i></a> --}}
                                 <form action="{{route('admin.bld-request-approvals-reject', ['id' => $service->id])}}" method="post" class="mb-1 mx-0">
                                     @csrf
                                     <button type="submit" class="border-0 bg-white text-danger"><i data-feather="x" width="20"></i> Deny</button>
                                 </form>
-                                {{-- <a href="" class="text-danger mb-1 mx-2">
-                                <i data-feather="x" width="20"></i></a> --}}
+                                @else
+                                <form action="{{route('admin.undo-status', ['id' => $service->id])}}" method="post" class="mb-1 mx-0">
+                                    @csrf
+                                    <button type="submit" class="border-0 bg-white text-danger"><i data-feather="repeat" width="18"></i>&nbsp; Undo</button>
+                                </form>
+                                @endif
                             </td>
                         </tr>
                     @endforeach

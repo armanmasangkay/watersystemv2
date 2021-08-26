@@ -4,11 +4,6 @@
 
 
 @section('content')
-<div class="row">
-    <div class="col-md-12 mt-2">
-        <h3 class="text-secondary"><b>MWS - Macrohon Water System</b></h3>
-    </div>
-</div>
 <div class="row mb-0">
     @include('templates.user')
     <div class="col-md-8 pt-2">
@@ -17,9 +12,13 @@
     <div class="col-md-4"></div>
 </div>
 
-<div class="card">
+<div class="card shadow-sm">
     <div class="card-header px-2 bg-light">
-        @include('templates.form-search-account')
+        <div class="row">
+            <div class="col-md-6 py-0">
+                @include('templates.form-search-account')
+            </div>
+        </div>
     </div>
     <div class="card-body p-0">
         <div class="table-responsive p-0">
@@ -28,8 +27,8 @@
                     <tr>
                         <td class="border-bottom pt-3 pb-3 "><strong><i data-feather="bar-chart-2" class="mx-1 text-primary" width="18"></i> ACCOUNT NO</td>
                         <td class="border-bottom pt-3 pb-3 "><strong><i data-feather="user" class="mx-1 text-primary" width="18"></i> CLIENT NAME</td>
-                        <td class="border-bottom pt-3 pb-3 "><strong><i data-feather="activity" class="mx-1 text-primary" width="18"></i> REQ. TYPE</td>
-                        <td class="border-bottom pt-3 pb-3 "><strong><i data-feather="calendar" class="mx-1 text-primary" width="18"></i> DATE OF REQ.</td>
+                        <td class="border-bottom pt-3 pb-3 "><strong><i data-feather="activity" class="mx-1 text-primary" width="18"></i> REQUEST TYPE</td>
+                        <td class="border-bottom pt-3 pb-3 "><strong><i data-feather="calendar" class="mx-1 text-primary" width="18"></i> DATE OF REQUEST</td>
                         <td class="border-bottom pt-3 pb-3 "><strong><i data-feather="activity" class="mx-1 text-primary" width="20"></i> ACTIONS</td>
                     </tr>
                 </thead>
@@ -47,14 +46,10 @@
                                     <input type="hidden" name="id" value="{{ $service->id }}">
                                     <button type="submit" class="border-0 bg-white text-primary"><i data-feather="check" width="20"></i> Approve</button>
                                 </form>
-                                {{-- <a href="" class="text-primary mb-1 mx-2">
-                                <i data-feather="check" width="20"></i></a> --}}
                                 <form action="{{route('admin.waterworks-request-approvals-reject', ['id' => $service->id])}}" method="post" class="mb-1 mx-0">
                                     @csrf
                                     <button type="submit" class="border-0 bg-white text-danger"><i data-feather="x" width="20"></i> Deny</button>
                                 </form>
-                                {{-- <a href="" class="text-danger mb-1 mx-2">
-                                <i data-feather="x" width="20"></i></a> --}}
                             </td>
                         </tr>
                     @endforeach
