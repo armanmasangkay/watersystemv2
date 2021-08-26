@@ -8,12 +8,7 @@
 
         <link rel="stylesheet" href="{{asset('assets/css/custom.css')}}">
     </head>
-    <style>
-        *{
-            font-weight: 300 !important;
-        }
-    </style>
-    <body class="bg-white">
+    <body class="bg-light bg-gradient">
         
         <div class="container px-md-0">
             @yield('content')

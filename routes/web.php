@@ -51,12 +51,6 @@ Route::post('/login',[LoginController::class,'authenticate']);
 
 Route::prefix('admin')->middleware(['auth', 'auth.allowed-user'])->name('admin.')->group(function(){
 
-    Route::resources([
-        'searched-customers'=>SearchedCustomerController::class,
-        'existing-customers'=>ExistingCustomerController::class,
-        'new-connection' => NewConnectionController::class,
-    ]);
-
     Route::get('/service-list', [ServiceListController::class, 'index'])->name('services-list.index');
 
     // Export URLs
@@ -64,7 +58,6 @@ Route::prefix('admin')->middleware(['auth', 'auth.allowed-user'])->name('admin.'
     Route::get('/ledger/export/{account_number}',[ExportsController::class,'exportLedger'])->name('ledger.export');
 
 
-    Route::resource('cashiers',CashierController::class)->middleware('auth.restrict-cashier');
     Route::post('/logout',[LogoutUserController::class,'logout'])->middleware('auth')->name('logout');
     Route::get('/consumers',[CustomerController::class,'showAll'])->middleware('auth')->name('customers');
     Route::get('/transaction/new',[TransactionsController::class,'index'])->middleware('auth')->name('new-transaction');
@@ -75,7 +68,9 @@ Route::prefix('admin')->middleware(['auth', 'auth.allowed-user'])->name('admin.'
     Route::post('/register-consumer',[CustomerController::class,'store'])
             ->middleware('access.authorize')->name('register-customer.store');
 
-    Route::get('/dashboard',[DashboardController::class,'index'])->middleware('auth.restrict-cashier')->name('dashboard');
+    Route::get('/dashboard',[DashboardController::class,'index'])
+            ->middleware('access.authorize')
+            ->name('dashboard');
 
     Route::get('/search-consumer',[CustomerSearchController::class,'search'])->name('search-customer');
 
@@ -89,11 +84,13 @@ Route::prefix('admin')->middleware(['auth', 'auth.allowed-user'])->name('admin.'
     Route::post('reconnection/transaction/store',[ReconnectionController::class,'storeTransaction'])->name('reconnection.store');
     // END RECONNECTION OF METER
 
-    // BUILDING INSPECTOR REQUEST APPROVALS
-    Route::get('/bldg-area/request-approvals',[BLDGApprovalController::class, 'index'])->name('request-approvals')->middleware('auth');
-    Route::post('/bldg-area/request-approvals/approve',[BLDGApprovalController::class, 'approve'])->name('bld-request-approvals-approve');
-    Route::post('/bldg-area/request-approvals/reject/{id}',[BLDGApprovalController::class, 'reject'])->name('bld-request-approvals-reject');
-    // END BUILDING INSPECTOR REQUEST APPROVALS
+    // BUILDING INSPECTOR ALLOWED ACCESS ONLY
+    Route::middleware('auth.allowed-bldg-inspector')->group(function(){
+        Route::get('/bldg-area/request-approvals',[BLDGApprovalController::class, 'index'])->name('request-approvals');
+        Route::post('/bldg-area/request-approvals/approve',[BLDGApprovalController::class, 'approve'])->name('bld-request-approvals-approve');
+        Route::post('/bldg-area/request-approvals/reject/{id}',[BLDGApprovalController::class, 'reject'])->name('bld-request-approvals-reject');
+    });
+    // END BUILDING INSPECTOR ALLOWED ACCESS ONLY
 
     // MUNICIPAL TREASURER OFFICE REQUEST APPROVALS
     Route::get('/mto/request-approvals',[MTOApprovalController::class, 'index'])->name('mto-request-approvals')->middleware('auth');
@@ -101,11 +98,13 @@ Route::prefix('admin')->middleware(['auth', 'auth.allowed-user'])->name('admin.'
     Route::post('/mto/request-approvals/reject', [MTOApprovalController::class, 'reject'])->name('mto-request-approvals-reject');
     // END MUNICIPAL TREASURER OFFICE REQUEST APPROVALS
 
-    // WATER WORKS REQUEST APPROVALS
-    Route::get('/water-works/request-approvals',[WaterWorksApprovalController::class, 'index'])->name('waterworks-request-approvals')->middleware('auth');
-    Route::post('/waterworks/request-approvals/approve', [WaterWorksApprovalController::class, 'approve'])->name('waterworks-request-approvals-approve');
-    Route::post('/waterworks/request-approvals/reject/{id}', [WaterWorksApprovalController::class, 'reject'])->name('waterworks-request-approvals-reject');
-    // END WATER WORKS REQUEST APPROVALS
+    // WATER WORKS ALLOWED ACCESS ONLY
+    Route::middleware('auth.allowed-waterworks-access')->group(function(){
+        Route::get('/water-works/request-approvals',[WaterWorksApprovalController::class, 'index'])->name('waterworks-request-approvals');
+        Route::post('/waterworks/request-approvals/approve', [WaterWorksApprovalController::class, 'approve'])->name('waterworks-request-approvals-approve');
+        Route::post('/waterworks/request-approvals/reject/{id}', [WaterWorksApprovalController::class, 'reject'])->name('waterworks-request-approvals-reject');
+    });
+    // END WATER WORKS ALLOWED ACCESS ONLY
 
     // MUNICIPAL ENGINEER APPROVALS
     Route::get('/me/request-approvals',[MunicipalEngApprovalController::class, 'index'])->name('me-request-approvals')->middleware('auth');
@@ -120,34 +119,54 @@ Route::prefix('admin')->middleware(['auth', 'auth.allowed-user'])->name('admin.'
     Route::get('/search-info',[TransferOfMeterController::class, 'search'])->name('search-info');
     // END TRANSFER OF METER
 
-    // WATER RATES AND SURCHARGE SETTINGS
-    Route::get('/water-rate', [WaterRateController::class, 'getWaterRates'])->middleware('access.authorize')->name('water-rate-get');
-    Route::post('/water-rate', [WaterRateController::class, 'update'])->name('water-rate-update');
-    Route::get('/surcharge', [SurchargeController::class, 'getSurcharge'])->middleware('access.authorize')->name('surcharge-get');
-    Route::post('/surcharge', [SurchargeController::class, 'update'])->name('surcharge-update');
-    // END WATER RATES AND SURCHARGE SETTINGS
+    // ADMIN AND CASHIER ALLOWED ACCESS
+    Route::middleware('auth.allowed-admin-cashier-access')->group(function(){
+        // VIEWING AND SEARCHING OF EXISTING CUSTOMERS
+            Route::resources([
+                'searched-customers'=>SearchedCustomerController::class,
+                'existing-customers'=>ExistingCustomerController::class,
+                'new-connection' => NewConnectionController::class,
+            ]);
+        // END VIEWING AND SEARCHING OF EXISTING CUSTOMERS
 
-    // COSTUMER LEDGER
-    Route::get('/consumer-ledger',[ConsumerLedgerController::class, 'index'])->name('consumer-ledger');
-    Route::get('/consumer-ledger/transactions',[ConsumerLedgerController::class, 'search'])->name('search-transactions');
-    Route::post('/consumer-ledger/transactions/save-billing',[ConsumerLedgerController::class,'store'])->middleware('access.authorize')->name('save-billing');
-    Route::post('/consumer-ledger/balance/payment/{id}',[PaymentController::class,'getBalance'])->middleware('access.authorize')->name('get-balance');
-    Route::post('/consumer-ledger/balance/payment/save/{id}',[PaymentController::class,'save_payment'])->middleware('access.authorize')->name('save-payment');
-    Route::post('/consumer-ledger/billing/transaction/{id}',[EditBillingController::class,'getBill'])->middleware('access.authorize')->name('get-bill');
-    Route::post('/consumer-ledger/billing/transaction/update',[EditBillingController::class,'updateBill'])->middleware('access.authorize')->name('update-billing');
-    // END CUSTOMER LEDGER
+        // CUSTOMER LEDGER
+            Route::get('/consumer-ledger',[ConsumerLedgerController::class, 'index'])->name('consumer-ledger');
+            Route::get('/consumer-ledger/transactions',[ConsumerLedgerController::class, 'search'])->name('search-transactions');
+            Route::post('/consumer-ledger/transactions/save-billing',[ConsumerLedgerController::class,'store'])->name('save-billing');
+            Route::post('/consumer-ledger/balance/payment/{id}',[PaymentController::class,'getBalance'])->name('get-balance');
+            Route::post('/consumer-ledger/balance/payment/save/{id}',[PaymentController::class,'save_payment'])->name('save-payment');
+            Route::post('/consumer-ledger/billing/transaction/{id}',[EditBillingController::class,'getBill'])->name('get-bill');
+            Route::post('/consumer-ledger/billing/transaction/update',[EditBillingController::class,'updateBill'])->name('update-billing');
+        // END CUSTOMER LEDGER
+    });
+    // ADMIN AND CASHIER ALLOWED ACCESS
 
-    // READER ACCOUNT CREATION
-    Route::get('/meter-reader', [MeterReaderController::class, 'index'])->middleware('access.authorize')->name('reader');
-    Route::get('/meter-reader/create', [MeterReaderController::class, 'create'])->middleware('access.authorize')->name('reader-create');
-    Route::post('/meter-reader/store', [MeterReaderController::class, 'store'])->middleware('access.authorize')->name('reader-store');
-    // END READER ACCOUNT CREATION
+    // ADMIN ALLOWED ACCESS ONLY
+    Route::middleware('access.authorize')->group(function(){
+        // CASHIER ACCOUNT CREATION
+            Route::resource('cashiers',CashierController::class)->middleware('auth.restrict-cashier');
+        // END CASHIER ACCOUNT CREATION
 
-    // ADMIN ACCOUNT CREATION
-    Route::get('/new', [AdminController::class, 'index'])->middleware('access.authorize')->name('admin');
-    Route::get('/new/create', [AdminController::class, 'create'])->middleware('access.authorize')->name('admin-create');
-    Route::post('/new/store', [AdminController::class, 'store'])->middleware('access.authorize')->name('admin-store');
-    // END ADMIN ACCOUNT CREATION
+        // READER ACCOUNT CREATION
+            Route::get('/meter-reader', [MeterReaderController::class, 'index'])->name('reader');
+            Route::get('/meter-reader/create', [MeterReaderController::class, 'create'])->name('reader-create');
+            Route::post('/meter-reader/store', [MeterReaderController::class, 'store'])->name('reader-store');
+        // END READER ACCOUNT CREATION
+
+        // ADMIN ACCOUNT CREATION
+            Route::get('/new', [AdminController::class, 'index'])->name('admin');
+            Route::get('/new/create', [AdminController::class, 'create'])->name('admin-create');
+            Route::post('/new/store', [AdminController::class, 'store'])->name('admin-store');
+        // END ADMIN ACCOUNT CREATION
+
+        // WATER RATES AND SURCHARGE SETTINGS
+            Route::get('/water-rate', [WaterRateController::class, 'getWaterRates'])->name('water-rate-get');
+            Route::post('/water-rate', [WaterRateController::class, 'update'])->name('water-rate-update');
+            Route::get('/surcharge', [SurchargeController::class, 'getSurcharge'])->name('surcharge-get');
+            Route::post('/surcharge', [SurchargeController::class, 'update'])->name('surcharge-update');
+        // END WATER RATES AND SURCHARGE SETTINGS
+    });
+    // END ADMIN ALLOWED ACCESS ONLY
 });
 
 Route::middleware('auth', 'auth.allowed-reader')->group(function(){

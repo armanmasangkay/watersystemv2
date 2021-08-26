@@ -21,7 +21,7 @@ class ServicesListSeeder extends Seeder
             'customer_id' => $customer->account_number,
             'type_of_service' => 'new_connection',
             'contact_number' => $customer->contact_number,
-            'status' => 'pending'
+            'status' => 'pending_building_inspection'
         ]);
     }
 }

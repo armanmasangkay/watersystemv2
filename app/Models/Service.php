@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
+use App\Classes\Facades\ConnectionTypeHelper;
 
 class Service extends Model
 {
@@ -32,8 +33,6 @@ class Service extends Model
         return Carbon::createFromFormat('Y-m-d',$dateString)->format('M d, Y');
     }
 
-
-
     public function buildingInspectionSchedHuman()
     {
         return $this->changeDateFormat($this->building_inspection_schedule);
@@ -42,5 +41,10 @@ class Service extends Model
     public function waterWorksSchedHuman()
     {
         return $this->changeDateFormat($this->water_works_schedule);
+    }
+
+    public function serviceType()
+    {
+        return ConnectionTypeHelper::toReadableString($this->type_of_service);
     }
 }

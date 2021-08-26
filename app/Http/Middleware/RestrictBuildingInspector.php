@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 
-class EnsureIsAdmin
+class RestrictBuildingInspector
 {
     /**
      * Handle an incoming request.
@@ -16,11 +16,9 @@ class EnsureIsAdmin
      */
     public function handle(Request $request, Closure $next)
     {
-        if(!auth()->user()->isAdmin())
-        {
-            return back();
+        if(auth()->user()->isBuildingInspector()){
+            return redirect(route('admin.request-approvals'));
         }
-        
         return $next($request);
     }
 }

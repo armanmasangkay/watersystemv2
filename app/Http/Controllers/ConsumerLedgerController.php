@@ -79,6 +79,8 @@ class ConsumerLedgerController extends Controller
             $dates = $date[1];
         }
 
+        // dd($transactions->toArray());
+
         return view('pages.consumer-ledger',[
             'customer' => [
                 'fullname' => $fullname,
@@ -91,7 +93,7 @@ class ConsumerLedgerController extends Controller
             ],
             'rates' => $rate,
             'surcharge' => $surcharge[0]->rate,
-            'last_date' => !empty($dates) ? $dates : '',
+            'last_date' => !empty($dates) ? $dates : date('M d Y'),
             'route' => 'admin.search-transactions',
             'current_transaction_id' => !empty($balance->id) ? $balance->id : 0
         ]);
