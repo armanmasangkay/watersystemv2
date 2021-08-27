@@ -72,7 +72,7 @@ class ConsumerLedgerController extends Controller
 
         $surcharge = Surcharge::all();
         $dates = [];
-        // $payments = Payments
+        
         if(!empty($balance->period_covered))
         {
             $date = ($balance->period_covered != "Beginning Balance" ? explode('-', $balance->period_covered) : explode('/', '/'.$balance->reading_date));
