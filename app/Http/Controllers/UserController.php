@@ -12,9 +12,9 @@ class UserController extends Controller
 
     public function index()
     {
-        $customers=User::paginate(15);
+        $users=User::paginate(15);
         return view('pages.users.index',[
-            'customers'=>$customers
+            'users'=>$users
         ]);
     }
     public function create()
@@ -35,6 +35,7 @@ class UserController extends Controller
 
     public function update(User $user,Request $request)
     {
+
         $request->validate([
             'role'=>'required'
         ]);

@@ -59,6 +59,11 @@ class User extends Authenticatable
         ];
     }
 
+    public static function defaultPassword()
+    {
+        return '12345678';
+    }
+
 
     public function transactions()
     {

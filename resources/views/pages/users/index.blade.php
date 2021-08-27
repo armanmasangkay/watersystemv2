@@ -5,8 +5,8 @@
 @section('content')
 
 <div class="row">
-  <div class="col-md-8 offset-md-2">
-    @if(session('created'))
+  <div class="col-md-8 col-lg-12">
+    @if(session('created') || session('resetted-password'))
     <div class="alert alert-success alert-dismissible fade show mt-4" role="alert">
         <strong>Great!</strong> {{session('message')}}
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -25,12 +25,20 @@
               </tr>
             </thead>
             <tbody>
-                @forelse($customers as $customer)
+                @forelse($users as $user)
                 <tr>
-                  <td scope="row" class="border-bottom-0 border-top">{{$customer->name}}</td>
-                  <td class="border-bottom-0 border-top">{{$customer->username}}</td>
+                  <td scope="row" class="border-bottom-0 border-top">{{$user->name}}</td>
+                  <td class="border-bottom-0 border-top">{{$user->username}}</td>
                   <td class="border-bottom-0 border-top">
-                    <a href="{{route('admin.users.edit',$customer)}}">Edit</a>
+                    
+                    <a href="{{route('admin.users.edit',$user)}}">Edit</a>
+                    <span> | </span>
+                    <form action="{{route('admin.user-passwords.update',$user)}}" method="post" style="display:inline">
+                      @csrf
+                      @method("PUT")
+                      <button type="submit" class="btn btn-link">Reset Password</a>
+                    </form>
+              
                   </td>
                 </tr>
                 @empty
@@ -44,7 +52,7 @@
       </div>
     
     </div>
-    {{$customers->links()}}
+    {{$users->links()}}
   </div>
 </div>
 @endsection
