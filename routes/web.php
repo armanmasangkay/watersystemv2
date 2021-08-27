@@ -34,6 +34,7 @@ use App\Http\Controllers\FieldMeterServicesController;
 use App\Http\Controllers\NewConnectionController;
 use App\Http\Controllers\MeterReaderController;
 use App\Http\Controllers\ServiceListController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\WaterBill;
 use App\Services\CustomersFromKeyword;
 use Illuminate\Support\Facades\Auth;
@@ -55,7 +56,9 @@ Route::prefix('admin')->middleware(['auth', 'auth.allowed-user'])->name('admin.'
         'searched-customers'=>SearchedCustomerController::class,
         'existing-customers'=>ExistingCustomerController::class,
         'new-connection' => NewConnectionController::class,
+        'users'=>UserController::class
     ]);
+
 
     Route::get('/service-list', [ServiceListController::class, 'index'])->name('services-list.index');
 
