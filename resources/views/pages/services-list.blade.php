@@ -24,11 +24,11 @@
                         @forelse ($services as $service)
                             <tr>
                                 <td scope="row" class="border-bottom-0 border-top">{{$service->customer->fullname()}}</td>
-                                <td scope="row" class="border-bottom-0 border-top">{{ App\Classes\Facades\ConnectionTypeHelper::toReadableString($service->type_of_service)}}</td>
+                                <td scope="row" class="border-bottom-0 border-top">{{ App\Classes\Facades\StringHelper::toReadableService($service->type_of_service)}}</td>
                                 <td scope="row" class="border-bottom-0 border-top">{{$service->remarks}}</td>
                                 <td scope="row" class="border-bottom-0 border-top">{{$service->landmarks}}</td>
                                 <td scope="row" class="border-bottom-0 border-top">{{$service->contact_number}}</td>
-                                <td scope="row" class="border-bottom-0 border-top">{{App\Classes\Facades\ConnectionTypeHelper::toReadableString($service->status)}}</td>
+                                <td scope="row" class="border-bottom-0 border-top">{{App\Classes\Facades\StringHelper::toReadableStatus($service->status)}}</td>
                             </tr>
                         @empty
                             <tr>
@@ -39,6 +39,7 @@
                 </table>
             </div>
         </div>
+        {{$services->render()}}
     </div>
 </div>
 @endsection
