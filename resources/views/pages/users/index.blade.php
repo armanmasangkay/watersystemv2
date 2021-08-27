@@ -33,6 +33,12 @@
                     
                     <a href="{{route('admin.users.edit',$user)}}">Edit</a>
                     <span> | </span>
+                    <form action="{{route('admin.users.destroy',$user)}}" method="post" style="display:inline">
+                      @csrf
+                      @method("DELETE")
+                      <button type="submit" class="btn btn-link" onclick="return confirm('Are you sure you want to delete this user? This cannot be reverted back.')">Delete</button>
+                    </form>
+                    <span> | </span>
                     <form action="{{route('admin.user-passwords.update',$user)}}" method="post" style="display:inline">
                       @csrf
                       @method("PUT")

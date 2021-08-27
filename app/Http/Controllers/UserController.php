@@ -46,6 +46,15 @@ class UserController extends Controller
         return redirect(route('admin.users.edit',$user));
     }
 
+    public function destroy(User $user)
+    {
+        $user->delete();
+        return redirect()->route('admin.users.index')->with([
+            'resetted-password'=>true,
+            'message'=>"{$user->name}'s account was deleted successfully!"
+        ]);
+    }
+
     public function store(Request $request)
     {
         $request->validate([
