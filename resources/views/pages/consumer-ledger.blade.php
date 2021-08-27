@@ -170,16 +170,16 @@
                                 @endif
                             </tbody>
                         </table>
-                        <div class="{{ count($customer['transactions']) > 0 ? 'pt-3 pb-2' : 'pt-2 pb-1' }} px-2 bg-light">
-                            <div class="{{ count($customer['transactions']) > 0 ? 'd-flex justify-content-between' : 'float-center' }}">
-                                <div class="{{ count($customer['transactions']) > 0 ? 'float-left' : 'float-center' }}">
-                                    @if(count($customer["transactions"]) > 0)
+                        <div class="{{ (isset($customer['transactions']) && count($customer['transactions']) > 0) ? 'pt-3 pb-2' : 'pt-2 pb-1' }} px-2 bg-light">
+                            <div class="{{ (isset($customer['transactions']) && count($customer['transactions']) > 0) ? 'd-flex justify-content-between' : 'float-center' }}">
+                                <div class="{{ (isset($customer['transactions']) && count($customer['transactions']) > 0) ? 'float-left' : 'float-center' }}">
+                                    @if(isset($customer['transactions']) && count($customer["transactions"]) > 0)
                                     {{ $customer["transactions"]->links() }}
                                     @else
                                     <h6 class="text-center text-secondary">No records to display</h6>
                                     @endif
                                 </div>
-                                @if(count($customer["transactions"]) > 0)
+                                @if(isset($customer['transactions']) && count($customer["transactions"]) > 0)
                                 <div class="float-md-end mb-1">
                                     @if(isset($customer))
                                         <a href="{{route('admin.ledger.export',['account_number'=>$customer['account']])}}" class="btn btn-secondary py-2"><i data-feather="download" class="feather-20 me-1 pb-1"></i> Export Ledger</a>

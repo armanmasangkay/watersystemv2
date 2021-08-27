@@ -53,8 +53,6 @@ Route::post('/login',[LoginController::class,'authenticate']);
 
 Route::prefix('admin')->middleware(['auth', 'auth.allowed-user'])->name('admin.')->group(function(){
 
-<<<<<<< HEAD
-=======
     Route::resources([
         'searched-customers'=>SearchedCustomerController::class,
         'existing-customers'=>ExistingCustomerController::class,
@@ -68,7 +66,6 @@ Route::prefix('admin')->middleware(['auth', 'auth.allowed-user'])->name('admin.'
 
 
 
->>>>>>> 6fddfc3578fdc55f6a1d69aa5ecf03654c626da6
     Route::get('/service-list', [ServiceListController::class, 'index'])->name('services-list.index');
 
     // Export URLs
