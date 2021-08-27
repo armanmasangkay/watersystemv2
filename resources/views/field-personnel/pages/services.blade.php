@@ -33,19 +33,25 @@
                         <h6 class="text-secondary d-flex justify-content-start align-items-center"><span>ACC. # &nbsp; :</span> <span class="text-primary ms-2" id="acc_num">{{ isset($customer) ? $customer["account"] : '' }}</span></h6>
                     </div>
                     <div class="card-body pt-3 pb-2 px-3">
-                        <form action="">
+                        <form id="waterworks_form" action="{{ route('meter-services.store') }}" method="post">
+                            @csrf
                             <p class="text-danger pt-1">Reminder: Fields with (*) is required.</p>
                             <h3 class="text-muted mt-4"><strong>Water Works Services </strong></h3>
                             <div class="row mt-4 mb-2 ps-4">
                                 <p class="mb-0">Select service(s) <span class="text-danger">*</span></p>
                                 <div class="ms-4">
-                                    <h6 class="d-flex justify-content-start align-items-center py-0 my-0"><input type="checkbox" name="" id="" class="me-2 mt-1">Broken Meter</h6>
-                                    <h6 class="d-flex justify-content-start align-items-center py-0 my-0"><input type="checkbox" name="" id="" class="me-2 mt-1">Transfer Meter Location</h6>
-                                    <h6 class="d-flex justify-content-start align-items-center py-0 my-0"><input type="checkbox" name="" id="" class="me-2 mt-1">Transfer of Ownership</h6>
+                                    <h6 class="d-flex justify-content-start align-items-center py-0 my-0"><input type="radio" name="type_of_service" id="" value="request_for_transfer_of_meter" class="me-2 mt-1">Request for transfer of meter</h6>
+                                    <h6 class="d-flex justify-content-start align-items-center py-0 my-0"><input type="radio" name="type_of_service" id="" value="change_of_meter" class="me-2 mt-1">Change of meter</h6>
+                                    <h6 class="d-flex justify-content-start align-items-center py-0 my-0"><input type="radio" name="type_of_service" id="" value="change_of_ownership" class="me-2 mt-1">Change of ownership</h6>
+                                    <h6 class="d-flex justify-content-start align-items-center py-0 my-0"><input type="radio" name="type_of_service" id="" value="disconnection"class="me-2 mt-1">Disconnection</h6>
+                                    <h6 class="d-flex justify-content-start align-items-center py-0 my-0"><input type="radio" name="type_of_service" id="" value="repairs_of_damage_connection" class="me-2 mt-1">Repairs of damage connection (from main tone to meter only)</h6>
+                                    <h6 class="d-flex justify-content-start align-items-center py-0 my-0"><input type="radio" name="type_of_service" id="" value="report_of_no_water_low_pressure" class="me-2 mt-1">Report of no water, low pressure</h6>
+                                    <h6 class="d-flex justify-content-start align-items-center py-0 my-0"><input type="radio" name="type_of_service" id="" value="defective_meter_and_other_related_request" class="me-2 mt-1">Defective meter and other related request. (Except application for new connection and reconnection)</h6>
                                     <!-- <h6 class="d-flex justify-content-start align-items-center py-0 my-0"><input type="checkbox" name="" id="" class="me-2 mt-1"></h6>
                                     <h6 class="d-flex justify-content-start align-items-center py-0 my-0"><input type="checkbox" name="" id="" class="me-2 mt-1"></h6> -->
                                 </div>
                             </div>
+                            {{-- <button type="submit">sample</button> --}}
                         </form>
                     </div>
                 </div>
@@ -62,7 +68,7 @@
                 @if(isset($customer))
                 <div class="row mt-3">
                     <div class="col-xs-12 d-flex justify-content-start align-items-center mt-1">
-                        <button class="btn btn-primary d-flex justify-content-between align-items-center" disabled><i data-feather="user-plus" class="feather-18 me-2"></i> Request Water Works</button>
+                        <button class="btn btn-primary d-flex justify-content-between align-items-center" id="request_waterworks_btn" ><i data-feather="user-plus" class="feather-18 me-2"></i> Request Water Works</button>
                     </div>
                 </div>
                 @endif
@@ -72,6 +78,37 @@
 @endsection
 
 @section('custom-js')
+
+<script>
+
+
+    request_waterworks_btn.addEventListener('click', async(e)=>{
+        // e.preventDefault();
+        let data = new FormData(waterworks_form)
+        data.append('account_number', acc_num.textContent)
+        let url = waterworks_form.getAttribute('action');
+
+        // data.forEach((datas) => console.log(datas));
+
+        let response = await fetch(url,{
+            method: 'post',
+            body: data
+        });
+
+        response = await response.json();
+        if(response.created == true){
+            Swal.fire('Great!','New customer has been added','success').then(function(result){
+                if(result.isConfirmed)
+                {
+                    window.location.reload();
+                }
+            })
+        }else{
+            Swal.fire('Something went wrong!','Please be sure to fill up all the required fields','error');
+        }
+
+    })
+</script>
 
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script src="{{ asset('assets/js/form-search-animation.js') }}" defer></script>

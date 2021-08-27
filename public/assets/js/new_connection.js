@@ -33,7 +33,6 @@ $(document).ready(async()=>{
 
 
         response = await response.json();
-        console.log(response);
         RemoveError();
         if(response.created == true){
             Swal.fire('Great!','New customer has been added','success').then(function(result){

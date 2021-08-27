@@ -34,6 +34,8 @@ use App\Http\Controllers\FieldMeterServicesController;
 use App\Http\Controllers\NewConnectionController;
 use App\Http\Controllers\MeterReaderController;
 use App\Http\Controllers\ServiceListController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\UserPasswordController;
 use App\Http\Controllers\WaterBill;
 use App\Services\CustomersFromKeyword;
 use Illuminate\Support\Facades\Auth;
@@ -51,6 +53,22 @@ Route::post('/login',[LoginController::class,'authenticate']);
 
 Route::prefix('admin')->middleware(['auth', 'auth.allowed-user'])->name('admin.')->group(function(){
 
+<<<<<<< HEAD
+=======
+    Route::resources([
+        'searched-customers'=>SearchedCustomerController::class,
+        'existing-customers'=>ExistingCustomerController::class,
+        'new-connection' => NewConnectionController::class,
+        'users'=>UserController::class,
+
+    ]);
+    Route::resource('user-passwords',UserPasswordController::class)->parameters([
+        'user-passwords'=>'user'
+    ]);
+
+
+
+>>>>>>> 6fddfc3578fdc55f6a1d69aa5ecf03654c626da6
     Route::get('/service-list', [ServiceListController::class, 'index'])->name('services-list.index');
 
     // Export URLs
@@ -181,6 +199,7 @@ Route::middleware('auth', 'auth.allowed-reader')->group(function(){
 
     Route::get('/field-personnel/meter-services',[FieldMeterServicesController::class, 'index'])->middleware('access.authorize')->name('meter-services');
     Route::get('/field-personnel/meter-services/search/consumer',[FieldMeterServicesController::class, 'search'])->middleware('access.authorize')->name('services-search-customer');
+    Route::post('/field-personnel/meter-services',[FieldMeterServicesController::class, 'store'])->middleware('access.authorize')->name('meter-services.store');
 
 });
 

@@ -51,6 +51,22 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public static function validRoles()
+    {
+        return [
+            '1'=>'Admin',
+            '2'=>'Cashier',
+            '3'=>'Meter Reader',
+            '4'=>'Building Inspector',
+            '5'=>'Waterworks Inspector'
+        ];
+    }
+
+    public static function defaultPassword()
+    {
+        return '12345678';
+    }
+
 
     public function transactions()
     {
