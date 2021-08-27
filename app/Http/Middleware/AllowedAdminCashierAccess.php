@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 
-class EnsureIsAdmin
+class AllowedAdminCashierAccess
 {
     /**
      * Handle an incoming request.
@@ -16,7 +16,7 @@ class EnsureIsAdmin
      */
     public function handle(Request $request, Closure $next)
     {
-        if(!auth()->user()->isAdmin())
+        if(!auth()->user()->isCashier() && !auth()->user()->isAdmin())
         {
             return back();
         }

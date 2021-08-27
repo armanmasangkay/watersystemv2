@@ -423,7 +423,7 @@ $(document).ready(function(){
         })
 
         $(document).on('change', '#purchase_option', function(){
-            if($(this).val() == "installment" || $(this).val() == 'N/A')
+            if($(this).val() == "cash" || $(this).val() == 'N/A')
             {
                 $('#billing_meter_ips').val(0)
                 $('#billing_meter_ips').prop('readonly', true)

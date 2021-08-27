@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Models\Transaction;
+use App\Classes\Facades\UserTypeHelper;
 
 class User extends Authenticatable
 {
@@ -15,6 +16,8 @@ class User extends Authenticatable
     public static $ADMIN=1;
     public static $CASHIER=2;
     public static $READER=3;
+    public static $BLDG_INSPECTOR=4;
+    public static $WATERWORKS_INSPECTOR=5;
 
 
     /**
@@ -83,5 +86,30 @@ class User extends Authenticatable
     public function isAdmin()
     {
         return $this->role==1;
+    }
+
+    public function isBuildingInspector()
+    {
+        return $this->role==4;
+    }
+
+    public function isWaterworksInspector()
+    {
+        return $this->role==5;
+    }
+
+    public function username()
+    {
+        return $this->username;
+    }
+
+    public function name()
+    {
+        return $this->name;
+    }
+
+    public function user_role()
+    {
+        return UserTypeHelper::toReadableUserString($this->role);
     }
 }

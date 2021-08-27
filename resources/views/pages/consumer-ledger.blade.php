@@ -15,7 +15,9 @@
                         </div>
                         @if(isset($customer))
                         <div class="col-md-6">
+                            @if($customer['balance'] != null)
                             <button class="btn btn-success mt-2 ms-1 float-md-end" id="paymentBtn"><i data-feather="user-check" width="20"></i>&nbsp; Payment</button>
+                            @endif
                             <button class="btn btn-primary mt-2 float-md-end" data-bs-toggle='modal' data-bs-target='#ledgerSetupModal'><i data-feather="user-plus" width="20"></i>&nbsp; New Water Bill</button>
                         </div>
                         @endif
@@ -51,7 +53,7 @@
                 <div class="card-header border-secondary px-4 pb-1 pt-2 f94c7eb">
                     <div class="row mt-1">
                         <center>
-                            <h3 class="h5 mb-2 mt-0 text-center"><strong>Balance as of {{ isset($customer) ? date('F j, Y') : '' }}</strong> - <span class="text-danger" id="currentBalance"><strong>{{ isset($customer) ?'Php '. \App\Classes\Facades\NumberHelper::toAccounting($customer["balance"]->balance) : '' }}</strong></span></h3>
+                            <h3 class="h5 mb-2 mt-0 text-center"><strong>Balance as of {{ isset($customer) ? date('F j, Y') : '' }}</strong> - <span class="text-danger" id="currentBalance"><strong>{{ isset($customer) ? ($customer['balance'] != null  ? ('Php '. \App\Classes\Facades\NumberHelper::toAccounting($customer["balance"]->balance)) : 'Php 0.00') : 'Php 0.00' }}</strong></span></h3>
                         </center>
                     </div>
                 </div>
@@ -168,16 +170,16 @@
                                 @endif
                             </tbody>
                         </table>
-                        <div class="{{ isset($customer['transactions']) ? 'pt-3 pb-2' : 'pt-2 pb-1' }} px-2 bg-light">
-                            <div class="{{ isset($customer['transactions']) ? 'd-flex justify-content-between' : 'float-center' }}">
-                                <div class="{{ isset($customer['transactions']) ? 'float-left' : 'float-center' }}">
-                                    @if(isset($customer["transactions"]))
+                        <div class="{{ (isset($customer['transactions']) && count($customer['transactions']) > 0) ? 'pt-3 pb-2' : 'pt-2 pb-1' }} px-2 bg-light">
+                            <div class="{{ (isset($customer['transactions']) && count($customer['transactions']) > 0) ? 'd-flex justify-content-between' : 'float-center' }}">
+                                <div class="{{ (isset($customer['transactions']) && count($customer['transactions']) > 0) ? 'float-left' : 'float-center' }}">
+                                    @if(isset($customer['transactions']) && count($customer["transactions"]) > 0)
                                     {{ $customer["transactions"]->links() }}
                                     @else
                                     <h6 class="text-center text-secondary">No records to display</h6>
                                     @endif
                                 </div>
-                                @if(isset($customer["transactions"]))
+                                @if(isset($customer['transactions']) && count($customer["transactions"]) > 0)
                                 <div class="float-md-end mb-1">
                                     @if(isset($customer))
                                         <a href="{{route('admin.ledger.export',['account_number'=>$customer['account']])}}" class="btn btn-secondary py-2"><i data-feather="download" class="feather-20 me-1 pb-1"></i> Export Ledger</a>
