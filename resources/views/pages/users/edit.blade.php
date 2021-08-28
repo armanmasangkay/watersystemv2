@@ -8,7 +8,7 @@
 
     <div class="col-12 col-md-8 col-lg-5 col-xl-4">
         <h3 class='text-center mt-3'>Updating ({{$user->name}}) Account</h3>
-        
+
         @if(session('updated'))
         <div class="alert alert-success alert-dismissible fade show mt-4" role="alert">
             <strong>Great!</strong> {{session('message')}}
@@ -39,7 +39,7 @@
                 </div>
                 @enderror
             </div>  
-      
+        <span class="form-label">Role</span>
             <select class="form-select" name="role" required>
                 <option value="" selected>--Select one--</option>
                 @foreach($roles as $key=>$value)
