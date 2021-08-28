@@ -4,9 +4,18 @@
 @section('content')
 
 <div class="row mt-3 justify-content-center">
-    
+ 
+
     <div class="col-12 col-md-8 col-lg-5 col-xl-4">
         <h3 class='text-center mt-3'>Updating ({{$user->name}}) Account</h3>
+        
+        @if(session('updated'))
+        <div class="alert alert-success alert-dismissible fade show mt-4" role="alert">
+            <strong>Great!</strong> {{session('message')}}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        @endif
+
         <form action="{{route('admin.users.update',$user)}}" class="mt-5" method="post">
             @csrf
             @method("PUT")
@@ -20,6 +29,16 @@
                 </div>
                 @enderror
             </div>
+
+            <div class="mb-2">
+                <span class="form-label">Full Name</span>
+                <input type="text" class="form-control mt-0 @error('name') is-invalid @enderror" placeholder="John Doe"  name='name' value="{{$user->name}}" required>
+                @error('name')
+                <div class="invalid-feedback">
+                    {{$message}}
+                </div>
+                @enderror
+            </div>  
       
             <select class="form-select" name="role" required>
                 <option value="" selected>--Select one--</option>
