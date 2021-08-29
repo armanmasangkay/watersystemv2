@@ -1,18 +1,20 @@
 <div class="modal modal-fluid fade" id="editBillingSetupModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
-          
+
             <form action="{{ isset($current_transaction_id) ? route('admin.update-billing'):'' }}" method="post" id="edit-billing-form">
                 @csrf
-                <input type="hidden" name="edit_connection_type" value="{{ isset($customer)?$customer['connection_type'] : ''}}">
-                <input type="hidden" name="edit_min_rates" value="{{ isset($rates) ? $rates['min_rate'] : '0'}}">
-                <input type="hidden" name="edit_excess_rate" value="{{ isset($rates) ? $rates['excess_rates'] : '0'}}">
-                <input type="hidden" name="edit_max_range" value="{{ isset($rates) ? $rates['max_range'] : '0'}}">
-                <input type="hidden" name="edit_or_num" value="{{ isset($customer) ? ($customer['balance'] != null ? $customer['balance']->payment_or_no : '') : ''}}">
-                <input type="hidden" name="edit_surcharge" value="{{ isset($surcharge) ? $surcharge : '0'}}">
-                <input type="hidden" name="edit_customer_id" value="{{ isset($customer) ? $customer['account'] : '' }}">
-                <input type="hidden" name="edit_curr_transaction_id" value="{{ isset($current_transaction_id) ? $current_transaction_id : '' }}">
-                <input type="hidden" name="edit_prev_transaction_id" value="">
+                @if ($customer && $rates)
+                    <input type="hidden" name="edit_connection_type" value="{{ isset($customer)?$customer['connection_type'] : ''}}">
+                    <input type="hidden" name="edit_min_rates" value="{{ isset($rates) ? $rates['min_rate'] : '0'}}">
+                    <input type="hidden" name="edit_excess_rate" value="{{ isset($rates) ? $rates['excess_rates'] : '0'}}">
+                    <input type="hidden" name="edit_max_range" value="{{ isset($rates) ? $rates['max_range'] : '0'}}">
+                    <input type="hidden" name="edit_or_num" value="{{ isset($customer) ? ($customer['balance'] != null ? $customer['balance']->payment_or_no : '') : ''}}">
+                    <input type="hidden" name="edit_surcharge" value="{{ isset($surcharge) ? $surcharge : '0'}}">
+                    <input type="hidden" name="edit_customer_id" value="{{ isset($customer) ? $customer['account'] : '' }}">
+                    <input type="hidden" name="edit_curr_transaction_id" value="{{ isset($current_transaction_id) ? $current_transaction_id : '' }}">
+                    <input type="hidden" name="edit_prev_transaction_id" value="">
+                @endif
 
                 <div class="modal-header">
                     <h5 class="modal-title text-muted" id="exampleModalLabel"><i data-feather="file"></i><strong>&nbsp; Billing Updates Setup</strong></h5>
