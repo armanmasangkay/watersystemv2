@@ -153,7 +153,7 @@ Route::prefix('admin')->middleware(['auth', 'auth.allowed-user'])->name('admin.'
             Route::post('/consumer-ledger/balance/payment/{id}',[PaymentController::class,'getBalance'])->name('get-balance');
             Route::post('/consumer-ledger/balance/payment/save/{id}',[PaymentController::class,'save_payment'])->name('save-payment');
             Route::post('/consumer-ledger/billing/transaction/{id}',[EditBillingController::class,'getBill'])->name('get-bill');
-            Route::post('/consumer-ledger/billing/transaction/update',[EditBillingController::class,'updateBill'])->name('update-billing');
+            Route::post('/consumer-ledger/billing/update/transaction',[EditBillingController::class,'updateBill'])->name('update-billing');
         // END CUSTOMER LEDGER
     });
     // ADMIN AND CASHIER ALLOWED ACCESS
@@ -188,15 +188,15 @@ Route::prefix('admin')->middleware(['auth', 'auth.allowed-user'])->name('admin.'
 
 Route::middleware('auth', 'auth.allowed-reader')->group(function(){
 
-    Route::get('/field-personnel/home',[FieldMeterController::class, 'index'])->middleware('access.authorize')->name('home');
+    Route::get('/field-personnel/home',[FieldMeterController::class, 'index'])->name('home');
 
-    Route::get('/field-personnel/meter-reading',[FieldMeterReadingController::class, 'index'])->middleware('access.authorize')->name('field-reading');
-    Route::get('/field-personnel/meter-reading/search/consumer',[FieldMeterReadingController::class, 'search'])->middleware('access.authorize')->name('search');
-    Route::post('/field-personnel/meter-reading/save',[FieldMeterReadingController::class, 'store'])->middleware('access.authorize')->name('save-meter-billing');
+    Route::get('/field-personnel/meter-reading',[FieldMeterReadingController::class, 'index'])->name('field-reading');
+    Route::get('/field-personnel/meter-reading/search/consumer',[FieldMeterReadingController::class, 'search'])->name('search');
+    Route::post('/field-personnel/meter-reading/save',[FieldMeterReadingController::class, 'store'])->name('save-meter-billing');
 
-    Route::get('/field-personnel/meter-services',[FieldMeterServicesController::class, 'index'])->middleware('access.authorize')->name('meter-services');
-    Route::get('/field-personnel/meter-services/search/consumer',[FieldMeterServicesController::class, 'search'])->middleware('access.authorize')->name('services-search-customer');
-    Route::post('/field-personnel/meter-services',[FieldMeterServicesController::class, 'store'])->middleware('access.authorize')->name('meter-services.store');
+    Route::get('/field-personnel/meter-services',[FieldMeterServicesController::class, 'index'])->name('meter-services');
+    Route::get('/field-personnel/meter-services/search/consumer',[FieldMeterServicesController::class, 'search'])->name('services-search-customer');
+    Route::post('/field-personnel/meter-services',[FieldMeterServicesController::class, 'store'])->name('meter-services.store');
 
 });
 

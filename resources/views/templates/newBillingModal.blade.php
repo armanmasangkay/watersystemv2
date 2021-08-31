@@ -11,6 +11,7 @@
                 <input type="hidden" name="surcharge" value="{{ isset($surcharge) ? $surcharge : '0'}}">
                 <input type="hidden" name="customer_id" value="{{ isset($customer) ? $customer['account'] : '' }}">
                 <input type="hidden" name="current_transaction_id" value="{{ isset($current_transaction_id) ? $current_transaction_id : '' }}">
+                <input type="hidden" name="rd_date" value="{{ $customer['balance'] != null ? $customer['balance']->period_covered : '' }}">
 
                 <div class="modal-header">
                     <h5 class="modal-title text-muted" id="exampleModalLabel"><i data-feather="file"></i><strong>&nbsp; New Billing Setup</strong></h5>
@@ -22,7 +23,7 @@
                     <div class="row mt-3">
                         <div class="col-lg-4 col-md-6 mb-sm-2 pe-md-1 pe-sm-1">
                             <label class='text-muted'>Meter Reading</label>
-                            <input class="form-control" id="meter-reading" name="meter_reading" type="number" placeholder="Meter reading" min=0 readOnly value="{{ isset($customer) ? ($customer['balance'] != null ? $customer['balance']->reading_meter : '') : '' }}">
+                            <input class="form-control" id="meter-reading" name="meter_reading" type="number" placeholder="Meter reading" min=0 readOnly value="{{ isset($customer) ? ($customer['balance'] != null ? $customer['balance']->reading_meter : '0.00') : '0.00' }}">
                         </div>
                         <div class="col-lg-4 col-md-6 mb-sm-2 ps-md-0 pe-md-0 ps-sm-1">
                             <label class='text-muted'>Balance</label>
@@ -32,7 +33,7 @@
                     <div class="row mt-1">
                         <div class="col-md-4 pe-md-0">
                             <label class='text-muted'>Reading Date</label>
-                            <input type="text" class="form-control" name="date" value="{{ isset($customer) ? ($customer['balance'] != null ? \Carbon\Carbon::parse($customer['balance']->reading_date)->format('F d, Y'):'') : '' }}" readonly>
+                            <input type="text" class="form-control" name="date" value="{{ isset($customer) ? ($customer['balance'] != null ? \Carbon\Carbon::parse($customer['balance']->reading_date)->format('F d, Y') : \Carbon\Carbon::parse(date('Y-m-d'))->format('F d, Y')) : '' }}" readonly>
                         </div>
                     </div>
 
@@ -64,7 +65,8 @@
                             <select name='next_month' id='next-month' class='form-select' disabled>
                                 @if(isset($customer))
                                 @for($i = 1; $i <=  \Carbon\Carbon::parse($last_date)->addMonths(1)->endOfMonth()->format('d'); $i++)
-                                <option value="{{ \Carbon\Carbon::parse($last_date)->addMonths(1)->format('M '.($i < 10 ? '0'.$i : $i).', Y') }}" {{ \Carbon\Carbon::parse($last_date)->format('d') == $i ? 'selected' : '' }}>{{ $i < 10 ? '0'.$i : $i }}</option>
+                                <option value="{{ \Carbon\Carbon::parse($last_date)->addMonths(1)->format('M '.($i < 10 ? '0'.$i : $i).', Y') }}" 
+                                    {{ \Carbon\Carbon::parse($last_date)->format('d') == $i ? 'selected' : '' }}>{{ $i < 10 ? '0'.$i : $i }}</option>
                                 @endfor
                                 @endif
                             </select>

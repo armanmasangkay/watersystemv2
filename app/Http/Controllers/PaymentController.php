@@ -20,9 +20,8 @@ class PaymentController extends Controller
 
     public function save_payment(Request $request, $account_number)
     {
-
         $validator = Validator::make($request->all(),[
-            'orNum' => 'required',
+            'orNum' => 'required|unique',
             'inputedAmount' => 'required|numeric|gt:0'
         ]);
 
