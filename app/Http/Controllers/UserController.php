@@ -37,13 +37,18 @@ class UserController extends Controller
     {
 
         $request->validate([
-            'role'=>'required'
+            'role'=>'required',
+            'name'=>'required'
         ]);
 
         $user->role=$request->role;
+        $user->name=$request->name;
         $user->save();
 
-        return redirect(route('admin.users.edit',$user));
+        return redirect(route('admin.users.edit',$user))->with([
+                'updated'=>true,
+                'message'=>"Account was updated successfully!"
+        ]);
     }
 
     public function destroy(User $user)

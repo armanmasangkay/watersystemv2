@@ -58,7 +58,8 @@ class User extends Authenticatable
             '2'=>'Cashier',
             '3'=>'Meter Reader',
             '4'=>'Building Inspector',
-            '5'=>'Waterworks Inspector'
+            '5'=>'Waterworks Inspector',
+            '6'=>'Municipal Engineer'
         ];
     }
 
