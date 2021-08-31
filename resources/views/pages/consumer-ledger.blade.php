@@ -15,7 +15,7 @@
                         </div>
                         @if(isset($customer))
                         <div class="col-md-6">
-                            @if($customer['balance'] != null)
+                            @if($customer['balance'] != null && $customer['balance']->balance > 0)
                             <button class="btn btn-success mt-2 ms-1 float-md-end" id="paymentBtn"><i data-feather="user-check" width="20"></i>&nbsp; Payment</button>
                             @endif
                             <button class="btn btn-primary mt-2 float-md-end" data-bs-toggle='modal' data-bs-target='#ledgerSetupModal'><i data-feather="user-plus" width="20"></i>&nbsp; New Water Bill</button>
@@ -89,8 +89,6 @@
                                 <?php
                                     $amount = 0.00;
                                     $count = 0;
-
-
                                 ?>
                                 @if(isset($customer["transactions"]))
                                 @foreach($customer["transactions"] as $billing)
@@ -111,7 +109,7 @@
                                             @if($payment->transaction_id == $billing->id)
                                                 <?php $count += 1; ?>
                                                 @if($count >= 1)
-                                                {{ "[". $payment->or_no . "]" }}
+                                                {{ $payment->or_no }} </br>
                                                 @else
                                                 {{ $payment->or_no }}
                                                 @endif
@@ -123,8 +121,8 @@
                                         <small>
                                         @foreach($billing->payments as $payment)
                                             @if($payment->transaction_id == $billing->id)
-                                                @if($count > 1)
-                                                {{ "[". \Carbon\Carbon::parse($payment->payment_date)->format('F d, Y') . "]" }}
+                                                @if($count >= 1)
+                                                {{ \Carbon\Carbon::parse($payment->payment_date)->format('F d, Y') }} </br>
                                                 @else
                                                 {{ \Carbon\Carbon::parse($payment->payment_date)->format('F d, Y') }}
                                                 @endif
@@ -136,8 +134,8 @@
                                         <small>
                                         @foreach($billing->payments as $payment)
                                             @if($payment->transaction_id == $billing->id)
-                                                @if($count > 1)
-                                                {{ "[". \App\Classes\Facades\NumberHelper::toAccounting($payment->payment_amount) . "]" }}
+                                                @if($count >= 1)
+                                                {{ \App\Classes\Facades\NumberHelper::toAccounting($payment->payment_amount) }} </br> 
                                                 @else
                                                 {{ \App\Classes\Facades\NumberHelper::toAccounting($payment->payment_amount) }}
                                                 @endif
@@ -149,8 +147,8 @@
                                         <small>
                                         @foreach($billing->payments as $payment)
                                             @if($payment->transaction_id == $billing->id)
-                                                @if($count > 1)
-                                                {{ "[". $payment->user->name."]" }}
+                                                @if($count >= 1)
+                                                {{ $payment->user->name}} </br>
                                                 <?php $count++; ?>
                                                 @else
                                                 {{ $payment->user->name }}

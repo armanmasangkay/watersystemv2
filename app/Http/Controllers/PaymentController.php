@@ -21,14 +21,13 @@ class PaymentController extends Controller
     public function save_payment(Request $request, $account_number)
     {
         $validator = Validator::make($request->all(),[
-            'orNum' => 'required|unique',
+            'orNum' => 'required|unique:payments,or_no',
             'inputedAmount' => 'required|numeric|gt:0'
         ]);
 
         if($validator->fails()){
             return response()->json(['created' => false, 'errors' => $validator->errors()], 400);
         }
-
 
         $transaction = Transaction::where(['customer_id' =>$account_number])->get()->toArray();
         $amount = ($request->inputedAmount >= $request->totalAmount ? $request->totalAmount : $request->inputedAmount);
