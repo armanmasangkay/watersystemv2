@@ -93,6 +93,15 @@ class FieldMeterReadingController extends Controller
 
     public function store(Request $request)
     {
+        if(isset($request->read_date))
+        {
+            if( \Carbon\Carbon::parse($request->current_month) >= $request->read_date && 
+                \Carbon\Carbon::parse($request->next_month) <= $request->read_date )
+            {
+                return response()->json(['created' => false, 'msg' => 'Cannot create billing, make sure that the reading date is not covered from the previous reading date.']);
+            }
+        }
+
         if($request->reading_meter < $request->meter_reading)
         {
             return response()->json(['created' => false, 'msg' => 'Current meter reading should not be less than the previous meter reading.']);
@@ -104,7 +113,7 @@ class FieldMeterReadingController extends Controller
 
         $fillable=[
             'customer_id' => $this->waterbill->balance->customer_id,
-            'period_covered' => $this->waterbill->computed_total['date'],
+            'period_covered' => $request->current_month.'-'.$request->next_month,
             'reading_date' => date('Y-m-d', strtotime($request->read_date)),
             'reading_meter' => $request->reading_meter,
             'reading_consumption' => $this->waterbill->computed_total['meter_consumption'],

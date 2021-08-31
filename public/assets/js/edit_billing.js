@@ -37,7 +37,7 @@ $(document).ready(function(){
             $('#update-billing').prop('disabled', true);
 
             let data = $('#edit-billing-form').serialize();
-            console.log(data)
+
             $.ajax({
                 type: 'POST',
                 url: actionURI,
@@ -121,12 +121,11 @@ $(document).ready(function(){
             success: function(responseData){
 
                 if(responseData.getBill == true){
-                    console.log(responseData)
+                    
                     $('input[name="edit_cur_balance"]').val(format_number(responseData.balance))
                     $('input[name="edit_meter_reading_bal"]').val(responseData.meter)
 
                     responseData.bal.forEach(element => {
-                        // console.log(element)
 
                         var period = element.period_covered
                         var result = (period != 'Beginning Balance') ?? period.split('-')
