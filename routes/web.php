@@ -53,6 +53,8 @@ Route::post('/login',[LoginController::class,'authenticate']);
 
 Route::prefix('admin')->middleware(['auth', 'auth.allowed-user'])->name('admin.')->group(function(){
 
+    Route::get('/users/change-password', [UserController::class, 'updatePassword'])->name('users.update-password.edit');
+    Route::put('/users/change-password', [UserController::class, 'storeNewPassword'])->name('users.update-password.store');
     Route::resources([
         'searched-customers'=>SearchedCustomerController::class,
         'existing-customers'=>ExistingCustomerController::class,
@@ -60,6 +62,8 @@ Route::prefix('admin')->middleware(['auth', 'auth.allowed-user'])->name('admin.'
         'users'=>UserController::class,
 
     ]);
+   
+
     Route::resource('user-passwords',UserPasswordController::class)->parameters([
         'user-passwords'=>'user'
     ]);

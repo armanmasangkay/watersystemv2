@@ -81,7 +81,7 @@
             <ul class="dropdown-menu px-2" aria-labelledby="navbarDropdown">
               <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">Water Rates</a></li>
               <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#surchargeModel">Surcharge</a></li>
-              <li><a class="dropdown-item" href="#">Change Password</a></li>
+              <li><a class="dropdown-item" href="{{route('admin.users.update-password.edit')}}">Change Password</a></li>
             </ul>
           </li>
           @endadminonly

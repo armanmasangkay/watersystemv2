@@ -4,12 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Models\Customer;
 use App\Models\User;
+use App\Rules\SamePasswordFromAuthUser;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
 
+
+    private $passwordValidationRule=['required','confirmed','min:8'];
     public function index()
     {
         $users=User::paginate(15);
@@ -65,7 +69,7 @@ class UserController extends Controller
         $request->validate([
             'name'=>'required',
             'username'=>'required|unique:users,username',
-            'password'=>['required','confirmed','min:8'],
+            'password'=>$this->passwordValidationRule,
             'role'=>'required'
         ]);
 
@@ -79,6 +83,28 @@ class UserController extends Controller
         return redirect(route('admin.users.index'))->with([
             'created'=>true,
             'message'=>'User Account created successfully!'
+        ]);
+    }
+
+    public function updatePassword()
+    {
+        return view('pages.users.change-password');
+    }
+
+    public function storeNewPassword(Request $request)
+    {
+        $request->validate([
+            'current_password'=>['required',new SamePasswordFromAuthUser],
+            'password'=>$this->passwordValidationRule,
+        ]);
+
+        $authenticatedUser=Auth::user();
+        $authenticatedUser->password=Hash::make($request->password);
+        $authenticatedUser->save();
+
+        return redirect(route('admin.users.update-password.edit'))->with([
+            'updated-password'=>true,
+            'message'=>'Password updated successfully!'
         ]);
     }
 }
