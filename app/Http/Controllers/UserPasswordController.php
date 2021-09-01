@@ -10,7 +10,6 @@ class UserPasswordController extends Controller
 {
     public function update(User $user,Request $request)
     {
-    
         $user->password=Hash::make(User::defaultPassword());
         $user->save();
         return redirect()->route('admin.users.index')->with([
@@ -18,4 +17,7 @@ class UserPasswordController extends Controller
             'message'=>"{$user->name}'s password was resetted successfully!"
         ]);
     }
+
+  
+
 }

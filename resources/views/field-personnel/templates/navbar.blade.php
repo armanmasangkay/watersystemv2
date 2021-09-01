@@ -42,7 +42,7 @@
                         </a>
                         <ul class="dropdown-menu px-2" aria-labelledby="navbarDropdown">
                         <li>
-                            <a class="dropdown-item" href="#"><i data-feather="key" class="feather-18 me-2"></i> Reset Password </a>
+                            <a class="dropdown-item" href="{{route('users.update-password.edit')}}"><i data-feather="key" class="feather-18 me-2"></i> Change Password </a>
                             <a class="dropdown-item" href="#"><i data-feather="log-out" class="feather-18 me-2"></i> Sign-out </a>
                         </li>
                         </ul>

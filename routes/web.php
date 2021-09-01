@@ -50,9 +50,14 @@ Route::get('/', function () {
 Route::get('/login',[LoginController::class,'index'])->name('login');
 Route::post('/login',[LoginController::class,'authenticate']);
 
+Route::middleware('auth')->group(function(){
+    Route::get('/users/change-password', [UserController::class, 'updatePassword'])->name('users.update-password.edit');
+    Route::put('/users/change-password', [UserController::class, 'storeNewPassword'])->name('users.update-password.store');
+});
 
 Route::prefix('admin')->middleware(['auth', 'auth.allowed-user'])->name('admin.')->group(function(){
 
+   
     Route::resources([
         'searched-customers'=>SearchedCustomerController::class,
         'existing-customers'=>ExistingCustomerController::class,
@@ -60,6 +65,8 @@ Route::prefix('admin')->middleware(['auth', 'auth.allowed-user'])->name('admin.'
         'users'=>UserController::class,
 
     ]);
+   
+
     Route::resource('user-passwords',UserPasswordController::class)->parameters([
         'user-passwords'=>'user'
     ]);
@@ -76,9 +83,7 @@ Route::prefix('admin')->middleware(['auth', 'auth.allowed-user'])->name('admin.'
     Route::post('/logout',[LogoutUserController::class,'logout'])->middleware('auth')->name('logout');
     Route::get('/consumers',[CustomerController::class,'showAll'])->middleware('auth')->name('customers');
     Route::get('/transaction/new',[TransactionsController::class,'index'])->middleware('auth')->name('new-transaction');
-    // Route::get('/register-consumer',[CustomerController::class,'index'])
-    //     ->middleware('auth')
-    //     ->name('register-customer');
+
 
     Route::post('/register-consumer',[CustomerController::class,'store'])
             ->middleware('access.authorize')->name('register-customer.store');
