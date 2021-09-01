@@ -16,6 +16,14 @@
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
               </div>
             @endif
+
+            @if(session('updated-password'))
+            <div class="alert alert-success alert-dismissible fade show mt-4" role="alert">
+                <strong>Great!</strong> {{session('message')}}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            @endif
+            
             <div class="card rounded-3 mb-1">
                 <div class="card-header p-4">
                 <span class="text-muted"> Note: Please don't share your account to anyone.</span>

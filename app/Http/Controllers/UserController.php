@@ -102,9 +102,10 @@ class UserController extends Controller
         $authenticatedUser->password=Hash::make($request->password);
         $authenticatedUser->save();
 
-        return redirect(route('admin.users.update-password.edit'))->with([
+        Auth::logout();
+        return redirect(route('login'))->with([
             'updated-password'=>true,
-            'message'=>'Password updated successfully!'
+            'message'=>'Password updated successfully! You may log-in again.'
         ]);
     }
 }

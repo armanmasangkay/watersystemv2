@@ -7,14 +7,9 @@
     
 
     <div class="col-12 col-md-8 col-lg-5 col-xl-4">
-        @if(session('updated-password'))
-        <div class="alert alert-success alert-dismissible fade show mt-4" role="alert">
-            <strong>Great!</strong> {{session('message')}}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-        @endif
+    
         <h3 class='text-center mt-3'>Change Account Password</h3>
-        <form action="{{route('admin.users.update-password.store')}}" class="mt-5" method="post">
+        <form action="{{route('users.update-password.store')}}" class="mt-5" method="post">
             @csrf
             @method("PUT")
             <div class="mb-2">
