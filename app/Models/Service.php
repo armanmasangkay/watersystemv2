@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
-use App\Classes\Facades\ConnectionTypeHelper;
+use App\Classes\Facades\StringHelper;
 
 class Service extends Model
 {
@@ -45,6 +45,6 @@ class Service extends Model
 
     public function serviceType()
     {
-        return ConnectionTypeHelper::toReadableString($this->type_of_service);
+        return StringHelper::toReadableService($this->type_of_service);
     }
 }
