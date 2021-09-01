@@ -101,7 +101,7 @@ class ConsumerLedgerController extends Controller
 
     public function store(Request $request)
     {
-        if(isset($request->rd_date))
+        if(isset($request->rd_date) && $request->rd_date != "Beginning Balance")
         {
             $prev_period_covered = explode('-', $request->rd_date);
             $previous_year = explode(', ', $prev_period_covered[1]);
