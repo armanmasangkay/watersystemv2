@@ -48,12 +48,7 @@ $(document).ready(function(){
                         })
                     }
                     else{
-                        Swal.fire('Ooops!',response.msg).then(function(result){
-                            if(result.isConfirmed)
-                            {
-                                window.location.reload();
-                            }
-                        })
+                        Swal.fire('Ooops!',response.msg)
                     }
                 }
             })
