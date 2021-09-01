@@ -34,7 +34,7 @@ $(document).ready(function(){
                 url: actionURI,
                 data: data,
                 success: function(response){
-                    console.log(response)
+
                     if(response.created == true){
                         $('#current-month').prop('disabled', true);
                         $('#next-month').prop('disabled', true);
@@ -48,12 +48,7 @@ $(document).ready(function(){
                         })
                     }
                     else{
-                        Swal.fire('Ooops!',response.msg).then(function(result){
-                            if(result.isConfirmed)
-                            {
-                                window.location.reload();
-                            }
-                        })
+                        Swal.fire('Ooops!',response.msg)
                     }
                 }
             })

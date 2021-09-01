@@ -17,7 +17,7 @@ class CreatePaymentsTable extends Migration
             $table->id();
             $table->foreignId('transaction_id')->references('id')->on('transactions')->onDelete('cascade');
             $table->string('customer_id');
-            $table->string('or_no');
+            $table->string('or_no')->unique();
             $table->date('payment_date')->nullable();
             $table->double('payment_amount')->nullable();
             $table->double('balance');

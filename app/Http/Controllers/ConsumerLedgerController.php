@@ -93,7 +93,7 @@ class ConsumerLedgerController extends Controller
             ],
             'rates' => $rate,
             'surcharge' => $surcharge[0]->rate,
-            'last_date' => !empty($dates) ? $dates : date('M d Y'),
+            'last_date' => !empty($balance->period_covered) ? $dates : date('Y-m-d', strtotime('now')),
             'route' => 'admin.search-transactions',
             'current_transaction_id' => !empty($balance->id) ? $balance->id : 0
         ]);
@@ -101,6 +101,18 @@ class ConsumerLedgerController extends Controller
 
     public function store(Request $request)
     {
+        if(isset($request->rd_date) && $request->rd_date != "Beginning Balance")
+        {
+            $prev_period_covered = explode('-', $request->rd_date);
+            $previous_year = explode(', ', $prev_period_covered[1]);
+            $new_covered_date_beginning = $prev_period_covered[0]. ', '.$previous_year[1];
+        
+            if( \Carbon\Carbon::parse($request->reading_date) >= \Carbon\Carbon::parse($new_covered_date_beginning) && 
+                \Carbon\Carbon::parse($request->reading_date) <= \Carbon\Carbon::parse($prev_period_covered[1]) )
+            {
+                return response()->json(['created' => false, 'msg' => 'Cannot create billing, make sure that the reading date is not covered from the previous reading date.']);
+            }
+        }
 
         $validator = Validator::make($request->all(), [
             'customer_id' => 'required',
@@ -116,7 +128,7 @@ class ConsumerLedgerController extends Controller
         ]);
 
         if($validator->fails()){
-            return response()->json(['created' => false, 'errors' => $validator->errors()]);
+            return response()->json(['created' => false, 'msg' => $validator->errors()]);
         }
 
         if($request->reading_meter < $request->meter_reading)
@@ -129,49 +141,29 @@ class ConsumerLedgerController extends Controller
         $this->waterbill->computeBillConsumption($request->reading_meter);
 
         $fillable=[
-            'customer_id' => $this->waterbill->balance->customer_id,
+            'customer_id' => $this->waterbill->balance != null ? $this->waterbill->balance->customer_id : $request->customer_id,
             'period_covered' => $request->current_month.'-'.$request->next_month,
-            'reading_date' => date('Y-m-d', strtotime($request->read_date)),
+            'reading_date' => date('Y-m-d', strtotime($request->reading_date)),
             'reading_meter' => $request->reading_meter,
             'reading_consumption' => $this->waterbill->computed_total['meter_consumption'],
             'billing_amount' => $this->waterbill->computed_total['amount_consumption'],
             'billing_surcharge' => '0.00',
-            'billing_meter_ips' => $this->waterbill->balance->billing_meter_ips,
+            'billing_meter_ips' => $this->waterbill->balance != null ? $this->waterbill->balance->billing_meter_ips : $request->meter_ips,
             'billing_total' => $this->waterbill->computed_total['total'],
             'balance' => $this->waterbill->computed_total['total'],
             'posted_by' => Auth::id(),
             'user_id' => Auth::id(),
         ];
 
-        $update_transaction = Transaction::findOrFail($this->waterbill->balance->id);
+        if($this->waterbill->balance != null)
+        {
+            $update_transaction = Transaction::findOrFail($this->waterbill->balance->id);
 
-        $update_transaction->billing_surcharge = $this->waterbill->computed_total['surcharge'];
-        $update_transaction->billing_total += $this->waterbill->computed_total['surcharge'];
-        $update_transaction->balance += $this->waterbill->computed_total['surcharge'];
-        $update_transaction->update();
-
-        // $fillable=[
-        //     'customer_id' => $request->customer_id,
-        //     'period_covered' => $request->current_month.'-'.$request->next_month,
-        //     'reading_date' => date('Y-m-d', strtotime($request->reading_date)),
-        //     'reading_meter' => $request->reading_meter,
-        //     'reading_consumption' => $request->consumption,
-        //     'billing_amount' => $request->amount,
-        //     'billing_surcharge' => '0.00',
-        //     'billing_meter_ips' => $request->meter_ips,
-        //     'billing_total' => $request->total,
-        //     'balance' => $request->total,
-        //     'posted_by' => Auth::id(),
-        //     'user_id' => Auth::id(),
-        // ];
-
-        // $update_transaction = Transaction::find($request->current_transaction_id);
-
-        // $update_transaction->billing_surcharge = $request->surcharge_amount;
-        // $update_transaction->billing_total += $request->surcharge_amount;
-        // $update_transaction->balance += $request->surcharge_amount;
-        // $update_transaction->update();
-
+            $update_transaction->billing_surcharge = $this->waterbill->computed_total['surcharge'];
+            $update_transaction->billing_total += $this->waterbill->computed_total['surcharge'];
+            $update_transaction->balance += $this->waterbill->computed_total['surcharge'];
+            $update_transaction->update();
+        }
 
         $transactions = Transaction::create($fillable);
         return response()->json(['created' => true/*, 'data' => $this->waterbill->computed_total*/]);

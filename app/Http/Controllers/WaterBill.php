@@ -56,13 +56,13 @@ class WaterBill extends Controller{
         $this->reading_meter = $request->reading_meter;
         $this->computeBillConsumption($request->reading_meter);
 
-        $surcharge = (empty($this->balance->payment_or_no)) ? ($this->balance->balance * $this->surcharge[0]->rate) : 0.00;
-        $meter_consumption = $request->reading_meter - $this->balance->reading_meter;
+        $surcharge = $this->balance ? ((empty($this->balance->payment_or_no)) ? (($this->balance->balance != null ? $this->balance->balance : 0.00) * $this->surcharge[0]->rate) : 0.00) : 0.00;
+        $meter_consumption = $request->reading_meter - ($this->balance != null ? $this->balance->reading_meter : 0.00);
         $total_consumption = (($meter_consumption - $this->rate['max_range']) * $this->rate['excess_rates']) + $this->rate['min_rate'];
         $amount_comsumption = $meter_consumption <= $this->rate['max_range'] ? $this->rate['min_rate'] : $total_consumption;
 
-        $total = ($surcharge + $this->balance->balance) + ($this->balance->billing_meter_ips + $amount_comsumption);
-        $date = ($this->balance->period_covered != "Beginning Balance" ? explode('-', $this->balance->period_covered) : explode('/', '/'.$this->balance->reading_date));
+        $total = ($surcharge + ($this->balance != null ? $this->balance->balance : 0.00)) + (($this->balance != null ? $this->balance->billing_meter_ips : 0.00) + $amount_comsumption);
+        $date = ($this->balance != null ? ($this->balance->period_covered != "Beginning Balance" ? explode('-', $this->balance->period_covered) : explode('/', '/'.$this->balance->reading_date)) : explode('/', '/'.date('Y-m-d')));
 
         $this->computed_total = [
             'surcharge' => $surcharge,
@@ -80,13 +80,13 @@ class WaterBill extends Controller{
 
     public function computeBillConsumption($reading_meter)
     {
-        $surcharge = (empty($this->balance->payment_or_no)) ? ($this->balance->balance * $this->surcharge[0]->rate) : 0.00;
-        $meter_consumption = $reading_meter - $this->balance->reading_meter;
+        $surcharge = $this->balance ? ((empty($this->balance->payment_or_no)) ? (($this->balance->balance != null ? $this->balance->balance : 0.00) * $this->surcharge[0]->rate) : 0.00) : 0.00;
+        $meter_consumption = $reading_meter - ($this->balance != null ? $this->balance->reading_meter : 0.00);
         $total_consumption = (($meter_consumption - $this->rate['max_range']) * $this->rate['excess_rates']) + $this->rate['min_rate'];
         $amount_comsumption = $meter_consumption <= $this->rate['max_range'] ? $this->rate['min_rate'] : $total_consumption;
 
-        $total = ($surcharge + $this->balance->balance) + ($this->balance->billing_meter_ips + $amount_comsumption);
-        $date = ($this->balance->period_covered != "Beginning Balance" ? explode('-', $this->balance->period_covered) : explode('/', '/'.$this->balance->reading_date));
+        $total = ($surcharge + ($this->balance != null ? $this->balance->balance : 0.00)) + (($this->balance != null ? $this->balance->billing_meter_ips : 0.00) + $amount_comsumption);
+        $date = ($this->balance != null ? ($this->balance->period_covered != "Beginning Balance" ? explode('-', $this->balance->period_covered) : explode('/', '/'.$this->balance->reading_date)) : explode('/', '/'.date('Y-m-d')));
 
         $this->computed_total = [
             'surcharge' => $surcharge,

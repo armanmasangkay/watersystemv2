@@ -41,10 +41,10 @@ $(document).ready(function()
                         var year = (period != 'Beginning Balance') ?? result[1].split(',')
                         var date =  new Date(responseData.bal.reading_date)
                         var newDate = date.toDateString().split(' '),
-                            cleanDate = newDate[0] + '. ' + newDate[1] + '. ' + newDate[2] + ', ' + newDate[3]
+                            cleanDate = newDate[0] + ', ' + newDate[1] + '. ' + newDate[2] + ', ' + newDate[3]
 
-                        $('input[name="from"]').val((period == 'Beginning Balance') ? 'Beginning Balance' : result[0] + '' + year[1] )
-                        $('input[name="to"]').val((period == 'Beginning Balance') ? '' : result[1] + '' + year[1] )
+                        $('input[name="from"]').val((period == 'Beginning Balance') ? 'Beginning Balance' : result[0] )
+                        $('input[name="to"]').val((period == 'Beginning Balance') ? '' : result[1])
                         $('input[name="curr_transaction_id"]').val(responseData.bal.id)
                         $('input[name="meter_reading"]').val(responseData.bal.reading_meter)
                         $('input[name="curr_balance"]').val(format_number(responseData.bal.balance))
@@ -134,7 +134,7 @@ $(document).ready(function()
                             console.log(response)
                         }
                         else{
-                            Swal.fire('Ooops!',"There was an error on saving the consumer's bill!")
+                            Swal.fire('Ooops!', response.errors)
                         }
                     }
                 })
