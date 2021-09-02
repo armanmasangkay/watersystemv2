@@ -3,14 +3,14 @@
         <div class="modal-content">
             <form action="{{ route('admin.save-billing') }}" method="post" id="billing-form">
                 @csrf
-                <input type="hidden" name="connection_type" value="{{ isset($customer)?$customer['connection_type'] : ''}}">
-                <input type="hidden" name="min_rates" value="{{ isset($rates) ? $rates['min_rate'] : '0'}}">
-                <input type="hidden" name="billing_excess_rate" value="{{ isset($rates) ? $rates['excess_rates'] : '0'}}">
-                <input type="hidden" name="max_range" value="{{ isset($rates) ? $rates['max_range'] : '0'}}">
-                <input type="hidden" name="or_num" value="{{ isset($customer) ? ($customer['balance'] != null ? $customer['balance']->payment_or_no : '') : ''}}">
-                <input type="hidden" name="surcharge" value="{{ isset($surcharge) ? $surcharge : '0'}}">
-                <input type="hidden" name="customer_id" value="{{ isset($customer) ? $customer['account'] : '' }}">
-                <input type="hidden" name="current_transaction_id" value="{{ isset($current_transaction_id) ? $current_transaction_id : '' }}">
+                <input type="hidden" name="connection_type" value="{{ $customer['connection_type'] ?? ''}}">
+                <input type="hidden" name="min_rates" value="{{ $rates['min_rate'] ?? '0'}}">
+                <input type="hidden" name="billing_excess_rate" value="{{ $rates['excess_rates'] ?? '0'}}">
+                <input type="hidden" name="max_range" value="{{ $rates['max_range'] ?? '0'}}">
+                <input type="hidden" name="or_num" value="{{ ($customer['balance'] != null ?? $customer['balance']->payment_or_no ?? '') ?? ''}}">
+                <input type="hidden" name="surcharge" value="{{ $surcharge ?? '0'}}">
+                <input type="hidden" name="customer_id" value="{{ $customer['account'] ?? '' }}">
+                <input type="hidden" name="current_transaction_id" value="{{ $current_transaction_id ?? '' }}">
                 <input type="hidden" name="rd_date" value="{{ $customer['balance'] != null ? $customer['balance']->period_covered : '' }}">
 
                 <div class="modal-header">

@@ -27,7 +27,7 @@ class ConsumerLedgerController extends Controller
 
     public function index()
     {
-        return view('pages.consumer-ledger', ['route' => 'admin.search-transactions']);
+        return view('pages.consumer-ledger', ['search_route' => 'admin.search-transactions']);
     }
 
     public function search(Request $request)
@@ -72,7 +72,7 @@ class ConsumerLedgerController extends Controller
 
         $surcharge = Surcharge::all();
         $dates = [];
-        
+
         if(!empty($balance->period_covered))
         {
             $date = ($balance->period_covered != "Beginning Balance" ? explode('-', $balance->period_covered) : explode('/', '/'.$balance->reading_date));
@@ -94,7 +94,7 @@ class ConsumerLedgerController extends Controller
             'rates' => $rate,
             'surcharge' => $surcharge[0]->rate,
             'last_date' => !empty($balance->period_covered) ? $dates : date('Y-m-d', strtotime('now')),
-            'route' => 'admin.search-transactions',
+            'search_route' => 'admin.search-transactions',
             'current_transaction_id' => !empty($balance->id) ? $balance->id : 0
         ]);
     }
@@ -106,8 +106,8 @@ class ConsumerLedgerController extends Controller
             $prev_period_covered = explode('-', $request->rd_date);
             $previous_year = explode(', ', $prev_period_covered[1]);
             $new_covered_date_beginning = $prev_period_covered[0]. ', '.$previous_year[1];
-        
-            if( \Carbon\Carbon::parse($request->reading_date) >= \Carbon\Carbon::parse($new_covered_date_beginning) && 
+
+            if( \Carbon\Carbon::parse($request->reading_date) >= \Carbon\Carbon::parse($new_covered_date_beginning) &&
                 \Carbon\Carbon::parse($request->reading_date) <= \Carbon\Carbon::parse($prev_period_covered[1]) )
             {
                 return response()->json(['created' => false, 'msg' => 'Cannot create billing, make sure that the reading date is not covered from the previous reading date.']);
