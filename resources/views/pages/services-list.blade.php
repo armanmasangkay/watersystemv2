@@ -27,7 +27,7 @@
                                 <td scope="row" class="border-bottom-0 border-top">{{ App\Classes\Facades\StringHelper::toReadableService($service->type_of_service)}}</td>
                                 <td scope="row" class="border-bottom-0 border-top">{{$service->remarks}}</td>
                                 <td scope="row" class="border-bottom-0 border-top">{{$service->landmarks}}</td>
-                                <td scope="row" class="border-bottom-0 border-top">{{$service->contact_number}}</td>
+                                <td scope="row" class="border-bottom-0 border-top">{{$service->customer->contact_number}}</td>
                                 <td scope="row" class="border-bottom-0 border-top">{{App\Classes\Facades\StringHelper::toReadableStatus($service->status)}}</td>
                             </tr>
                         @empty
