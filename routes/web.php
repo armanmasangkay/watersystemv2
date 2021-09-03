@@ -80,7 +80,6 @@ Route::prefix('admin')->middleware(['auth', 'auth.allowed-user'])->name('admin.'
     Route::get('/ledger/export/{account_number}',[ExportsController::class,'exportLedger'])->name('ledger.export');
 
 
-    Route::post('/logout',[LogoutUserController::class,'logout'])->middleware('auth')->name('logout');
     Route::get('/consumers',[CustomerController::class,'showAll'])->middleware('auth')->name('customers');
     Route::get('/transaction/new',[TransactionsController::class,'index'])->middleware('auth')->name('new-transaction');
 
@@ -194,6 +193,8 @@ Route::prefix('admin')->middleware(['auth', 'auth.allowed-user'])->name('admin.'
     });
     // END ADMIN ALLOWED ACCESS ONLY
 });
+
+Route::post('/logout',[LogoutUserController::class,'logout'])->middleware('auth')->name('logout');
 
 Route::middleware('auth', 'auth.allowed-reader')->group(function(){
 

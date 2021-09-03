@@ -87,7 +87,7 @@
           @endadminonly
         </ul>
         <span class="navbar-text mt-1 pt-0">
-          <form action="{{route('admin.logout')}}" method="post">
+          <form action="{{route('logout')}}" method="post">
               @csrf
               <button type="submit" class="btn btn-link text-danger" id="logoutBtn">
                 <i data-feather="log-out" class="feather-16 m-1"></i> Logout
