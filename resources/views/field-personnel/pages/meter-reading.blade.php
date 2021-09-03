@@ -278,7 +278,6 @@
 
 @section('custom-js')
 
-<script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script src="{{ asset('assets/js/form-search-animation.js') }}" defer></script>
 <script src="{{ asset('assets/js/fieldMeterReading.js') }}" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.4/dist/JsBarcode.all.min.js"></script>

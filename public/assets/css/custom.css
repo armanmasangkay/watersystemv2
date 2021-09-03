@@ -64,7 +64,8 @@
     font-weight: bold !important;
 }
 
-.navbar ul li a:hover{
+.navbar ul li a:hover, .navbar ul li form button:hover{
+    background-color: #fff;
     color: #2d62c5 !important;
     font-weight: 500 !important;
 }
