@@ -57,7 +57,7 @@ Route::middleware('auth')->group(function(){
 
 Route::prefix('admin')->middleware(['auth', 'auth.allowed-user'])->name('admin.')->group(function(){
 
-   
+
     Route::resources([
         'searched-customers'=>SearchedCustomerController::class,
         'existing-customers'=>ExistingCustomerController::class,
@@ -65,7 +65,7 @@ Route::prefix('admin')->middleware(['auth', 'auth.allowed-user'])->name('admin.'
         'users'=>UserController::class,
 
     ]);
-   
+
 
     Route::resource('user-passwords',UserPasswordController::class)->parameters([
         'user-passwords'=>'user'
@@ -74,6 +74,7 @@ Route::prefix('admin')->middleware(['auth', 'auth.allowed-user'])->name('admin.'
 
 
     Route::get('/service-list', [ServiceListController::class, 'index'])->name('services-list.index');
+    Route::get('/service-list/service', [ServiceListController::class, 'filter'])->name('services-list.filter');
 
     // Export URLs
     Route::get('/customers/export/{keyword?}',[ExportsController::class,'exportCustomers'])->name('customers.export');
