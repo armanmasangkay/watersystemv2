@@ -21,6 +21,7 @@
               <tr>
                 <td scope="col" class="border-bottom-0 py-3"><strong>FULL NAME</strong></td>
                 <td scope="col" class="border-bottom-0 py-3"><strong>USERNAME</strong></td>
+                <td scope="col" class="border-bottom-0 py-3"><strong>ROLE</strong></td>
                 <td scope="col" class="border-bottom-0 py-3"><strong>ACTIONS</strong></td>
               </tr>
             </thead>
@@ -29,6 +30,7 @@
                 <tr>
                   <td scope="row" class="border-bottom-0 border-top">{{$user->name}}</td>
                   <td class="border-bottom-0 border-top">{{$user->username}}</td>
+                  <td class="border-bottom-0 border-top">{{$user->role()}}</td>
                   <td class="border-bottom-0 border-top">
                     
                     <a href="{{route('admin.users.edit',$user)}}">Edit</a>
