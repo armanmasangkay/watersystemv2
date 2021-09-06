@@ -26,11 +26,13 @@ class NewConnectionController extends Controller
         $requestData = $request->all();
         $requestData['connection_status'] = 'inactive';
         $customer = Customer::create($requestData);
+        $serviceType="new_connection";
+        $initialStatus=Service::getInitialStatus($serviceType);
         Service::create([
             'customer_id' => $customer->account_number,
-            'type_of_service' => 'new_connection',
-            'contact_number' => $customer->contact_number,
-            'status' => 'new_connection'
+            'type_of_service' => $serviceType,
+            'status' => $initialStatus,
+            'start_status' =>  $initialStatus
         ]);
         TransactionLog::create([
             'customer_organization_name' => $requestData['org_name'] ?? '',
