@@ -109,8 +109,8 @@ class User extends Authenticatable
         return $this->name;
     }
 
-    public function user_role()
+    public function role()
     {
-        return UserTypeHelper::toReadableUserString($this->role);
+        return self::validRoles()[$this->role];
     }
 }
