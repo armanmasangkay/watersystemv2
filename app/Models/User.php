@@ -109,7 +109,7 @@ class User extends Authenticatable
         return $this->name;
     }
 
-    public function role()
+    public function user_role()
     {
         return self::validRoles()[$this->role];
     }
