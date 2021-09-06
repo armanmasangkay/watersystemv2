@@ -46,7 +46,6 @@ class FieldMeterServicesController extends Controller
 
     public function store(FieldMeterServiceRequest $request){
 
-        // $customer = Customer::where('account_number', $request->account_number);
         $customer = Customer::find($request->account_number);
 
         Service::create([

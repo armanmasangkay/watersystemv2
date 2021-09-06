@@ -2,12 +2,16 @@
 
 namespace App\Classes\Facades;
 
-class StringHelper{
+class StringHelper
+{
+
     public static function toReadableStatus($value){
         $data = [
             'pending_building_inspection' => 'Pending for Building Inspection',
             'pending_waterworks_inspection'=>'Pending for Waterworks  Inspection',
-            'pending' => 'Pending'
+            'denied_building_inspection' => 'Disapproved by Building Inspector',
+            'denied_waterworks_inspection' => 'Disapproved by Waterworks Inspector',
+            'service_done' => 'Service Done'
         ];
 
         return $data[$value];

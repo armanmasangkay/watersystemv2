@@ -29,7 +29,6 @@ class Service extends Model
         'customer_id',
         'type_of_service',
         'remarks',
-        'contact_number',
         'landmarks',
         'work_schedule',
         'status',
