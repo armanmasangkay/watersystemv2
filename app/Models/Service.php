@@ -22,6 +22,13 @@ class Service extends Model
         'status'
     ];
 
+    protected static function booted()
+    {
+        static::creating(function ($service) {
+            
+        });
+    }
+
 
     public function customer()
     {
