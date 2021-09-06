@@ -20,7 +20,6 @@ class ServicesListSeeder extends Seeder
         Service::factory()->create([
             'customer_id' => $customer->account_number,
             'type_of_service' => 'new_connection',
-            'contact_number' => $customer->contact_number,
             'status' => 'pending_building_inspection',
             'start_status' => 'pending_building_inspection'
         ]);
