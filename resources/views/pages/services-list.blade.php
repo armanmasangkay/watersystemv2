@@ -5,7 +5,7 @@
 @section('content')
 
 <div class="row">
-    <div class="col-md-8 offset-md-2">
+    <div class="col-md-12">
         <h3 class="mt-4">List of Services</h3>
         <div class="card">
             <div class="table-responsive mb-0">
