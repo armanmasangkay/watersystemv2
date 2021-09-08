@@ -34,6 +34,7 @@ use App\Http\Controllers\FieldMeterServicesController;
 use App\Http\Controllers\NewConnectionController;
 use App\Http\Controllers\MeterReaderController;
 use App\Http\Controllers\ServiceListController;
+use App\Http\Controllers\ServicesPaymentController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserPasswordController;
 use App\Http\Controllers\WaterBill;
@@ -164,6 +165,11 @@ Route::prefix('admin')->middleware(['auth', 'auth.allowed-user'])->name('admin.'
             Route::post('/consumer-ledger/billing/transaction/{id}',[EditBillingController::class,'getBill'])->name('get-bill');
             Route::post('/consumer-ledger/billing/update/transaction',[EditBillingController::class,'updateBill'])->name('update-billing');
         // END CUSTOMER LEDGER
+
+        // SERVICES PAYMENT
+            Route::get('/services-for-payment',[ServicesPaymentController::class, 'index'])->name('services-payment');
+            Route::get('/services-for-payment/search',[ServicesPaymentController::class, 'search'])->name('services-payment-search');
+        // END SERVICES PAYMENT
     });
     // ADMIN AND CASHIER ALLOWED ACCESS
 
