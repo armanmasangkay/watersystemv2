@@ -7,13 +7,32 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Service;
+use App\Services\ServiceReturnDataArray;
+use App\Services\ServicesFromKeyword;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\DB;
 
 class BLDGApprovalController extends Controller
 {
+
     public function index()
     {
         $services = Service::where('status', 'pending_building_inspection')->paginate(20);
-        return view('pages.bldg-request-approval', ['route' => 'admin.undo', 'text' => ['Lists of Request for Building/Area Inspections', 'View Approved Request'], 'search_heading' => 'SEARCH REQUEST','services' => $services]);
+        return view('pages.bldg-request-approval',ServiceReturnDataArray::set('pending_building_inspection', $services));
+    }
+
+    public function search(Request $request){
+        $services = (new ServicesFromKeyword)->get($request->account_number, 'pending_building_inspection');
+        $services = new Paginator($services->all(), 10);
+
+        return view('pages.bldg-request-approval',ServiceReturnDataArray::set('pending_building_inspection', $services));
+    }
+
+    public function search_denied(Request $request){
+        $services = (new ServicesFromKeyword)->get($request->account_number, 'denied_building_inspection');
+        $services = new Paginator($services->all(), 10);
+
+        return view('pages.bldg-request-approval',ServiceReturnDataArray::set('denied_building_inspection', $services) );
     }
 
     public function approve(Request $request)
@@ -37,8 +56,9 @@ class BLDGApprovalController extends Controller
     public function undo()
     {
         $services = Service::where('status', 'denied_building_inspection')->paginate(20);
-        return view('pages.bldg-request-approval', ['route' => 'admin.request-approvals', 'text' => ['Lists of Denied Request for Building/Area Inspections', 'Return Back'], 'search_heading' => 'SEARCH REQUEST','services' => $services]);
+        return view('pages.bldg-request-approval',ServiceReturnDataArray::set('denied_building_inspection', $services) );
     }
+
 
     public function undoStatus($id)
     {

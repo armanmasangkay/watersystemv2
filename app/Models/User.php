@@ -111,6 +111,6 @@ class User extends Authenticatable
 
     public function user_role()
     {
-        return UserTypeHelper::toReadableUserString($this->role);
+        return self::validRoles()[$this->role];
     }
 }
