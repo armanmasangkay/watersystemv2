@@ -47,8 +47,9 @@ class BLDGApprovalController extends Controller
     public function reject($id)
     {
         $service = Service::findOrFail($id);
-        $service->status = "denied_building_inspection";
-        $service->save();
+        $service->deny();
+        // $service->status = "denied_building_inspection";
+        // $service->save();
 
         return redirect(route('admin.request-approvals'));
     }

@@ -49,10 +49,13 @@
                                     <input type="hidden" name="id" value="{{ $service->id }}">
                                     <button type="submit" class="border-0 bg-white text-primary"><i data-feather="check" width="20"></i> Approve</button>
                                 </form>
+
+                                @if($service->isDeniable())
                                 <form action="{{route('admin.bld-request-approvals-reject', ['id' => $service->id])}}" method="post" class="mb-1 mx-0">
                                     @csrf
                                     <button type="submit" class="border-0 bg-white text-danger"><i data-feather="x" width="20"></i> Deny</button>
                                 </form>
+                                @endif
                                 @else
                                 <form action="{{route('admin.undo-status', ['id' => $service->id])}}" method="post" class="mb-1 mx-0">
                                     @csrf

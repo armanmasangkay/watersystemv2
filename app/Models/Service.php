@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
 use App\Classes\Facades\StringHelper;
+use Exception;
+use Maatwebsite\Excel\Facades\Excel;
 
 class Service extends Model
 {
@@ -35,9 +37,18 @@ class Service extends Model
         'start_status'
     ];
 
+    protected $processFlow=[
+        'pending_building_inspection',
+        'pending_waterworks_inspection',
+        'pending_engineer_approval',
+        'pending_for_payment',
+        'ready'
+    ];
+
     public static $PENDING_BUILDING_INSPECTION="pending_building_inspection";
     public static $PENDING_WATERWORKS_INSPECTION="pending_waterworks_inspection";
     public static $PENDING_ENGINEER_APPROVAL="pending_engineer_approval";
+    public static $PENDING_FOR_PAYMENT="pending_for_payment";
     public static $READY="ready";
 
 
@@ -71,13 +82,37 @@ class Service extends Model
         }
     }
 
-    // protected static function booted()
-    // {
-    //     static::creating(function ($service) {
-    //         $service->status=$this->getInitialStatus($this->type_of_service);
-    //         $service->start_status=$this->getInitialStatus($this->type_of_service);
-    //     });
-    // }
+    public function isDeniable()
+    {
+        if($this->status==$this->start_status)
+        {
+            return false;
+        }
+
+        return true;
+    }
+    
+    public function deny()
+    {
+
+        //check if current status is equal to start status
+        if(!$this->isDeniable())
+        {
+            throw new Exception("Deny no longer possible.");
+        }
+        //if no, change deny status upwards
+        $flowIndex=0;
+        foreach($this->processFlow as $flow)
+        {     
+            if($this->status==$flow)
+            {
+               break;
+            }
+            $flowIndex++;
+        }
+        $this->status=$this->processFlow[$flowIndex-1];
+        $this->save();
+    }
 
 
     public function customer()

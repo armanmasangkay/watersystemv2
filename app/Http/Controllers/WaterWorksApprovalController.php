@@ -42,9 +42,10 @@ class WaterWorksApprovalController extends Controller
 
     public function reject($id)
     {
-        $services = Service::findOrFail($id);
-        $services->status = "denied_waterworks_inspection";
-        $services->save();
+        $service = Service::findOrFail($id);
+        // $services->status = "denied_waterworks_inspection";
+        // $services->save();
+        $service->deny();
 
         return redirect(route('admin.waterworks-request-approvals'));
     }

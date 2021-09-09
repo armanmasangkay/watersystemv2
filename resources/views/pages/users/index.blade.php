@@ -30,7 +30,7 @@
                 <tr>
                   <td scope="row" class="border-bottom-0 border-top">{{$user->name}}</td>
                   <td class="border-bottom-0 border-top">{{$user->username}}</td>
-                  <td class="border-bottom-0 border-top">{{$user->role()}}</td>
+                  <td class="border-bottom-0 border-top">{{$user->user_role()}}</td>
                   <td class="border-bottom-0 border-top">
                     
                     <a href="{{route('admin.users.edit',$user)}}">Edit</a>
