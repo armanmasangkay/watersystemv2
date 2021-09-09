@@ -1,30 +1,23 @@
-@extends('layout.approval')
-
-@section('title', 'Building Inspection Request')
+@extends('layout.main')
+@section('title', 'Request Services | Payment')
 
 @section('content')
-<div class="row mb-0">
-    @include('templates.user')
-    <div class="col-md-8 pt-2">
-        <h3 class="h4 mb-3 mt-2 text-left text-secondary"><i data-feather="align-left" class="feather-16 mx-1"></i> {{ $text[0] }}</h3>
-    </div>
-    <div class="col-md-4"></div>
-</div>
 
-<div class="card shadow-sm">
+<h5 class="text-secondary h4 mt-5"><i data-feather="align-right" class="mb-1 feather-30 me-1"></i> Lists of Request Services Pending for Payment</h5>
+<div class="card shadow-sm mt-2">
     <div class="card-header px-2 bg-white pt-1 pb-0">
         <div class="row">
-            <div class="col-md-6 py-0">
+            <div class="col-md-9 py-0">
                 @include('templates.form-search-account')
             </div>
-            <div class="col-md-6 pt-md-2">
-                <a href="{{ route($route) }}" class="btn btn-secondary float-md-end" style="height: 45px; padding-top: 10px;">{{ $text[1] }}</a>
+            <div class="col-md-3 pt-md-2">
+                <a href="{{ route('admin.services-payment') }}" class="btn btn-secondary float-md-end" style="height: 45px; padding-top: 10px;">Refresh</a>
             </div>
         </div>
     </div>
     <div class="card-body p-0">
         <div class="table-responsive p-0">
-            <table class="table mb-0" style="min-width: 1300px !important">
+            <table class="table mb-0" style="min-width: 1200px !important">
                 <thead class="bg-light">
                     <tr>
                         <td class="border-bottom pt-3 pb-3 text-secondary"><strong><i data-feather="bar-chart-2" class="mx-1 text-primary" width="18"></i> ACCOUNT NO</strong></td>
@@ -43,29 +36,10 @@
                             <td class="pt-2 pb-2 ps-3">{{ $service->serviceType() }}</td>
                             <td class="pt-2 pb-2 ps-3">{{ \Carbon\Carbon::parse($service->created_at)->format('F d, Y') }}</td>
                             <td class="d-flex justify-content-start py-0">
-                                @if($service->status == 'pending_building_inspection')
-                                <form action="{{ route('admin.bld-request-approvals-approve') }}" method="post" class="mb-0 mx-0 d-flex py-2">
-                                    @csrf
-                                    <input type="hidden" name="id" value="{{ $service->id }}">
-                                    <button type="submit" class="border-0 bg-white text-primary"><i data-feather="check" width="20"></i> Approve</button>
-                                </form>
-<<<<<<< HEAD
-
-                                @if($service->isDeniable())
-                                <form action="{{route('admin.bld-request-approvals-reject', ['id' => $service->id])}}" method="post" class="mb-1 mx-0">
-=======
-                                <form action="{{route('admin.bld-request-approvals-reject', ['id' => $service->id])}}" method="post" class="mb-0 mx-0 py-2">
->>>>>>> b00c8ccf22ad608e049ffa6cadd94574bf98bdff
-                                    @csrf
-                                    <button type="submit" class="border-0 bg-white text-danger"><i data-feather="x" width="20"></i> Deny</button>
-                                </form>
-                                @endif
-                                @else
                                 <form action="{{route('admin.undo-status', ['id' => $service->id])}}" method="post" class="mb-0 mx-0 py-2">
                                     @csrf
-                                    <button type="submit" class="border-0 bg-white text-danger"><i data-feather="repeat" width="18"></i>&nbsp; Undo</button>
+                                    <button type="submit" class="border-0 bg-white text-primary py-0"><i data-feather="user-check" width="18" class="mb-1"></i>&nbsp; Payment</button>
                                 </form>
-                                @endif
                             </td>
                         </tr>
                     @endforeach
@@ -84,5 +58,10 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('custom-js')
+
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
 @endsection

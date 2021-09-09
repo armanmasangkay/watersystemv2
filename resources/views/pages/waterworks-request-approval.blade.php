@@ -40,14 +40,18 @@
                             <td class="pt-2 pb-2 ps-3">{{ $service->customer->fullname() }} </td>
                             <td class="pt-2 pb-2 ps-3">{{ $service->serviceType() }}</td>
                             <td class="pt-2 pb-2 ps-3">{{ \Carbon\Carbon::parse($service->created_at)->format('F d, Y') }}</td>
-                            <td class="d-flex justify-content-start">
-                                <form action="{{ route('admin.waterworks-request-approvals-approve') }}" method="post" class="mb-1 mx-0 d-flex">
+                            <td class="d-flex justify-content-start py-0">
+                                <form action="{{ route('admin.waterworks-request-approvals-approve') }}" method="post" class="mb-0 mx-0 d-flex py-2">
                                     @csrf
                                     <input type="hidden" name="id" value="{{ $service->id }}">
                                     <button type="submit" class="border-0 bg-white text-primary"><i data-feather="check" width="20"></i> Approve</button>
                                 </form>
+<<<<<<< HEAD
                                 @if($service->isDeniable())
                                 <form action="{{route('admin.waterworks-request-approvals-reject', ['id' => $service->id])}}" method="post" class="mb-1 mx-0">
+=======
+                                <form action="{{route('admin.waterworks-request-approvals-reject', ['id' => $service->id])}}" method="post" class="mb-0 mx-0 py-2">
+>>>>>>> b00c8ccf22ad608e049ffa6cadd94574bf98bdff
                                     @csrf
                                     <button type="submit" class="border-0 bg-white text-danger"><i data-feather="x" width="20"></i> Deny</button>
                                 </form>
