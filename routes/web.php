@@ -161,12 +161,18 @@ Route::prefix('admin')->middleware(['auth', 'auth.allowed-user'])->name('admin.'
             Route::post('/consumer-ledger/billing/update/transaction',[EditBillingController::class,'updateBill'])->name('update-billing');
         // END CUSTOMER LEDGER
 
+    });
+    // ADMIN AND CASHIER ALLOWED ACCESS
+
+    // CASHIER ALLOWED ACCESS ONLY
+    Route::middleware('auth.allowed-cashier-access')->group(function(){
         // SERVICES PAYMENT
             Route::get('/services-for-payment',[ServicesPaymentController::class, 'index'])->name('services-payment');
             Route::get('/services-for-payment/search',[ServicesPaymentController::class, 'search'])->name('services-payment-search');
+            Route::post('/services-for-payment/work-order',[ServicesPaymentController::class, 'save_payment'])->name('services-payment-save');
         // END SERVICES PAYMENT
     });
-    // ADMIN AND CASHIER ALLOWED ACCESS
+    // END CASHIER ALLOWED ACCESS ONLY
 
     // ADMIN ALLOWED ACCESS ONLY
     Route::middleware('access.authorize')->group(function(){

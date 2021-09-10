@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Service;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Customer;
+use App\Models\PaymentWorkOrder;
+use Illuminate\Support\Facades\Response;
 
 class ServicesPaymentController extends Controller
 {
@@ -32,5 +35,32 @@ class ServicesPaymentController extends Controller
 
         $services = Service::where('status', 'pending_for_payment')->where('customer_id', $request->account_number)->get();
         return view('pages.cashier-services-transaction-payment', ['services' => $services, 'route' => 'admin.services-payment-search']);
+    }
+
+    public function save_payment(Request $request)
+    {
+        $validator = Validator::make($request->all(),[
+            'orNum' => 'required|unique:payments,or_no',
+            'inputedAmount' => 'required|numeric|gt:0'
+        ]);
+
+        if($validator->fails()){
+            return response()->json(['created' => false, 'errors' => "OR number cannot be the same or the amount must be greater than zero"]);
+        }
+
+        $service = Service::findOrFail($request->id);
+        $service->status = 'ready';
+        $service->update();
+
+        PaymentWorkOrder::create([
+            'or_no' => $request->orNum,
+            'customer_id' => $request->customer_id,
+            'service_id' => $request->id,
+            'payment_date' => date('Y-m-d', strtotime($request->payment_date)),
+            'payment_amount' => $request->amount,
+            'user_id' => Auth::id()
+        ]);
+
+        return Response::json(['created' => true]);
     }
 }

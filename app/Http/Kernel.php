@@ -11,6 +11,7 @@ use App\Http\Middleware\RestricCashier;
 use App\Http\Middleware\AllowedBldgInspectorAccess;
 use App\Http\Middleware\AllowedAdminCashierAccess;
 use App\Http\Middleware\AllowedWaterworksInspector;
+use App\Http\Middleware\AllowedCashierAccess;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -77,6 +78,7 @@ class Kernel extends HttpKernel
         'auth.allowed-reader' => AllowedAccessGroupMeterReader::class,
         'auth.allowed-bldg-inspector' => AllowedBldgInspectorAccess::class,
         'auth.allowed-admin-cashier-access' => AllowedAdminCashierAccess::class,
-        'auth.allowed-waterworks-access' => AllowedWaterworksInspector::class
+        'auth.allowed-waterworks-access' => AllowedWaterworksInspector::class,
+        'auth.allowed-cashier-access' => AllowedCashierAccess::class
     ];
 }
