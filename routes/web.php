@@ -135,8 +135,10 @@ Route::prefix('admin')->middleware(['auth', 'auth.allowed-user'])->name('admin.'
 
     // MUNICIPAL ENGINEER APPROVALS
     Route::get('/me/request-approvals',[MunicipalEngApprovalController::class, 'index'])->name('me-request-approvals');
+    Route::get('/me/search',[MunicipalEngApprovalController::class, 'search'])->name('municipal-engineer.search');
     Route::post('/me/approve',[MunicipalEngApprovalController::class, 'approve'])->name('municipal-engineer.approve');
     Route::post('/me/deny',[MunicipalEngApprovalController::class, 'deny'])->name('municipal-engineer.deny');
+   
     // END MUNICIPAL ENGINEER APPROVALS
 
     // TRANSACTION LISTS
