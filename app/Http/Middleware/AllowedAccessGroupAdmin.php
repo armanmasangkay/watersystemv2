@@ -17,8 +17,14 @@ class AllowedAccessGroupAdmin
      */
     public function handle(Request $request, Closure $next)
     {
-        if ( Auth::check() && (Auth::user()->isAdmin() || Auth::user()->isCashier()) || Auth::user()->isBuildingInspector() || Auth::user()->isWaterworksInspector() )
+        if ( Auth::check() && (
+            Auth::user()->isAdmin() || 
+            Auth::user()->isCashier()) || 
+            Auth::user()->isBuildingInspector() || 
+            Auth::user()->isWaterworksInspector() || 
+            Auth::user()->isEngineer())
         {
+    
             return $next($request);
         }
 

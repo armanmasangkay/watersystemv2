@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
 use App\Classes\Facades\StringHelper;
 use Exception;
-use Maatwebsite\Excel\Facades\Excel;
 
 class Service extends Model
 {
@@ -56,6 +55,7 @@ class Service extends Model
     {
         return self::$serviceTypes;
     }
+    
 
     public static function getInitialStatus($serviceType)
     {
@@ -82,6 +82,11 @@ class Service extends Model
         }
     }
 
+    public function prettyRequestDate()
+    {
+        return Carbon::parse($this->created_at)->format('F d, Y');
+    }
+
     public function isDeniable()
     {
         if($this->status==$this->start_status)
@@ -92,15 +97,8 @@ class Service extends Model
         return true;
     }
     
-    public function deny()
+    private function getNextFlow($flag="prev")
     {
-
-        //check if current status is equal to start status
-        if(!$this->isDeniable())
-        {
-            throw new Exception("Deny no longer possible.");
-        }
-        //if no, change deny status upwards
         $flowIndex=0;
         foreach($this->processFlow as $flow)
         {     
@@ -110,7 +108,26 @@ class Service extends Model
             }
             $flowIndex++;
         }
-        $this->status=$this->processFlow[$flowIndex-1];
+        return $flag=="prev"?$this->processFlow[$flowIndex-1]:$this->processFlow[$flowIndex+1];
+
+    }
+
+    public function approve()
+    {
+        $this->status=$this->getNextFlow("next");
+        $this->save();
+    }
+
+
+    public function deny()
+    {
+
+        //check if current status is equal to start status
+        if(!$this->isDeniable())
+        {
+            throw new Exception("Deny no longer possible.");
+        }
+        $this->status=$this->getNextFlow("prev");
         $this->save();
     }
 

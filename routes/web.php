@@ -134,7 +134,9 @@ Route::prefix('admin')->middleware(['auth', 'auth.allowed-user'])->name('admin.'
     // END WATER WORKS ALLOWED ACCESS ONLY
 
     // MUNICIPAL ENGINEER APPROVALS
-    Route::get('/me/request-approvals',[MunicipalEngApprovalController::class, 'index'])->name('me-request-approvals')->middleware('auth');
+    Route::get('/me/request-approvals',[MunicipalEngApprovalController::class, 'index'])->name('me-request-approvals');
+    Route::post('/me/approve',[MunicipalEngApprovalController::class, 'approve'])->name('municipal-engineer.approve');
+    Route::post('/me/deny',[MunicipalEngApprovalController::class, 'deny'])->name('municipal-engineer.deny');
     // END MUNICIPAL ENGINEER APPROVALS
 
     // TRANSACTION LISTS

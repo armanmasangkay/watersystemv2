@@ -1,14 +1,10 @@
 @extends('layout.approval')
 
-@section('title', 'New Connection')
+@section('title', 'Municipal Engineer Approval')
 
 
 @section('content')
-<div class="row">
-    <div class="col-md-12 mt-2">
-        <h3><b>MWS - Macrohon Water System</b></h3>
-    </div>
-</div>
+
 <div class="row mb-0">
     @include('templates.user')
     <div class="col-md-8 pt-2">
@@ -29,44 +25,40 @@
                         <td class="border-bottom pt-3 pb-3"><i data-feather="bar-chart-2" class="mx-1 text-primary" width="18"></i> ACCOUNT NO</td>
                         <td class="border-bottom pt-3 pb-3"><i data-feather="user" class="mx-1 text-primary" width="18"></i> CLIENT NAME</td>
                         <td class="border-bottom pt-3 pb-3"><i data-feather="activity" class="mx-1 text-primary" width="18"></i> REQ. TYPE</td>
-                        <td class="border-bottom pt-3 pb-3"><i data-feather="calendar" class="mx-1 text-primary" width="18"></i> DATE OF REQ.</td>
-                        <td class="border-bottom pt-3 pb-3"><i data-feather="calendar" class="mx-1 text-primary" width="18"></i> BLDG/AREA INSP. DATE</td>
-                        <td class="border-bottom pt-3 pb-3"><i data-feather="calendar" class="mx-1 text-primary" width="18"></i> WATER WORKS INSP. DATE</td>
-                        <td class="border-bottom pt-3 pb-3"><i data-feather="activity" class="mx-1 text-primary" width="20"></i> ACTIONS</td>
+                        <td class="border-bottom pt-3 pb-3 text-secondary"><strong><i data-feather="calendar" class="mx-1 text-primary" width="18"></i> DATE OF REQUEST</strong></td>
+                        <td class="border-bottom pt-3 pb-3 text-secondary"><strong><i data-feather="activity" class="mx-1 text-primary" width="20"></i> ACTIONS</strong></td>
                     </tr>
                 </thead>
                 <tbody>
+                    @forelse ($services as $service)
                     <tr>
-                        <td class="pt-2 pb-2">020-2021-001</td>
-                        <td class="pt-2 pb-2">Nobegin Masub</td>
-                        <td class="pt-2 pb-2">New Connection</td>
-                        <td class="pt-2 pb-2">04-28-2021</td>
-                        <td class="pt-2 pb-2">04-28-2021</td>
-                        <td class="pt-2 pb-2">04-28-2021</td>
-                        <td class="">
-                            <a href="" class="text-primary mb-1 mx-2">
-                            <i data-feather="check" width="20"></i></a>
-                            <a href="" class="text-danger mb-1 mx-2">
-                            <i data-feather="x" width="20"></i></a>
+                        <td class="pt-2 pb-2">{{$service->customer->account_number}}</td>
+                        <td class="pt-2 pb-2">{{$service->customer->fullname()}}</td>
+                        <td class="pt-2 pb-2">{{$service->serviceType()}}</td>
+                        <td class="pt-2 pb-2">{{$service->prettyRequestDate()}}</td>
+                        <td class="d-flex justify-content-start py-0">
+                            <form action="{{ route('admin.municipal-engineer.approve') }}" method="post" class="mb-0 mx-0 d-flex py-2">
+                                @csrf
+                                <input type="hidden" name="id" value="{{ $service->id }}">
+                                <button type="submit" class="border-0 bg-white text-primary"><i data-feather="check" width="20"></i> Approve</button>
+                            </form>
+                            @if($service->isDeniable())
+                            <form action="{{route('admin.municipal-engineer.deny', ['id' => $service->id])}}" method="post" class="mb-1 mx-0 py-2">
+                                @csrf
+                                <button type="submit" class="border-0 bg-white text-danger"><i data-feather="x" width="20"></i> Deny</button>
+                            </form>
+                            @endif
                         </td>
                     </tr>
-                    <tr>
-                        <td class="pt-2 pb-2">020-2021-002</td>
-                        <td class="pt-2 pb-2">Benj Areten Masub</td>
-                        <td class="pt-2 pb-2">New Connection</td>
-                        <td class="pt-2 pb-2">04-30-2021</td>
-                        <td class="pt-2 pb-2">04-30-2021</td>
-                        <td class="pt-2 pb-2">04-30-2021</td>
-                        <td class="pt-2 pb-2">
-                            <a href="" class="text-primary mb-1 mx-2">
-                            <i data-feather="check" width="20"></i></a>
-                            <a href="" class="text-danger mb-1 mx-2">
-                            <i data-feather="x" width="20"></i></a>
-                        </td>
-                    </tr>
+                    @empty
+                        <p class="text-center text-muted my-4">No pending service</p>
+                    @endforelse
+
                 </tbody>
             </table>
-            <div class="pt-2 pb-2 px-2 bg-light">
+
+            {{$services->links()}}
+            {{-- <div class="pt-2 pb-2 px-2 bg-light">
                 <button class="btn btn-primary rounded-sm">
                     <i data-feather="chevrons-left" width="20"></i> Prev
                 </button>
@@ -78,7 +70,7 @@
                 <button class="btn btn-primary rounded-sm"> Next
                     <i data-feather="chevrons-right" width="20"></i>
                 </button>
-            </div>
+            </div> --}}
         </div>
     </div>
 </div>
