@@ -4,9 +4,25 @@
 
 @section('content')
 
-<div class="row">
-    <div class="col-md-12">
-        <h3 class="mt-4">List of Services</h3>
+    <div class="col-md-8 offset-md-2">
+        <div class="row">
+            <div class="col-md-6 py-0">
+                <h3 class="mt-4">List of Services</h3>
+            </div>
+            <div class="col-md-6 pt-md-3">
+                <form action="{{ route('admin.services-list.filter')}}" class="row" method="get">
+                    <select class="form-control col-md mx-3" name="filter" id="filter">
+                        <option value="none">None</option>
+                        <option value="pending_building_inspection">Pending Building Inspection</option>
+                        <option value="pending_waterworks_inspection">Pending Waterworks Inspection</option>
+                        <option value="denied_building_inspection">Disapproved by Building Inspector</option>
+                        <option value="denied_waterworks_inspection">Disapproved by Waterworks Inspector</option>
+                        <option value="service_done">Service Done</option>
+                    </select>
+                    <button type="submit" class="btn btn-primary col-md-3">Filter</button>
+                </form>
+            </div>
+        </div>
         <div class="card">
             <div class="table-responsive mb-0">
                 <table class="table mb-0">
@@ -27,7 +43,7 @@
                                 <td scope="row" class="border-bottom-0 border-top">{{ App\Classes\Facades\StringHelper::toReadableService($service->type_of_service)}}</td>
                                 <td scope="row" class="border-bottom-0 border-top">{{$service->remarks}}</td>
                                 <td scope="row" class="border-bottom-0 border-top">{{$service->landmarks}}</td>
-                                <td scope="row" class="border-bottom-0 border-top">{{$service->contact_number}}</td>
+                                <td scope="row" class="border-bottom-0 border-top">{{$service->customer->contact_number}}</td>
                                 <td scope="row" class="border-bottom-0 border-top">{{App\Classes\Facades\StringHelper::toReadableStatus($service->status)}}</td>
                             </tr>
                         @empty

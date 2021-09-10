@@ -18,6 +18,7 @@ class User extends Authenticatable
     public static $READER=3;
     public static $BLDG_INSPECTOR=4;
     public static $WATERWORKS_INSPECTOR=5;
+    public static $ENGINEER=6;
 
 
     /**
@@ -99,6 +100,11 @@ class User extends Authenticatable
         return $this->role==5;
     }
 
+    public function isEngineer()
+    {
+        return $this->role==self::$ENGINEER;
+    }
+
     public function username()
     {
         return $this->username;
@@ -111,6 +117,6 @@ class User extends Authenticatable
 
     public function user_role()
     {
-        return UserTypeHelper::toReadableUserString($this->role);
+        return self::validRoles()[$this->role];
     }
 }

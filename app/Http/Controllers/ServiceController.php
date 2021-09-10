@@ -8,6 +8,7 @@ use App\Rules\RedundantService;
 use App\Services\Options;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Validator;
 
 class ServiceController extends Controller
@@ -18,7 +19,7 @@ class ServiceController extends Controller
 
     private function getServices()
     {
-        return (new Options)->getServices();
+        return Arr::except(Service::getServiceTypes(),['new_connection']);
     }
 
 
@@ -68,13 +69,15 @@ class ServiceController extends Controller
            'service_schedule'=>'required|date|after_or_equal:today'
        ],$messages);
 
+       $initialStatus=Service::getInitialStatus($request->service_type);
        Service::create([
             'customer_id'=>$request->account_number,
             'type_of_service'=>$request->service_type,
             'remarks'=>$request->remarks,
             'landmarks'=>$request->landmark,
             'work_schedule'=>$request->service_schedule,
-            'status'=>'pending'
+            'status'=>$initialStatus,
+            'start_status'=>$initialStatus,
        ]);
 
        return back()->with([

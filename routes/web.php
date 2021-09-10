@@ -58,7 +58,7 @@ Route::middleware('auth')->group(function(){
 
 Route::prefix('admin')->middleware(['auth', 'auth.allowed-user'])->name('admin.')->group(function(){
 
-   
+
     Route::resources([
         'searched-customers'=>SearchedCustomerController::class,
         'existing-customers'=>ExistingCustomerController::class,
@@ -66,7 +66,7 @@ Route::prefix('admin')->middleware(['auth', 'auth.allowed-user'])->name('admin.'
         'users'=>UserController::class,
 
     ]);
-   
+
 
     Route::resource('user-passwords',UserPasswordController::class)->parameters([
         'user-passwords'=>'user'
@@ -75,6 +75,7 @@ Route::prefix('admin')->middleware(['auth', 'auth.allowed-user'])->name('admin.'
 
 
     Route::get('/service-list', [ServiceListController::class, 'index'])->name('services-list.index');
+    Route::get('/service-list/service', [ServiceListController::class, 'filter'])->name('services-list.filter');
 
     // Export URLs
     Route::get('/customers/export/{keyword?}',[ExportsController::class,'exportCustomers'])->name('customers.export');
@@ -95,7 +96,7 @@ Route::prefix('admin')->middleware(['auth', 'auth.allowed-user'])->name('admin.'
     Route::get('/search-consumer',[CustomerSearchController::class,'search'])->name('search-customer');
 
     Route::get('/services/search',[ServiceController::class,'search'])->name('services.search');
-    
+
     Route::resource('services', ServiceController::class);
 
     // RECONNECTION OF METER
@@ -108,7 +109,9 @@ Route::prefix('admin')->middleware(['auth', 'auth.allowed-user'])->name('admin.'
     Route::middleware('auth.allowed-bldg-inspector')->group(function(){
         Route::get('/bldg-area/request-approvals',[BLDGApprovalController::class, 'index'])->name('request-approvals');
         Route::get('/bldg-area/request-approvals/undo',[BLDGApprovalController::class, 'undo'])->name('undo');
+        Route::get('/bldg-area/request-approvals/search',[BLDGApprovalController::class, 'search'])->name('search');
         Route::post('/bldg-area/request-approvals/undo/{id}',[BLDGApprovalController::class, 'undoStatus'])->name('undo-status');
+        Route::get('/bldg-area/request-approvals/search-denied',[BLDGApprovalController::class,'search_denied'])->name('search.denied');
         Route::post('/bldg-area/request-approvals/approve',[BLDGApprovalController::class, 'approve'])->name('bld-request-approvals-approve');
         Route::post('/bldg-area/request-approvals/reject/{id}',[BLDGApprovalController::class, 'reject'])->name('bld-request-approvals-reject');
     });
@@ -122,6 +125,8 @@ Route::prefix('admin')->middleware(['auth', 'auth.allowed-user'])->name('admin.'
 
     // WATER WORKS ALLOWED ACCESS ONLY
     Route::middleware('auth.allowed-waterworks-access')->group(function(){
+        Route::get('/water-works/request-approvals/search',[WaterWorksApprovalController::class, 'search'])->name('water.search');
+        // Route::get('/water-works/request-approvals/search-denied',[WaterWorksApprovalController::class,'search_denied'])->name('water.search.denied');
         Route::get('/water-works/request-approvals',[WaterWorksApprovalController::class, 'index'])->name('waterworks-request-approvals');
         Route::post('/waterworks/request-approvals/approve', [WaterWorksApprovalController::class, 'approve'])->name('waterworks-request-approvals-approve');
         Route::post('/waterworks/request-approvals/reject/{id}', [WaterWorksApprovalController::class, 'reject'])->name('waterworks-request-approvals-reject');
@@ -129,7 +134,11 @@ Route::prefix('admin')->middleware(['auth', 'auth.allowed-user'])->name('admin.'
     // END WATER WORKS ALLOWED ACCESS ONLY
 
     // MUNICIPAL ENGINEER APPROVALS
-    Route::get('/me/request-approvals',[MunicipalEngApprovalController::class, 'index'])->name('me-request-approvals')->middleware('auth');
+    Route::get('/me/request-approvals',[MunicipalEngApprovalController::class, 'index'])->name('me-request-approvals');
+    Route::get('/me/search',[MunicipalEngApprovalController::class, 'search'])->name('municipal-engineer.search');
+    Route::post('/me/approve',[MunicipalEngApprovalController::class, 'approve'])->name('municipal-engineer.approve');
+    Route::post('/me/deny',[MunicipalEngApprovalController::class, 'deny'])->name('municipal-engineer.deny');
+   
     // END MUNICIPAL ENGINEER APPROVALS
 
     // TRANSACTION LISTS
