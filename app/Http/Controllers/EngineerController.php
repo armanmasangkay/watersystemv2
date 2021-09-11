@@ -10,13 +10,17 @@ use Illuminate\Pagination\Paginator;
 
 class EngineerController extends Controller
 {
+    //used to identify how many services to show when paginated
+    private int $servicesPerPage=10; 
+    
+    
     private function createView($services)
     {
         return view('pages.users.engineer.index', ServiceReturnDataArray::set(Service::$PENDING_ENGINEER_APPROVAL,$services));
     }
     public function index()
     {
-        $services = Service::where('status', Service::$PENDING_ENGINEER_APPROVAL)->paginate(20);
+        $services = Service::where('status', Service::$PENDING_ENGINEER_APPROVAL)->paginate($this->servicesPerPage);
         return $this->createView($services);
     }
 
@@ -38,7 +42,7 @@ class EngineerController extends Controller
     public function search(Request $request)
     {
         $services = (new ServicesFromKeyword)->get($request->keyword, Service::$PENDING_ENGINEER_APPROVAL);
-        $services = new Paginator($services->all(), 10);
+        $services = new Paginator($services->all(), $this->servicesPerPage);
         return $this->createView($services);
     }
 }
