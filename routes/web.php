@@ -1,5 +1,6 @@
 <?php
 
+use App\Classes\Facades\Middleware\Allowed;
 use App\Exports\CustomersExport;
 use App\Exports\LedgerExport;
 use App\Http\Controllers\AdminController;
@@ -39,10 +40,13 @@ use App\Http\Controllers\ServicesPaymentController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserPasswordController;
 use App\Http\Controllers\WaterBill;
+use App\Models\User;
 use App\Services\CustomersFromKeyword;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
+
+// dd(Allowed::role(User::$CASHIER,User::$BLDG_INSPECTOR));
 
 Route::get('/', function () {
     return redirect(route('admin.dashboard'));
@@ -135,7 +139,7 @@ Route::prefix('admin')->middleware(['auth', 'auth.allowed-user'])->name('admin.'
     // END WATER WORKS ALLOWED ACCESS ONLY
 
     // MUNICIPAL ENGINEER
-    Route::get('/engineer/index',[EngineerController::class, 'index'])->name('municipal-engineer.index');
+    Route::get('/engineer/index',[EngineerController::class, 'index'])->name('municipal-engineer.index')->middleware(Allowed::role(User::$ADMIN,User::$ENGINEER));
     Route::get('/engineer/search',[EngineerController::class, 'search'])->name('municipal-engineer.search');
     Route::post('/engineer/approve',[EngineerController::class, 'approve'])->name('municipal-engineer.approve');
     Route::post('/engineer/deny',[EngineerController::class, 'deny'])->name('municipal-engineer.deny');
