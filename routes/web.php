@@ -134,13 +134,13 @@ Route::prefix('admin')->middleware(['auth', 'auth.allowed-user'])->name('admin.'
     });
     // END WATER WORKS ALLOWED ACCESS ONLY
 
-    // MUNICIPAL ENGINEER APPROVALS
+    // MUNICIPAL ENGINEER
     Route::get('/engineer/index',[EngineerController::class, 'index'])->name('municipal-engineer.index');
     Route::get('/engineer/search',[EngineerController::class, 'search'])->name('municipal-engineer.search');
     Route::post('/engineer/approve',[EngineerController::class, 'approve'])->name('municipal-engineer.approve');
     Route::post('/engineer/deny',[EngineerController::class, 'deny'])->name('municipal-engineer.deny');
    
-    // END MUNICIPAL ENGINEER APPROVALS
+    // END MUNICIPAL ENGINEER
 
     // TRANSACTION LISTS
     Route::get('/transactions-lists',[TransactionListsController::class, 'index'])->name('transactions-lists');
