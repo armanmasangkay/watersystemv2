@@ -104,7 +104,7 @@ Route::prefix('admin')->middleware(['auth', 'auth.allowed-user'])->name('admin.'
     // END RECONNECTION OF METER
 
     // BUILDING INSPECTOR ALLOWED ACCESS ONLY
-    Route::middleware('auth.allowed-bldg-inspector')->group(function(){
+    Route::middleware(Allowed::role(User::$BLDG_INSPECTOR))->group(function(){
         Route::get('/bldg-area/request-approvals',[BLDGApprovalController::class, 'index'])->name('request-approvals');
         Route::get('/bldg-area/request-approvals/undo',[BLDGApprovalController::class, 'undo'])->name('undo');
         Route::get('/bldg-area/request-approvals/search',[BLDGApprovalController::class, 'search'])->name('search');
@@ -122,7 +122,7 @@ Route::prefix('admin')->middleware(['auth', 'auth.allowed-user'])->name('admin.'
     // END MUNICIPAL TREASURER OFFICE REQUEST APPROVALS
 
     // WATER WORKS ALLOWED ACCESS ONLY
-    Route::middleware('auth.allowed-waterworks-access')->group(function(){
+    Route::middleware(Allowed::role(User::$WATERWORKS_INSPECTOR))->group(function(){
         Route::get('/water-works/request-approvals/search',[WaterWorksApprovalController::class, 'search'])->name('water.search');
         // Route::get('/water-works/request-approvals/search-denied',[WaterWorksApprovalController::class,'search_denied'])->name('water.search.denied');
         Route::get('/water-works/request-approvals',[WaterWorksApprovalController::class, 'index'])->name('waterworks-request-approvals');
