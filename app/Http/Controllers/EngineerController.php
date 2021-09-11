@@ -12,7 +12,7 @@ class EngineerController extends Controller
 {
     private function createView($services)
     {
-        return view('pages.mun-eng-request-approval', ServiceReturnDataArray::set(Service::$PENDING_ENGINEER_APPROVAL,$services));
+        return view('pages.users.engineer.index', ServiceReturnDataArray::set(Service::$PENDING_ENGINEER_APPROVAL,$services));
     }
     public function index()
     {
