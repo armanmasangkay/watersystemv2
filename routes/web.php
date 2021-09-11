@@ -27,6 +27,7 @@ use App\Http\Controllers\ExistingCustomerController;
 use App\Http\Controllers\SearchedCustomerController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\EditBillingController;
+use App\Http\Controllers\EngineerController;
 use App\Http\Controllers\ExportsController;
 use App\Http\Controllers\FieldMeterController;
 use App\Http\Controllers\FieldMeterReadingController;
@@ -134,10 +135,10 @@ Route::prefix('admin')->middleware(['auth', 'auth.allowed-user'])->name('admin.'
     // END WATER WORKS ALLOWED ACCESS ONLY
 
     // MUNICIPAL ENGINEER APPROVALS
-    Route::get('/me/request-approvals',[MunicipalEngApprovalController::class, 'index'])->name('me-request-approvals');
-    Route::get('/me/search',[MunicipalEngApprovalController::class, 'search'])->name('municipal-engineer.search');
-    Route::post('/me/approve',[MunicipalEngApprovalController::class, 'approve'])->name('municipal-engineer.approve');
-    Route::post('/me/deny',[MunicipalEngApprovalController::class, 'deny'])->name('municipal-engineer.deny');
+    Route::get('/engineer/index',[EngineerController::class, 'index'])->name('municipal-engineer.index');
+    Route::get('/engineer/search',[EngineerController::class, 'search'])->name('municipal-engineer.search');
+    Route::post('/engineer/approve',[EngineerController::class, 'approve'])->name('municipal-engineer.approve');
+    Route::post('/engineer/deny',[EngineerController::class, 'deny'])->name('municipal-engineer.deny');
    
     // END MUNICIPAL ENGINEER APPROVALS
 
