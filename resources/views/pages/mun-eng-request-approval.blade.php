@@ -58,19 +58,7 @@
             </table>
 
             {{$services->links()}}
-            {{-- <div class="pt-2 pb-2 px-2 bg-light">
-                <button class="btn btn-primary rounded-sm">
-                    <i data-feather="chevrons-left" width="20"></i> Prev
-                </button>
-                <button class="btn btn-default rounded-sm">1</button>
-                <button class="btn btn-default rounded-sm">2</button>
-                <button class="btn btn-default rounded-sm">3</button>
-                <button class="btn btn-default rounded-sm">4</button>
-                <button class="btn btn-default rounded-sm">5</button>
-                <button class="btn btn-primary rounded-sm"> Next
-                    <i data-feather="chevrons-right" width="20"></i>
-                </button>
-            </div> --}}
+        
         </div>
     </div>
 </div>

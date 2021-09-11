@@ -13,3 +13,5 @@
     </div>
     @enderror
 </form>
+
+//TODO: Ability to clear search filter and go back to show everything

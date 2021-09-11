@@ -8,7 +8,7 @@ use App\Services\ServicesFromKeyword;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
 
-class MunicipalEngApprovalController extends Controller
+class EngineerController extends Controller
 {
     private function createView($services)
     {
