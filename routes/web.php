@@ -1,23 +1,18 @@
 <?php
 
 use App\Classes\Facades\Middleware\Allowed;
-use App\Exports\CustomersExport;
-use App\Exports\LedgerExport;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\CustomerSearchController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutUserController;
-use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\TransactionsController;
 use App\Http\Controllers\ReconnectionController;
 use App\Http\Controllers\BLDGApprovalController;
 use App\Http\Controllers\CashierController;
 use App\Http\Controllers\MTOApprovalController;
 use App\Http\Controllers\WaterWorksApprovalController;
-use App\Http\Controllers\MunicipalEngApprovalController;
-use App\Http\Controllers\ReconnectionTransactionController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\TransactionListsController;
 use App\Http\Controllers\TransferOfMeterController;
@@ -41,8 +36,6 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserPasswordController;
 use App\Http\Controllers\WaterBill;
 use App\Models\User;
-use App\Services\CustomersFromKeyword;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 
