@@ -37,7 +37,7 @@ class EngineerController extends Controller
 
     public function search(Request $request)
     {
-        $services = (new ServicesFromKeyword)->get($request->account_number, Service::$PENDING_ENGINEER_APPROVAL);
+        $services = (new ServicesFromKeyword)->get($request->keyword, Service::$PENDING_ENGINEER_APPROVAL);
         $services = new Paginator($services->all(), 10);
         return $this->createView($services);
     }
