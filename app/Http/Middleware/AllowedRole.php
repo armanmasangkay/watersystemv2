@@ -16,7 +16,6 @@ class AllowedRole
      */
     public function handle(Request $request, Closure $next,...$role)
     {
-        dd($role);
         $authenticatedUserRole=auth()->user()->role;
 
         $isAllowed=in_array($authenticatedUserRole,$role);
