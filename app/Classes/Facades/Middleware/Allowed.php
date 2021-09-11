@@ -11,6 +11,6 @@ class Allowed{
             $result.=$role.",";
         }
 
-        return substr($result,0,strlen($result)-1); //removes the extra ','
+        return substr($result,0,strlen($result)-1); //removes the extra ',' before returning it
     }
 }
