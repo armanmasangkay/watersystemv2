@@ -29,11 +29,8 @@ class Service extends Model
     protected static $serviceStatus = [
         'pending_building_inspection' => 'Pending for Building Inspection',
         'pending_waterworks_inspection'=>'Pending for Waterworks  Inspection',
-        'denied_building_inspection' => 'Disapproved by Building Inspector',
-        'denied_waterworks_inspection' => 'Disapproved by Waterworks Inspector',
         'pending_engineer_approval' => 'Municipal Engineer',
-        'denied_engineer_approval' => 'Disapproved by Municipal Engineer',
-        'service_done' => 'Service Done',
+        'pending_for_payment' => 'Pending for Payment',
         'ready' => 'Ready for Scheduling or Print of WOR'
     ];
 

@@ -9,16 +9,17 @@ class DashboardCard extends Component
 
     public $title;
     public $count;
-
+    public $url;
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($title, $count)
+    public function __construct($title, $count, $url)
     {
         $this->title = $title;
         $this->count = $count;
+        $this->url = $url;
     }
 
     /**

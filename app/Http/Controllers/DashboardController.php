@@ -9,6 +9,15 @@ use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
+    private function constructArray($title, $count, $url)
+    {
+        return [
+            'title' =>$title,
+            'count' =>$count,
+            'url' => $url,
+        ];
+    }
+
     public function index()
     {
         $customerCount = Customer::count();
@@ -20,22 +29,10 @@ class DashboardController extends Controller
         $servicePendingForPaymentCount = Service::countWithStatus('pending_for_payment');
 
         $data = [
-            'customer' =>[
-                'title' => 'Number of Customer',
-               'count' => $customerCount
-            ] ,
-            'user' =>[
-                'title' => 'Number of User',
-                'count' => $userCount
-            ],
-            'service_pending' =>[
-                'title' => 'Number of Pending Services',
-                'count' => $servicePendingCount
-            ],
-            'service_pending_for_payment' => [
-                'title' => 'Number of Pending for Payment',
-                'count' => $servicePendingForPaymentCount
-            ]
+            'customer' => $this->constructArray('Number of Customer', $customerCount, route('admin.existing-customers.index')),
+            'user' => $this->constructArray('Number of User', $userCount, route('admin.users.index')),
+            'service_pending' =>$this->constructArray('Number of Pending Services', $servicePendingCount, route('admin.services-list.index')),
+            'service_pending_for_payment' => $this->constructArray('Number of Pending for Payment', $servicePendingForPaymentCount, route('admin.services-list.filter', ['filter' => Service::$PENDING_FOR_PAYMENT]))
         ];
 
         return view('pages.dashboard', [

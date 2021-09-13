@@ -9,9 +9,11 @@ class ServiceListController extends Controller
 {
     public function index(){
         $services = Service::paginate(15);
+        $status = Service::getServiceStatus();
 
         return view('pages.services-list', [
-            'services' => $services
+            'services' => $services,
+            'status' => $status
         ]);
     }
 
@@ -20,9 +22,11 @@ class ServiceListController extends Controller
             return redirect(route('admin.services-list.index'));
         }
         $services = Service::where('status', $request->filter)->paginate(10);
+        $status = Service::getServiceStatus();
 
         return view('pages.services-list', [
-            'services' => $services
+            'services' => $services,
+            'status' => $status
         ]);
     }
 }
