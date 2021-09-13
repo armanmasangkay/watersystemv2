@@ -3,5 +3,6 @@
     <div class="card-body text-end">
         <h3 class="card-title">{{ $count }}</h3>
         <p class="card-text">{{ $title }}</p>
+        <a href="{{ $url}}" class="stretched-link"></a>
     </div>
 </div>
