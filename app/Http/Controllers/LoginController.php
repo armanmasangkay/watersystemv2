@@ -36,7 +36,7 @@ class LoginController extends Controller
             }
             else if(Auth::user()->isEngineer())
             {
-                return redirect()->intended(route('admin.me-request-approvals'));
+                return redirect()->intended(route('admin.municipal-engineer.index'));
             }
             else
             {

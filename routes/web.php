@@ -1,22 +1,18 @@
 <?php
 
-use App\Exports\CustomersExport;
-use App\Exports\LedgerExport;
+use App\Classes\Facades\Middleware\Allowed;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\CustomerSearchController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutUserController;
-use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\TransactionsController;
 use App\Http\Controllers\ReconnectionController;
 use App\Http\Controllers\BLDGApprovalController;
 use App\Http\Controllers\CashierController;
 use App\Http\Controllers\MTOApprovalController;
 use App\Http\Controllers\WaterWorksApprovalController;
-use App\Http\Controllers\MunicipalEngApprovalController;
-use App\Http\Controllers\ReconnectionTransactionController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\TransactionListsController;
 use App\Http\Controllers\TransferOfMeterController;
@@ -27,6 +23,7 @@ use App\Http\Controllers\ExistingCustomerController;
 use App\Http\Controllers\SearchedCustomerController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\EditBillingController;
+use App\Http\Controllers\EngineerController;
 use App\Http\Controllers\ExportsController;
 use App\Http\Controllers\FieldMeterController;
 use App\Http\Controllers\FieldMeterReadingController;
@@ -38,10 +35,11 @@ use App\Http\Controllers\ServicesPaymentController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserPasswordController;
 use App\Http\Controllers\WaterBill;
-use App\Services\CustomersFromKeyword;
-use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
+
+// dd(Allowed::role(User::$CASHIER,User::$BLDG_INSPECTOR));
 
 Route::get('/', function () {
     return redirect(route('admin.dashboard'));
@@ -106,7 +104,7 @@ Route::prefix('admin')->middleware(['auth', 'auth.allowed-user'])->name('admin.'
     // END RECONNECTION OF METER
 
     // BUILDING INSPECTOR ALLOWED ACCESS ONLY
-    Route::middleware('auth.allowed-bldg-inspector')->group(function(){
+    Route::middleware(Allowed::role(User::$BLDG_INSPECTOR))->group(function(){
         Route::get('/bldg-area/request-approvals',[BLDGApprovalController::class, 'index'])->name('request-approvals');
         Route::get('/bldg-area/request-approvals/undo',[BLDGApprovalController::class, 'undo'])->name('undo');
         Route::get('/bldg-area/request-approvals/search',[BLDGApprovalController::class, 'search'])->name('search');
@@ -124,7 +122,7 @@ Route::prefix('admin')->middleware(['auth', 'auth.allowed-user'])->name('admin.'
     // END MUNICIPAL TREASURER OFFICE REQUEST APPROVALS
 
     // WATER WORKS ALLOWED ACCESS ONLY
-    Route::middleware('auth.allowed-waterworks-access')->group(function(){
+    Route::middleware(Allowed::role(User::$WATERWORKS_INSPECTOR))->group(function(){
         Route::get('/water-works/request-approvals/search',[WaterWorksApprovalController::class, 'search'])->name('water.search');
         // Route::get('/water-works/request-approvals/search-denied',[WaterWorksApprovalController::class,'search_denied'])->name('water.search.denied');
         Route::get('/water-works/request-approvals',[WaterWorksApprovalController::class, 'index'])->name('waterworks-request-approvals');
@@ -133,13 +131,16 @@ Route::prefix('admin')->middleware(['auth', 'auth.allowed-user'])->name('admin.'
     });
     // END WATER WORKS ALLOWED ACCESS ONLY
 
-    // MUNICIPAL ENGINEER APPROVALS
-    Route::get('/me/request-approvals',[MunicipalEngApprovalController::class, 'index'])->name('me-request-approvals');
-    Route::get('/me/search',[MunicipalEngApprovalController::class, 'search'])->name('municipal-engineer.search');
-    Route::post('/me/approve',[MunicipalEngApprovalController::class, 'approve'])->name('municipal-engineer.approve');
-    Route::post('/me/deny',[MunicipalEngApprovalController::class, 'deny'])->name('municipal-engineer.deny');
-   
-    // END MUNICIPAL ENGINEER APPROVALS
+    // MUNICIPAL ENGINEER
+    Route::middleware(Allowed::role(User::$ENGINEER))->group(function(){
+
+        Route::get('/engineer/index',[EngineerController::class, 'index'])->name('municipal-engineer.index');
+        Route::get('/engineer/search',[EngineerController::class, 'search'])->name('municipal-engineer.search');
+        Route::post('/engineer/approve',[EngineerController::class, 'approve'])->name('municipal-engineer.approve');
+        Route::post('/engineer/deny',[EngineerController::class, 'deny'])->name('municipal-engineer.deny');
+
+    });
+    // END MUNICIPAL ENGINEER
 
     // TRANSACTION LISTS
     Route::get('/transactions-lists',[TransactionListsController::class, 'index'])->name('transactions-lists');

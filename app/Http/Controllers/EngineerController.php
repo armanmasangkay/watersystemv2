@@ -8,15 +8,22 @@ use App\Services\ServicesFromKeyword;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
 
-class MunicipalEngApprovalController extends Controller
+class EngineerController extends Controller
 {
+    
+    private int $servicesPerPage=10; //used to identify how many services to show when paginated
+    
+    
     private function createView($services)
     {
-        return view('pages.mun-eng-request-approval', ServiceReturnDataArray::set(Service::$PENDING_ENGINEER_APPROVAL,$services));
+        return view(
+            'pages.users.engineer.index',
+            ServiceReturnDataArray::set(Service::$PENDING_ENGINEER_APPROVAL,$services)
+        );
     }
     public function index()
     {
-        $services = Service::where('status', Service::$PENDING_ENGINEER_APPROVAL)->paginate(20);
+        $services = Service::where('status', Service::$PENDING_ENGINEER_APPROVAL)->paginate($this->servicesPerPage);
         return $this->createView($services);
     }
 
@@ -24,7 +31,6 @@ class MunicipalEngApprovalController extends Controller
     {
         $service=Service::findOrFail($request->id);
         $service->approve();
-
         return back();
     }
 
@@ -37,8 +43,8 @@ class MunicipalEngApprovalController extends Controller
 
     public function search(Request $request)
     {
-        $services = (new ServicesFromKeyword)->get($request->account_number, Service::$PENDING_ENGINEER_APPROVAL);
-        $services = new Paginator($services->all(), 10);
+        $services = (new ServicesFromKeyword)->get($request->keyword, Service::$PENDING_ENGINEER_APPROVAL);
+        $services = new Paginator($services->all(), $this->servicesPerPage);
         return $this->createView($services);
     }
 }

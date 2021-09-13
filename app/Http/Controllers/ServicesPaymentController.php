@@ -15,7 +15,7 @@ class ServicesPaymentController extends Controller
     public function index()
     {
         $services = Service::where('status', 'pending_for_payment')->paginate(20);
-        return view('pages.cashier-services-transaction-payment', ['services' => $services, 'route' => 'admin.services-payment-search']);
+        return view('pages.cashier-services-transaction-payment', ['services' => $services, 'search_route' => 'admin.services-payment-search']);
     }
 
     public function search(Request $request)
@@ -45,18 +45,16 @@ class ServicesPaymentController extends Controller
         ]);
 
         if($validator->fails()){
-            return response()->json(['created' => false, 'errors' => "OR number cannot be the same or the amount must be greater than zero"]);
+            return response()->json(['created' => false, 'errors' => $validator->errors()]);
         }
 
         $service = Service::findOrFail($request->id);
-        $service->status = 'ready';
-        $service->update();
+        $service->approve();
 
         PaymentWorkOrder::create([
             'or_no' => $request->orNum,
             'customer_id' => $request->customer_id,
             'service_id' => $request->id,
-            'payment_date' => date('Y-m-d', strtotime($request->payment_date)),
             'payment_amount' => $request->amount,
             'user_id' => Auth::id()
         ]);

@@ -55,6 +55,11 @@ class Service extends Model
     {
         return self::$serviceTypes;
     }
+
+    public function prettyServiceType()
+    {
+        return self::$serviceTypes[$this->type_of_service];
+    }
     
 
     public static function getInitialStatus($serviceType)
