@@ -138,6 +138,7 @@ Route::prefix('admin')->middleware(['auth', 'auth.allowed-user'])->name('admin.'
         Route::get('/engineer/search',[EngineerController::class, 'search'])->name('municipal-engineer.search');
         Route::post('/engineer/approve',[EngineerController::class, 'approve'])->name('municipal-engineer.approve');
         Route::post('/engineer/deny',[EngineerController::class, 'deny'])->name('municipal-engineer.deny');
+        
 
     });
     // END MUNICIPAL ENGINEER
@@ -177,6 +178,8 @@ Route::prefix('admin')->middleware(['auth', 'auth.allowed-user'])->name('admin.'
         // END SERVICES PAYMENT
     });
     // ADMIN AND CASHIER ALLOWED ACCESS
+
+
 
     // ADMIN ALLOWED ACCESS ONLY
     Route::middleware('access.authorize')->group(function(){
