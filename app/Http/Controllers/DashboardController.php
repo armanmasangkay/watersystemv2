@@ -11,20 +11,35 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $customers = Customer::all();
-        $customerCount = $customers->count();
+        $customerCount = Customer::count();
 
-        $users = User::all();
-        $usersCount = $users->count();
+        $userCount = User::count();
 
-        $pending_services = Service::where('status' , '<>', 'ready');
-        $pending_services_count = $pending_services->count();
+        $servicePendingCount = Service::countNotReady();
 
-        $pending_services_not_paid = Service::where('status', 'pending_for_payment');
-        $pending_services_not_paid_count = $pending_services_not_paid->count();
+        $servicePendingForPaymentCount = Service::countWithStatus('pending_for_payment');
 
-        dd([$customerCount,$usersCount,$pending_services_count, $pending_services_not_paid_count]);
+        $data = [
+            'customer' =>[
+                'title' => 'Number of Customer',
+               'count' => $customerCount
+            ] ,
+            'user' =>[
+                'title' => 'Number of User',
+                'count' => $userCount
+            ],
+            'service_pending' =>[
+                'title' => 'Number of Pending Services',
+                'count' => $servicePendingCount
+            ],
+            'service_pending_for_payment' => [
+                'title' => 'Number of Pending for Payment',
+                'count' => $servicePendingForPaymentCount
+            ]
+        ];
 
-        return view('pages.dashboard');
+        return view('pages.dashboard', [
+            'data' => $data
+        ]);
     }
 }
