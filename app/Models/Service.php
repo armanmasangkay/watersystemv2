@@ -25,6 +25,17 @@ class Service extends Model
         'others' => 'Others'
     ];
 
+    protected static $serviceStatus = [
+        'pending_building_inspection' => 'Pending for Building Inspection',
+        'pending_waterworks_inspection'=>'Pending for Waterworks  Inspection',
+        'denied_building_inspection' => 'Disapproved by Building Inspector',
+        'denied_waterworks_inspection' => 'Disapproved by Waterworks Inspector',
+        'pending_engineer_approval' => 'Municipal Engineer',
+        'denied_engineer_approval' => 'Disapproved by Municipal Engineer',
+        'service_done' => 'Service Done',
+        'ready' => 'Ready for Scheduling or Print of WOR'
+    ];
+
     protected $fillable=[
         'customer_id',
         'type_of_service',
@@ -41,6 +52,10 @@ class Service extends Model
     public static $READY="ready";
 
 
+    public static function getServiceStatus(){
+        return self::$serviceStatus;
+    }
+
     public static function getServiceTypes()
     {
         return self::$serviceTypes;
@@ -48,7 +63,7 @@ class Service extends Model
 
     public static function getInitialStatus($serviceType)
     {
-        
+
         switch($serviceType)
         {
             case 'new_connection':
@@ -67,7 +82,7 @@ class Service extends Model
                 return self::$PENDING_ENGINEER_APPROVAL;
             default:
                 return self::$READY;
-    
+
         }
     }
 
