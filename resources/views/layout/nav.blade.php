@@ -1,6 +1,6 @@
   <nav class="navbar navbar-expand-md navabr-light border-bottom pt-3 pb-3">
-    <div class="container{{ Request::is('admin/consumer-ledger*') ? '-fluid px-5' : ' px-3' }}">
-      <a class="navbar-brand text-dark pe-4" href="{{route('admin.dashboard')}}"><strong>MWS</strong></a>
+    <div class="container{{ Request::is('admin/consumer-ledger*') || Request::is('admin/service-list*') ? '-fluid px-5' : ' px-3' }}">
+      <a class="navbar-brand text-dark pe-4 pt-md-0" href="{{route('admin.dashboard')}}"><strong>MWS</strong></a>
       <button class="navbar-toggler border-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span data-feather="align-center" class="text-secondary"></span>
       </button>
@@ -22,6 +22,11 @@
               {{-- <li><a class="dropdown-item" href="{{route('admin.consumer-ledger')}}">Ledger Card</a></li> --}}
               <li><a class="dropdown-item" href="{{route('admin.existing-customers.index')}}">View Lists</a></li>
             </ul>
+          </li>
+          <li class="nav-item m1-">
+            <a class="nav-link m-1 text-secondary" aria-current="page" href="{{route('admin.services-payment')}}">
+              <i data-feather="activity" class="feather-16 m-1 mb-1"></i> Request Services &nbsp;
+            </a>
           </li>
           @adminonly(Auth::user()->role)
           {{-- <li class="nav-item dropdown pt-1">

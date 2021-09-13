@@ -34,6 +34,10 @@ class LoginController extends Controller
             {
                 return redirect()->intended(route('admin.waterworks-request-approvals'));
             }
+            else if(Auth::user()->isEngineer())
+            {
+                return redirect()->intended(route('admin.municipal-engineer.index'));
+            }
             else
             {
                 return redirect()->intended(route('admin.dashboard'));
