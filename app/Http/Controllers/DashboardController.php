@@ -32,7 +32,7 @@ class DashboardController extends Controller
             'customer' => $this->constructArray('Number of Customer', $customerCount, route('admin.existing-customers.index')),
             'user' => $this->constructArray('Number of User', $userCount, route('admin.users.index')),
             'service_pending' =>$this->constructArray('Number of Pending Services', $servicePendingCount, route('admin.services-list.index')),
-            'service_pending_for_payment' => $this->constructArray('Number of Pending for Payment', $servicePendingForPaymentCount, route('admin.services-list.index'))
+            'service_pending_for_payment' => $this->constructArray('Number of Pending for Payment', $servicePendingForPaymentCount, route('admin.services-list.filter', ['filter' => Service::$PENDING_FOR_PAYMENT]))
         ];
 
         return view('pages.dashboard', [
