@@ -9,6 +9,8 @@ class StringHelper
         $data = [
             'pending_building_inspection' => 'Pending for Building Inspection',
             'pending_waterworks_inspection'=>'Pending for Waterworks  Inspection',
+            'pending_for_payment'=>'Pending for Payments',
+            'pending' => 'Pending',
             'denied_building_inspection' => 'Disapproved by Building Inspector',
             'denied_waterworks_inspection' => 'Disapproved by Waterworks Inspector',
             'service_done' => 'Service Done'
