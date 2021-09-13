@@ -26,6 +26,14 @@ class Service extends Model
         'others' => 'Others'
     ];
 
+    protected static $serviceStatus = [
+        'pending_building_inspection' => 'Pending for Building Inspection',
+        'pending_waterworks_inspection'=>'Pending for Waterworks  Inspection',
+        'pending_engineer_approval' => 'Municipal Engineer',
+        'pending_for_payment' => 'Pending for Payment',
+        'ready' => 'Ready for Scheduling or Print of WOR'
+    ];
+
     protected $fillable=[
         'customer_id',
         'type_of_service',
@@ -51,15 +59,19 @@ class Service extends Model
     public static $READY="ready";
 
 
+    public static function getServiceStatus(){
+        return self::$serviceStatus;
+    }
+
     public static function getServiceTypes()
     {
         return self::$serviceTypes;
     }
-    
+
 
     public static function getInitialStatus($serviceType)
     {
-        
+
         switch($serviceType)
         {
             case 'new_connection':
@@ -78,7 +90,7 @@ class Service extends Model
                 return self::$PENDING_ENGINEER_APPROVAL;
             default:
                 return self::$READY;
-    
+
         }
     }
 
@@ -96,12 +108,12 @@ class Service extends Model
 
         return true;
     }
-    
+
     private function getNextFlow($flag="prev")
     {
         $flowIndex=0;
         foreach($this->processFlow as $flow)
-        {     
+        {
             if($this->status==$flow)
             {
                break;
@@ -155,5 +167,15 @@ class Service extends Model
     public function serviceType()
     {
         return StringHelper::toReadableService($this->type_of_service);
+    }
+
+    public static function countNotReady()
+    {
+        return self::where('status', '<>', 'ready')->count();
+    }
+
+    public static function countWithStatus($status)
+    {
+        return self::where('status', $status)->count();
     }
 }

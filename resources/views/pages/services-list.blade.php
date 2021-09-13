@@ -13,11 +13,9 @@
                 <form action="{{ route('admin.services-list.filter')}}" class="row" method="get">
                     <select class="form-control col-md mx-3" name="filter" id="filter">
                         <option value="none">None</option>
-                        <option value="pending_building_inspection">Pending Building Inspection</option>
-                        <option value="pending_waterworks_inspection">Pending Waterworks Inspection</option>
-                        <option value="denied_building_inspection">Disapproved by Building Inspector</option>
-                        <option value="denied_waterworks_inspection">Disapproved by Waterworks Inspector</option>
-                        <option value="service_done">Service Done</option>
+                        @foreach ($status as $key => $value)
+                            <option value="{{$key}}">{{ $value }}</option>
+                        @endforeach
                     </select>
                     <button type="submit" class="btn btn-primary col-md-3">Filter</button>
                 </form>

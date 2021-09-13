@@ -90,4 +90,8 @@ class Customer extends Model
     {
         return $this->connection_status==="active";
     }
+
+    public static function count(){
+        return self::all()->count();
+    }
 }
