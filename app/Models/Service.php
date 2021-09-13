@@ -50,6 +50,8 @@ class Service extends Model
     public static $PENDING_FOR_PAYMENT="pending_for_payment";
     public static $READY="ready";
 
+    public static $PAGINATION_VALUE = 10;
+
 
     public static function getServiceTypes()
     {
@@ -61,6 +63,10 @@ class Service extends Model
         return self::$serviceTypes[$this->type_of_service];
     }
     
+    public static function withStatus($status)
+    {
+        return self::where('status', $status)->paginate(self::$PAGINATION_VALUE);
+    }
 
     public static function getInitialStatus($serviceType)
     {

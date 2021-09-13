@@ -31,6 +31,6 @@ class CreatePaymentWorkordersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('payment_workorders');
+        Schema::dropIfExists('payment_work_orders');
     }
 }

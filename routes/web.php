@@ -54,7 +54,7 @@ Route::middleware('auth')->group(function(){
     Route::put('/users/change-password', [UserController::class, 'storeNewPassword'])->name('users.update-password.store');
 });
 
-Route::prefix('admin')->middleware(['auth', 'auth.allowed-user'])->name('admin.')->group(function(){
+Route::prefix('admin')->middleware(['auth'])->name('admin.')->group(function(){
 
 
     Route::resources([
@@ -95,12 +95,12 @@ Route::prefix('admin')->middleware(['auth', 'auth.allowed-user'])->name('admin.'
 
     Route::get('/services/search',[ServiceController::class,'search'])->name('services.search');
 
-    Route::resource('services', ServiceController::class);
+    
 
     // RECONNECTION OF METER
-    Route::get('reconnection',[ReconnectionController::class, 'index'])->name('reconnection');
-    Route::get('search-consumer-info',[ReconnectionController::class, 'search'])->name('search');
-    Route::post('reconnection/transaction/store',[ReconnectionController::class,'storeTransaction'])->name('reconnection.store');
+    // Route::get('reconnection',[ReconnectionController::class, 'index'])->name('reconnection');
+    // Route::get('search-consumer-info',[ReconnectionController::class, 'search'])->name('search');
+    // Route::post('reconnection/transaction/store',[ReconnectionController::class,'storeTransaction'])->name('reconnection.store');
     // END RECONNECTION OF METER
 
     // BUILDING INSPECTOR ALLOWED ACCESS ONLY
@@ -116,9 +116,9 @@ Route::prefix('admin')->middleware(['auth', 'auth.allowed-user'])->name('admin.'
     // END BUILDING INSPECTOR ALLOWED ACCESS ONLY
 
     // MUNICIPAL TREASURER OFFICE REQUEST APPROVALS
-    Route::get('/mto/request-approvals',[MTOApprovalController::class, 'index'])->name('mto-request-approvals')->middleware('auth');
-    Route::post('/mto/request-approvals/approve', [MTOApprovalController::class, 'approve'])->name('mto-request-approvals-approve');
-    Route::post('/mto/request-approvals/reject', [MTOApprovalController::class, 'reject'])->name('mto-request-approvals-reject');
+    // Route::get('/mto/request-approvals',[MTOApprovalController::class, 'index'])->name('mto-request-approvals')->middleware('auth');
+    // Route::post('/mto/request-approvals/approve', [MTOApprovalController::class, 'approve'])->name('mto-request-approvals-approve');
+    // Route::post('/mto/request-approvals/reject', [MTOApprovalController::class, 'reject'])->name('mto-request-approvals-reject');
     // END MUNICIPAL TREASURER OFFICE REQUEST APPROVALS
 
     // WATER WORKS ALLOWED ACCESS ONLY
@@ -143,16 +143,16 @@ Route::prefix('admin')->middleware(['auth', 'auth.allowed-user'])->name('admin.'
     // END MUNICIPAL ENGINEER
 
     // TRANSACTION LISTS
-    Route::get('/transactions-lists',[TransactionListsController::class, 'index'])->name('transactions-lists');
+    // Route::get('/transactions-lists',[TransactionListsController::class, 'index'])->name('transactions-lists');
     // TRANSACTION LISTS
 
     // TRANSFER OF METER
-    Route::get('/transfer-meter',[TransferOfMeterController::class, 'index'])->name('transfer-meter');
-    Route::get('/search-info',[TransferOfMeterController::class, 'search'])->name('search-info');
+    // Route::get('/transfer-meter',[TransferOfMeterController::class, 'index'])->name('transfer-meter');
+    // Route::get('/search-info',[TransferOfMeterController::class, 'search'])->name('search-info');
     // END TRANSFER OF METER
 
     // ADMIN AND CASHIER ALLOWED ACCESS
-    Route::middleware('auth.allowed-admin-cashier-access')->group(function(){
+    Route::middleware(Allowed::role(User::$ADMIN, User::$CASHIER))->group(function(){
         // VIEWING AND SEARCHING OF EXISTING CUSTOMERS
             Route::resources([
                 'searched-customers'=>SearchedCustomerController::class,
@@ -175,20 +175,24 @@ Route::prefix('admin')->middleware(['auth', 'auth.allowed-user'])->name('admin.'
     // ADMIN AND CASHIER ALLOWED ACCESS
 
     // CASHIER ALLOWED ACCESS ONLY
-    Route::middleware('auth.allowed-cashier-access')->group(function(){
+    Route::middleware(Allowed::role(User::$CASHIER))->group(function(){
         // SERVICES PAYMENT
             Route::get('/services-for-payment',[ServicesPaymentController::class, 'index'])->name('services-payment');
             Route::get('/services-for-payment/search',[ServicesPaymentController::class, 'search'])->name('services-payment-search');
-            Route::post('/services-for-payment/work-order',[ServicesPaymentController::class, 'save_payment'])->name('services-payment-save');
+            Route::post('/services-for-payment/work-order',[ServicesPaymentController::class, 'savePayment'])->name('services-payment-save');
         // END SERVICES PAYMENT
     });
     // END CASHIER ALLOWED ACCESS ONLY
 
     // ADMIN ALLOWED ACCESS ONLY
-    Route::middleware('access.authorize')->group(function(){
+    Route::middleware(Allowed::role(User::$ADMIN))->group(function(){
         // CASHIER ACCOUNT CREATION
             Route::resource('cashiers',CashierController::class)->middleware('auth.restrict-cashier');
         // END CASHIER ACCOUNT CREATION
+
+        // SERVICES
+        Route::resource('services', ServiceController::class);
+        // END SERVICES
 
         // READER ACCOUNT CREATION
             Route::get('/meter-reader', [MeterReaderController::class, 'index'])->name('reader');
@@ -210,23 +214,26 @@ Route::prefix('admin')->middleware(['auth', 'auth.allowed-user'])->name('admin.'
         // END WATER RATES AND SURCHARGE SETTINGS
     });
     // END ADMIN ALLOWED ACCESS ONLY
+
+    // FIELD METER USER ACCESS ONLY
+    Route::middleware(Allowed::role(User::$FIELD_PERSONNEL))->group(function(){
+
+        Route::get('/field-personnel/home',[FieldMeterController::class, 'index'])->name('home');
+    
+        Route::get('/field-personnel/meter-reading',[FieldMeterReadingController::class, 'index'])->name('field-reading');
+        Route::get('/field-personnel/meter-reading/search/consumer',[FieldMeterReadingController::class, 'search'])->name('search');
+        Route::post('/field-personnel/meter-reading/save',[FieldMeterReadingController::class, 'store'])->name('save-meter-billing');
+    
+        Route::get('/field-personnel/meter-services',[FieldMeterServicesController::class, 'index'])->name('meter-services');
+        Route::get('/field-personnel/meter-services/search/consumer',[FieldMeterServicesController::class, 'search'])->name('services-search-customer');
+        Route::post('/field-personnel/meter-services',[FieldMeterServicesController::class, 'store'])->name('meter-services.store');
+    
+    });
+    // END FIELD METER USER ACCESS ONLY
+
 });
 
 Route::post('/logout',[LogoutUserController::class,'logout'])->middleware('auth')->name('logout');
-
-Route::middleware('auth', 'auth.allowed-reader')->group(function(){
-
-    Route::get('/field-personnel/home',[FieldMeterController::class, 'index'])->name('home');
-
-    Route::get('/field-personnel/meter-reading',[FieldMeterReadingController::class, 'index'])->name('field-reading');
-    Route::get('/field-personnel/meter-reading/search/consumer',[FieldMeterReadingController::class, 'search'])->name('search');
-    Route::post('/field-personnel/meter-reading/save',[FieldMeterReadingController::class, 'store'])->name('save-meter-billing');
-
-    Route::get('/field-personnel/meter-services',[FieldMeterServicesController::class, 'index'])->name('meter-services');
-    Route::get('/field-personnel/meter-services/search/consumer',[FieldMeterServicesController::class, 'search'])->name('services-search-customer');
-    Route::post('/field-personnel/meter-services',[FieldMeterServicesController::class, 'store'])->name('meter-services.store');
-
-});
 
 Route::post('/get/computed/water-bill',[WaterBill::class, 'computeWaterBill'])->name('water-bill');
 
