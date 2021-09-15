@@ -169,6 +169,11 @@ class Service extends Model
         return self::$serviceTypes[$this->type_of_service];
     }
 
+    public function prettyStatus()
+    {
+        return self::$serviceStatus[$this->status];
+    }
+
     public static function countNotReady()
     {
         return self::where('status', '<>', 'ready')->count();

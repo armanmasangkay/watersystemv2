@@ -43,8 +43,10 @@
                                 <td scope="row" class="border-bottom-0 border-top">{{$service->remarks}}</td>
                                 <td scope="row" class="border-bottom-0 border-top">{{$service->landmarks}}</td>
                                 <td scope="row" class="border-bottom-0 border-top">{{$service->customer->contact_number}}</td>
-                                <td scope="row" class="border-bottom-0 border-top">{{App\Classes\Facades\StringHelper::toReadableStatus($service->status)}}</td>
-                                <td scope="row" class="border-bottom-0 border-top">{{App\Classes\Facades\StringHelper::toReadableStatus($service->status)}}</td>
+                                <td scope="row" class="border-bottom-0 border-top">{{$service->prettyStatus()}}</td>
+                                <td scope="row" class="border-bottom-0 border-top">
+                                    <a href="{{}}">Delete</a>
+                                </td>
                             </tr>
                         @empty
                             <tr>
