@@ -32,5 +32,7 @@ class AppServiceProvider extends ServiceProvider
         Blade::if('adminonly',function($value){
             return $value==User::$ADMIN;
         });
+
+     
     }
 }

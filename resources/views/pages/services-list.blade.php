@@ -32,16 +32,18 @@
                             <td scope="col" class="border-bottom-0 py-3"><strong>LANDMARKS</strong></td>
                             <td scope="col" class="border-bottom-0 py-3"><strong>CONTACT NUMBER</strong></td>
                             <td scope="col" class="border-bottom-0 py-3"><strong>STATUS</strong></td>
+                            <td scope="col" class="border-bottom-0 py-3"><strong>ACTION</strong></td>
                         </tr>
                     </thead>
                     <tbody>
                         @forelse ($services as $service)
                             <tr>
                                 <td scope="row" class="border-bottom-0 border-top">{{$service->customer->fullname()}}</td>
-                                <td scope="row" class="border-bottom-0 border-top">{{ App\Classes\Facades\StringHelper::toReadableService($service->type_of_service)}}</td>
+                                <td scope="row" class="border-bottom-0 border-top">{{ $service->prettyType()}}</td>
                                 <td scope="row" class="border-bottom-0 border-top">{{$service->remarks}}</td>
                                 <td scope="row" class="border-bottom-0 border-top">{{$service->landmarks}}</td>
                                 <td scope="row" class="border-bottom-0 border-top">{{$service->customer->contact_number}}</td>
+                                <td scope="row" class="border-bottom-0 border-top">{{App\Classes\Facades\StringHelper::toReadableStatus($service->status)}}</td>
                                 <td scope="row" class="border-bottom-0 border-top">{{App\Classes\Facades\StringHelper::toReadableStatus($service->status)}}</td>
                             </tr>
                         @empty

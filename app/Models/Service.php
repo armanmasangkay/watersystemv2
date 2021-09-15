@@ -164,9 +164,9 @@ class Service extends Model
         return $this->changeDateFormat($this->water_works_schedule);
     }
 
-    public function serviceType()
+    public function prettyType()
     {
-        return StringHelper::toReadableService($this->type_of_service);
+        return self::$serviceTypes[$this->type_of_service];
     }
 
     public static function countNotReady()
