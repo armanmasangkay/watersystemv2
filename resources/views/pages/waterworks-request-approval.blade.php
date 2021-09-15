@@ -18,6 +18,9 @@
             <div class="col-md-6 py-0">
                 @include('templates.form-search-account')
             </div>
+            @if(isset(request()->keyword))
+                <x-button :url="$index_route"/>
+            @endif
         </div>
     </div>
     <div class="card-body p-0">
