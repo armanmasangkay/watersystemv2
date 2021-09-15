@@ -72,8 +72,8 @@ Route::prefix('admin')->middleware(['auth', 'auth.allowed-user'])->name('admin.'
 
 
 
-    Route::get('/service-list', [ServiceListController::class, 'index'])->name('services-list.index');
-    Route::get('/service-list/filter', [ServiceListController::class, 'filter'])->name('services-list.filter');
+    // Route::get('/service-list', [ServiceListController::class, 'index'])->name('services-list.index');
+    // Route::get('/service-list/filter', [ServiceListController::class, 'filter'])->name('services-list.filter');
 
     // Export URLs
     Route::get('/customers/export/{keyword?}',[ExportsController::class,'exportCustomers'])->name('customers.export');
@@ -94,6 +94,7 @@ Route::prefix('admin')->middleware(['auth', 'auth.allowed-user'])->name('admin.'
     Route::get('/search-consumer',[CustomerSearchController::class,'search'])->name('search-customer');
 
     Route::get('/services/search',[ServiceController::class,'search'])->name('services.search');
+    Route::get('/services/filter',[ServiceController::class,'filter'])->name('services.filter');
 
     Route::resource('services', ServiceController::class);
 

@@ -10,7 +10,7 @@
                 <h3 class="mt-4">List of Services</h3>
             </div>
             <div class="col-md-6 pt-md-3">
-                <form action="{{ route('admin.services-list.filter')}}" class="row" method="get">
+                <form action="{{ route('admin.services.filter')}}" class="row" method="get">
                     <select class="form-control col-md mx-3" name="filter" id="filter">
                         <option value="none">None</option>
                         @foreach ($status as $key => $value)
@@ -45,7 +45,7 @@
                                 <td scope="row" class="border-bottom-0 border-top">{{$service->customer->contact_number}}</td>
                                 <td scope="row" class="border-bottom-0 border-top">{{$service->prettyStatus()}}</td>
                                 <td scope="row" class="border-bottom-0 border-top">
-                                    <a href="{{}}">Delete</a>
+                                    <a href="#">Delete</a>
                                 </td>
                             </tr>
                         @empty
