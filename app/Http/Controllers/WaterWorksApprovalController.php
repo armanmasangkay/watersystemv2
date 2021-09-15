@@ -34,8 +34,7 @@ class WaterWorksApprovalController extends Controller
     public function approve(Request $request)
     {
         $services = Service::findOrFail($request->id);
-        $services->status = "waterworks_approved";
-        $services->save();
+        $services->approve();
 
         return redirect(route('admin.waterworks-request-approvals'));
     }

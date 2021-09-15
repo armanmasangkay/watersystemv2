@@ -63,7 +63,6 @@ class ServiceController extends Controller
 
     public function create()
     { 
-
         return view('pages.add-service', [
             'route' => 'admin.search-customer',
             'services'=>$this->getServices()
