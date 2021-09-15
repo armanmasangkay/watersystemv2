@@ -2,21 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\services\StoreServiceRequest;
 use App\Models\Customer;
 use App\Models\Service;
 use App\Rules\RedundantService;
-use App\Services\Options;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Validator;
 
 class ServiceController extends Controller
 {
   
-
-
-
     private function getServices()
     {
         return Arr::except(Service::getServiceTypes(),['new_connection']);
@@ -75,19 +71,9 @@ class ServiceController extends Controller
     }
 
 
-    public function store(Request $request)
+    public function store(StoreServiceRequest $request)
     {
-        $messages=[
-            'remarks.required_if'=>"Remarks field is required if 'Other' is selected on Service Type field"
-        ];
-
-       $request->validate([
-           'account_number'=>'required',
-           'service_type'=>['required',new RedundantService],
-           'remarks'=>'required_if:service_type,others',
-           'service_schedule'=>'required|date|after_or_equal:today'
-       ],$messages);
-
+    
        $initialStatus=Service::getInitialStatus($request->service_type);
        Service::create([
             'customer_id'=>$request->account_number,
@@ -145,8 +131,9 @@ class ServiceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Service $service)
     {
-        //
+        $service->delete();
+        return back();
     }
 }

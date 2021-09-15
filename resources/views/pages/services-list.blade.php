@@ -45,7 +45,15 @@
                                 <td scope="row" class="border-bottom-0 border-top">{{$service->customer->contact_number}}</td>
                                 <td scope="row" class="border-bottom-0 border-top">{{$service->prettyStatus()}}</td>
                                 <td scope="row" class="border-bottom-0 border-top">
-                                    <a href="#">Delete</a>
+                                    <form action="{{route("admin.services.destroy",$service)}}" method="post">
+                                        @csrf
+                                        @method("DELETE")
+                                        <button type="submit" class="btn btn-link" 
+                                                onclick="return confirm('Are you sure you want to delete this? You cannot undo this action')">
+                                                Delete
+                                        </button>
+                                    </form>
+                                    
                                 </td>
                             </tr>
                         @empty

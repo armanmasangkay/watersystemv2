@@ -95,7 +95,6 @@ Route::prefix('admin')->middleware(['auth', 'auth.allowed-user'])->name('admin.'
 
     Route::get('/services/search',[ServiceController::class,'search'])->name('services.search');
     Route::get('/services/filter',[ServiceController::class,'filter'])->name('services.filter');
-
     Route::resource('services', ServiceController::class);
 
     // RECONNECTION OF METER

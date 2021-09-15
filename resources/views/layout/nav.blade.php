@@ -70,7 +70,7 @@
             <ul class="dropdown-menu px-2" aria-labelledby="navbarDropdown">
               <li>
                 <a class="dropdown-item" href="{{route('admin.services.create')}}">New</a>
-                <a class="dropdown-item" href="{{route('admin.services-list.index')}}">List of Services</a>
+                <a class="dropdown-item" href="{{route('admin.services.index')}}">List of Services</a>
                 <a class="dropdown-item" href="{{route('admin.request-approvals')}}">Requests</a>
               </li>
             </ul>
