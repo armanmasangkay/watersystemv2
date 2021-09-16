@@ -85,10 +85,10 @@ Route::prefix('admin')->middleware(['auth'])->name('admin.')->group(function(){
 
 
     Route::post('/register-consumer',[CustomerController::class,'store'])
-            ->middleware('access.authorize')->name('register-customer.store');
+            ->middleware(Allowed::role(User::$ADMIN))->name('register-customer.store');
 
     Route::get('/dashboard',[DashboardController::class,'index'])
-            ->middleware('access.authorize')
+            ->middleware(Allowed::role(User::$ADMIN))
             ->name('dashboard');
 
     Route::get('/search-consumer',[CustomerSearchController::class,'search'])->name('search-customer');
