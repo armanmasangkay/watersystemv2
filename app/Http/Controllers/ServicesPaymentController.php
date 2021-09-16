@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\Customer;
 use App\Models\PaymentWorkOrder;
 use Illuminate\Support\Facades\Response;
+use App\Http\Requests\ServiceRequest;
 
 class ServicesPaymentController extends Controller
 {
@@ -37,16 +38,8 @@ class ServicesPaymentController extends Controller
         return view('pages.users.cashier.services-transaction-payment', ['services' => $services, 'route' => 'admin.services-payment-search']);
     }
 
-    public function savePayment(Request $request)
+    public function savePayment(ServiceRequest $request)
     {
-        $validator = Validator::make($request->all(),[
-            'orNum' => 'required|unique:payments,or_no',
-            'inputedAmount' => 'required|numeric|gt:0'
-        ]);
-
-        if($validator->fails()){
-            return response()->json(['created' => false, 'errors' => $validator->errors()]);
-        }
 
         $service = Service::findOrFail($request->id);
         $service->approve();
