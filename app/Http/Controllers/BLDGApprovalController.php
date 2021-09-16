@@ -38,8 +38,7 @@ class BLDGApprovalController extends Controller
     public function approve(Request $request)
     {
         $service = Service::findOrFail($request->id);
-        $service->status = "pending_waterworks_inspection";
-        $service->save();
+        $service->approve();
 
         return redirect(route('admin.request-approvals'));
     }

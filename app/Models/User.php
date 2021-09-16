@@ -121,4 +121,9 @@ class User extends Authenticatable
     {
         return self::validRoles()[$this->role];
     }
+
+    public static function count()
+    {
+        return self::all()->count();
+    }
 }

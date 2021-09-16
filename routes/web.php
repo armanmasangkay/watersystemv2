@@ -72,8 +72,8 @@ Route::prefix('admin')->middleware(['auth'])->name('admin.')->group(function(){
 
 
 
-    Route::get('/service-list', [ServiceListController::class, 'index'])->name('services-list.index');
-    Route::get('/service-list/service', [ServiceListController::class, 'filter'])->name('services-list.filter');
+    // Route::get('/service-list', [ServiceListController::class, 'index'])->name('services-list.index');
+    // Route::get('/service-list/filter', [ServiceListController::class, 'filter'])->name('services-list.filter');
 
     // Export URLs
     Route::get('/customers/export/{keyword?}',[ExportsController::class,'exportCustomers'])->name('customers.export');
@@ -94,8 +94,8 @@ Route::prefix('admin')->middleware(['auth'])->name('admin.')->group(function(){
     Route::get('/search-consumer',[CustomerSearchController::class,'search'])->name('search-customer');
 
     Route::get('/services/search',[ServiceController::class,'search'])->name('services.search');
-
-    
+    Route::get('/services/filter',[ServiceController::class,'filter'])->name('services.filter');
+    Route::resource('services', ServiceController::class);
 
     // RECONNECTION OF METER
     // Route::get('reconnection',[ReconnectionController::class, 'index'])->name('reconnection');
@@ -138,6 +138,7 @@ Route::prefix('admin')->middleware(['auth'])->name('admin.')->group(function(){
         Route::get('/engineer/search',[EngineerController::class, 'search'])->name('municipal-engineer.search');
         Route::post('/engineer/approve',[EngineerController::class, 'approve'])->name('municipal-engineer.approve');
         Route::post('/engineer/deny',[EngineerController::class, 'deny'])->name('municipal-engineer.deny');
+        
 
     });
     // END MUNICIPAL ENGINEER
@@ -183,6 +184,8 @@ Route::prefix('admin')->middleware(['auth'])->name('admin.')->group(function(){
         // END SERVICES PAYMENT
     });
     // END CASHIER ALLOWED ACCESS ONLY
+
+
 
     // ADMIN ALLOWED ACCESS ONLY
     Route::middleware(Allowed::role(User::$ADMIN))->group(function(){
