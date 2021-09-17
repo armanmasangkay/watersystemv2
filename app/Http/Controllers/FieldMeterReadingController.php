@@ -29,8 +29,8 @@ class FieldMeterReadingController extends Controller
 
     public function search(Request $request)
     {
-        $account_number=$request->account_number??$request->account_number;
-        
+        $account_number=$request->account_number;
+    
         try{
             $customer=Customer::findOrFail($account_number);
         }catch(ModelNotFoundException $e){
@@ -41,7 +41,7 @@ class FieldMeterReadingController extends Controller
         $acc = $customer->account();
         $fullname = $customer->fullname();
         $address = $customer->address();
-        // $transactions = $customer->transactions()->orderBy('created_at', 'asc')->paginate(10)->appends(['account_number'=>$account_number]);
+       
 
         $balance = Transaction::orderByDesc('created_at')->where('customer_id', $account_number)->get();
         $balance = $balance->first();

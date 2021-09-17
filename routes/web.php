@@ -219,12 +219,12 @@ Route::prefix('admin')->middleware(['auth'])->name('admin.')->group(function(){
     // END ADMIN ALLOWED ACCESS ONLY
 
     // FIELD METER USER ACCESS ONLY
-    Route::middleware(Allowed::role(User::$FIELD_PERSONNEL))->group(function(){
+    Route::middleware(Allowed::role(User::$READER))->group(function(){
 
         Route::get('/field-personnel/home',[FieldMeterController::class, 'index'])->name('home');
     
         Route::get('/field-personnel/meter-reading',[FieldMeterReadingController::class, 'index'])->name('field-reading');
-        Route::get('/field-personnel/meter-reading/search/consumer',[FieldMeterReadingController::class, 'search'])->name('search');
+        Route::get('/field-personnel/meter-reading/search/consumer',[FieldMeterReadingController::class, 'search'])->name('reader.search');
         Route::post('/field-personnel/meter-reading/save',[FieldMeterReadingController::class, 'store'])->name('save-meter-billing');
     
         Route::get('/field-personnel/meter-services',[FieldMeterServicesController::class, 'index'])->name('meter-services');

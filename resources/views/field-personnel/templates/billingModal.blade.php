@@ -1,7 +1,7 @@
 <div class="modal modal-fluid fade" id="ledgerSetupModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
-            <form action="{{ route('save-meter-billing') }}" method="post" id="billing-form">
+            <form action="{{ route('admin.save-meter-billing') }}" method="post" id="billing-form">
                 @csrf
                 <input type="hidden" name="connection_type" value="{{ isset($customer)?$customer['connection_type'] : ''}}">
                 <input type="hidden" name="min_rates" value="{{ isset($rates) ? $rates['min_rate'] : '0'}}">

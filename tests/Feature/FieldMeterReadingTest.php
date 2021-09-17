@@ -18,12 +18,19 @@ class FieldMeterReadingTest extends TestCase
 {
     use RefreshDatabase;
 
+    private function getUser()
+    {
+        return $user = User::factory()->create([
+            'role'=>User::$READER
+        ]);
+    }
     public function test_can_search_consumer_with_transactions()
     {
         $customer = Customer::factory()->create([
             'connection_type'=>'Residential'
         ]);
-        $user = User::factory()->create();
+       $user=$this->getUser();
+      
         WaterRate::factory()->create();
         Surcharge::factory()->create();
 
@@ -32,9 +39,7 @@ class FieldMeterReadingTest extends TestCase
             'user_id' => $user->id,
             'posted_by' => $user->id
         ]);
-
-        $response = $this->get(route('admin.search',['account_number'=>$transaction->customer_id]));
-
+        $response = $this->actingAs($user)->get(route('admin.reader.search',['account_number'=>$transaction->customer_id]));
         $response->assertSessionHasNoErrors();
         $response->assertViewIs('field-personnel.pages.meter-reading');
         $response->assertViewHasAll(['customer', 'rates', 'surcharge', 'last_date', 'current_transaction_id']);
@@ -43,13 +48,14 @@ class FieldMeterReadingTest extends TestCase
 
     public function test_cannot_search_transaction_if_account_number_is_null()
     {
-        $response = $this->get(route('search',['account_number'=>'']));
+    
+        $response = $this->actingAs($this->getUser())->get(route('admin.reader.search',['account_number'=>'']));
         $response->assertSessionHasErrors();
     }
 
     public function test_cannot_save_billing_if_current_meter_is_less_than_previous_meter_reading()
     {
-        $response = $this->post(route('save-meter-billing', ['reading_meter' => 99, 'meter_reading' => 100]));
+        $response = $this->actingAs($this->getUser())->post(route('admin.save-meter-billing', ['reading_meter' => 99, 'meter_reading' => 100]));
         $response->assertStatus(200)
                     ->assertJson([
                         'created' => false,
@@ -58,7 +64,7 @@ class FieldMeterReadingTest extends TestCase
 
     public function test_cannot_update_previous_bill_surcharge_and_balance_if_null_transaction_id()
     {
-        $response = $this->post(route('save-meter-billing',['current_transaction_id' => '']));
+        $response = $this->actingAs($this->getUser())->post(route('admin.save-meter-billing',['current_transaction_id' => '']));
         $response->assertStatus(404);
     }
 
@@ -79,8 +85,7 @@ class FieldMeterReadingTest extends TestCase
             'posted_by' => $user->id
         ]);
 
-
-        $response = $this->post(route('save-meter-billing',[
+        $response = $this->actingAs($this->getUser())->post(route('admin.save-meter-billing',[
             'reading_meter' => 107,
             'customer_id' => $customer->account_number,
             'current_month' => 'Aug 09',
