@@ -19,7 +19,6 @@ class User extends Authenticatable
     public static $BLDG_INSPECTOR=4;
     public static $WATERWORKS_INSPECTOR=5;
     public static $ENGINEER=6;
-    public static $FIELD_PERSONNEL=7;
 
 
     /**
@@ -62,7 +61,6 @@ class User extends Authenticatable
             '4'=>'Building Inspector',
             '5'=>'Waterworks Inspector',
             '6'=>'Municipal Engineer',
-            '7'=>'Field Personnel'
         ];
     }
 
