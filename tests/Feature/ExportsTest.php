@@ -5,22 +5,28 @@ namespace Tests\Feature;
 use App\Exports\CustomersExport;
 use App\Models\Customer;
 use App\Models\User;
+use Illuminate\Filesystem\Filesystem;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Maatwebsite\Excel\Facades\Excel;
+
 use Tests\TestCase;
 
 class ExportsTest extends TestCase
 {
     use RefreshDatabase;
-   
+    private function clean()
+    {
+        (new Filesystem)->cleanDirectory('storage/framework/laravel-excel');
+    }
+
     //Customer Export Assertions
     public function test_customers_export_route()
     {
         $user=User::factory()->create();
-
        $response=$this->actingAs($user)->get(route('admin.customers.export'));
        $response->assertOk();
+       $this->clean();
     }
 
     public function test_customers_export_is_available_only_for_logged_in_users()
@@ -28,6 +34,7 @@ class ExportsTest extends TestCase
     
        $response=$this->get(route('admin.customers.export'));
        $response->assertRedirect();
+
     }
 
     public function test_customers_export_route_with_keyword()
@@ -35,6 +42,7 @@ class ExportsTest extends TestCase
         $user=User::factory()->create();
        $response=$this->actingAs($user)->get(route('admin.customers.export',['keyword'=>'arman']));
        $response->assertOk();
+       $this->clean();
     }
 
     public function test_user_can_download_customers_export_without_keyword_supplied() 
@@ -62,6 +70,7 @@ class ExportsTest extends TestCase
         $customer=Customer::factory()->create();
        $response=$this->actingAs($user)->get(route('admin.ledger.export',['account_number'=>$customer->account_number]));
        $response->assertOk();
+       $this->clean();
     }
 
     public function test_ledger_export_is_available_only_for_logged_in_users()
