@@ -30,6 +30,7 @@ class LedgerTransactionTest extends TestCase
             'purok' => 'Somewhere',
             'barangay' => 'Somewhere',
             'contact_number' => '09178781045',
+            'meter_serial_number'=>'123',
             'connection_type' => 'Residential',
             'connection_status' => 'Active',
             'purchase_option' => 'cash',
@@ -58,6 +59,7 @@ class LedgerTransactionTest extends TestCase
         Surcharge::factory()->create();
         $user = $this->create_user_admin();
         $this->create_customer_with_transaction();
+
         $customer = Customer::where('account_number', '!=', '')->first();
 
         $response = $this->actingAs($user)->get(route('admin.search-transactions',['account_number' => $customer->account_number]),[
@@ -66,7 +68,7 @@ class LedgerTransactionTest extends TestCase
 
         $response->assertSessionHasNoErrors();
         $response->assertViewIs('pages.consumer-ledger');
-        $response->assertViewHasAll(['customer', 'rates', 'surcharge', 'last_date', 'route', 'current_transaction_id']);
+        $response->assertViewHasAll(['customer', 'rates', 'surcharge', 'last_date', 'search_route', 'current_transaction_id']);
 
     }
 
@@ -189,7 +191,7 @@ class LedgerTransactionTest extends TestCase
         ]);
 
         $this->assertDatabaseCount('transactions',1);
-        $response->assertJson(['created' => false, 'errors' => array('reading_meter' => [])]);
+        $response->assertJson(['created' => false, 'msg' => array('reading_meter' => [])]);
     }
 
     public function test_amount_should_not_allow_less_than_or_equal_to_zero()
@@ -225,7 +227,7 @@ class LedgerTransactionTest extends TestCase
 
 
         $this->assertDatabaseCount('transactions',1);
-        $response->assertJson(['created' => false, 'errors' => array('amount' => [])]);
+        $response->assertJson(['created' => false, 'msg' => array('amount' => [])]);
     }
 
     public function test_total_should_not_allow_less_than_or_equal_to_zero()
@@ -261,7 +263,7 @@ class LedgerTransactionTest extends TestCase
 
 
         $this->assertDatabaseCount('transactions',1);
-        $response->assertJson(['created' => false, 'errors' => array('total' => [])]);
+        $response->assertJson(['created' => false, 'msg' => array('total' => [])]);
     }
 
     public function test_recent_transaction_id_should_be_required_in_form_submit()
@@ -296,7 +298,7 @@ class LedgerTransactionTest extends TestCase
 
 
         $this->assertDatabaseCount('transactions',1);
-        $response->assertJson(['created' => false, 'errors' => array('current_transaction_id' => [])]);
+        $response->assertJson(['created' => false, 'msg' => array('current_transaction_id' => [])]);
     }
 
     public function test_reading_meter_should_be_numeric()
@@ -332,7 +334,7 @@ class LedgerTransactionTest extends TestCase
 
 
         $this->assertDatabaseCount('transactions',1);
-        $response->assertJson(['created' => false, 'errors' => array('reading_meter' => [])]);
+        $response->assertJson(['created' => false, 'msg' => array('reading_meter' => [])]);
     }
 
     public function test_amount_should_be_numeric()
@@ -368,7 +370,7 @@ class LedgerTransactionTest extends TestCase
 
 
         $this->assertDatabaseCount('transactions',1);
-        $response->assertJson(['created' => false, 'errors' => array('amount' => [])]);
+        $response->assertJson(['created' => false, 'msg' => array('amount' => [])]);
     }
 
 }

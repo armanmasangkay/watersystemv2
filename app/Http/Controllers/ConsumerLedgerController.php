@@ -32,7 +32,7 @@ class ConsumerLedgerController extends Controller
 
     public function search(Request $request)
     {
-        $account_number=$request->account_number??$request->account_number;
+        $account_number=$request->account_number;
 
         try{
             $customer=Customer::findOrFail($account_number);
