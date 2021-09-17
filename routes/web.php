@@ -190,7 +190,7 @@ Route::prefix('admin')->middleware(['auth'])->name('admin.')->group(function(){
     // ADMIN ALLOWED ACCESS ONLY
     Route::middleware(Allowed::role(User::$ADMIN))->group(function(){
         // CASHIER ACCOUNT CREATION
-            Route::resource('cashiers',CashierController::class)->middleware('auth.restrict-cashier');
+            // Route::resource('cashiers',CashierController::class)->middleware('auth.restrict-cashier');
         // END CASHIER ACCOUNT CREATION
 
         // SERVICES
