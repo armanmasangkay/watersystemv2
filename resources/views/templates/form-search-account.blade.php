@@ -14,8 +14,4 @@
     @enderror
 </form>
 
-@if(isset(request()->keyword))
-<small>
-    <a href="{{route($index_route)}}">Show all</a>
-</small>
-@endif
+

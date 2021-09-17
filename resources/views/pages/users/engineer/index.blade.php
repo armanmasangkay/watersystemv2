@@ -15,7 +15,14 @@
 
 <div class="card">
     <div class="card-header px-2 bg-light">
-        @include('templates.form-search-account')
+        <div class="row">
+            <div class="col-md-6 py-0">
+                @include('templates.form-search-account')
+            </div>
+            @if(isset(request()->keyword))
+                <x-button :url="$index_route"/>
+            @endif
+        </div>
     </div>
     <div class="card-body p-0">
         <div class="table-responsive p-0">
@@ -58,7 +65,7 @@
             </table>
 
             {{$services->links()}}
-        
+
         </div>
     </div>
 </div>

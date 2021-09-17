@@ -17,9 +17,9 @@
             <div class="col-md-6 py-0">
                 @include('templates.form-search-account')
             </div>
-            <div class="col-md-6 pt-md-2">
-                <a href="{{ route($route) }}" class="btn btn-secondary float-md-end" style="height: 45px; padding-top: 10px;">{{ $text[1] }}</a>
-            </div>
+            @if(isset(request()->keyword))
+                <x-button :url="$index_route"/>
+            @endif
         </div>
     </div>
     <div class="card-body p-0">

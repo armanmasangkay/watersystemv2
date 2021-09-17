@@ -22,7 +22,7 @@ class BLDGApprovalController extends Controller
     }
 
     public function search(Request $request){
-        $services = (new ServicesFromKeyword)->get($request->account_number, 'pending_building_inspection');
+        $services = (new ServicesFromKeyword)->get($request->keyword, 'pending_building_inspection');
         $services = new Paginator($services->all(), 10);
 
         return view('pages.bldg-request-approval',ServiceReturnDataArray::set('pending_building_inspection', $services));
