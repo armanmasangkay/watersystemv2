@@ -12,6 +12,7 @@ use App\Http\Middleware\AllowedBldgInspectorAccess;
 use App\Http\Middleware\AllowedAdminCashierAccess;
 use App\Http\Middleware\AllowedRole;
 use App\Http\Middleware\AllowedWaterworksInspector;
+use App\Http\Middleware\AllowedCashierAccess;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -72,14 +73,14 @@ class Kernel extends HttpKernel
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
-        'access.authorize'=>EnsureIsAdmin::class,
-        'auth.restrict-cashier'=>RestricCashier::class,
-        'auth.allowed-user' => AllowedAccessGroupAdmin::class,
-        'auth.allowed-reader' => AllowedAccessGroupMeterReader::class,
-        'auth.allowed-bldg-inspector' => AllowedBldgInspectorAccess::class,
-        'auth.allowed-admin-cashier-access' => AllowedAdminCashierAccess::class,
-        'auth.allowed-waterworks-access' => AllowedWaterworksInspector::class,
-
+        // 'access.authorize'=>EnsureIsAdmin::class,
+        // 'auth.restrict-cashier'=>RestricCashier::class,
+        // 'auth.allowed-user' => AllowedAccessGroupAdmin::class,
+        // 'auth.allowed-reader' => AllowedAccessGroupMeterReader::class,
+        // 'auth.allowed-bldg-inspector' => AllowedBldgInspectorAccess::class,
+        // 'auth.allowed-admin-cashier-access' => AllowedAdminCashierAccess::class,
+        // 'auth.allowed-waterworks-access' => AllowedWaterworksInspector::class,
+        // 'auth.allowed-cashier-access' => AllowedCashierAccess::class,
         'allowed'=>AllowedRole::class
     ];
 }

@@ -8,6 +8,7 @@ use Illuminate\Support\Str;
 use App\Models\Service;
 use App\Models\Transaction;
 use App\Models\Payments;
+use App\Models\PaymentWorkOrder;
 
 class Customer extends Model
 {
@@ -69,6 +70,11 @@ class Customer extends Model
     public function services()
     {
         return $this->hasMany(Service::class);
+    }
+
+    public function workOrderPayment()
+    {
+        return $this->hasMany(PaymentWorkOrder::class);
     }
 
     public function payments()

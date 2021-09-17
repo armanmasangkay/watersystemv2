@@ -11,7 +11,9 @@
                 @include('templates.form-search-account')
             </div>
             <div class="col-md-3 pt-md-2">
+            @if(count($services) > 0)
                 <a href="{{ route('admin.services-payment') }}" class="btn btn-secondary float-md-end" style="height: 45px; padding-top: 10px;">Refresh</a>
+            @endif
             </div>
         </div>
     </div>
@@ -33,13 +35,10 @@
                         <tr>
                             <td class="pt-2 pb-2 ps-3">{{ $service->customer->account_number }}</td>
                             <td class="pt-2 pb-2 ps-3">{{ $service->customer->fullname() }} </td>
-                            <td class="pt-2 pb-2 ps-3">{{ $service->serviceType() }}</td>
+                            <td class="pt-2 pb-2 ps-3">{{ $service->prettyServiceType() }}</td>
                             <td class="pt-2 pb-2 ps-3">{{ \Carbon\Carbon::parse($service->created_at)->format('F d, Y') }}</td>
-                            <td class="d-flex justify-content-start py-0">
-                                <form action="{{route('admin.undo-status', ['id' => $service->id])}}" method="post" class="mb-0 mx-0 py-2">
-                                    @csrf
-                                    <button type="submit" class="border-0 bg-white text-primary py-0"><i data-feather="user-check" width="18" class="mb-1"></i>&nbsp; Payment</button>
-                                </form>
+                            <td class="d-flex justify-content-start py-2">
+                                <button type="submit" class="border-0 bg-white text-primary py-0" data-bs-toggle='modal' data-bs-target='#servicePaymentModal' data-id="{{ $service->id }}" acc-id="{{ $service->customer->account_number }}" id="payment"><i data-feather="user-check" width="18" class="mb-1"></i>&nbsp; Payment</button>
                             </td>
                         </tr>
                     @endforeach
@@ -58,10 +57,12 @@
         </div>
     </div>
 </div>
+@include('templates.servicePaymentModal')
 @endsection
 
 @section('custom-js')
 
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script src="{{ asset('assets/js/servicePayment.js') }}" defer></script>
 
 @endsection

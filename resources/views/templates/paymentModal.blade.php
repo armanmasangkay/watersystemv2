@@ -83,7 +83,7 @@
                     <div class="row mt-3">
                         <div class="col-lg-4 col-md-6 pe-md-0">
                             <small class='text-muted'>Enter OR Number <span class="text-danger"><strong>*</strong></span></small>
-                            <input type="text" class="form-control" placeholder="0.00" name="orNum" id="orNum">
+                            <input type="text" class="form-control" placeholder="xxxx" name="orNum" id="orNum">
                         </div>
                         <div class="col-lg-4 col-md-6 ps-md-1 pe-md-1">
                             <small class='text-muted'>Remaining Balance</small>
@@ -95,21 +95,17 @@
                             <small class='text-muted'>Enter Payment Amount <span class="text-danger"><strong>*</strong></span></small>
                             <input type="number" class="form-control" placeholder="0.00" name="inputedAmount" id="inputedAmount">
                         </div>
-                        <div class="col-lg-4 col-md-6 ps-md-1 pe-md-1">
-                            <small class='text-muted'>Change</small>
-                            <input type="number" class="form-control" placeholder="0.00" name="change" readonly>
-                        </div>
                         <!-- <div class="col-lg-3 col-md-6 ps-md-0">
                             <small class='text-muted'>Advance Payment</small>
                             <input type="number" class="form-control" placeholder="0.00" name="advance_payment " readonly>
                         </div> -->
                     </div>
-                    <!-- <div class="row mt-3">
-                        <div class="col-md-12 pe-md-0 d-flex justify-content-start align-items-center">
-                            <input name="override" id="override" type="checkbox">
-                            <label class='text-muted ms-2'>Add change as advance payment ?</label>
+                    <div class="row mt-3">
+                        <div class="col-md-4 pe-md-4">
+                            <p class='text-danger' style="font-size: 20px; font-weight: bold;">Change :</p>
+                            <input type="number" class="form-control border-0 text-right" placeholder="0.00" name="change" readonly  style="font-size: 28px; font-weight: bold;">
                         </div>
-                    </div> -->
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i data-feather="x"></i> Close</button>

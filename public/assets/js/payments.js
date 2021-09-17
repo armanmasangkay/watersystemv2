@@ -68,7 +68,7 @@ $(document).ready(function()
         if(parseFloat($(this).val()) > 0)
         {
             var total = 0, change = 0, remaining = 0;
-            if( parseFloat($('input[name="inputedAmount"]').val()) > parseFloat($('input[name="totalAmount"]').val()) )
+            if( parseFloat($('input[name="inputedAmount"]').val()) >= parseFloat($('input[name="totalAmount"]').val()) )
             {
                 total = parseFloat($('input[name="inputedAmount"]').val()) - parseFloat($('input[name="totalAmount"]').val())
                 change = total
@@ -81,15 +81,15 @@ $(document).ready(function()
                 remaining = total
             }
             
-            $('input[name="remaining_bal"]').val(format_number(remaining))
-            $('input[name="change"]').val(format_number(change))
+            $('input[name="remaining_bal"]').val(remaining.toFixed(2))
+            $('input[name="change"]').val(change.toFixed(2))
 
             $('#save-payment').prop('disabled', false);
         }
         else
         {
-            $('input[name="remaining_bal"]').val(format_number(parseFloat($('input[name="totalAmount"]').val())))
-            $('input[name="change"]').val(format_number(0))
+            $('input[name="remaining_bal"]').val(parseFloat($('input[name="totalAmount"]').val()).toFixed(2))
+            $('input[name="change"]').val(0.00)
             $('#save-payment').prop('disabled', true);
         }
     })

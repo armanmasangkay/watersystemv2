@@ -33,6 +33,8 @@ class AppServiceProvider extends ServiceProvider
             return $value==User::$ADMIN;
         });
 
-     
+        Blade::if('cashierOnly',function($value){
+            return $value==User::$CASHIER;
+        });
     }
 }
