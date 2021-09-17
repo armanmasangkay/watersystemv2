@@ -33,7 +33,7 @@ class FieldMeterReadingTest extends TestCase
             'posted_by' => $user->id
         ]);
 
-        $response = $this->get(route('search',['account_number'=>$transaction->customer_id]));
+        $response = $this->get(route('admin.search',['account_number'=>$transaction->customer_id]));
 
         $response->assertSessionHasNoErrors();
         $response->assertViewIs('field-personnel.pages.meter-reading');

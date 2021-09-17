@@ -5,15 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Customer;
 use App\Models\WaterRate;
 use App\Models\Transaction;
-use App\Models\Payments;
 use App\Models\Surcharge;
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Response;
+
 
 class FieldMeterReadingController extends Controller
 {
