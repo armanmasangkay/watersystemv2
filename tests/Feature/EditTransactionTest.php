@@ -26,6 +26,7 @@ class EditTransactionTest extends TestCase
             'barangay' => 'Somewhere',
             'contact_number' => '09178781045',
             'connection_type' => 'Residential',
+            'meter_serial_number'=>'123',
             'connection_status' => 'Active',
             'purchase_option' => 'cash',
             'reading_meter' => '100',
@@ -41,7 +42,7 @@ class EditTransactionTest extends TestCase
         $this->create_customer_with_transaction();
         $customer = Customer::where('account_number', '!=', '')->first();
         $transaction = Transaction::where('id', '!=', '')->first();
-
+       
         $response = $this->post(route('admin.get-bill', ['id' =>$transaction->id]), ['customer_id' => $customer->account_number]);
 
         $response->assertJson(['getBill' => true]);
