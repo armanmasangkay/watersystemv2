@@ -31,7 +31,7 @@ class PaymentTest extends TestCase
             'barangay' => 'Somewhere',
             'contact_number' => '09178781045',
             'connection_type' => 'Residential',
-            'meter_serial_number'=>'123',
+            'meter_serial_number'=>'1234',
             'connection_status' => 'Active',
             'purchase_option' => 'cash',
             'reading_meter' => '100',
