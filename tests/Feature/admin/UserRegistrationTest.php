@@ -7,22 +7,19 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
-class DashboardTest extends TestCase
+class UserRegistrationTest extends TestCase
 {
-    use RefreshDatabase;
+   public function test_route()
+   {
+       $user=User::factory()->create();
+       $response=$this->actingAs($user)->get(route('admin.users.index'));
+       $response->assertOk();
+       $response->assertViewIs('pages.users.index');
+       $response->assertViewHas(['users']);
+   }
 
-    public function test_route()
-    {
-        $user=User::factory()->create();
-        $response=$this->actingAs($user)->get(route('admin.dashboard'));
-        $response->assertOk();
-        $response->assertViewIs('pages.dashboard');
-        $response->assertViewHas('data');
-      
-    }
-
-    public function test_should_be_accessible_to_admin_only()
-    {
+   public function test_route_is_accessible_only_to_admin()
+   {
         $cashier=User::factory()->create([
             'role'=>User::$CASHIER
         ]);
@@ -58,7 +55,5 @@ class DashboardTest extends TestCase
         $waterInspectorResponse->assertForbidden();
         $engResponse->assertForbidden();
         $adminResponse->assertOk();
-    }
-
-
+   }
 }

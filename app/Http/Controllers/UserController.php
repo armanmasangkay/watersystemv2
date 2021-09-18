@@ -14,6 +14,7 @@ class UserController extends Controller
 
 
     private $passwordValidationRule=['required','confirmed','min:8'];
+    
     public function index()
     {
         $users=User::paginate(15);
