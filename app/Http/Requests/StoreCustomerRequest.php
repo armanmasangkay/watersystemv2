@@ -109,7 +109,7 @@ class StoreCustomerRequest extends FormRequest
             'balance' => 'required|numeric|min:0',
             'reading_date' => 'required|date|before_or_equal:today',
             'billing_meter_ips' => 'required|numeric|min:0',
-            'meter_serial_number'=>'required'
+            'meter_serial_number'=>'required|unique:customers,meter_number'
 
         ];
     }

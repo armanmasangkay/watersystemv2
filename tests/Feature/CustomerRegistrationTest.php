@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Models\User;
 use App\Classes\Facades\CustomerRegistrationOptions;
+use App\Models\Customer;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Carbon;
@@ -388,6 +389,34 @@ class CustomerRegistrationTest extends TestCase
 
         $response->assertJson(['created'=> true]);
         $this->assertDatabaseCount('customers',1);
+
+    }
+
+    public function test_should_not_save_if_meter_reader_already_exist_on_an_exist_customer()
+    {
+        $user = User::factory()->create();
+        $existingCustomer=Customer::factory()->create();
+        $date = Carbon::now();
+      
+        $response = $this->actingAs($user)->post(route('admin.register-customer.store'),[
+            'firstname' => "June Vic",
+            'middlename' => 'Meowk',
+            'lastname' => 'Cadayona',
+            'civil_status' => 'single',
+            'purok' => 'Somewhere',
+            'barangay' => 'Somewhere',
+            'contact_number' => '09178781045',
+            'connection_type' => 'Residential',
+            'connection_status' => 'Active',
+            'purchase_option' => 'cash',
+            'meter_serial_number'=>$existingCustomer->meter_number,
+            'reading_meter' => '0',
+            'balance' => '100',
+            'reading_date' => $date->toDateString(),
+            'billing_meter_ips' => '100'
+        ]);
+        $response->assertJson(['created'=> false]);
+        $response->assertJsonValidationErrors(['meter_serial_number']);
 
     }
 }
