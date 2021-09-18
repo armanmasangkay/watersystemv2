@@ -9,6 +9,7 @@ use Tests\TestCase;
 
 class UserRegistrationTest extends TestCase
 {
+    use RefreshDatabase;
    public function test_route()
    {
        $user=User::factory()->create();
@@ -55,5 +56,95 @@ class UserRegistrationTest extends TestCase
         $waterInspectorResponse->assertForbidden();
         $engResponse->assertForbidden();
         $adminResponse->assertOk();
+   }
+
+   public function test_storing_user_valid_data()
+   {
+        $admin=User::factory()->create();
+        $response=$this->actingAs($admin)->post(route('admin.users.store'),[
+            'name'=>'John',
+            'username'=>'arman',
+            'password'=>'12345678',
+            'password_confirmation'=>'12345678',
+            'role'=>User::$ADMIN
+        ]);
+
+        $response->assertRedirect(route('admin.users.index'));
+        $response->assertSessionHasAll([
+            'created'=>true,
+            'message'=>'User Account created successfully!'
+        ]);
+
+   }
+   public function test_storing_user_without_name()
+   {
+        $admin=User::factory()->create();
+        $response=$this->actingAs($admin)->post(route('admin.users.store'),[
+            'name'=>'',
+            'username'=>'arman',
+            'password'=>'12345678',
+            'password_confirmation'=>'12345678',
+            'role'=>User::$ADMIN
+        ]);
+
+        $response->assertRedirect();
+        $response->assertSessionHas('created',false);
+        $response->assertSessionHasErrors(['name']);
+   }
+
+   public function test_storing_user_with_existing_username()
+   {
+        $admin=User::factory()->create();
+        User::factory()->create([
+            'username'=>'arman'
+        ]);
+        $response=$this->actingAs($admin)->post(route('admin.users.store'),[
+            'name'=>'John',
+            'username'=>'arman',
+            'password'=>'12345678',
+            'password_confirmation'=>'12345678',
+            'role'=>User::$ADMIN
+        ]);
+
+        $response->assertRedirect();
+        $response->assertSessionHas('created',false);
+        $response->assertSessionHasErrors(['username']);
+   }
+   public function test_storing_user_with_mismatch_password()
+   {
+        $admin=User::factory()->create();
+        User::factory()->create([
+            'username'=>'arman'
+        ]);
+        $response=$this->actingAs($admin)->post(route('admin.users.store'),[
+            'name'=>'John',
+            'username'=>'arman',
+            'password'=>'12345678',
+            'password_confirmation'=>'1234567899',
+            'role'=>User::$ADMIN
+        ]);
+
+        $response->assertRedirect();
+        $response->assertSessionHas('created',false);
+        $response->assertSessionHasErrors(['password']);
+   }
+
+   public function test_storing_user_with_no_role_selected()
+   {
+        $admin=User::factory()->create();
+        User::factory()->create([
+            'username'=>'arman'
+        ]);
+        $response=$this->actingAs($admin)->post(route('admin.users.store'),[
+            'name'=>'John',
+            'username'=>'arman',
+            'password'=>'12345678',
+            'password_confirmation'=>'1234567899',
+            'role'=>''
+        ]);
+
+        $response->assertRedirect();
+        $response->assertSessionHas('created',false);
+        $response->assertSessionHasErrors(['role']);
    }
 }
