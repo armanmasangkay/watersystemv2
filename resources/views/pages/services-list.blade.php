@@ -11,10 +11,14 @@
             </div>
             <div class="col-md-6 pt-md-3">
                 <form action="{{ route('admin.services.filter')}}" class="row" method="get">
-                    <select class="form-control col-md mx-3" name="filter" id="filter">
+                    <select class="form-select col-md mx-3" name="filter" id="filter">
                         <option value="none">None</option>
                         @foreach ($status as $key => $value)
-                            <option value="{{$key}}">{{ $value }}</option>
+                            @if (request()->filter == $key)
+                                <option value="{{$key}}" selected>{{ $value }}</option>
+                            @else
+                                <option value="{{$key}}">{{ $value }}</option>
+                            @endif
                         @endforeach
                     </select>
                     <button type="submit" class="btn btn-primary col-md-3">Filter</button>
@@ -48,12 +52,12 @@
                                     <form action="{{route("admin.services.destroy",$service)}}" method="post">
                                         @csrf
                                         @method("DELETE")
-                                        <button type="submit" class="btn btn-link" 
+                                        <button type="submit" class="btn btn-link"
                                                 onclick="return confirm('Are you sure you want to delete this? You cannot undo this action')">
                                                 Delete
                                         </button>
                                     </form>
-                                    
+
                                 </td>
                             </tr>
                         @empty
