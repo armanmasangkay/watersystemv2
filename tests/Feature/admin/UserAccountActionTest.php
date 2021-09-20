@@ -5,6 +5,7 @@ namespace Tests\Feature\admin;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
 
 class UserAccountActionTest extends TestCase
@@ -224,5 +225,22 @@ class UserAccountActionTest extends TestCase
         $waterInspectorResponse->assertForbidden();
         $engResponse->assertForbidden();
         $adminResponse->assertOk();
+    }
+
+    public function test_reset_password_route()
+    {
+        $user=User::factory()->create();
+        $userToUpdatePassword=User::factory()->create([
+            'role'=>User::$CASHIER,
+            'password'=>Hash::make('09999')
+        ]);
+        $response=$this->actingAs($user)->put(route('admin.user-passwords.update',$userToUpdatePassword));
+        $userWithResettedPassword=User::findOrFail($userToUpdatePassword->id);
+        $this->assertTrue(Hash::check(User::defaultPassword(),$userWithResettedPassword->password));
+        $response->assertRedirect(route('admin.users.index'));
+        $response->assertSessionHas([
+            'resetted-password'=>true,
+            'message'=>"{$userWithResettedPassword->name}'s password was resetted successfully!"
+        ]); 
     }
 }
