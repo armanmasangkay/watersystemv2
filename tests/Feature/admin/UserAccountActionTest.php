@@ -243,4 +243,6 @@ class UserAccountActionTest extends TestCase
             'message'=>"{$userWithResettedPassword->name}'s password was resetted successfully!"
         ]); 
     }
+
+    //TODO check if reset password is accessible only to admin
 }
