@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\users\UpdateUserRequest;
 use App\Models\Customer;
 use App\Models\User;
 use App\Rules\SamePasswordFromAuthUser;
+use App\Rules\ValidRole;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
@@ -38,13 +41,8 @@ class UserController extends Controller
         ]);
     }
 
-    public function update(User $user,Request $request)
+    public function update(User $user,UpdateUserRequest $request)
     {
-
-        $request->validate([
-            'role'=>'required',
-            'name'=>'required'
-        ]);
 
         $user->role=$request->role;
         $user->name=$request->name;
