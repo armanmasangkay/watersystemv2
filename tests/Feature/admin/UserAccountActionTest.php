@@ -98,7 +98,7 @@ class UserAccountActionTest extends TestCase
             'role'=>'InvalidRole',
             'name'=>'Armando Masangkay',
         ]);
-        $response->dump();
+    
         $response->assertRedirect();
         $response->assertSessionHasErrors(['role']);
     }
@@ -118,7 +118,76 @@ class UserAccountActionTest extends TestCase
         $response->assertSessionHasErrors(['role']);
     }
 
+    public function test_update_action_with_role_as_decimal_value()
+    {
+        $user=User::factory()->create();
+        $userToUpdate=User::factory()->create([
+            'role'=>User::$CASHIER
+        ]);
+        $response=$this->actingAs($user)->put(route('admin.users.update',$userToUpdate),[
+            'role'=>'1.1',
+            'name'=>'Armando Masangkay',
+        ]);
+   
+        $response->assertRedirect();
+        $response->assertSessionHasErrors(['role']);
+    }
+
     public function test_update_action_should_only_be_accessible_to_admin()
+    {
+        $cashier=User::factory()->create([
+            'role'=>User::$CASHIER
+        ]);
+
+        $reader=User::factory()->create([
+            'role'=>User::$READER
+        ]);
+
+        $bldgInspector=User::factory()->create([
+            'role'=>User::$BLDG_INSPECTOR
+        ]);
+
+        $waterInspector=User::factory()->create([
+            'role'=>User::$WATERWORKS_INSPECTOR
+        ]);
+
+        $engineer=User::factory()->create([
+            'role'=>User::$ENGINEER
+        ]);
+
+        $admin=User::factory()->create();
+
+        $cashierResponse=$this->actingAs($cashier)->get(route('admin.users.edit',$admin));
+        $readerResponse=$this->actingAs($reader)->get(route('admin.users.edit',$admin));
+        $bldgInspectorResponse=$this->actingAs($bldgInspector)->get(route('admin.users.edit',$admin));
+        $waterInspectorResponse=$this->actingAs($waterInspector)->get(route('admin.users.edit',$admin));
+        $engResponse=$this->actingAs($engineer)->get(route('admin.users.edit',$admin));
+        $adminResponse=$this->actingAs($admin)->get(route('admin.users.edit',$admin));
+
+        $cashierResponse->assertForbidden();
+        $readerResponse->assertForbidden();
+        $bldgInspectorResponse->assertForbidden();
+        $waterInspectorResponse->assertForbidden();
+        $engResponse->assertForbidden();
+        $adminResponse->assertOk();
+    }
+
+    public function test_delete_route()
+    {
+        $user=User::factory()->create();
+        $userToDelete=User::factory()->create([
+            'role'=>User::$CASHIER
+        ]);
+        $response=$this->actingAs($user)->delete(route('admin.users.destroy',$userToDelete));
+        $this->assertNull(User::find($userToDelete->id));
+        $response->assertRedirect(route('admin.users.index'));
+        $response->assertSessionHas([
+            'deleted'=>true,
+            'message'=>"{$userToDelete->name}'s account was deleted successfully!"
+        ]);
+    }
+
+    public function test_delete_route_is_only_accessible_to_admin()
     {
         $cashier=User::factory()->create([
             'role'=>User::$CASHIER

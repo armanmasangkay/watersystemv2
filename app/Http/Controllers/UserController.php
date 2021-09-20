@@ -58,7 +58,7 @@ class UserController extends Controller
     {
         $user->delete();
         return redirect()->route('admin.users.index')->with([
-            'resetted-password'=>true,
+            'deleted'=>true,
             'message'=>"{$user->name}'s account was deleted successfully!"
         ]);
     }
