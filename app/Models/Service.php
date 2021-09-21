@@ -70,11 +70,11 @@ class Service extends Model
         return self::$serviceTypes;
     }
 
-    public function prettyServiceType()
+public function prettyServiceType()
     {
         return self::$serviceTypes[$this->type_of_service];
     }
-    
+
     public static function withStatus($status)
     {
         return self::where('status', $status)->paginate(self::$PAGINATION_VALUE);
