@@ -64,7 +64,7 @@ Route::prefix('admin')->middleware(['auth'])->name('admin.')->group(function(){
         'existing-customers'=>ExistingCustomerController::class,
         'new-connection' => NewConnectionController::class,
         // 'users'=>UserController::class,
-        'officers' => OfficerController::class
+
     ]);
 
 
@@ -198,6 +198,7 @@ Route::prefix('admin')->middleware(['auth'])->name('admin.')->group(function(){
         // SERVICES
         Route::resource('services', ServiceController::class);
         Route::resource('users',UserController::class);
+        Route::resource('officers', OfficerController::class);
         // END SERVICES
 
         // READER ACCOUNT CREATION
