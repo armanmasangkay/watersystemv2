@@ -21,10 +21,43 @@ class OfficerTest extends TestCase
         $response->assertViewIs('pages.officers.index');
     }
 
-    public function test_fail_if_not_admin_user_try_to_access_officers()
+    public function test_fail_if_cashier_user_try_to_access_officers()
     {
         $user = User::factory()->create([
             'role' => User::$CASHIER
+        ]);
+
+        $response = $this->actingAs($user)->get(route('admin.officers.index'));
+
+        $response->assertForbidden();
+    }
+
+    public function test_fail_if_waterworks_user_try_to_access_officers()
+    {
+        $user = User::factory()->create([
+            'role' => User::$WATERWORKS_INSPECTOR
+        ]);
+
+        $response = $this->actingAs($user)->get(route('admin.officers.index'));
+
+        $response->assertForbidden();
+    }
+
+    public function test_fail_if_bldg_inspector_user_try_to_access_officers()
+    {
+        $user = User::factory()->create([
+            'role' => User::$BLDG_INSPECTOR
+        ]);
+
+        $response = $this->actingAs($user)->get(route('admin.officers.index'));
+
+        $response->assertForbidden();
+    }
+
+    public function test_fail_if_municipal_engineer_user_try_to_access_officers()
+    {
+        $user = User::factory()->create([
+            'role' => User::$ENGINEER
         ]);
 
         $response = $this->actingAs($user)->get(route('admin.officers.index'));

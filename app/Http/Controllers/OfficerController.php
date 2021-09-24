@@ -24,10 +24,6 @@ class OfficerController extends Controller
 
     public function store(OfficerRequest $request)
     {
-        if(!Officer::isValidPosition($request->position))
-        {
-            return back()->withErrors(['position' => 'Invalid Position'])->withInput(['fullname' => $request->fullname]);
-        }
 
         Officer::create([
             'fullname' => Str::title($request->fullname),
@@ -52,10 +48,6 @@ class OfficerController extends Controller
 
     public function update(OfficerRequest $request, Officer $officer)
     {
-        if(!Officer::isValidPosition($request->position))
-        {
-            return back()->withErrors(['position' => 'Invalid Position'])->withInput(['fullname' => $request->fullname]);
-        }
 
         $officer = Officer::findOrFail($officer->id);
 
@@ -71,7 +63,6 @@ class OfficerController extends Controller
 
     public function destroy(Officer $officer)
     {
-        $officer = Officer::findOrFail($officer->id);
         $officer->delete();
 
         return redirect(route('admin.officers.index'))->with([

@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Rules\ValidPosition;
 
 class OfficerRequest extends FormRequest
 {
@@ -25,7 +26,7 @@ class OfficerRequest extends FormRequest
     {
         return [
             'fullname' => 'required',
-            'position' => 'required'
+            'position' => ['required', new ValidPosition]
         ];
     }
 }
