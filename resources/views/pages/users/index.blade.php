@@ -6,7 +6,7 @@
 
 <div class="row">
   <div class="col-md-8 col-lg-12">
-    @if(session('created') || session('resetted-password'))
+    @if(session('created') || session('deleted') || session('resetted-password'))
     <div class="alert alert-success alert-dismissible fade show mt-4" role="alert">
         <strong>Great!</strong> {{session('message')}}
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
