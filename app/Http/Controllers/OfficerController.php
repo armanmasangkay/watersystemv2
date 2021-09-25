@@ -38,7 +38,6 @@ class OfficerController extends Controller
 
     public function edit(Officer $officer)
     {
-        $officer = Officer::findOrFail($officer->id);
 
         return view('pages.officers.edit',[
             'officer' => $officer,
@@ -48,9 +47,6 @@ class OfficerController extends Controller
 
     public function update(OfficerRequest $request, Officer $officer)
     {
-
-        $officer = Officer::findOrFail($officer->id);
-
         $officer->fullname = Str::title($request->fullname);
         $officer->position = $request->position;
         $officer->save();
