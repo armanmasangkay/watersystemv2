@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\admin;
 
+use App\Classes\Facades\Helpers\Test\IsRouteAccessible;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -56,6 +57,7 @@ class UserAccountActionTest extends TestCase
         $waterInspectorResponse->assertForbidden();
         $engResponse->assertForbidden();
         $adminResponse->assertOk();
+       
     }
 
     public function test_update_action_should_not_accept_if_required_fields_are_empty()
@@ -136,6 +138,7 @@ class UserAccountActionTest extends TestCase
 
     public function test_update_action_should_only_be_accessible_to_admin()
     {
+
         $cashier=User::factory()->create([
             'role'=>User::$CASHIER
         ]);
@@ -158,19 +161,20 @@ class UserAccountActionTest extends TestCase
 
         $admin=User::factory()->create();
 
-        $cashierResponse=$this->actingAs($cashier)->get(route('admin.users.edit',$admin));
-        $readerResponse=$this->actingAs($reader)->get(route('admin.users.edit',$admin));
-        $bldgInspectorResponse=$this->actingAs($bldgInspector)->get(route('admin.users.edit',$admin));
-        $waterInspectorResponse=$this->actingAs($waterInspector)->get(route('admin.users.edit',$admin));
-        $engResponse=$this->actingAs($engineer)->get(route('admin.users.edit',$admin));
-        $adminResponse=$this->actingAs($admin)->get(route('admin.users.edit',$admin));
+        $cashierResponse=$this->actingAs($cashier)->put(route('admin.users.update',$admin),['role'=>User::$CASHIER,'name'=>'John']);
+        $readerResponse=$this->actingAs($reader)->put(route('admin.users.update',$admin),['role'=>User::$CASHIER,'name'=>'John']);
+        $bldgInspectorResponse=$this->actingAs($bldgInspector)->put(route('admin.users.update',$admin),['role'=>User::$CASHIER,'name'=>'John']);
+        $waterInspectorResponse=$this->actingAs($waterInspector)->put(route('admin.users.update',$admin),['role'=>User::$CASHIER,'name'=>'John']);
+        $engResponse=$this->actingAs($engineer)->put(route('admin.users.update',$admin),['role'=>User::$CASHIER,'name'=>'John']);
+        $adminResponse=$this->actingAs($admin)->put(route('admin.users.update',$admin),['role'=>User::$CASHIER,'name'=>'John']);
 
         $cashierResponse->assertForbidden();
         $readerResponse->assertForbidden();
         $bldgInspectorResponse->assertForbidden();
         $waterInspectorResponse->assertForbidden();
         $engResponse->assertForbidden();
-        $adminResponse->assertOk();
+        $adminResponse->assertRedirect(route('admin.users.edit',$admin));
+        
     }
 
     public function test_delete_route()
@@ -212,19 +216,23 @@ class UserAccountActionTest extends TestCase
 
         $admin=User::factory()->create();
 
-        $cashierResponse=$this->actingAs($cashier)->get(route('admin.users.edit',$admin));
-        $readerResponse=$this->actingAs($reader)->get(route('admin.users.edit',$admin));
-        $bldgInspectorResponse=$this->actingAs($bldgInspector)->get(route('admin.users.edit',$admin));
-        $waterInspectorResponse=$this->actingAs($waterInspector)->get(route('admin.users.edit',$admin));
-        $engResponse=$this->actingAs($engineer)->get(route('admin.users.edit',$admin));
-        $adminResponse=$this->actingAs($admin)->get(route('admin.users.edit',$admin));
+        $cashierResponse=$this->actingAs($cashier)->delete(route('admin.users.destroy',$admin));
+        $readerResponse=$this->actingAs($reader)->delete(route('admin.users.destroy',$admin));
+        $bldgInspectorResponse=$this->actingAs($bldgInspector)->delete(route('admin.users.destroy',$admin));
+        $waterInspectorResponse=$this->actingAs($waterInspector)->delete(route('admin.users.destroy',$admin));
+        $engResponse=$this->actingAs($engineer)->delete(route('admin.users.destroy',$admin));
+        $adminResponse=$this->actingAs($admin)->delete(route('admin.users.destroy',$admin));
 
         $cashierResponse->assertForbidden();
         $readerResponse->assertForbidden();
         $bldgInspectorResponse->assertForbidden();
         $waterInspectorResponse->assertForbidden();
         $engResponse->assertForbidden();
-        $adminResponse->assertOk();
+        $adminResponse->assertRedirect(route('admin.users.index'));
+        $adminResponse->assertSessionHas([
+            'deleted'=>true,
+            'message'=>"{$admin->name}'s account was deleted successfully!"
+        ]);
     }
 
     public function test_reset_password_route()
@@ -244,5 +252,50 @@ class UserAccountActionTest extends TestCase
         ]); 
     }
 
-    //TODO check if reset password is accessible only to admin
+    public function test_reset_password_route_is_only_accessible_to_admin()
+    {
+        $cashier=User::factory()->create([
+            'role'=>User::$CASHIER
+        ]);
+
+        $reader=User::factory()->create([
+            'role'=>User::$READER
+        ]);
+
+        $bldgInspector=User::factory()->create([
+            'role'=>User::$BLDG_INSPECTOR
+        ]);
+
+        $waterInspector=User::factory()->create([
+            'role'=>User::$WATERWORKS_INSPECTOR
+        ]);
+
+        $engineer=User::factory()->create([
+            'role'=>User::$ENGINEER
+        ]);
+
+        $admin=User::factory()->create([
+            'password'=>Hash::make('1234')
+        ]);
+
+        $cashierResponse=$this->actingAs($cashier)->put(route('admin.user-passwords.update',$admin));
+        $readerResponse=$this->actingAs($reader)->put(route('admin.user-passwords.update',$admin));
+        $bldgInspectorResponse=$this->actingAs($bldgInspector)->put(route('admin.user-passwords.update',$admin));
+        $waterInspectorResponse=$this->actingAs($waterInspector)->put(route('admin.user-passwords.update',$admin));
+        $engResponse=$this->actingAs($engineer)->put(route('admin.user-passwords.update',$admin));
+        $adminResponse=$this->actingAs($admin)->put(route('admin.user-passwords.update',$admin));
+
+        $cashierResponse->assertForbidden();
+        $readerResponse->assertForbidden();
+        $bldgInspectorResponse->assertForbidden();
+        $waterInspectorResponse->assertForbidden();
+        $engResponse->assertForbidden();
+        $adminResponse->assertRedirect(route('admin.users.index'));
+        $adminResponse->assertSessionHas([
+            'resetted-password'=>true,
+            'message'=>"{$admin->name}'s password was resetted successfully!"
+        ]);
+
+    }
+
 }
