@@ -30,6 +30,7 @@ use App\Http\Controllers\FieldMeterReadingController;
 use App\Http\Controllers\FieldMeterServicesController;
 use App\Http\Controllers\NewConnectionController;
 use App\Http\Controllers\MeterReaderController;
+use App\Http\Controllers\OfficerController;
 use App\Http\Controllers\ServiceListController;
 use App\Http\Controllers\ServicesPaymentController;
 use App\Http\Controllers\UserController;
@@ -37,6 +38,7 @@ use App\Http\Controllers\UserPasswordController;
 use App\Http\Controllers\WaterBill;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Str;
 
 
 // dd(Allowed::role(User::$CASHIER,User::$BLDG_INSPECTOR));
@@ -135,7 +137,7 @@ Route::prefix('admin')->middleware(['auth'])->name('admin.')->group(function(){
         Route::get('/engineer/search',[EngineerController::class, 'search'])->name('municipal-engineer.search');
         Route::post('/engineer/approve',[EngineerController::class, 'approve'])->name('municipal-engineer.approve');
         Route::post('/engineer/deny',[EngineerController::class, 'deny'])->name('municipal-engineer.deny');
-        
+
 
     });
     // END MUNICIPAL ENGINEER
@@ -193,9 +195,11 @@ Route::prefix('admin')->middleware(['auth'])->name('admin.')->group(function(){
         // SERVICES
         Route::resource('services', ServiceController::class);
         Route::resource('users',UserController::class);
+        Route::resource('officers', OfficerController::class);
         Route::resource('user-passwords',UserPasswordController::class)->parameters([
             'user-passwords'=>'user'
         ]);
+
         // END SERVICES
 
         // READER ACCOUNT CREATION
@@ -223,15 +227,15 @@ Route::prefix('admin')->middleware(['auth'])->name('admin.')->group(function(){
     Route::middleware(Allowed::role(User::$READER))->group(function(){
 
         Route::get('/field-personnel/home',[FieldMeterController::class, 'index'])->name('home');
-    
+
         Route::get('/field-personnel/meter-reading',[FieldMeterReadingController::class, 'index'])->name('field-reading');
         Route::get('/field-personnel/meter-reading/search/consumer',[FieldMeterReadingController::class, 'search'])->name('reader.search');
         Route::post('/field-personnel/meter-reading/save',[FieldMeterReadingController::class, 'store'])->name('save-meter-billing');
-    
+
         Route::get('/field-personnel/meter-services',[FieldMeterServicesController::class, 'index'])->name('meter-services');
         Route::get('/field-personnel/meter-services/search/consumer',[FieldMeterServicesController::class, 'search'])->name('services-search-customer');
         Route::post('/field-personnel/meter-services',[FieldMeterServicesController::class, 'store'])->name('meter-services.store');
-    
+
     });
     // END FIELD METER USER ACCESS ONLY
 
@@ -240,6 +244,3 @@ Route::prefix('admin')->middleware(['auth'])->name('admin.')->group(function(){
 Route::post('/logout',[LogoutUserController::class,'logout'])->middleware('auth')->name('logout');
 
 Route::post('/get/computed/water-bill',[WaterBill::class, 'computeWaterBill'])->name('water-bill');
-
-
-

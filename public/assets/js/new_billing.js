@@ -1,7 +1,7 @@
 $(document).ready(function(){
 
-    $('#carbon_date_billing').datepicker({ 
-        autoclose: true, 
+    $('#carbon_date_billing').datepicker({
+        autoclose: true,
         todayHighlight: true,
     }).datepicker('update', new Date());
 
@@ -49,6 +49,10 @@ $(document).ready(function(){
                     }
                     else{
                         Swal.fire('Ooops!',response.msg)
+                        $('#current-month').prop('disabled', true);
+                        $('#save-billing').prop('disabled', false);
+                        $('#next-month').prop('disabled', true);
+                        $('#save-billing').html('<i class="far fa-check"></i>&nbsp; Save!');
                     }
                 }
             })
@@ -77,7 +81,7 @@ $(document).ready(function(){
             const meter_consumption = parseInt($('#reading_meter').val(), 10) - parseInt($('#meter-reading').val(), 10);
             const total_consumption = ((meter_consumption - max_range) * excess_rate) + min_rates;
             const amount_consumption = meter_consumption <= max_range ? min_rates : total_consumption;
-            
+
             $('#consumption').val(meter_consumption);
             $('#surcharge_amount').val(surcharge.toFixed(2));
             $('#amount').val(amount_consumption.toFixed(2));
@@ -98,7 +102,7 @@ $(document).ready(function(){
                 url: "/get/computed/water-bill",
                 data: {'reading_meter' : $('input[name="reading_meter"]').val(), customer_id: $('#account_number').val()},
                 success: function(response){
-                    
+
                 }
             })
         }

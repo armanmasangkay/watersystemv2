@@ -62,6 +62,12 @@
               </li>
             </ul>
           </li>
+
+          <li class="nav-item dropdown pt-1">
+            <a class="nav-link text-secondary" href="{{route('admin.officers.index')}}"  aria-expanded="false">
+             <i data-feather="users" class="feather-16 m-1"></i> Officers
+            </a>
+          </li>
           @endadminonly
 
           @adminonly(Auth::user()->role)
