@@ -22,6 +22,13 @@ class ServiceFactory extends Factory
     public function definition()
     {
         return [
+            'customer_id'=>'1',
+            'type_of_service'=>'reconnection',
+            'remarks'=>'No remarks',
+            'landmarks'=>'Near Bulwagan',
+            'work_schedule'=>now(),
+            'status'=>Service::$PENDING_BUILDING_INSPECTION,
+            'start_status'=>Service::$PENDING_BUILDING_INSPECTION,
         ];
     }
 }

@@ -92,10 +92,7 @@ Route::prefix('admin')->middleware(['auth'])->name('admin.')->group(function(){
 
     Route::get('/search-consumer',[CustomerSearchController::class,'search'])->name('search-customer');
 
-    Route::get('/services/search',[ServiceController::class,'search'])->name('services.search');
-    Route::get('/services/filter',[ServiceController::class,'filter'])->name('services.filter');
-    Route::resource('services', ServiceController::class);
-
+    
     // RECONNECTION OF METER
     // Route::get('reconnection',[ReconnectionController::class, 'index'])->name('reconnection');
     // Route::get('search-consumer-info',[ReconnectionController::class, 'search'])->name('search');
@@ -220,6 +217,11 @@ Route::prefix('admin')->middleware(['auth'])->name('admin.')->group(function(){
             Route::get('/surcharge', [SurchargeController::class, 'getSurcharge'])->name('surcharge-get');
             Route::post('/surcharge', [SurchargeController::class, 'update'])->name('surcharge-update');
         // END WATER RATES AND SURCHARGE SETTINGS
+
+        Route::get('/services/search',[ServiceController::class,'search'])->name('services.search');
+        Route::get('/services/filter',[ServiceController::class,'filter'])->name('services.filter');
+        Route::resource('services', ServiceController::class);
+
     });
     // END ADMIN ALLOWED ACCESS ONLY
 
