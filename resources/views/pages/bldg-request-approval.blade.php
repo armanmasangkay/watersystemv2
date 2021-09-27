@@ -17,9 +17,9 @@
             <div class="col-md-6 py-0">
                 @include('templates.form-search-account')
             </div>
-            <div class="col-md-6 pt-md-2">
-                <a href="{{ route($route) }}" class="btn btn-secondary float-md-end" style="height: 45px; padding-top: 10px;">{{ $text[1] }}</a>
-            </div>
+            @if(isset(request()->keyword))
+                <x-button :url="$index_route"/>
+            @endif
         </div>
     </div>
     <div class="card-body p-0">
@@ -40,7 +40,7 @@
                         <tr>
                             <td class="pt-2 pb-2 ps-3">{{ $service->customer->account_number }}</td>
                             <td class="pt-2 pb-2 ps-3">{{ $service->customer->fullname() }} </td>
-                            <td class="pt-2 pb-2 ps-3">{{ $service->serviceType() }}</td>
+                            <td class="pt-2 pb-2 ps-3">{{ $service->prettyServiceType() }}</td>
                             <td class="pt-2 pb-2 ps-3">{{ \Carbon\Carbon::parse($service->created_at)->format('F d, Y') }}</td>
                             <td class="d-flex justify-content-start py-0">
                                 @if($service->status == 'pending_building_inspection')

@@ -26,7 +26,7 @@ class PaymentController extends Controller
         ]);
 
         if($validator->fails()){
-            return response()->json(['created' => false, 'errors' => "OR number cannot be the same or the amount must be greater than zero"]);
+            return response()->json(['created' => false, 'errors' => $validator->errors()]);
         }
 
         $transaction = Transaction::where(['customer_id' =>$account_number])->get()->toArray();

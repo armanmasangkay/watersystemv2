@@ -15,7 +15,14 @@
 
 <div class="card">
     <div class="card-header px-2 bg-light">
-        @include('templates.form-search-account')
+        <div class="row">
+            <div class="col-md-6 py-0">
+                @include('templates.form-search-account')
+            </div>
+            @if(isset(request()->keyword))
+                <x-button :url="$index_route"/>
+            @endif
+        </div>
     </div>
     <div class="card-body p-0">
         <div class="table-responsive p-0">
@@ -34,7 +41,7 @@
                     <tr>
                         <td class="pt-2 pb-2">{{$service->customer->account_number}}</td>
                         <td class="pt-2 pb-2">{{$service->customer->fullname()}}</td>
-                        <td class="pt-2 pb-2">{{$service->serviceType()}}</td>
+                        <td class="pt-2 pb-2">{{$service->prettyServiceType()}}</td>
                         <td class="pt-2 pb-2">{{$service->prettyRequestDate()}}</td>
                         <td class="d-flex justify-content-start py-0">
                             <form action="{{ route('admin.municipal-engineer.approve') }}" method="post" class="mb-0 mx-0 d-flex py-2">
@@ -58,7 +65,7 @@
             </table>
 
             {{$services->links()}}
-        
+
         </div>
     </div>
 </div>

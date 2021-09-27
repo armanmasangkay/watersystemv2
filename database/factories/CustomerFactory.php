@@ -40,7 +40,8 @@ class CustomerFactory extends Factory
             'contact_number'=>'09757375747',
             'connection_type'=>FakeCustomerData::connectionType(),
             'connection_status'=>FakeCustomerData::connectionStatus(),
-            'purchase_option'=>'cash'
+            'purchase_option'=>'cash',
+            'meter_number'=>'123'
         ];
         return $customerData;
       

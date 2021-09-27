@@ -5,15 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Customer;
 use App\Models\WaterRate;
 use App\Models\Transaction;
-use App\Models\Payments;
 use App\Models\Surcharge;
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Response;
+
 
 class FieldMeterReadingController extends Controller
 {
@@ -33,8 +29,8 @@ class FieldMeterReadingController extends Controller
 
     public function search(Request $request)
     {
-        $account_number=$request->account_number??$request->account_number;
-        
+        $account_number=$request->account_number;
+    
         try{
             $customer=Customer::findOrFail($account_number);
         }catch(ModelNotFoundException $e){
@@ -45,7 +41,7 @@ class FieldMeterReadingController extends Controller
         $acc = $customer->account();
         $fullname = $customer->fullname();
         $address = $customer->address();
-        // $transactions = $customer->transactions()->orderBy('created_at', 'asc')->paginate(10)->appends(['account_number'=>$account_number]);
+       
 
         $balance = Transaction::orderByDesc('created_at')->where('customer_id', $account_number)->get();
         $balance = $balance->first();

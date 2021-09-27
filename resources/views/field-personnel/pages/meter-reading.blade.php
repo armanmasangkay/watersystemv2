@@ -15,7 +15,7 @@
     <div class="mt-3" id="reading">
         <div class="row">
             <div class="col-12 col-sm-8 col-md-6 col-lg-6 form-search hidden pt-1">
-                <form action="{{ route('search') }}" method="get" class="d-flex justify-content-between align-items-center mb-lg-0">
+                <form action="{{ route('admin.reader.search') }}" method="get" class="d-flex justify-content-between align-items-center mb-lg-0">
                     <input type="text" class="form-control" name="account_number" placeholder="Account no. or name">
                     <button class="btn btn-primary ms-1 d-flex justify-content-between align-items-center" id="close"><i data-feather="search" class="feather-18 me-1"></i> Search</button>
                 </form>

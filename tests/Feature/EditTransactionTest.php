@@ -15,9 +15,9 @@ class EditTransactionTest extends TestCase
 {
     use RefreshDatabase;
 
-    private function create_customer_with_transaction(){
+    private function create_customer_with_transaction($user){
         $date = Carbon::now();
-        $this->post(route('admin.register-customer.store'),[
+        $this->actingAs($user)->post(route('admin.register-customer.store'),[
             'firstname' => "June Vic",
             'middlename' => '',
             'lastname' => 'Cadayona',
@@ -26,6 +26,7 @@ class EditTransactionTest extends TestCase
             'barangay' => 'Somewhere',
             'contact_number' => '09178781045',
             'connection_type' => 'Residential',
+            'meter_serial_number'=>'12344',
             'connection_status' => 'Active',
             'purchase_option' => 'cash',
             'reading_meter' => '100',
@@ -37,11 +38,10 @@ class EditTransactionTest extends TestCase
 
     public function test_get_consumer_bill(){
         $user = User::factory()->create();
-        $this->actingAs($user);
-        $this->create_customer_with_transaction();
+        $this->create_customer_with_transaction($user);
         $customer = Customer::where('account_number', '!=', '')->first();
         $transaction = Transaction::where('id', '!=', '')->first();
-
+       
         $response = $this->post(route('admin.get-bill', ['id' =>$transaction->id]), ['customer_id' => $customer->account_number]);
 
         $response->assertJson(['getBill' => true]);
@@ -50,12 +50,11 @@ class EditTransactionTest extends TestCase
     public function test_update_consumer_transaction(){
         Artisan::call('migrate --seed');
         $user = User::factory()->create();
-        $this->actingAs($user);
-        $this->create_customer_with_transaction();
+        $this->create_customer_with_transaction($user);
+
         $customer = Customer::where('account_number', '!=', '')->first();
         $transaction = Transaction::where('id', '!=', '')->first();
-
-        $response = $this->post(route('admin.update-billing', ['id' => $customer->account_number]),[
+        $response = $this->actingAs($user)->post(route('admin.update-billing', ['id' => $customer->account_number]),[
             'edit_curr_transaction_id' => $transaction->id,
             'edit_reading_meter'=> $transaction->reading_meter,
             'current_meter' => 101,

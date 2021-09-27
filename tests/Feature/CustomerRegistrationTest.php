@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Models\User;
 use App\Classes\Facades\CustomerRegistrationOptions;
+use App\Models\Customer;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Carbon;
@@ -43,6 +44,7 @@ class CustomerRegistrationTest extends TestCase
             'purok' => 'Somewhere',
             'barangay' => 'Somewhere',
             'contact_number' => '09178781045',
+            'meter_serial_number'=>'123',
             'connection_type' => 'Residential',
             'connection_status' => 'Active',
             'purchase_option' => 'cash',
@@ -102,6 +104,7 @@ class CustomerRegistrationTest extends TestCase
             'contact_number' => '09178781045',
             'connection_type' => 'others',
             'connection_type_specifics'=>'some type',
+            'meter_serial_number'=>'123',
             'connection_status' => 'Active',
             'purchase_option' => 'cash',
             'reading_meter' => '100',
@@ -161,6 +164,7 @@ class CustomerRegistrationTest extends TestCase
             'connection_type_specifics'=>'some type',
             'connection_status' => 'others',
             'connection_status_specifics' => 'some status',
+            'meter_serial_number'=>'123',
             'purchase_option' => 'cash',
             'reading_meter' => '100',
             'balance' => '100',
@@ -188,6 +192,7 @@ class CustomerRegistrationTest extends TestCase
             'contact_number' => '09178781045',
             'connection_type' => 'Residential',
             'connection_status' => 'Active',
+            'meter_serial_number'=>'123',
             'purchase_option' => 'cash',
             'reading_meter' => '100',
             'balance' => '100',
@@ -254,7 +259,7 @@ class CustomerRegistrationTest extends TestCase
         $response->assertJson(['created'=> false]);
     }
 
-    public function test_success_registeration_if_customer_with_complete_and_valid_data(){
+    public function test_registraation_must_be_successful_if_customer_has_complete_and_valid_data(){
         $user = User::factory()->create();
         $this->actingAs($user);
         $date = Carbon::now();
@@ -268,6 +273,7 @@ class CustomerRegistrationTest extends TestCase
             'contact_number' => '09178781045',
             'connection_type' => 'Residential',
             'connection_status' => 'Active',
+            'meter_serial_number'=>'123',
             'purchase_option' => 'cash',
             'reading_meter' => '100',
             'balance' => '100',
@@ -374,6 +380,7 @@ class CustomerRegistrationTest extends TestCase
             'connection_type' => 'Residential',
             'connection_status' => 'Active',
             'purchase_option' => 'cash',
+            'meter_serial_number'=>'123',
             'reading_meter' => '0',
             'balance' => '100',
             'reading_date' => $date->toDateString(),
@@ -382,6 +389,34 @@ class CustomerRegistrationTest extends TestCase
 
         $response->assertJson(['created'=> true]);
         $this->assertDatabaseCount('customers',1);
+
+    }
+
+    public function test_should_not_save_if_meter_reader_already_exist_on_an_exist_customer()
+    {
+        $user = User::factory()->create();
+        $existingCustomer=Customer::factory()->create();
+        $date = Carbon::now();
+      
+        $response = $this->actingAs($user)->post(route('admin.register-customer.store'),[
+            'firstname' => "June Vic",
+            'middlename' => 'Meowk',
+            'lastname' => 'Cadayona',
+            'civil_status' => 'single',
+            'purok' => 'Somewhere',
+            'barangay' => 'Somewhere',
+            'contact_number' => '09178781045',
+            'connection_type' => 'Residential',
+            'connection_status' => 'Active',
+            'purchase_option' => 'cash',
+            'meter_serial_number'=>$existingCustomer->meter_number,
+            'reading_meter' => '0',
+            'balance' => '100',
+            'reading_date' => $date->toDateString(),
+            'billing_meter_ips' => '100'
+        ]);
+        $response->assertJson(['created'=> false]);
+        $response->assertJsonValidationErrors(['meter_serial_number']);
 
     }
 }

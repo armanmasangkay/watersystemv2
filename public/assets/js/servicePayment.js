@@ -73,7 +73,9 @@ $(document).ready(function(){
                         })
                     }
                     else{
-                        Swal.fire('Ooops!', response.errors)
+                        response.errors.forEach(element => {
+                            Swal.fire('Ooops!', element)
+                        })
                     }
                 }
             })

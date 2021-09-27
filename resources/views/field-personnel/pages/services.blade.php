@@ -6,7 +6,7 @@
     <div class="mt-3">
         <div class="row">
             <div class="col-12 col-sm-8 col-md-6 col-lg-6 form-search d-lg-block d-md-none hidden pt-1">
-                <form action="{{ route('services-search-customer') }}" method="get" class="d-flex justify-content-between align-items-center mb-lg-0">
+                <form action="{{ route('admin.services-search-customer') }}" method="get" class="d-flex justify-content-between align-items-center mb-lg-0">
                     <input type="text" class="form-control" name="account_number" placeholder="Account no. or name">
                     <button class="btn btn-primary ms-1 d-flex justify-content-between align-items-center" id="close"><i data-feather="search" class="feather-18 me-1"></i> Search</button>
                 </form>
@@ -33,11 +33,11 @@
                         <h6 class="text-secondary d-flex justify-content-start align-items-center"><span>ACC. # &nbsp; :</span> <span class="text-primary ms-2" id="acc_num">{{ isset($customer) ? $customer["account"] : '' }}</span></h6>
                     </div>
                     <div class="card-body pt-3 pb-2 px-3">
-                        <form id="waterworks_form" action="{{ route('meter-services.store') }}" method="post">
+                        <form id="waterworks_form" action="{{ route('admin.meter-services.store') }}" method="post">
                             @csrf
                             <p class="text-danger pt-1">Reminder: Fields with (*) is required.</p>
                             <h3 class="text-muted mt-4"><strong>Water Works Services </strong></h3>
-                            <div class="row mt-4 mb-2 ps-4">
+                            <div class="row mt-4 mb-2 ps-4 pe-4">
                                 <p class="mb-0">Select service(s) <span class="text-danger">*</span></p>
                                 <div class="ms-4">
                                     <h6 class="d-flex justify-content-start align-items-center py-0 my-0"><input type="radio" name="type_of_service" id="" value="request_for_transfer_of_meter" class="me-2 mt-1">Request for transfer of meter</h6>

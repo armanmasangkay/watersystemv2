@@ -23,11 +23,13 @@
               <li><a class="dropdown-item" href="{{route('admin.existing-customers.index')}}">View Lists</a></li>
             </ul>
           </li>
+          @cashierOnly(Auth::user()->role)
           <li class="nav-item m1-">
             <a class="nav-link m-1 text-secondary" aria-current="page" href="{{route('admin.services-payment')}}">
               <i data-feather="activity" class="feather-16 m-1 mb-1"></i> Request Services &nbsp;
             </a>
           </li>
+          @endcashierOnly
           @adminonly(Auth::user()->role)
           {{-- <li class="nav-item dropdown pt-1">
             <a class="nav-link dropdown-toggle text-secondary" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -53,12 +55,18 @@
             <ul class="dropdown-menu px-2" aria-labelledby="navbarDropdown">
               <li>
                 <a class="dropdown-item" href="{{route('admin.users.create')}}">New</a>
-                <a class="dropdown-item" href="{{route('admin.users.index')}}">View</a>
+                <a class="dropdown-item" href="{{route('admin.users.index')}}">Lists of Accounts</a>
                 {{-- <a class="dropdown-item" href="{{route('admin.cashiers.index')}}">Cashiers</a>
                 <a class="dropdown-item" href="{{route('admin.reader')}}">Meter Reader</a>
                 <a class="dropdown-item" href="{{route('admin.admin')}}">System Admin</a> --}}
               </li>
             </ul>
+          </li>
+
+          <li class="nav-item dropdown pt-1">
+            <a class="nav-link text-secondary" href="{{route('admin.officers.index')}}"  aria-expanded="false">
+             <i data-feather="users" class="feather-16 m-1"></i> Officers
+            </a>
           </li>
           @endadminonly
 
@@ -70,7 +78,7 @@
             <ul class="dropdown-menu px-2" aria-labelledby="navbarDropdown">
               <li>
                 <a class="dropdown-item" href="{{route('admin.services.create')}}">New</a>
-                <a class="dropdown-item" href="{{route('admin.services-list.index')}}">List of Services</a>
+                <a class="dropdown-item" href="{{route('admin.services.index')}}">List of Services</a>
                 <a class="dropdown-item" href="{{route('admin.request-approvals')}}">Requests</a>
               </li>
             </ul>

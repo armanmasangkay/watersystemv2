@@ -24,7 +24,7 @@ class LoginController extends Controller
             }
             else if(Auth::user()->isReader())
             {
-                return redirect()->intended(route('home'));
+                return redirect()->intended(route('admin.home'));
             }
             else if(Auth::user()->isBuildingInspector())
             {

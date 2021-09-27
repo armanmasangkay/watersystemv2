@@ -4,22 +4,24 @@
 
 @section('content')
 
-    <div class="col-md-8 offset-md-2">
+    <div class="col-md-12 mt-4">
         <div class="row">
-            <div class="col-md-6 py-0">
-                <h3 class="mt-4">List of Services</h3>
+            <div class="col-md-8 py-0">
+                <h5 class="text-secondary h4 mt-4"><i data-feather="align-right" class="mb-1 feather-30 me-1"></i> Lists of Services</h5>
             </div>
-            <div class="col-md-6 pt-md-3">
-                <form action="{{ route('admin.services-list.filter')}}" class="row" method="get">
-                    <select class="form-control col-md mx-3" name="filter" id="filter">
+            <div class="col-md-4 pt-md-3">
+                <form action="{{ route('admin.services.filter')}}" class="d-flex justify-content-start mb-2" method="get">
+                    <select class="form-control col-md me-1" name="filter" id="filter">
                         <option value="none">None</option>
-                        <option value="pending_building_inspection">Pending Building Inspection</option>
-                        <option value="pending_waterworks_inspection">Pending Waterworks Inspection</option>
-                        <option value="denied_building_inspection">Disapproved by Building Inspector</option>
-                        <option value="denied_waterworks_inspection">Disapproved by Waterworks Inspector</option>
-                        <option value="service_done">Service Done</option>
+                        @foreach ($status as $key => $value)
+                            @if (request()->filter == $key)
+                                <option value="{{$key}}" selected>{{ $value }}</option>
+                            @else
+                                <option value="{{$key}}">{{ $value }}</option>
+                            @endif
+                        @endforeach
                     </select>
-                    <button type="submit" class="btn btn-primary col-md-3">Filter</button>
+                    <button type="submit" class="btn btn-primary col-md-3"><i data-feather="filter" class="feather-18"></i> Filter</button>
                 </form>
             </div>
         </div>
@@ -34,28 +36,49 @@
                             <td scope="col" class="border-bottom-0 py-3"><strong>LANDMARKS</strong></td>
                             <td scope="col" class="border-bottom-0 py-3"><strong>CONTACT NUMBER</strong></td>
                             <td scope="col" class="border-bottom-0 py-3"><strong>STATUS</strong></td>
+                            <td scope="col" class="border-bottom-0 py-3"><strong>ACTION</strong></td>
                         </tr>
                     </thead>
                     <tbody>
                         @forelse ($services as $service)
                             <tr>
                                 <td scope="row" class="border-bottom-0 border-top">{{$service->customer->fullname()}}</td>
-                                <td scope="row" class="border-bottom-0 border-top">{{ App\Classes\Facades\StringHelper::toReadableService($service->type_of_service)}}</td>
+                                <td scope="row" class="border-bottom-0 border-top">{{ $service->prettyType()}}</td>
                                 <td scope="row" class="border-bottom-0 border-top">{{$service->remarks}}</td>
                                 <td scope="row" class="border-bottom-0 border-top">{{$service->landmarks}}</td>
                                 <td scope="row" class="border-bottom-0 border-top">{{$service->customer->contact_number}}</td>
-                                <td scope="row" class="border-bottom-0 border-top">{{App\Classes\Facades\StringHelper::toReadableStatus($service->status)}}</td>
+                                <td scope="row" class="border-bottom-0 border-top">{{$service->prettyStatus()}}</td>
+                                <td scope="row" class="border-bottom-0 border-top pb-3">
+                                    <form action="{{route("admin.services.destroy",$service)}}" method="post" class="mb-0">
+                                        @csrf
+                                        @method("DELETE")
+                                        <button type="submit" class="btn-link border-0 bg-white" 
+                                                onclick="return confirm('Are you sure you want to delete this? You cannot undo this action')">
+                                                Delete
+                                        </button>
+                                    </form>
+
+                                </td>
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="6" class="text-center border-top border-bottom-0">No records yet!</td>
+                                <td colspan="7" class="text-center border-top border-bottom-0">No records yet!</td>
                             </tr>
                         @endforelse
                     </tbody>
                 </table>
             </div>
         </div>
-        {{$services->render()}}
+        <div class="row">
+            <div class="col-md-6">
+                {{$services->render()}}
+            </div>
+            <div class="col-md-6">
+                @if(request()->filter == "ready" && count($services) > 0)
+                <a href="{{ route('admin.workorder') }}" class="btn btn-secondary btn-lg rounded-sm float-end mt-2"><i data-feather="printer" class="feather-18 mb-1 me-1"></i> Print WOR</a>
+                @endif
+            </div>
+        </div>
     </div>
 </div>
 @endsection

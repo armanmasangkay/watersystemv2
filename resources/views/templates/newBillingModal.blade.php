@@ -64,17 +64,11 @@
                             <small class='text-primary'>{{ isset($customer) ? \Carbon\Carbon::parse($last_date)->addMonths(1)->format('M, Y') : '' }}</small>
                             <select name='next_month' id='next-month' class='form-select' disabled>
                                 @if(isset($customer))
-<<<<<<< HEAD
-                                    @for($i = 1; $i <=  \Carbon\Carbon::parse($last_date)->addMonths(1)->endOfMonth()->format('d'); $i++)
-                                        <option value="{{ \Carbon\Carbon::parse($last_date)->addMonths(1)->format('M '.($i < 10 ? '0'.$i : $i).', Y') }}" {{ \Carbon\Carbon::parse($last_date)->format('d') == $i ? 'selected' : '' }}>{{ $i < 10 ? '0'.$i : $i }}</option>
-                                    @endfor
-=======
                                 @for($i = 1; $i <=  \Carbon\Carbon::parse($last_date)->addMonths(1)->endOfMonth()->format('d'); $i++)
                                 <option value="{{ \Carbon\Carbon::parse($last_date)->addMonths(1)->format('M '.($i < 10 ? '0'.$i : $i).', Y') }}"
                                     {{ \Carbon\Carbon::parse($last_date)->addMonths(1)->format('d') == $i ? 'selected' : '' }}>{{ $i < 10 ? '0'.$i : $i }}</option>
 
                                 @endfor
->>>>>>> a0416b6b2285d8536744011caf1827165b19555b
                                 @endif
                             </select>
                         </div>

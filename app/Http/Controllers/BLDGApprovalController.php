@@ -22,7 +22,7 @@ class BLDGApprovalController extends Controller
     }
 
     public function search(Request $request){
-        $services = (new ServicesFromKeyword)->get($request->account_number, 'pending_building_inspection');
+        $services = (new ServicesFromKeyword)->get($request->keyword, 'pending_building_inspection');
         $services = new Paginator($services->all(), 10);
 
         return view('pages.bldg-request-approval',ServiceReturnDataArray::set('pending_building_inspection', $services));
@@ -38,8 +38,7 @@ class BLDGApprovalController extends Controller
     public function approve(Request $request)
     {
         $service = Service::findOrFail($request->id);
-        $service->status = "pending_waterworks_inspection";
-        $service->save();
+        $service->approve();
 
         return redirect(route('admin.request-approvals'));
     }

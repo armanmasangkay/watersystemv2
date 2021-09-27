@@ -18,12 +18,10 @@ class ServicesListTest extends TestCase
         $service = Service::factory()->create([
             'customer_id' => $customer->account_number,
             'type_of_service' => 'new_connection',
-            'contact_number' => $customer->contact_number,
-            'status' => 'water_works'
+            'status' => Service::$PENDING_BUILDING_INSPECTION,
+            'start_status' => Service::$PENDING_BUILDING_INSPECTION
         ]);
-
         $response = $this->actingAs($user)->get(route('admin.services-list.index'));
-
         $response->assertViewIs('pages.services-list');
         $response->assertViewHas('services');
     }

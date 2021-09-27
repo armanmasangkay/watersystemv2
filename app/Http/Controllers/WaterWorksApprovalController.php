@@ -18,8 +18,8 @@ class WaterWorksApprovalController extends Controller
     }
 
     public function search(Request $request){
-        $services = (new ServicesFromKeyword)->get($request->account_number, 'pending_waterworks_inspection');
-        $services = new Paginator($services->all(), 10);
+        $services = (new ServicesFromKeyword)->get($request->keyword, 'pending_waterworks_inspection');
+        $services = new Paginator($services->all(), 20);
         return view('pages.waterworks-request-approval', ServiceReturnDataArray::set('pending_waterworks_inspection', $services));
     }
 
@@ -34,8 +34,7 @@ class WaterWorksApprovalController extends Controller
     public function approve(Request $request)
     {
         $services = Service::findOrFail($request->id);
-        $services->status = "waterworks_approved";
-        $services->save();
+        $services->approve();
 
         return redirect(route('admin.waterworks-request-approvals'));
     }
