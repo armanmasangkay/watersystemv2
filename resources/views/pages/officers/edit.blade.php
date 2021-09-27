@@ -1,5 +1,5 @@
 @extends('layout.main')
-@section('title', 'Create New Officer')
+@section('title', 'Update Officer')
 
 @section('content')
 
@@ -46,7 +46,7 @@
 
 
             <center>
-                <button type="submit" class="btn btn-primary mt-4"><i data-feather="edit-3" class="feather-18 me-1 mb-1"></i>Add Officer</button>
+                <button type="submit" class="btn btn-primary mt-4"><i data-feather="edit-3" class="feather-18 me-1 mb-1"></i>Update Officer</button>
             </center>
         </form>
     </div>

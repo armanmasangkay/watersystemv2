@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Hash;
 
 class UserPasswordController extends Controller
 {
-    public function update(User $user,Request $request)
+    public function update(User $user)
     {
         $user->password=Hash::make(User::defaultPassword());
         $user->save();

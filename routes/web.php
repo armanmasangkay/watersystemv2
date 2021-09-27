@@ -67,10 +67,7 @@ Route::prefix('admin')->middleware(['auth'])->name('admin.')->group(function(){
 
     ]);
 
-
-    Route::resource('user-passwords',UserPasswordController::class)->parameters([
-        'user-passwords'=>'user'
-    ]);
+    
 
 
 
@@ -199,6 +196,10 @@ Route::prefix('admin')->middleware(['auth'])->name('admin.')->group(function(){
         Route::resource('services', ServiceController::class);
         Route::resource('users',UserController::class);
         Route::resource('officers', OfficerController::class);
+        Route::resource('user-passwords',UserPasswordController::class)->parameters([
+            'user-passwords'=>'user'
+        ]);
+
         // END SERVICES
 
         // READER ACCOUNT CREATION
