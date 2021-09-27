@@ -4,20 +4,20 @@
 
 @section('content')
 
-    <div class="col-md-8 offset-md-2">
+    <div class="col-md-12 mt-4">
         <div class="row">
-            <div class="col-md-6 py-0">
-                <h3 class="mt-4">List of Services</h3>
+            <div class="col-md-8 py-0">
+                <h3 class="mt-4"><i data-feather="align-left"></i> List of Services</h3>
             </div>
-            <div class="col-md-6 pt-md-3">
-                <form action="{{ route('admin.services.filter')}}" class="row" method="get">
-                    <select class="form-control col-md mx-3" name="filter" id="filter">
+            <div class="col-md-4 pt-md-3">
+                <form action="{{ route('admin.services.filter')}}" class="d-flex justify-content-start mb-2" method="get">
+                    <select class="form-control col-md me-1" name="filter" id="filter">
                         <option value="none">None</option>
                         @foreach ($status as $key => $value)
                             <option value="{{$key}}">{{ $value }}</option>
                         @endforeach
                     </select>
-                    <button type="submit" class="btn btn-primary col-md-3">Filter</button>
+                    <button type="submit" class="btn btn-primary col-md-3"><i data-feather="filter" class="feather-18"></i> Filter</button>
                 </form>
             </div>
         </div>
@@ -44,11 +44,11 @@
                                 <td scope="row" class="border-bottom-0 border-top">{{$service->landmarks}}</td>
                                 <td scope="row" class="border-bottom-0 border-top">{{$service->customer->contact_number}}</td>
                                 <td scope="row" class="border-bottom-0 border-top">{{$service->prettyStatus()}}</td>
-                                <td scope="row" class="border-bottom-0 border-top">
-                                    <form action="{{route("admin.services.destroy",$service)}}" method="post">
+                                <td scope="row" class="border-bottom-0 border-top pb-3">
+                                    <form action="{{route("admin.services.destroy",$service)}}" method="post" class="mb-0">
                                         @csrf
                                         @method("DELETE")
-                                        <button type="submit" class="btn btn-link" 
+                                        <button type="submit" class="btn-link border-0 bg-white" 
                                                 onclick="return confirm('Are you sure you want to delete this? You cannot undo this action')">
                                                 Delete
                                         </button>

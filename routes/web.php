@@ -35,6 +35,7 @@ use App\Http\Controllers\ServicesPaymentController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserPasswordController;
 use App\Http\Controllers\WaterBill;
+use App\Http\Controllers\WorkOrderController;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
@@ -82,14 +83,6 @@ Route::prefix('admin')->middleware(['auth'])->name('admin.')->group(function(){
 
     Route::get('/consumers',[CustomerController::class,'showAll'])->middleware('auth')->name('customers');
     Route::get('/transaction/new',[TransactionsController::class,'index'])->middleware('auth')->name('new-transaction');
-
-
-    Route::post('/register-consumer',[CustomerController::class,'store'])
-            ->middleware(Allowed::role(User::$ADMIN))->name('register-customer.store');
-
-    Route::get('/dashboard',[DashboardController::class,'index'])
-            ->middleware(Allowed::role(User::$ADMIN))
-            ->name('dashboard');
 
     Route::get('/search-consumer',[CustomerSearchController::class,'search'])->name('search-customer');
 
@@ -216,6 +209,12 @@ Route::prefix('admin')->middleware(['auth'])->name('admin.')->group(function(){
             Route::get('/surcharge', [SurchargeController::class, 'getSurcharge'])->name('surcharge-get');
             Route::post('/surcharge', [SurchargeController::class, 'update'])->name('surcharge-update');
         // END WATER RATES AND SURCHARGE SETTINGS
+
+        Route::post('/register-consumer',[CustomerController::class,'store'])->name('register-customer.store');
+
+        Route::get('/dashboard',[DashboardController::class,'index'])->name('dashboard');
+
+        Route::get('/work-order',[WorkOrderController::class,'index'])->name('workorder');
     });
     // END ADMIN ALLOWED ACCESS ONLY
 
