@@ -14,7 +14,11 @@
                     <select class="form-control col-md me-1" name="filter" id="filter">
                         <option value="none">None</option>
                         @foreach ($status as $key => $value)
-                            <option value="{{$key}}">{{ $value }}</option>
+                            @if (request()->filter == $key)
+                                <option value="{{$key}}" selected>{{ $value }}</option>
+                            @else
+                                <option value="{{$key}}">{{ $value }}</option>
+                            @endif
                         @endforeach
                     </select>
                     <button type="submit" class="btn btn-primary col-md-3"><i data-feather="filter" class="feather-18"></i> Filter</button>
@@ -48,12 +52,16 @@
                                     <form action="{{route("admin.services.destroy",$service)}}" method="post" class="mb-0">
                                         @csrf
                                         @method("DELETE")
+<<<<<<< HEAD
                                         <button type="submit" class="btn-link border-0 bg-white" 
+=======
+                                        <button type="submit" class="btn btn-link"
+>>>>>>> d4bc8c08d76695cabfb90ae11e0167ae85fb7e2b
                                                 onclick="return confirm('Are you sure you want to delete this? You cannot undo this action')">
                                                 Delete
                                         </button>
                                     </form>
-                                    
+
                                 </td>
                             </tr>
                         @empty

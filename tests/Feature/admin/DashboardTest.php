@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\admin;
 
+use App\Classes\Facades\Helpers\Test\IsRouteAccessible;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -23,6 +24,7 @@ class DashboardTest extends TestCase
 
     public function test_should_be_accessible_to_admin_only()
     {
+        
         $cashier=User::factory()->create([
             'role'=>User::$CASHIER
         ]);
@@ -45,12 +47,12 @@ class DashboardTest extends TestCase
 
         $admin=User::factory()->create();
 
-        $cashierResponse=$this->actingAs($cashier)->get(route('admin.dashboard'));
-        $readerResponse=$this->actingAs($reader)->get(route('admin.dashboard'));
-        $bldgInspectorResponse=$this->actingAs($bldgInspector)->get(route('admin.dashboard'));
-        $waterInspectorResponse=$this->actingAs($waterInspector)->get(route('admin.dashboard'));
-        $engResponse=$this->actingAs($engineer)->get(route('admin.dashboard'));
-        $adminResponse=$this->actingAs($admin)->get(route('admin.dashboard'));
+        $cashierResponse=$this->actingAs($cashier)->get(route('admin.dashboard',$admin));
+        $readerResponse=$this->actingAs($reader)->get(route('admin.dashboard',$admin));
+        $bldgInspectorResponse=$this->actingAs($bldgInspector)->get(route('admin.dashboard',$admin));
+        $waterInspectorResponse=$this->actingAs($waterInspector)->get(route('admin.dashboard',$admin));
+        $engResponse=$this->actingAs($engineer)->get(route('admin.dashboard',$admin));
+        $adminResponse=$this->actingAs($admin)->get(route('admin.dashboard',$admin));
 
         $cashierResponse->assertForbidden();
         $readerResponse->assertForbidden();
