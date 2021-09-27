@@ -32,7 +32,8 @@ class NewConnectionController extends Controller
             'customer_id' => $customer->account_number,
             'type_of_service' => $serviceType,
             'status' => $initialStatus,
-            'start_status' =>  $initialStatus
+            'start_status' =>  $initialStatus,
+            'request_number' => Service::generateUniqueIdentifier()
         ]);
         TransactionLog::create([
             'customer_organization_name' => $requestData['org_name'] ?? '',
