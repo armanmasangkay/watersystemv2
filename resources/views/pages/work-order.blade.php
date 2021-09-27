@@ -15,6 +15,8 @@
 <body>
     <div class="container-fluid">
         <div class="row">
+            @if(!empty($services))
+            @foreach($services as $service)
             @for($i = 0; $i < 2; $i++)
             <div class="col-md-6">
                 <table class="table mt-3 mb-0">
@@ -34,7 +36,7 @@
                 <table class="table mb-0">
                     <tr>
                         <td colspan="3" class="border-bottom-0 pt-4 text-center"><h3 class="float-end"><strong>WORK ORDER REQUEST</strong></32></td>
-                        <td colspan="2" class="border-bottom-0 display-6 pt-4 text-right"><h3 class="float-end"><strong>#: <span class="text-danger">MAR2021-001</span></strong></h3></td>
+                        <td colspan="2" class="border-bottom-0 display-6 pt-4 text-right"><h3 class="float-end"><strong>#: <span class="text-danger">{{ $service->id }}</span></strong></h3></td>
                     </tr>
                     <tr>
                         <td colspan="4" class="border-bottom-0 pt-3 text-center"></td>
@@ -43,9 +45,9 @@
                 <table class="table mb-0">
                     <tr>
                         <td class="border bg-light text-primary"><strong>DATE : </strong></td>
-                        <td colspan="2" class="border">September 22, 2021</td>
+                        <td colspan="2" class="border">{{ $service->prettyRequestDate() }}</td>
                         <td class="border bg-light text-primary"><strong>TYPE OF SERVICES : </strong></td>
-                        <td class="border">New Connection</td>
+                        <td class="border">{{ $service->prettyType() }}</td>
                     </tr>
                     <tr>
                         <td colspan="3" class="border py-0 bg-light text-primary"><strong>NAME OF APPLICANT</strong></td>
@@ -56,9 +58,9 @@
                         <td rowspan="2" colspan="3" class="border-start border-bottom-0 py-0 ">
                             <table class="table mb-0">
                                 <tr>
-                                    <td class="border-0 text-center"><strong>MASOB</strong></td>
-                                    <td class="border-0 text-center"><strong>NOBEGIN</strong></td>
-                                    <td class="border-0 text-center"><strong>A.</strong></td>
+                                    <td class="border-0 text-center"><strong>{{ strtoupper($service->customer->lastname) }}</strong></td>
+                                    <td class="border-0 text-center"><strong>{{ strtoupper($service->customer->firstname) }}</strong></td>
+                                    <td class="border-0 text-center"><strong>{{ strtoupper($service->customer->middlename) }}</strong></td>
                                 </tr>
                                 <tr>
                                     <td class="border-0 py-0 text-muted text-center"><i>Entity/Family Name</i></td>
@@ -67,8 +69,8 @@
                                 </tr>
                             </table>
                         </td>
-                        <td class="border-start border-bottom-0 py-3 text-center px-1 display-5"><h2 class="text-danger"><strong>0004</strong></h2></td>
-                        <td class="border-start border-bottom-0 border-end py-3 text-center">09367653842</td>
+                        <td class="border-start border-bottom-0 py-3 text-center px-1 display-5"><h2 class="text-danger"><strong>{{ $service->customer_id }}</strong></h2></td>
+                        <td class="border-start border-bottom-0 border-end py-3 text-center">{{ $service->contact_number }}</td>
                     </tr>
                 </table>
                 <table class="table mb-0">
@@ -81,8 +83,8 @@
                             <table class="table mb-0">
                                 <tr>
                                     <td class="border-0 text-center"><strong>&nbsp;</strong></td>
-                                    <td class="border-0 text-center"><strong>&nbsp;</strong></td>
-                                    <td class="border-0 text-center"><strong>ILIHAN</strong></td>
+                                    <td class="border-0 text-center"><strong>{{ $service->customer->purok }}</strong></td>
+                                    <td class="border-0 text-center"><strong>{{ $service->customer->barangay }}</strong></td>
                                 </tr>
                                 <tr>
                                     <td class="border-0 py-0 text-muted text-center"><i>Street Name</i></td>
@@ -91,7 +93,7 @@
                                 </tr>
                             </table>
                         </td>
-                        <td class="border-start border-bottom-0 border-end py-3 text-center px-1 display-5"><h3>Residential</h3></td>
+                        <td class="border-start border-bottom-0 border-end py-3 text-center px-1 display-5"><h3>{{ $service->customer->connectionType() }}</h3></td>
                     </tr>
                 </table>
                 <table class="table mb-0">
@@ -124,7 +126,7 @@
                                     <td class="border-0 text-center"><strong>ENGR. SARAH P. DAMPOG, CE, MPA</strong></td>
                                 </tr>
                                 <tr>
-                                    <td class="border-0 py-0 text-muted text-center"><i>Internal Auditor 1</i></td>
+                                    <td class="border-0 py-0 text-muted text-center"><i>Municipal Engineer</i></td>
                                 </tr>
                             </table>
                         </td>
@@ -153,7 +155,7 @@
                                         <textarea name="" col="10" class="border-0 w-100" id="" rows="5"></textarea>
                                     </td>
                                 </tr>
-                            </table>
+                            </table> 
                         </td>
                         <td colspan="1" rowspan="2" class="border py-0">
                             <table class="table mt-3">
@@ -171,6 +173,8 @@
                 </table>
             </div>
             @endfor
+            @endforeach
+            @endif
         </div>
     </div>
 </body>

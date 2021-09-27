@@ -57,7 +57,7 @@
                 </tr>
                 @empty
                 <tr>
-                  <td colspan="2" class="text-center border-top border-bottom-0">No records yet!</td>
+                  <td colspan="4" class="text-center border-top border-bottom-0">No records yet!</td>
                 </tr>
                 @endforelse
             </tbody>

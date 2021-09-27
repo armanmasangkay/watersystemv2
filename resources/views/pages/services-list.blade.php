@@ -7,7 +7,7 @@
     <div class="col-md-12 mt-4">
         <div class="row">
             <div class="col-md-8 py-0">
-                <h3 class="mt-4"><i data-feather="align-left"></i> List of Services</h3>
+                <h5 class="text-secondary h4 mt-4"><i data-feather="align-right" class="mb-1 feather-30 me-1"></i> Lists of Services</h5>
             </div>
             <div class="col-md-4 pt-md-3">
                 <form action="{{ route('admin.services.filter')}}" class="d-flex justify-content-start mb-2" method="get">
@@ -52,11 +52,7 @@
                                     <form action="{{route("admin.services.destroy",$service)}}" method="post" class="mb-0">
                                         @csrf
                                         @method("DELETE")
-<<<<<<< HEAD
                                         <button type="submit" class="btn-link border-0 bg-white" 
-=======
-                                        <button type="submit" class="btn btn-link"
->>>>>>> d4bc8c08d76695cabfb90ae11e0167ae85fb7e2b
                                                 onclick="return confirm('Are you sure you want to delete this? You cannot undo this action')">
                                                 Delete
                                         </button>
@@ -66,14 +62,23 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="6" class="text-center border-top border-bottom-0">No records yet!</td>
+                                <td colspan="7" class="text-center border-top border-bottom-0">No records yet!</td>
                             </tr>
                         @endforelse
                     </tbody>
                 </table>
             </div>
         </div>
-        {{$services->render()}}
+        <div class="row">
+            <div class="col-md-6">
+                {{$services->render()}}
+            </div>
+            <div class="col-md-6">
+                @if(request()->filter == "ready" && count($services) > 0)
+                <a href="{{ route('admin.workorder') }}" class="btn btn-secondary btn-lg rounded-sm float-end mt-2"><i data-feather="printer" class="feather-18 mb-1 me-1"></i> Print WOR</a>
+                @endif
+            </div>
+        </div>
     </div>
 </div>
 @endsection

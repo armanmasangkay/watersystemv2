@@ -70,7 +70,7 @@ class Service extends Model
         return self::$serviceTypes;
     }
 
-public function prettyServiceType()
+    public function prettyServiceType()
     {
         return self::$serviceTypes[$this->type_of_service];
     }
