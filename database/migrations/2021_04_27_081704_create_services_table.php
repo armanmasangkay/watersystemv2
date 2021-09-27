@@ -23,6 +23,7 @@ class CreateServicesTable extends Migration
             $table->date('date_completed')->nullable();
             $table->string('status');
             $table->string('start_status');
+            $table->string('request_number');
             $table->timestamps();
             $table->foreign('customer_id')->references('account_number')->on('customers')->onDelete('cascade');
         });

@@ -12,7 +12,7 @@ use Illuminate\Support\Arr;
 
 class ServiceController extends Controller
 {
-  
+
     private function getServices()
     {
         return Arr::except(Service::getServiceTypes(),['new_connection']);
@@ -32,7 +32,7 @@ class ServiceController extends Controller
 
     public function filter(Request $request){
         if($request->filter == 'none'){
-            return redirect(route('admin.services-list.index'));
+            return redirect(route('admin.services.index'));
         }
         $services = Service::where('status', $request->filter)->paginate(10);
         $status = Service::getServiceStatus();
@@ -44,7 +44,7 @@ class ServiceController extends Controller
     }
 
     public function search(Request $request)
-    {  
+    {
         try{
             $customer= Customer::findOrFail($request->account_number);
             return view('pages.add-service', [
@@ -57,12 +57,12 @@ class ServiceController extends Controller
                     'account_number'=>'Account number not found!'
                 ])->withInput();
         }
-      
+
     }
 
 
     public function create()
-    { 
+    {
         return view('pages.add-service', [
             'route' => 'admin.search-customer',
             'services'=>$this->getServices()
@@ -72,7 +72,6 @@ class ServiceController extends Controller
 
     public function store(StoreServiceRequest $request)
     {
-    
        $initialStatus=Service::getInitialStatus($request->service_type);
        Service::create([
             'customer_id'=>$request->account_number,
@@ -82,6 +81,7 @@ class ServiceController extends Controller
             'work_schedule'=>$request->service_schedule,
             'status'=>$initialStatus,
             'start_status'=>$initialStatus,
+            'request_number'=>Service::generateUniqueIdentifier()
        ]);
 
        return back()->with([
