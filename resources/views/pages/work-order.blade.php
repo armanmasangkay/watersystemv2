@@ -15,7 +15,7 @@
 <body>
     <div class="container-fluid">
         <div class="row">
-            @if(!empty($services))
+            @if($services->count() > 0)
             @foreach($services as $service)
             @for($i = 0; $i < 2; $i++)
             <div class="col-md-6">
@@ -58,9 +58,9 @@
                         <td rowspan="2" colspan="3" class="border-start border-bottom-0 py-0 ">
                             <table class="table mb-0">
                                 <tr>
-                                    <td class="border-0 text-center"><strong>{{ strtoupper($service->customer->lastname) }}</strong></td>
-                                    <td class="border-0 text-center"><strong>{{ strtoupper($service->customer->firstname) }}</strong></td>
-                                    <td class="border-0 text-center"><strong>{{ strtoupper($service->customer->middlename) }}</strong></td>
+                                    <td class="border-0 text-center"><strong>{{ ucwords($service->customer->lastname) }}</strong></td>
+                                    <td class="border-0 text-center"><strong>{{ ucwords($service->customer->firstname) }}</strong></td>
+                                    <td class="border-0 text-center"><strong>{{ ucwords($service->customer->middlename) }}</strong></td>
                                 </tr>
                                 <tr>
                                     <td class="border-0 py-0 text-muted text-center"><i>Entity/Family Name</i></td>
@@ -70,7 +70,7 @@
                             </table>
                         </td>
                         <td class="border-start border-bottom-0 py-3 text-center px-1 display-5"><h2 class="text-danger"><strong>{{ $service->customer_id }}</strong></h2></td>
-                        <td class="border-start border-bottom-0 border-end py-3 text-center">{{ $service->contact_number }}</td>
+                        <td class="border-start border-bottom-0 border-end py-3 text-center">{{ $service->customer->contact_number }}</td>
                     </tr>
                 </table>
                 <table class="table mb-0">
@@ -113,20 +113,20 @@
                         <td rowspan="2" colspan="3" class="border-start border-bottom-0 py-0">
                             <table class="table mt-4 mb-3">
                                 <tr>
-                                    <td class="border-0 text-center"><strong>ARLAN AUGUSTINE HEIG A. ESTELA</strong></td>
+                                    <td class="border-0 text-center"><strong>{{ $officers['auditor']['fullname_aud'] }}</strong></td>
                                 </tr>
                                 <tr>
-                                    <td class="border-0 py-0 text-muted text-center"><i>Internal Auditor 1</i></td>
+                                    <td class="border-0 py-0 text-muted text-center"><i>{{ $officers['auditor']['position_aud'] }}</i></td>
                                 </tr>
                             </table>
                         </td>
                         <td rowspan="2" colspan="2" class="border-start border-bottom-0 border-end py-0">
                             <table class="table mt-4 mb-3">
                                 <tr>
-                                    <td class="border-0 text-center"><strong>ENGR. SARAH P. DAMPOG, CE, MPA</strong></td>
+                                    <td class="border-0 text-center"><strong>{{ $officers['engineer']['fullname_me'] }}</strong></td>
                                 </tr>
                                 <tr>
-                                    <td class="border-0 py-0 text-muted text-center"><i>Municipal Engineer</i></td>
+                                    <td class="border-0 py-0 text-muted text-center"><i>{{ $officers['engineer']['position_me'] }}</i></td>
                                 </tr>
                             </table>
                         </td>

@@ -22,7 +22,7 @@ class Officer extends Model
 
 
     public static $INTERNAL_AUDITOR_I = 'internal_auditor_i';
-
+    public static $MUNICIPAL_ENGINEER = 'municipal_engineer';
 
     public static function getPositions()
     {
