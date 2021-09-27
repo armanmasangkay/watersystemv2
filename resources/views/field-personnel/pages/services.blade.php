@@ -37,7 +37,7 @@
                             @csrf
                             <p class="text-danger pt-1">Reminder: Fields with (*) is required.</p>
                             <h3 class="text-muted mt-4"><strong>Water Works Services </strong></h3>
-                            <div class="row mt-4 mb-2 ps-4">
+                            <div class="row mt-4 mb-2 ps-4 pe-4">
                                 <p class="mb-0">Select service(s) <span class="text-danger">*</span></p>
                                 <div class="ms-4">
                                     <h6 class="d-flex justify-content-start align-items-center py-0 my-0"><input type="radio" name="type_of_service" id="" value="request_for_transfer_of_meter" class="me-2 mt-1">Request for transfer of meter</h6>
