@@ -22,7 +22,7 @@ class ServicesListTest extends TestCase
             'start_status' => Service::$PENDING_BUILDING_INSPECTION,
             'request_number' => Service::generateUniqueIdentifier()
         ]);
-        $response = $this->actingAs($user)->get(route('admin.services-list.index'));
+        $response = $this->actingAs($user)->get(route('admin.services.index'));
         $response->assertViewIs('pages.services-list');
         $response->assertViewHas('services');
     }
