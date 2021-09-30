@@ -11,7 +11,7 @@
             </div>
             <div class="col-md-4 pt-md-3">
                 <form action="{{ route('admin.services.filter')}}" class="d-flex justify-content-start mb-2" method="get">
-                    <select class="form-control col-md me-1" name="filter" id="filter">
+                    <select class="form-select col-md me-1" name="filter" id="filter">
                         <option value="none">None</option>
                         @foreach ($status as $key => $value)
                             @if (request()->filter == $key)

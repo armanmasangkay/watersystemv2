@@ -55,7 +55,7 @@
             <ul class="dropdown-menu px-2" aria-labelledby="navbarDropdown">
               <li>
                 <a class="dropdown-item" href="{{route('admin.users.create')}}">New</a>
-                <a class="dropdown-item" href="{{route('admin.users.index')}}">Lists of Accounts</a>
+                <a class="dropdown-item" href="{{route('admin.users.index')}}">View Lists</a>
                 {{-- <a class="dropdown-item" href="{{route('admin.cashiers.index')}}">Cashiers</a>
                 <a class="dropdown-item" href="{{route('admin.reader')}}">Meter Reader</a>
                 <a class="dropdown-item" href="{{route('admin.admin')}}">System Admin</a> --}}
@@ -78,7 +78,7 @@
             <ul class="dropdown-menu px-2" aria-labelledby="navbarDropdown">
               <li>
                 <a class="dropdown-item" href="{{route('admin.services.create')}}">New</a>
-                <a class="dropdown-item" href="{{route('admin.services.index')}}">List of Services</a>
+                <a class="dropdown-item" href="{{route('admin.services.index')}}">View Lists</a>
                 <a class="dropdown-item" href="{{route('admin.request-approvals')}}">Requests</a>
               </li>
             </ul>
