@@ -21,9 +21,7 @@ class CustomerController extends Controller
         return view('pages.customers-list',['customers'=>$customers]);
     }
 
-
-
-    public function getOnlyTransaction($customerId, $requestData)
+    private function getOnlyTransaction($customerId, $requestData)
     {
         $transaction = Arr::only($requestData, ['reading_meter', 'balance', 'reading_date']);
         $transaction = Arr::add($transaction, 'billing_meter_ips', $requestData['billing_meter_ips'] ?? '0.00');
@@ -38,7 +36,7 @@ class CustomerController extends Controller
         return $transaction;
     }
 
-    public function getOnlyCustomerInformation($requestData)
+    private function getOnlyCustomerInformation($requestData)
     {
         return Arr::except($requestData, ['reading_meter', 'balance', 'last_payment_date', 'billing_meter_ips']);
     }
