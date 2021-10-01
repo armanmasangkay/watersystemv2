@@ -84,13 +84,6 @@ Route::prefix('admin')->middleware(['auth'])->name('admin.')->group(function(){
 
     Route::get('/search-consumer',[CustomerSearchController::class,'search'])->name('search-customer');
 
-    
-    // RECONNECTION OF METER
-    // Route::get('reconnection',[ReconnectionController::class, 'index'])->name('reconnection');
-    // Route::get('search-consumer-info',[ReconnectionController::class, 'search'])->name('search');
-    // Route::post('reconnection/transaction/store',[ReconnectionController::class,'storeTransaction'])->name('reconnection.store');
-    // END RECONNECTION OF METER
-
     // BUILDING INSPECTOR ALLOWED ACCESS ONLY
     Route::middleware(Allowed::role(User::$BLDG_INSPECTOR))->group(function(){
         Route::get('/bldg-area/request-approvals',[BLDGApprovalController::class, 'index'])->name('request-approvals');
@@ -103,11 +96,6 @@ Route::prefix('admin')->middleware(['auth'])->name('admin.')->group(function(){
     });
     // END BUILDING INSPECTOR ALLOWED ACCESS ONLY
 
-    // MUNICIPAL TREASURER OFFICE REQUEST APPROVALS
-    // Route::get('/mto/request-approvals',[MTOApprovalController::class, 'index'])->name('mto-request-approvals')->middleware('auth');
-    // Route::post('/mto/request-approvals/approve', [MTOApprovalController::class, 'approve'])->name('mto-request-approvals-approve');
-    // Route::post('/mto/request-approvals/reject', [MTOApprovalController::class, 'reject'])->name('mto-request-approvals-reject');
-    // END MUNICIPAL TREASURER OFFICE REQUEST APPROVALS
 
     // WATER WORKS ALLOWED ACCESS ONLY
     Route::middleware(Allowed::role(User::$WATERWORKS_INSPECTOR))->group(function(){
@@ -131,14 +119,6 @@ Route::prefix('admin')->middleware(['auth'])->name('admin.')->group(function(){
     });
     // END MUNICIPAL ENGINEER
 
-    // TRANSACTION LISTS
-    // Route::get('/transactions-lists',[TransactionListsController::class, 'index'])->name('transactions-lists');
-    // TRANSACTION LISTS
-
-    // TRANSFER OF METER
-    // Route::get('/transfer-meter',[TransferOfMeterController::class, 'index'])->name('transfer-meter');
-    // Route::get('/search-info',[TransferOfMeterController::class, 'search'])->name('search-info');
-    // END TRANSFER OF METER
 
     // ADMIN AND CASHIER ALLOWED ACCESS
     Route::middleware(Allowed::role(User::$ADMIN, User::$CASHIER))->group(function(){
