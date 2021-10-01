@@ -5,7 +5,7 @@
 @section('content')
 
 <div class="row mt-4">
-  <div class="col-md-8 col-lg-12 mt-3">
+  <div class="col-md-12 mt-3">
     @if(session('created'))
     <div class="alert alert-success alert-dismissible fade show mt-4" role="alert">
         <strong>Great!</strong> {{session('message')}}
