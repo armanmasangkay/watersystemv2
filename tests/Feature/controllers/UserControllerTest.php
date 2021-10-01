@@ -5,6 +5,7 @@ namespace Tests\Controllers\Feature;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
 
 class UserControllerTest extends TestCase
@@ -371,4 +372,94 @@ class UserControllerTest extends TestCase
         $response->assertSessionHas('created',false);
         $response->assertSessionHasErrors(['role']);
    }
+
+   public function test_update_password_route_can_only_be_accessed_if_logged_in()
+   {   
+        $response=$this->get(route('users.update-password.edit'));
+        $response
+            ->assertRedirect(route('login'));
+   }
+
+   public function test_update_password_route_with_authenticated_user()
+   {
+       $user=User::factory()->create();
+        $response=$this->actingAs($user)->get(route('users.update-password.edit'));
+        $response
+            ->assertOk()
+            ->assertViewIs('pages.users.change-password');
+   }
+
+   public function test_store_new_password_route_with_valid_data()
+   {
+       $user=User::factory()->create();
+        $response=$this->actingAs($user)->put(route('users.update-password.store'),[
+            'current_password'=>'1234',
+            'password'=>'987654321',
+            'password_confirmation'=>'987654321'
+        ]);
+
+        $userWithNewPass=User::findOrFail($user->id);
+
+        $this->assertTrue(Hash::check('987654321',$userWithNewPass->password));
+        $response
+            ->assertRedirect(route('login'))
+            ->assertSessionHasAll([
+                'updated-password'=>true,
+                'message'=>'Password updated successfully! You may log-in again.'
+            ]);
+
+        $this->assertGuest();
+
+   }
+
+   public function test_store_new_password_should_fail_if_provided_with_lower_than_8_characters()
+   {
+       $user=User::factory()->create();
+        $response=$this->actingAs($user)->put(route('users.update-password.store'),[
+            'current_password'=>'1234',
+            'password'=>'654321',
+            'password_confirmation'=>'654321'
+        ]);
+
+        $response
+            ->assertRedirect()
+            ->assertSessionHasErrors([
+                'password'
+            ]);
+
+   }
+
+   public function test_store_new_password_should_fail_if_current_password_is_incorrect()
+   {
+       $user=User::factory()->create();
+        $response=$this->actingAs($user)->put(route('users.update-password.store'),[
+            'current_password'=>'123',
+            'password'=>'654321',
+            'password_confirmation'=>'654321'
+        ]);
+
+        $response
+            ->assertRedirect()
+            ->assertSessionHasErrors([
+                'current_password'
+            ]);
+   }
+
+   public function test_store_new_password_should_fail_if_new_password_is_not_confirmed()
+   {
+       $user=User::factory()->create();
+        $response=$this->actingAs($user)->put(route('users.update-password.store'),[
+            'current_password'=>'1234',
+            'password'=>'654321',
+            'password_confirmation'=>'65432122'
+        ]);
+
+        $response
+            ->assertRedirect()
+            ->assertSessionHasErrors([
+                'password'
+            ]);
+   }
+
+
 }

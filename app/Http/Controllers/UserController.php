@@ -97,9 +97,11 @@ class UserController extends Controller
             'password'=>$this->passwordValidationRule,
         ]);
 
+    
         $authenticatedUser=Auth::user();
         $authenticatedUser->password=Hash::make($request->password);
         $authenticatedUser->save();
+      
 
         Auth::logout();
         return redirect(route('login'))->with([
