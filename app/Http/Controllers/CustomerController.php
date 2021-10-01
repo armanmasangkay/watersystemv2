@@ -15,7 +15,6 @@ use Illuminate\Support\Facades\Auth;
 class CustomerController extends Controller
 {
 
-
     public function showAll()
     {
         $customers=Customer::paginate(10);
@@ -55,4 +54,6 @@ class CustomerController extends Controller
             'created'=>true
         ]);
     }
+
+    
 }

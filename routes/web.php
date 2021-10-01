@@ -31,6 +31,7 @@ use App\Http\Controllers\FieldMeterServicesController;
 use App\Http\Controllers\NewConnectionController;
 use App\Http\Controllers\MeterReaderController;
 use App\Http\Controllers\OfficerController;
+use App\Http\Controllers\RootController;
 use App\Http\Controllers\ServiceListController;
 use App\Http\Controllers\ServicesPaymentController;
 use App\Http\Controllers\UserController;
@@ -44,9 +45,7 @@ use Illuminate\Support\Str;
 
 // dd(Allowed::role(User::$CASHIER,User::$BLDG_INSPECTOR));
 
-Route::get('/', function () {
-    return redirect(route('admin.dashboard'));
-})->middleware('auth');
+Route::get('/', [RootController::class,'index'])->middleware('auth');
 
 
 Route::get('/login',[LoginController::class,'index'])->name('login');
