@@ -14,7 +14,6 @@ class CustomerControllerTest extends TestCase
 {
     use RefreshDatabase;
 
-
     private function create_customer_with_transaction($user){
         $date = Carbon::now();
         $this->actingAs($user)->post(route('admin.register-customer.store'),[
