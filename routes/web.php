@@ -56,10 +56,9 @@ Route::prefix('admin')->middleware(['auth'])->name('admin.')->group(function(){
         'searched-customers'=>SearchedCustomerController::class,
         'existing-customers'=>ExistingCustomerController::class,
         'new-connection' => NewConnectionController::class,
-        // 'users'=>UserController::class,
 
     ]);
-    
+
     // Export URLs
     Route::get('/customers/export/{keyword?}',[ExportsController::class,'exportCustomers'])->name('customers.export');
     Route::get('/ledger/export/{account_number}',[ExportsController::class,'exportLedger'])->name('ledger.export');
