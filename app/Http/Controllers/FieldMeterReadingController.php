@@ -17,7 +17,7 @@ class FieldMeterReadingController extends Controller
 
     public function __construct()
     {
-        $this->waterbill = new WaterBill();
+        $this->waterbill = new WaterBillController();
     }
 
     public function toAccounting($num){ return number_format($num, 2, '.', ','); }

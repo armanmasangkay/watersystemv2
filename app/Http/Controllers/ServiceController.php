@@ -42,7 +42,6 @@ class ServiceController extends Controller
             'status' => $status
         ]);
 
-        //TODO: work with this test
     }
 
     public function search(Request $request)

@@ -10,7 +10,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 
-class WaterBill extends Controller{
+class WaterBillController extends Controller{
 
     public $surcharge = [];
     public $rates = [];

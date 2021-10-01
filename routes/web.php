@@ -30,7 +30,7 @@ use App\Http\Controllers\RootController;
 use App\Http\Controllers\ServicesPaymentController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserPasswordController;
-use App\Http\Controllers\WaterBill;
+use App\Http\Controllers\WaterBillController;
 use App\Http\Controllers\WorkOrderController;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
@@ -195,4 +195,4 @@ Route::prefix('admin')->middleware(['auth'])->name('admin.')->group(function(){
 
 Route::post('/logout',[LogoutUserController::class,'logout'])->middleware('auth')->name('logout');
 
-Route::post('/get/computed/water-bill',[WaterBill::class, 'computeWaterBill'])->name('water-bill');
+Route::post('/get/computed/water-bill',[WaterBillController::class, 'computeWaterBill'])->name('water-bill');
