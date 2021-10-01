@@ -41,7 +41,8 @@ class Service extends Model
         'landmarks',
         'work_schedule',
         'status',
-        'start_status'
+        'start_status',
+        'request_number'
     ];
 
     protected $processFlow=[
@@ -78,6 +79,13 @@ class Service extends Model
     public static function withStatus($status)
     {
         return self::where('status', $status)->paginate(self::$PAGINATION_VALUE);
+    }
+
+    public static function generateUniqueIdentifier()
+    {
+        $dateToday = Carbon::parse(now())->format('mdY');
+        $randomNum = rand(0001, 9999);
+        return "$dateToday-$randomNum";
     }
 
     public static function getInitialStatus($serviceType)
@@ -153,6 +161,7 @@ class Service extends Model
         $this->status=$this->getNextFlow("prev");
         $this->save();
     }
+
 
 
     public function customer()

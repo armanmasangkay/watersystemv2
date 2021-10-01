@@ -30,6 +30,7 @@
                 <table class="table mb-0">
                     <thead>
                         <tr>
+                            <td scope="col" class="border-bottom-0 py-3"><strong>REQUEST NUMBER</strong></td>
                             <td scope="col" class="border-bottom-0 py-3"><strong>FULL NAME</strong></td>
                             <td scope="col" class="border-bottom-0 py-3"><strong>TYPE OF SERVICE</strong></td>
                             <td scope="col" class="border-bottom-0 py-3"><strong>REMARKS</strong></td>
@@ -42,6 +43,7 @@
                     <tbody>
                         @forelse ($services as $service)
                             <tr>
+                                <td scope="row" class="border-bottom-0 border-top">{{$service->request_number}}</td>
                                 <td scope="row" class="border-bottom-0 border-top">{{$service->customer->fullname()}}</td>
                                 <td scope="row" class="border-bottom-0 border-top">{{ $service->prettyType()}}</td>
                                 <td scope="row" class="border-bottom-0 border-top">{{$service->remarks}}</td>
@@ -62,7 +64,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="7" class="text-center border-top border-bottom-0">No records yet!</td>
+                                <td colspan="10" class="text-center border-top border-bottom-0">No records yet!</td>
                             </tr>
                         @endforelse
                     </tbody>

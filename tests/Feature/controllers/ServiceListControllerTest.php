@@ -19,9 +19,10 @@ class ServiceListControllerTest extends TestCase
             'customer_id' => $customer->account_number,
             'type_of_service' => 'new_connection',
             'status' => Service::$PENDING_BUILDING_INSPECTION,
-            'start_status' => Service::$PENDING_BUILDING_INSPECTION
+            'start_status' => Service::$PENDING_BUILDING_INSPECTION,
+            'request_number' => Service::generateUniqueIdentifier()
         ]);
-        $response = $this->actingAs($user)->get(route('admin.services-list.index'));
+        $response = $this->actingAs($user)->get(route('admin.services.index'));
         $response->assertViewIs('pages.services-list');
         $response->assertViewHas('services');
     }
