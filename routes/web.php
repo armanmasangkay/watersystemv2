@@ -35,9 +35,6 @@ use App\Http\Controllers\WorkOrderController;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
-
-// dd(Allowed::role(User::$CASHIER,User::$BLDG_INSPECTOR));
-
 Route::get('/', [RootController::class,'index'])->middleware('auth');
 
 
