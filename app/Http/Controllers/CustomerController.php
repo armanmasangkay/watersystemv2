@@ -14,13 +14,6 @@ use Illuminate\Support\Facades\Auth;
 
 class CustomerController extends Controller
 {
-
-    public function showAll()
-    {
-        $customers=Customer::paginate(10);
-        return view('pages.customers-list',['customers'=>$customers]);
-    }
-
     private function getOnlyTransaction($customerId, $requestData)
     {
         $transaction = Arr::only($requestData, ['reading_meter', 'balance', 'reading_date']);
@@ -35,7 +28,13 @@ class CustomerController extends Controller
         $transaction = Arr::add($transaction, 'posted_by', Auth::id());
         return $transaction;
     }
-    
+
+    public function showAll()
+    {
+        $customers=Customer::paginate(10);
+        return view('pages.customers-list',['customers'=>$customers]);
+    }
+
     public function store(StoreCustomerRequest $request)
     {
        $normalizedData=CustomerDataHelper::normalize($request->all());
