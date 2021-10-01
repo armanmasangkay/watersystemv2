@@ -15,6 +15,7 @@ class LoginController extends Controller
     public function authenticate(Request $request)
     {
         $credentials=$request->only('username','password');
+
         if(Auth::attempt($credentials)){
             $request->session()->regenerate(); 
             
@@ -41,7 +42,7 @@ class LoginController extends Controller
             else
             {
                 return redirect()->intended(route('admin.dashboard'));
-        //    return Auth::user()->isCashier() ? redirect()->intended(route('admin.existing-customers.index')):redirect()->intended(route('admin.dashboard'));
+     
             }
         }
 
