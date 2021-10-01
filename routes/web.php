@@ -156,12 +156,6 @@ Route::prefix('admin')->middleware(['auth'])->name('admin.')->group(function(){
             Route::post('/meter-reader/store', [MeterReaderController::class, 'store'])->name('reader-store');
         // END READER ACCOUNT CREATION
 
-        // ADMIN ACCOUNT CREATION
-            Route::get('/new', [AdminController::class, 'index'])->name('admin');
-            Route::get('/new/create', [AdminController::class, 'create'])->name('admin-create');
-            Route::post('/new/store', [AdminController::class, 'store'])->name('admin-store');
-        // END ADMIN ACCOUNT CREATION
-
         // WATER RATES AND SURCHARGE SETTINGS
             Route::get('/water-rate', [WaterRateController::class, 'getWaterRates'])->name('water-rate-get');
             Route::post('/water-rate', [WaterRateController::class, 'update'])->name('water-rate-update');
