@@ -35,12 +35,7 @@ class CustomerController extends Controller
         $transaction = Arr::add($transaction, 'posted_by', Auth::id());
         return $transaction;
     }
-
-    private function getOnlyCustomerInformation($requestData)
-    {
-        return Arr::except($requestData, ['reading_meter', 'balance', 'last_payment_date', 'billing_meter_ips']);
-    }
-
+    
     public function store(StoreCustomerRequest $request)
     {
        $normalizedData=CustomerDataHelper::normalize($request->all());
