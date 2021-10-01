@@ -1,23 +1,19 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Controllers\Feature;
 
 use App\Models\Customer;
-use App\Models\User;
-use App\Models\Transaction;
 use App\Models\Surcharge;
+use App\Models\Transaction;
+use App\Models\User;
 use App\Models\WaterRate;
-use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Carbon;
-use App\Services\AccountNumberService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
-class FieldMeterReadingTest extends TestCase
+class FieldMeterReadingControllerTest extends TestCase
 {
     use RefreshDatabase;
-
     private function getUser()
     {
         return $user = User::factory()->create([
@@ -45,7 +41,6 @@ class FieldMeterReadingTest extends TestCase
         $response->assertViewHasAll(['customer', 'rates', 'surcharge', 'last_date', 'current_transaction_id']);
     }
 
-
     public function test_cannot_search_transaction_if_account_number_is_null()
     {
     
@@ -67,6 +62,7 @@ class FieldMeterReadingTest extends TestCase
         $response = $this->actingAs($this->getUser())->post(route('admin.save-meter-billing',['current_transaction_id' => '']));
         $response->assertStatus(404);
     }
+
 
     public function test_save_billing()
     {

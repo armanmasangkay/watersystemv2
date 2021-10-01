@@ -4,7 +4,7 @@
 
 @section('content')
 
-<div class="row">
+<div class="row mt-4">
   <div class="col-md-8 col-lg-12 mt-3">
     @if(session('created'))
     <div class="alert alert-success alert-dismissible fade show mt-4" role="alert">
@@ -12,8 +12,14 @@
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
     @endif
-    <h3 >List of Officers</h3>
-    <a class="btn btn-primary mb-3 pb-2 pt-2 mt-2" href="{{route('admin.officers.create')}}"><i data-feather="user-plus" class="feather-20 mx-1 pb-1 pt-1"></i> New Officer</a>
+    <div class="row">
+      <div class="col-md-6">
+        <h5 class="text-secondary h4 mt-4"><i data-feather="align-right" class="mb-1 feather-30 me-1"></i> Lists of Officers</h5>
+      </div>
+      <div class="col-md-6">
+        <a class="btn btn-primary mb-3 pb-2 pt-2 mt-2 float-end" href="{{route('admin.officers.create')}}"><i data-feather="user-plus" class="feather-20 mx-1 pb-1 pt-1"></i> New Officer</a>
+      </div>
+    </div>
     <div class="card">
       <div class="table-responsive mb-0">
         <table class="table mb-0">

@@ -1,15 +1,14 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Controllers\Feature;
 
 use App\Models\Officer;
 use App\Models\User;
-use Faker\Factory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
-class OfficerTest extends TestCase
+class OfficerControllerTest extends TestCase
 {
     use RefreshDatabase;
     public function test_only_admin_can_access_officers()

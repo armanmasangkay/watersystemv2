@@ -1,20 +1,19 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Controllers\Feature;
 
-use App\Models\User;
-use Illuminate\Support\Carbon;
 use App\Models\Customer;
 use App\Models\Transaction;
-use Illuminate\Support\Facades\Artisan;
+use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\Artisan;
 use Tests\TestCase;
 
-class EditTransactionTest extends TestCase
+class EditBillingControllerTest extends TestCase
 {
     use RefreshDatabase;
-
     private function create_customer_with_transaction($user){
         $date = Carbon::now();
         $this->actingAs($user)->post(route('admin.register-customer.store'),[
@@ -35,18 +34,7 @@ class EditTransactionTest extends TestCase
             'billing_meter_ips' => '100'
         ]);
     }
-
-    public function test_get_consumer_bill(){
-        $user = User::factory()->create();
-        $this->create_customer_with_transaction($user);
-        $customer = Customer::where('account_number', '!=', '')->first();
-        $transaction = Transaction::where('id', '!=', '')->first();
-       
-        $response = $this->post(route('admin.get-bill', ['id' =>$transaction->id]), ['customer_id' => $customer->account_number]);
-
-        $response->assertJson(['getBill' => true]);
-    }
-
+    
     public function test_update_consumer_transaction(){
         Artisan::call('migrate --seed');
         $user = User::factory()->create();

@@ -16,12 +16,13 @@ class Officer extends Model
 
     protected static $positions =
     [
-        'internal_auditor_i' => 'Internal Auditor I'
+        'internal_auditor_i' => 'Internal Auditor I',
+        'municipal_engineer' => 'Municipal Engineer'
     ];
 
 
     public static $INTERNAL_AUDITOR_I = 'internal_auditor_i';
-
+    public static $MUNICIPAL_ENGINEER = 'municipal_engineer';
 
     public static function getPositions()
     {

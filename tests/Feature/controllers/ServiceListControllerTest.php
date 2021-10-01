@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Controllers\Feature;
 
 use App\Models\Customer;
 use App\Models\Service;
@@ -9,7 +9,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
-class ServicesListTest extends TestCase
+class ServiceListControllerTest extends TestCase
 {
     use RefreshDatabase;
     public function test_service_list_should_be_accessable(){
@@ -25,6 +25,4 @@ class ServicesListTest extends TestCase
         $response->assertViewIs('pages.services-list');
         $response->assertViewHas('services');
     }
-
-
 }

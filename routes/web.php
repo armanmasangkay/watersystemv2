@@ -31,11 +31,13 @@ use App\Http\Controllers\FieldMeterServicesController;
 use App\Http\Controllers\NewConnectionController;
 use App\Http\Controllers\MeterReaderController;
 use App\Http\Controllers\OfficerController;
+use App\Http\Controllers\RootController;
 use App\Http\Controllers\ServiceListController;
 use App\Http\Controllers\ServicesPaymentController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserPasswordController;
 use App\Http\Controllers\WaterBill;
+use App\Http\Controllers\WorkOrderController;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
@@ -43,9 +45,7 @@ use Illuminate\Support\Str;
 
 // dd(Allowed::role(User::$CASHIER,User::$BLDG_INSPECTOR));
 
-Route::get('/', function () {
-    return redirect(route('admin.dashboard'));
-})->middleware('auth');
+Route::get('/', [RootController::class,'index'])->middleware('auth');
 
 
 Route::get('/login',[LoginController::class,'index'])->name('login');
@@ -81,14 +81,6 @@ Route::prefix('admin')->middleware(['auth'])->name('admin.')->group(function(){
 
     Route::get('/consumers',[CustomerController::class,'showAll'])->middleware('auth')->name('customers');
     Route::get('/transaction/new',[TransactionsController::class,'index'])->middleware('auth')->name('new-transaction');
-
-
-    Route::post('/register-consumer',[CustomerController::class,'store'])
-            ->middleware(Allowed::role(User::$ADMIN))->name('register-customer.store');
-
-    Route::get('/dashboard',[DashboardController::class,'index'])
-            ->middleware(Allowed::role(User::$ADMIN))
-            ->name('dashboard');
 
     Route::get('/search-consumer',[CustomerSearchController::class,'search'])->name('search-customer');
 
@@ -185,9 +177,6 @@ Route::prefix('admin')->middleware(['auth'])->name('admin.')->group(function(){
 
     // ADMIN ALLOWED ACCESS ONLY
     Route::middleware(Allowed::role(User::$ADMIN))->group(function(){
-        // CASHIER ACCOUNT CREATION
-            // Route::resource('cashiers',CashierController::class)->middleware('auth.restrict-cashier');
-        // END CASHIER ACCOUNT CREATION
 
         // SERVICES
         Route::resource('services', ServiceController::class);
@@ -222,6 +211,11 @@ Route::prefix('admin')->middleware(['auth'])->name('admin.')->group(function(){
         Route::get('/services/filter',[ServiceController::class,'filter'])->name('services.filter');
         Route::resource('services', ServiceController::class);
 
+        Route::post('/register-consumer',[CustomerController::class,'store'])->name('register-customer.store');
+
+        Route::get('/dashboard',[DashboardController::class,'index'])->name('dashboard');
+
+        Route::get('/work-order',[WorkOrderController::class,'index'])->name('workorder');
     });
     // END ADMIN ALLOWED ACCESS ONLY
 

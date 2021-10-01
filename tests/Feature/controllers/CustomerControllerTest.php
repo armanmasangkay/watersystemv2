@@ -1,34 +1,51 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Controllers\Feature;
 
-use App\Models\User;
-use App\Classes\Facades\CustomerRegistrationOptions;
 use App\Models\Customer;
+use App\Models\Transaction;
+use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Support\Carbon;
 use Tests\TestCase;
 
-class CustomerRegistrationTest extends TestCase
+class CustomerControllerTest extends TestCase
 {
     use RefreshDatabase;
 
 
-    public function test_redirect_to_customers_registration(){
-        $user = User::factory()->create();
-        $response = $this->actingAs($user)->get(route('admin.existing-customers.create'));
-
-        $response->assertViewIs('pages.consumer-data-entry');
-        $response->assertViewHasAll([
-            'civilStatuses'=>CustomerRegistrationOptions::civilStatuses(),
-            'barangays'=>CustomerRegistrationOptions::barangays(),
-            'connectionTypes'=>CustomerRegistrationOptions::connectionTypes(),
-            'connectionStatuses'=>CustomerRegistrationOptions::connectionStatuses()
+    private function create_customer_with_transaction($user){
+        $date = Carbon::now();
+        $this->actingAs($user)->post(route('admin.register-customer.store'),[
+            'firstname' => "June Vic",
+            'middlename' => '',
+            'lastname' => 'Cadayona',
+            'civil_status' => 'single',
+            'purok' => 'Somewhere',
+            'barangay' => 'Somewhere',
+            'contact_number' => '09178781045',
+            'connection_type' => 'Residential',
+            'meter_serial_number'=>'12344',
+            'connection_status' => 'Active',
+            'purchase_option' => 'cash',
+            'reading_meter' => '100',
+            'balance' => '100',
+            'reading_date' => $date->toDateString(),
+            'billing_meter_ips' => '100'
         ]);
     }
 
+    public function test_get_consumer_bill(){
+        $user = User::factory()->create();
+        $this->create_customer_with_transaction($user);
+        $customer = Customer::where('account_number', '!=', '')->first();
+        $transaction = Transaction::where('id', '!=', '')->first();
+       
+        $response = $this->post(route('admin.get-bill', ['id' =>$transaction->id]), ['customer_id' => $customer->account_number]);
 
+        $response->assertJson(['getBill' => true]);
+    }
 
     public function test_organization_name_is_saved_if_field_is_not_empty()
     {
@@ -203,14 +220,6 @@ class CustomerRegistrationTest extends TestCase
         $response->assertJson(['created'=> true]);
 
     }
-
-
-
-    public function test_route_cannot_be_accessed_if_user_is_not_logged_in(){
-        $response = $this->get(route('admin.existing-customers.create'));
-        $response->assertRedirect(route('login'));
-    }
-
     public function test_fail_to_register_if_customer_with_incomplete_data(){
         $user = User::factory()->create();
         $response = $this->actingAs($user)->post(route('admin.register-customer.store'),[

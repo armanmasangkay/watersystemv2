@@ -1,20 +1,36 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Controllers\Feature;
 
+use App\Classes\Facades\CustomerRegistrationOptions;
 use App\Models\Customer;
 use App\Models\User;
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Pagination\Paginator;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Tests\TestCase;
 
-class ConsumersListTest extends TestCase
+class ExistingCustomerControllerTest extends TestCase
 {
     use RefreshDatabase;
+    
+    public function test_route_cannot_be_accessed_if_user_is_not_logged_in(){
+        $response = $this->get(route('admin.existing-customers.create'));
+        $response->assertRedirect(route('login'));
+    }
+    public function test_redirect_to_customers_registration(){
+        $user = User::factory()->create();
+        $response = $this->actingAs($user)->get(route('admin.existing-customers.create'));
 
+        $response->assertViewIs('pages.consumer-data-entry');
+        $response->assertViewHasAll([
+            'civilStatuses'=>CustomerRegistrationOptions::civilStatuses(),
+            'barangays'=>CustomerRegistrationOptions::barangays(),
+            'connectionTypes'=>CustomerRegistrationOptions::connectionTypes(),
+            'connectionStatuses'=>CustomerRegistrationOptions::connectionStatuses()
+        ]);
+    }
+    
     public function test_view_consumers_route()
     {
         $customer=Customer::create([

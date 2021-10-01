@@ -1,20 +1,20 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Controllers\Feature;
 
-use App\Models\User;
-use Illuminate\Support\Carbon;
 use App\Models\Customer;
 use App\Models\Surcharge;
 use App\Models\Transaction;
+use App\Models\User;
 use App\Models\WaterRate;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Artisan;
+use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\Artisan;
 use Tests\TestCase;
+use Illuminate\Support\Str;
 
-class PaymentTest extends TestCase
+class PaymentControllerTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -150,4 +150,5 @@ class PaymentTest extends TestCase
 
         $response->assertJson(['created' => false, 'errors' => ["inputedAmount" => []]]);
     }
+
 }

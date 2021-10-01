@@ -1,13 +1,14 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Controllers\Feature;
 
 use App\Models\Customer;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
-class SearchConsumerTest extends TestCase
+class SearchedCustomerControllerTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -65,6 +66,4 @@ class SearchConsumerTest extends TestCase
 
         $response->assertDontSeeText('No records to display');
     }
-
-
 }

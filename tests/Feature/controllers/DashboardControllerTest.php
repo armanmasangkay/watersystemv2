@@ -1,17 +1,15 @@
 <?php
 
-namespace Tests\Feature\admin;
+namespace Tests\Controllers\Feature;
 
-use App\Classes\Facades\Helpers\Test\IsRouteAccessible;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
-class DashboardTest extends TestCase
+class DashboardControllerTest extends TestCase
 {
     use RefreshDatabase;
-
     public function test_route()
     {
         $user=User::factory()->create();
@@ -61,6 +59,4 @@ class DashboardTest extends TestCase
         $engResponse->assertForbidden();
         $adminResponse->assertOk();
     }
-
-
 }

@@ -1,20 +1,18 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Controllers\Feature;
 
 use App\Models\Customer;
-use App\Models\User;
-use App\Models\Transaction;
 use App\Models\Surcharge;
+use App\Models\Transaction;
+use App\Models\User;
 use App\Models\WaterRate;
-use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Carbon;
-use App\Services\AccountNumberService;
+use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
-class LedgerTransactionTest extends TestCase
+class ConsumerLedgerControllerTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -372,5 +370,4 @@ class LedgerTransactionTest extends TestCase
         $this->assertDatabaseCount('transactions',1);
         $response->assertJson(['created' => false, 'msg' => array('amount' => [])]);
     }
-
 }
