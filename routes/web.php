@@ -8,14 +8,9 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutUserController;
 use App\Http\Controllers\TransactionsController;
-use App\Http\Controllers\ReconnectionController;
 use App\Http\Controllers\BLDGApprovalController;
-use App\Http\Controllers\CashierController;
-use App\Http\Controllers\MTOApprovalController;
 use App\Http\Controllers\WaterWorksApprovalController;
 use App\Http\Controllers\ServiceController;
-use App\Http\Controllers\TransactionListsController;
-use App\Http\Controllers\TransferOfMeterController;
 use App\Http\Controllers\WaterRateController;
 use App\Http\Controllers\SurchargeController;
 use App\Http\Controllers\ConsumerLedgerController;
@@ -32,7 +27,6 @@ use App\Http\Controllers\NewConnectionController;
 use App\Http\Controllers\MeterReaderController;
 use App\Http\Controllers\OfficerController;
 use App\Http\Controllers\RootController;
-use App\Http\Controllers\ServiceListController;
 use App\Http\Controllers\ServicesPaymentController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserPasswordController;
@@ -40,7 +34,6 @@ use App\Http\Controllers\WaterBill;
 use App\Http\Controllers\WorkOrderController;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Str;
 
 
 // dd(Allowed::role(User::$CASHIER,User::$BLDG_INSPECTOR));
@@ -66,14 +59,7 @@ Route::prefix('admin')->middleware(['auth'])->name('admin.')->group(function(){
         // 'users'=>UserController::class,
 
     ]);
-
     
-
-
-
-    // Route::get('/service-list', [ServiceListController::class, 'index'])->name('services-list.index');
-    // Route::get('/service-list/filter', [ServiceListController::class, 'filter'])->name('services-list.filter');
-
     // Export URLs
     Route::get('/customers/export/{keyword?}',[ExportsController::class,'exportCustomers'])->name('customers.export');
     Route::get('/ledger/export/{account_number}',[ExportsController::class,'exportLedger'])->name('ledger.export');
