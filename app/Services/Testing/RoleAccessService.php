@@ -1,6 +1,7 @@
 <?php namespace App\Services\Testing;
 
 use App\Models\User;
+use Illuminate\Support\Arr;
 use Tests\TestCase;
 class RoleAccessService{
 
@@ -9,43 +10,45 @@ class RoleAccessService{
     public function __construct(TestCase $testCase)
     {
         $this->testCase=$testCase;
+    
         
     }
 
-    public function forAdminOnlyGet($route)
+    private function roles()
     {
-        $user=User::factory()->create();
-        $response=$this->testCase->actingAs($user)->get($route); 
-        $response->assertOk();
+        return User::validRoles();
+    }
 
-        $user=User::factory()->create([
-            'role'=>User::$CASHIER
-        ]);
-        $response=$this->testCase->actingAs($user)->get($route); 
-        $response->assertForbidden();
+    public function accessibleOnlyTo(array $allowedRoles,$method,$route,$parameters=[])
+    {
+        $notAllowedRoles=Arr::except($this->roles(),$allowedRoles);
 
-        $user=User::factory()->create([
-            'role'=>User::$BLDG_INSPECTOR
-        ]);
-        $response=$this->testCase->actingAs($user)->get($route); 
-        $response->assertForbidden();
+        foreach ($notAllowedRoles as $index=>$role){
 
-        $user=User::factory()->create([
-            'role'=>User::$WATERWORKS_INSPECTOR
-        ]);
-        $response=$this->testCase->actingAs($user)->get($route); 
-        $response->assertForbidden();
+            $user=User::factory()->create([
+                'role'=>$index
+            ]);
 
-        $user=User::factory()->create([
-            'role'=>User::$READER
-        ]);
-        $response=$this->testCase->actingAs($user)->get($route); 
-        $response->assertForbidden();
+            $this->testCase->actingAs($user);
 
-        $user=User::factory()->create([
-            'role'=>User::$ENGINEER
-        ]);
-        $response=$this->testCase->actingAs($user)->get($route); 
-        $response->assertForbidden();
+            $response=$this->testCase->call($method,$route,$parameters);
+
+            $response->assertForbidden();
+        }
+
+        foreach ($allowedRoles as $index=>$role){
+
+            $user=User::factory()->create([
+                'role'=>$role
+            ]);
+
+            $this->testCase->actingAs($user);
+
+            $response=$this->testCase->call($method,$route,$parameters);
+
+            $response->assertOk();
+        }
+
+        
     }
 }

@@ -35,33 +35,33 @@ use App\Http\Controllers\WorkOrderController;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [RootController::class,'index'])->middleware('auth');
+Route::get('/', [RootController::class,'index'])->middleware('auth'); // (Fully Tested)
 
 
-Route::get('/login',[LoginController::class,'index'])->name('login');
-Route::post('/login',[LoginController::class,'authenticate']);
+Route::get('/login',[LoginController::class,'index'])->name('login'); // (Fully Tested)
+Route::post('/login',[LoginController::class,'authenticate']); // (Fully Tested)
 
 Route::middleware('auth')->group(function(){
-    Route::get('/users/change-password', [UserController::class, 'updatePassword'])->name('users.update-password.edit');
-    Route::put('/users/change-password', [UserController::class, 'storeNewPassword'])->name('users.update-password.store');
+    Route::get('/users/change-password', [UserController::class, 'updatePassword'])->name('users.update-password.edit'); // (Fully Tested)
+    Route::put('/users/change-password', [UserController::class, 'storeNewPassword'])->name('users.update-password.store'); // (Fully Tested)
 });
 
 Route::prefix('admin')->middleware(['auth'])->name('admin.')->group(function(){
 
 
     Route::resources([
-        'searched-customers'=>SearchedCustomerController::class,
-        'existing-customers'=>ExistingCustomerController::class,
-        'new-connection' => NewConnectionController::class,
+        'searched-customers'=>SearchedCustomerController::class, // (Fully Tested)
+        'existing-customers'=>ExistingCustomerController::class, // (Fully Tested)
+        'new-connection' => NewConnectionController::class, // (Fully Tested)
 
     ]);
 
     // Export URLs
-    Route::get('/customers/export/{keyword?}',[ExportsController::class,'exportCustomers'])->name('customers.export');
-    Route::get('/ledger/export/{account_number}',[ExportsController::class,'exportLedger'])->name('ledger.export');
+    Route::get('/customers/export/{keyword?}',[ExportsController::class,'exportCustomers'])->name('customers.export'); // (Fully Tested)
+    Route::get('/ledger/export/{account_number}',[ExportsController::class,'exportLedger'])->name('ledger.export'); // (Fully Tested)
 
 
-    Route::get('/consumers',[CustomerController::class,'showAll'])->middleware('auth')->name('customers');
+   
     Route::get('/transaction/new',[TransactionsController::class,'index'])->middleware('auth')->name('new-transaction');
 
     Route::get('/search-consumer',[CustomerSearchController::class,'search'])->name('search-customer');
@@ -149,6 +149,8 @@ Route::prefix('admin')->middleware(['auth'])->name('admin.')->group(function(){
         ]);
 
         // END SERVICES
+
+        Route::get('/consumers',[CustomerController::class,'showAll'])->middleware('auth')->name('customers'); // fully tested
 
         // READER ACCOUNT CREATION
             Route::get('/meter-reader', [MeterReaderController::class, 'index'])->name('reader');
