@@ -73,7 +73,6 @@
               <li>
                 <a class="dropdown-item" href="{{route('admin.services.create')}}">New</a>
                 <a class="dropdown-item" href="{{route('admin.services.index')}}">View Lists</a>
-                <a class="dropdown-item" href="{{route('admin.request-approvals')}}">Requests</a>
               </li>
             </ul>
           </li>
