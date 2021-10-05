@@ -188,6 +188,15 @@ a.btn{
     background-color: #fff;
 }
 
+.form-control-plaintext:disabled:focus,
+.form-control-plaintext[readonly]:focus,
+.form-control:disabled:focus,
+.form-control[readonly]:focus,
+.form-select[disable]:focus {
+    border: 0px !important;
+    outline: 0px !important;
+}
+
 body.offcanvas-active{
 	overflow:hidden;
 }

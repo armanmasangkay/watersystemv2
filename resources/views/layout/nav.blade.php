@@ -86,7 +86,7 @@
               <i data-feather="settings" class="feather-16 m-1"></i> Settings
             </a>
             <ul class="dropdown-menu px-2" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" href="{{route('admin.officers.index')}}" >Officers</a></li>
+              <li><a class="dropdown-item" href="{{route('admin.officers.index')}}" >Set Officers</a></li>
               <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#exampleModal">Water Rates</a></li>
               <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#surchargeModel">Surcharge</a></li>
               <li><a class="dropdown-item" href="{{route('users.update-password.edit')}}">Change Password</a></li>
