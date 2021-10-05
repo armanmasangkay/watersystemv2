@@ -183,7 +183,8 @@ a.btn{
     }
 }
 
-.form-control:disabled, .form-control[readonly] {
+.form-control:disabled, .form-control[readonly],
+.form-select:disabled {
     background-color: #fff;
 }
 
