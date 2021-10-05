@@ -138,6 +138,11 @@ $(document).ready(function(){
         $('#reading_date').val(numDate)
     })
 
+    $('.calendar').click(function(){
+        var visible = $('#ui-datepicker-div').is(':visible');
+        $('#carbon_date_billing').datepicker(visible ? 'hide' : 'show');
+    })
+
     function format_number(n) {
         return n.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, "$1,");
     }

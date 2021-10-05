@@ -158,7 +158,7 @@ $(document).ready(function(){
                     
                     $('input[name="edit_meter_reading_bal"]').val(responseData.meter) 
 
-                    $('#editBillingSetupModal').modal('show')
+                    $('#editBillingSetupModal').modal('toggle')
                     nxt_mtr = responseData.nxt_mtr
                     
                 }
