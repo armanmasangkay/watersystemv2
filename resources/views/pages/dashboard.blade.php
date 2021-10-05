@@ -16,20 +16,23 @@
 </div>
 <script>
     startTime()
-    function startTime() {
-        const today = new Date();
-        let h = today.getHours();
-        let m = today.getMinutes();
-        let s = today.getSeconds();
-        m = checkTime(m);
-        s = checkTime(s);
-        document.getElementById('time').innerHTML =  h + ":" + m + ":" + s;
-        setTimeout(startTime, 1000);
+
+    function formatAMPM(date) {
+        var hours = date.getHours();
+        var minutes = date.getMinutes();
+        var seconds = date.getSeconds();
+        var ampm = hours >= 12 ? 'PM' : 'AM';
+        hours = hours % 12;
+        hours = hours ? hours : 12;
+        minutes = minutes < 10 ? '0'+ minutes : minutes;
+        seconds = seconds < 10 ? '0'+ seconds : seconds;
+        var strTime = hours + ':' + minutes + ':' + seconds + ' ' + ampm;
+        return strTime;
     }
 
-    function checkTime(i) {
-        if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
-        return i;
+    function startTime() {
+        document.getElementById('time').innerHTML = formatAMPM(new Date());
+        setTimeout(startTime, 1000);
     }
 
     var date =  new Date()
