@@ -22,20 +22,20 @@ class ServicesPaymentController extends Controller
     public function search(Request $request)
     {
         $validator=Validator::make($request->all(),[
-            'account_number'=>'required|exists:customers,account_number'
+            'keyword'=>'required|exists:customers,account_number'
         ],[
-           'account_number.exists'=>'Account number not found'
+           'keyword.exists'=>'Account number not found'
         ]);
 
         if($validator->fails()){
-            return redirect(route('admin.services-payment'))->withErrors($validator)->withInput();
+            return redirect(route('admin.services-payment'))->withErrors($validator)->withInput()->with(['search_route' => 'admin.services-payment']);
         }
 
         $customer=Customer::find($request->account_number);
         session()->flashInput(['account_number'=>$request->account_number]);
 
         $services = Service::where('status', 'pending_for_payment')->where('customer_id', $request->account_number)->get();
-        return view('pages.users.cashier.services-transaction-payment', ['services' => $services, 'route' => 'admin.services-payment-search']);
+        return view('pages.users.cashier.services-transaction-payment', ['services' => $services, 'search_route' => 'admin.services-payment-search']);
     }
 
     public function savePayment(ServiceRequest $request)
@@ -49,6 +49,7 @@ class ServicesPaymentController extends Controller
             'customer_id' => $request->customer_id,
             'service_id' => $request->id,
             'payment_amount' => $request->amount,
+            'remarks' => $request->remarks,
             'user_id' => Auth::id()
         ]);
 
