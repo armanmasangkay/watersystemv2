@@ -2,8 +2,10 @@
 
 namespace Tests\Controllers\Feature;
 
+use App\Exports\CustomersExport;
 use App\Models\Customer;
 use App\Models\User;
+use Database\Factories\CustomerFactory;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -85,5 +87,21 @@ class ExportsControllerTest extends TestCase
        $this->actingAs($user)
            ->get(route('admin.ledger.export',['account_number'=>'testing']));
        Excel::assertDownloaded('testing ledger.xlsx');
+   }
+
+   public function test_contains_columns_until_meter_ips_only()
+   {
+        Excel::fake();
+
+        $user=User::factory()->create();
+
+        $customer=Customer::factory()->create();
+
+        $this->actingAs($user)
+            ->get(route('admin.customers.export'));
+
+        Excel::assertDownloaded('customers.xlsx', function(CustomersExport $export) use ($customer) {
+            return $export->collection()->contains(Customer::find($customer->account_number));
+        });
    }
 }
