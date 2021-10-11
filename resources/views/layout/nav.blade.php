@@ -23,6 +23,7 @@
               <li><a class="dropdown-item" href="{{route('admin.existing-customers.index')}}">View Lists</a></li>
             </ul>
           </li>
+          
           @cashierOnly(Auth::user()->role)
           <li class="nav-item m1-">
             <a class="nav-link m-1 text-secondary" aria-current="page" href="{{route('admin.services-payment')}}">
