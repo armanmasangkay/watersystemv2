@@ -7,21 +7,25 @@
 
 <div class="row mb-0">
     @include('templates.user')
-    <div class="col-md-8 pt-2">
+    <div class="col-md-8 pt-2 mt-4">
         <h3 class="h4 mb-3 mt-2 text-left">PENDING FOR APPROVAL</h3>
     </div>
     <div class="col-md-4"></div>
 </div>
 
 <div class="card">
-    <div class="card-header px-2 bg-light">
+    <div class="card-header px-2 py-0 bg-light">
         <div class="row">
-            <div class="col-md-6 py-0">
+            <div class="col-md-8 py-0">
                 @include('templates.form-search-account')
             </div>
-            @if(isset(request()->keyword))
-                <x-button :url="$index_route"/>
-            @endif
+            <div class="col-md-4 py-2">
+                @if(isset(request()->keyword))
+                    <x-button :url="$index_route" btnText="Show All"/>
+                @else
+                    <x-button :url="$index_route" btnText="Refresh"/>
+                @endif
+            </div>
         </div>
     </div>
     <div class="card-body p-0">
@@ -58,7 +62,9 @@
                         </td>
                     </tr>
                     @empty
-                        <p class="text-center text-muted my-4">No pending service</p>
+                    <tr>
+                        <td colspan="5" class="py-2 border-bottom-0 text-center">No pending services</td>
+                    </tr>
                     @endforelse
 
                 </tbody>

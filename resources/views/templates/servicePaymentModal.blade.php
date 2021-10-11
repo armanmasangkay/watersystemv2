@@ -49,7 +49,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i data-feather="x"></i> Close</button>
-                    <button type="submit" class="btn btn-primary" id="save-payment" disabled><i data-feather="check"></i> Save Payment</button>
+                    <button type="submit" class="btn btn-primary" id="save-payment" disabled><i data-feather="check"></i> Submit</button>
                 </div>
             </form>
         </div>
