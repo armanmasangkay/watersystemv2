@@ -7,14 +7,16 @@ use Illuminate\View\Component;
 class Button extends Component
 {
     public $url;
+    public $btnText;
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($url)
+    public function __construct($url, $btnText)
     {
         $this->url = $url;
+        $this->btnText = $btnText;
     }
 
     /**

@@ -12,6 +12,7 @@ use Tests\TestCase;
 class ServiceListControllerTest extends TestCase
 {
     use RefreshDatabase;
+    
     public function test_service_list_should_be_accessable(){
         $user = User::factory()->create();
         $customer = Customer::factory()->create();

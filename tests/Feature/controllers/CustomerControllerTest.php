@@ -5,7 +5,9 @@ namespace Tests\Controllers\Feature;
 use App\Models\Customer;
 use App\Models\Transaction;
 use App\Models\User;
+use App\Services\Testing\RoleAccessService;
 use Carbon\Carbon;
+use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -13,6 +15,36 @@ use Tests\TestCase;
 class CustomerControllerTest extends TestCase
 {
     use RefreshDatabase;
+
+    public function test_show_all_function_can_show_customers()
+    {
+        $createdCustomers=Customer::factory(3)->create();
+
+        $user=User::factory()->create();
+
+        $this->actingAs($user);
+
+        $response=$this->get(route('admin.customers'));
+
+        $response
+            ->assertOk()
+            ->assertViewIs('pages.customers-list')
+            ->assertViewHas('customers');
+
+        $customers=$response['customers'];
+
+        $this->assertEquals($createdCustomers[0]->account_number,$customers[0]->account_number);
+        $this->assertEquals($createdCustomers[1]->account_number,$customers[1]->account_number);
+        $this->assertEquals($createdCustomers[2]->account_number,$customers[2]->account_number);
+
+        $this->assertInstanceOf(Paginator::class,$customers);
+    }
+
+    public function test_show_all_function_to_only_be_accessible_to_admins()
+    {
+        (new RoleAccessService($this))->accessibleOnlyTo([User::$ADMIN],'GET',route('admin.customers'));
+    }
+
 
     private function create_customer_with_transaction($user){
         $date = Carbon::now();
