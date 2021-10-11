@@ -15,11 +15,8 @@
                     <div class="row mt-3">
                         <div class="col-md-12">
                             <label class='text-muted'>Payment Date (dd/mm/yyyy) <span class="text-danger"><strong>*</strong></span></label>
-                            <div class="form-control date d-flex justify-content-between align-items-center input" id="datepicker">
-                                <input type="text" class="w-100 border-0" id="carbon_date_service" readonly value="{{ \Carbon\Carbon::now()->format('F d, Y') }}">
-                                <span class="input-group-addon calendar"><i data-feather="calendar" width="20"></i></span>
-                                <input type="hidden" class="border-0 date" name="payment_date" id="payment_date" readonly>
-                            </div>
+                            <input type="text" class="w-100" id="carbon_date_service" readonly value="{{ \Carbon\Carbon::now()->format('F d, Y') }}" style="cursor: pointer;">
+                            <input type="hidden" class="border-0 date" name="payment_date" id="payment_date" readonly>
                         </div>
                     </div>
                     <div class="row mt-3">

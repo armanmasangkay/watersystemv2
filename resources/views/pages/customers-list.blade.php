@@ -50,7 +50,7 @@
                         <tr style="cursor: pointer;" onclick='location.href=`{{ route("admin.search-transactions", ["account_number" => $customer->account_number]) }}`'>
                             <td class="text-primary border-top {{ ($customers->count() < 10) ? 'border-bottom-0' : '' }} "><strong>{{$customer->account_number}}</strong></td>
                             @if($customer->isOrgAccount())
-                            <td class="text-secondary border-secondary {{ ($customers->count() < 10) ? 'border-bottom-0' : '' }} ">
+                            <td class="text-secondary border-top {{ ($customers->count() < 10) ? 'border-bottom-0' : '' }} ">
                               ORG/COMPANY: <strong>{{$customer->org_name}}</strong><br>
                               <small class="text-muted">Registered by ({{$customer->fullname()}})</small>
                             </td>
