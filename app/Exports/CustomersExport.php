@@ -40,7 +40,19 @@ class CustomersExport implements FromCollection,WithHeadings
     public function collection()
     {
         
-        return $this->collection?$this->collection:Customer::all();
+        return $this->collection?$this->collection:Customer::all([
+            'account_number',
+            'firstname',
+            'middlename',
+            'lastname',
+            'civil_status',
+            'purok',
+            'barangay',
+            'contact_number',
+            'connection_type',
+            'connection_status',
+            'purchase_option'
+        ]);
 
     }
 }

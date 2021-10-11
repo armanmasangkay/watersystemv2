@@ -314,4 +314,9 @@ $(document).ready(()=>{
         let selectedPurok=$("#purok-dropdown option:selected").val()==""?"":$("#purok-dropdown option:selected").text();
         purokCodeTxtField.val(selectedPurok);
     })
+
+    $('#registration-form').submit(function(){
+        $(".modal_save").html('<i class="far fa-spinner fa-spin me-1"></i>&nbsp; Saving ...')
+        $(".modal_save").prop('disabled', true)
+    })
 })

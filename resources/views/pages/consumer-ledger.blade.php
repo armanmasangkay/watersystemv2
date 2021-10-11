@@ -159,7 +159,7 @@
                                         </small>
                                     </td>
                                     <td class="pt-2 pb-2 text-center bg-white border-bottom border-secondary">
-                                        @if($billing->payments->count() == 0)
+                                        @if($billing->payments->count() == 0 && $billing->balance > 0)
                                             <a href="#" class="text-primary" data-id="{{ $billing->id }}" id="edit"><i data-feather="edit-3" class="feather-18 me-1"></i> Edit</a>
                                         @endif
                                     </td>
