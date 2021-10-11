@@ -46,8 +46,10 @@ class ServiceController extends Controller
 
     public function search(Request $request)
     {
+       
         try{
             $customer= Customer::findOrFail($request->account_number);
+           
             return view('pages.add-service', [
                 'route' => 'admin.search-customer',
                 'services'=>$this->getServices(),
@@ -57,7 +59,7 @@ class ServiceController extends Controller
             return redirect(route('admin.services.create'))->withErrors([
                     'account_number'=>'Account number not found!'
                 ])->withInput();
-        }
+        } 
 
     }
 

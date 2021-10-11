@@ -141,7 +141,6 @@ Route::prefix('admin')->middleware(['auth'])->name('admin.')->group(function(){
     Route::middleware(Allowed::role(User::$ADMIN))->group(function(){
 
         // SERVICES
-        Route::resource('services', ServiceController::class);
         Route::resource('users',UserController::class);
         Route::resource('officers', OfficerController::class);
         Route::resource('user-passwords',UserPasswordController::class)->parameters([
