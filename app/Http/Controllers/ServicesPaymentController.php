@@ -53,6 +53,7 @@ class ServicesPaymentController extends Controller
             'user_id' => Auth::id()
         ]);
 
+
         return Response::json(['created' => true]);
     }
 }
