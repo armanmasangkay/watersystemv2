@@ -22,8 +22,8 @@ class ServiceRequest extends FormRequest
     public function messages()
     {
         return [
-            'orNUm.required' => 'OR number should not be empty.',
-            'orNUm.unique' => 'OR number cannot be the same with the existing issued OR number.',
+            'orNum.required' => 'OR number should not be empty.',
+            'orNum.unique' => 'OR number cannot be the same with the existing issued OR number.',
             'inputedAmount.required' => 'Inputed amount should not be empty.',
             'inputedAmount.numeric' => 'Inputed amount should be a number format.',
             'inputedAmount.gt' => 'Inputed amount should be greater than zero.',
@@ -47,7 +47,7 @@ class ServiceRequest extends FormRequest
     public function rules()
     {
         return [
-            'orNUm' => 'required|unique:payments,or_no',
+            'orNum' => 'required|unique:payments,or_no',
             'inputedAmount' => 'required|numeric|gt:0'
         ];
     }

@@ -33,5 +33,9 @@ class UserSeeder extends Seeder
             'username'=>'waterworksinspector',
             'role'=>User::$WATERWORKS_INSPECTOR
         ]);
+        User::factory(1)->create([
+            'username'=>'municipal-engineer',
+            'role'=>User::$ENGINEER
+        ]);
     }
 }

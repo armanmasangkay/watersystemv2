@@ -38,7 +38,7 @@
                             <td class="pt-2 pb-2 ps-3">{{ $service->prettyServiceType() }}</td>
                             <td class="pt-2 pb-2 ps-3">{{ \Carbon\Carbon::parse($service->created_at)->format('F d, Y') }}</td>
                             <td class="d-flex justify-content-start py-2">
-                                <button type="submit" class="border-0 bg-white text-primary py-0" data-bs-toggle='modal' data-bs-target='#servicePaymentModal' data-id="{{ $service->id }}" acc-id="{{ $service->customer->account_number }}" id="payment"><i data-feather="user-check" width="18" class="mb-1"></i>&nbsp; Payment</button>
+                                <button type="submit" class="border-0 bg-white text-primary py-0" data-bs-toggle='modal' data-bs-target='#servicePaymentModal' data-id="{{ $service->id }}" acc-id="{{ $service->customer->account_number }}" id="payment"><i data-feather="user-check" width="18" class="mb-1"></i>&nbsp; Pay</button>
                             </td>
                         </tr>
                     @endforeach
