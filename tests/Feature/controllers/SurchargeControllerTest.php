@@ -25,6 +25,69 @@ class SurchargeControllerTest extends TestCase
 
         $response->assertJson(['data' => array($data)]);
     }
+
+    /**
+     * @test
+     */
+    public function surchargeCanBeAccessableByAdmin()
+    {
+        $user = User::factory()->create();
+        Surcharge::factory()->create();
+
+        $response = $this->actingAs($user)->get(route('admin.surcharge-get'));
+        $data = ["rate" => 0.1];
+
+        $response->assertJson(['data' => array($data)]);
+    }
+
+    /**
+     * @test
+     */
+    public function surchageCannotBeAccessableByCashier()
+    {
+        $user = User::factory()->create(['role' => User::$CASHIER]);
+        Surcharge::factory()->create();
+
+        $response = $this->actingAs($user)->get(route('admin.surcharge-get'));
+        $response->assertForbidden();
+    }
+
+    /**
+     * @test
+     */
+    public function surchageCannotBeAccessableByEngineer()
+    {
+        $user = User::factory()->create(['role' => User::$ENGINEER]);
+        Surcharge::factory()->create();
+
+        $response = $this->actingAs($user)->get(route('admin.surcharge-get'));
+        $response->assertForbidden();
+    }
+
+    /**
+     * @test
+     */
+    public function surchageCannotBeAccessableByBldgInspector()
+    {
+        $user = User::factory()->create(['role' => User::$BLDG_INSPECTOR]);
+        Surcharge::factory()->create();
+
+        $response = $this->actingAs($user)->get(route('admin.surcharge-get'));
+        $response->assertForbidden();
+    }
+
+    /**
+     * @test
+     */
+    public function surchageCannotBeAccessableByWaterWorksInspector()
+    {
+        $user = User::factory()->create(['role' => User::$WATERWORKS_INSPECTOR]);
+        Surcharge::factory()->create();
+
+        $response = $this->actingAs($user)->get(route('admin.surcharge-get'));
+        $response->assertForbidden();
+    }
+
     public function test_success_if_surcharge_update_with_valid_data()
     {
         $user = User::factory()->create();

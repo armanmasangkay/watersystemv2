@@ -30,6 +30,65 @@ class WaterRateControllerTest extends TestCase
         $response->assertJson(['data' => array($data1, $data2,$data3)]);
     }
 
+    /**
+     * @test
+     */
+    public function waterRateCanBeAccessableByAdmin()
+    {
+        $user = User::factory()->create();
+        WaterRate::factory()->create();
+        WaterRate::factory()->create(['type' => 'Institutional']);
+        WaterRate::factory()->create(['type' => 'Commercial', "min_rate" => 110, "excess_rate" => 15]);
+        Surcharge::factory()->create();
+        $response = $this->actingAs($user)->get(route('admin.water-rate-get'));
+        $data1 = [ "type" => "Residential", "consumption_max_range" => 10, "min_rate" => 65, "excess_rate" => 10];
+        $data2 = ["type" => "Institutional", "consumption_max_range" => 10, "min_rate" => 65, "excess_rate" => 10];
+        $data3 = ["type" => "Commercial", "consumption_max_range" => 10, "min_rate" => 110, "excess_rate" => 15];
+        $response->assertJson(['data' => array($data1, $data2,$data3)]);
+    }
+
+    /**
+     * @test
+     */
+    public function waterRateCannotBeAccessableByCashier()
+    {
+        $user = User::factory()->create(['role' => User::$CASHIER]);
+        WaterRate::factory()->create();
+        WaterRate::factory()->create(['type' => 'Institutional']);
+        WaterRate::factory()->create(['type' => 'Commercial', "min_rate" => 110, "excess_rate" => 15]);
+        Surcharge::factory()->create();
+        $response = $this->actingAs($user)->get(route('admin.water-rate-get'));
+        $response->assertForbidden();
+    }
+
+    /**
+     * @test
+     */
+    public function waterRateCannotBeAccessableByEngineer()
+    {
+        $user = User::factory()->create(['role' => User::$ENGINEER]);
+        WaterRate::factory()->create();
+        WaterRate::factory()->create(['type' => 'Institutional']);
+        WaterRate::factory()->create(['type' => 'Commercial', "min_rate" => 110, "excess_rate" => 15]);
+        Surcharge::factory()->create();
+        $response = $this->actingAs($user)->get(route('admin.water-rate-get'));
+        $response->assertForbidden();
+    }
+
+    /**
+     * @test
+     */
+    public function waterRateCannotBeAccessableByBldgInspector()
+    {
+        $user = User::factory()->create(['role' => User::$BLDG_INSPECTOR]);
+        WaterRate::factory()->create();
+        WaterRate::factory()->create(['type' => 'Institutional']);
+        WaterRate::factory()->create(['type' => 'Commercial', "min_rate" => 110, "excess_rate" => 15]);
+        Surcharge::factory()->create();
+        $response = $this->actingAs($user)->get(route('admin.water-rate-get'));
+        $response->assertForbidden();
+    }
+
     public function test_should_error_if_required_fields_are_not_provided()
     {
         $user = User::factory()->create();

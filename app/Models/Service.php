@@ -50,7 +50,8 @@ class Service extends Model
         'pending_waterworks_inspection',
         'pending_engineer_approval',
         'pending_for_payment',
-        'ready'
+        'ready',
+        'finished'
     ];
 
     public static $PENDING_BUILDING_INSPECTION="pending_building_inspection";
