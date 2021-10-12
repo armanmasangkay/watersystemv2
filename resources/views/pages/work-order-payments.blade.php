@@ -6,7 +6,7 @@
 @section('content')
 
 @if($payments->count()>0)
-<h4 class="mt-4 text-center">Work Order Payments</h4>
+<h4 class="mt-4 text-center">(Work Order Payments)</h4>
 <table class="table table-striped mt-4">
     <thead>
         <th>Service Name</th>
