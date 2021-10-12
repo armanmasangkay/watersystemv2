@@ -15,6 +15,26 @@ class WorkOrderPaymentsControllerTest extends TestCase
 {
     use RefreshDatabase;
 
+    public function test_view_should_show_no_payments_to_show_label_if_payments_is_empty()
+    {
+        $user= User::factory()->create();
+
+        $this->actingAs($user);
+
+        $payments=collect([]);
+
+           $view= $this->view('pages.work-order-payments',[
+                'payments'=>$payments
+            ]);
+
+
+
+            $view->assertSeeText("No payments to show!");
+            $view->assertDontSeeText("(Work Order Payments)");
+           
+    }
+
+
     public function test_it_renders_the_payments_list_propery()
     {
         $user= User::factory()->create();
