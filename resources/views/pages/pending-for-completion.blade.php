@@ -7,24 +7,23 @@
 <div class="row mb-0">
     @include('templates.user')
     <div class="col-md-8 pt-2 mt-4">
-        <h3 class="h4 mb-3 mt-2 text-left text-secondary"><i data-feather="align-left" class="feather-16 mx-1"></i> Lists of Request for Water Works Inspections</h3>
+        <h3 class="h4 mb-3 mt-2 text-left text-secondary"><i data-feather="align-left" class="feather-16 mx-1"></i> Lists of Pending for Completion</h3>
     </div>
     <div class="col-md-4 pt-2 mt-4">
-        <div class="float-start float-md-end ms-3">
-            <a href="" class="btn btn-primary border" style="height: 40px;">
-                Pending for Completion
-            </a>
-        </div>
-        <div class="float-start float-md-end me-2">
-            <div class="btn bg-light position-relative">
-                <i data-feather="activity" class="me-1 feather-18"></i> Pending Services
+        <div class="float-start float-md-end">
+            <div class="btn {{ $services->count() > 0 ? 'btn-warning' : 'btn-info' }} position-relative">
+                Pending Services
                 <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                     {{ $services->count() }}
                     <span class="visually-hidden">unread messages</span>
                 </span>
             </div>
         </div>
-        
+        <div class="float-start float-md-end me-1">
+            <a href="" class="btn btn-primary border" style="height: 40px;">
+                Pending for Completion
+            </a>
+        </div>
     </div>
 </div>
 
@@ -32,14 +31,10 @@
     <div class="card-header px-2 py-0 bg-light">
         <div class="row">
             <div class="col-md-6 py-0">
-                @include('templates.form-search-account')
+                
             </div>
             <div class="col-md-6 py-2">
-                @if(isset(request()->keyword))
-                    <x-button :url="$index_route" btnText="Show All"/>
-                @else
-                    <x-button :url="$index_route" btnText="Refresh"/>
-                @endif
+                <x-button :url="$index_route" btnText="Refresh"/>
             </div>
         </div>
     </div>
