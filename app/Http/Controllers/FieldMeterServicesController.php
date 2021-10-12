@@ -52,7 +52,9 @@ class FieldMeterServicesController extends Controller
             'customer_id' => $customer->account_number,
             'type_of_service' => $request->type_of_service,
             'contact_number' => $customer->contact_number,
-            'status' => 'pending_waterworks_inspection'
+            'status' => Service::getInitialStatus($request->type_of_service),
+            'start_status' => Service::getInitialStatus($request->type_of_service),
+            'request_number' => Service::generateUniqueIdentifier()
         ]);
 
         return response()->json(['created' => true]);
