@@ -21,6 +21,11 @@ class PaymentWorkOrder extends Model
         'user_id',
     ];
 
+    public function prettyPaymentAmount()
+    {
+        return "P".number_format($this->payment_amount,2,".",",");
+    }
+
     public function service()
     {
         return $this->belongsTo(Service::class,'service_id','id');
