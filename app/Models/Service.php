@@ -90,6 +90,11 @@ class Service extends Model
         return "$dateToday-$randomNum";
     }
 
+    public function isReady()
+    {
+        return $this->status=="ready";
+    }
+
     public static function getInitialStatus($serviceType)
     {
 
