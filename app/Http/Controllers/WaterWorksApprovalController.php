@@ -39,4 +39,9 @@ class WaterWorksApprovalController extends Controller
 
         return redirect(route('admin.waterworks-request-approvals'));
     }
+
+    public function pendingForCompletion()
+    {
+        dd('asdada');
+    }
 }

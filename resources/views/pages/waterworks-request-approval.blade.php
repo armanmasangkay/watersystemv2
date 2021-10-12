@@ -11,7 +11,7 @@
     </div>
     <div class="col-md-4 pt-2 mt-4">
         <div class="float-start float-md-end ms-3">
-            <a href="" class="btn btn-primary border" style="height: 40px;">
+            <a href="{{route('admin.waterworks.pending-for-completion')}}" class="btn btn-primary border" style="height: 40px;">
                 Pending for Completion
             </a>
         </div>
