@@ -4,10 +4,10 @@
 @section('content')
 
 <div class="row mt-3 justify-content-center">
-    
+
 
     <div class="col-12 col-md-8 col-lg-5 col-xl-4">
-    
+
         <h3 class='text-center mt-3'>Change Account Password</h3>
         <form action="{{route('users.update-password.store')}}" class="mt-5" method="post">
             @csrf
@@ -38,10 +38,11 @@
             </div>
 
             <center>
+                <a href="{{ URL::previous()}}"  class="btn btn-secondary mt-4 p-2"> <i data-feather="corner-down-left" class="feather-18 me-1 mb-1"></i> Back</a>
                 <button type="submit" class="btn btn-primary mt-4"><i data-feather="edit-3" class="feather-18 me-1 mb-1"></i> Update</button>
             </center>
         </form>
-    </div>  
+    </div>
 </div>
 
 

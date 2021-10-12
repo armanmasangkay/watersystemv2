@@ -13,6 +13,8 @@
             </a>
           </li>
           @endadminonly
+
+          @adminAndCashierOnly
           <li class="nav-item dropdown pt-1">
             <a class="nav-link dropdown-toggle text-secondary" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               <i data-feather="users" class="feather-16 m-1"></i> Consumer
@@ -23,6 +25,7 @@
               <li><a class="dropdown-item" href="{{route('admin.existing-customers.index')}}">View Lists</a></li>
             </ul>
           </li>
+          @endadminAndCashierOnly
 
           @cashierOnly()
           <li class="nav-item m1-">
@@ -90,6 +93,13 @@
           </li>
           @endadminonly
 
+          @cashierOnly()
+            <li class="nav-item m1-">
+                <a class="nav-link m-1 text-secondary" aria-current="page" href="{{route('users.update-password.edit')}}">
+                <i data-feather="key" class="feather-16 m-1 mb-1"></i> Change Password &nbsp;
+                </a>
+            </li>
+          @endcashierOnly
 
           @adminonly()
           <li class="nav-item dropdown pt-1">

@@ -37,5 +37,9 @@ class AppServiceProvider extends ServiceProvider
         Blade::if('cashierOnly',function(){
             return Auth::user()->role==User::$CASHIER;
         });
+
+        Blade::if('adminAndCashierOnly', function(){
+            return Auth::user()->role==User::$ADMIN || Auth::user()->role == User::$CASHIER;
+        });
     }
 }
