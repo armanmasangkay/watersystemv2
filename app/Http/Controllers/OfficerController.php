@@ -24,7 +24,6 @@ class OfficerController extends Controller
 
     public function store(OfficerRequest $request)
     {
-
         Officer::create([
             'fullname' => Str::title($request->fullname),
             'position' => $request->position
