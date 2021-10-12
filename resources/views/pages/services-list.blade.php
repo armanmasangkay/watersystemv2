@@ -51,14 +51,23 @@
                                 <td scope="row" class="border-bottom-0 border-top">{{$service->customer->contact_number}}</td>
                                 <td scope="row" class="border-bottom-0 border-top">{{$service->prettyStatus()}}</td>
                                 <td scope="row" class="border-bottom-0 border-top pb-3">
-                                    <form action="{{route("admin.services.destroy",$service)}}" method="post" class="mb-0">
-                                        @csrf
-                                        @method("DELETE")
-                                        <button type="submit" class="btn-link border-0 bg-white" 
-                                                onclick="return confirm('Are you sure you want to delete this? You cannot undo this action')">
-                                                Delete
-                                        </button>
-                                    </form>
+                                    <div class="row">
+                                        @if($service->isReady())
+                                        <div class="col-6 pe-0">
+                                            <a href="{{ route('admin.workorder.filter', ['request_number' => $service->request_number]) }}" class="text-center">Print</a>
+                                        </div>
+                                        @endif
+                                        <div class="col-6 ps-0 pt-0">
+                                            <form action="{{route("admin.services.destroy",$service)}}" method="post" class="mb-0 pt-0">
+                                                @csrf
+                                                @method("DELETE")
+                                                <button type="submit" class="btn-link text-danger border-0 bg-white ps-0 float-start" 
+                                                        onclick="return confirm('Are you sure you want to delete this? You cannot undo this action')">
+                                                        Delete
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
 
                                 </td>
                             </tr>
@@ -76,7 +85,7 @@
                 {{$services->render()}}
             </div>
             <div class="col-md-6">
-                @if(request()->filter == "ready" && count($services) > 0)
+                @if(request()->filter == "finished" && count($services) > 0)
                 <a href="{{ route('admin.workorder') }}" class="btn btn-secondary btn-lg rounded-sm float-end mt-2"><i data-feather="printer" class="feather-18 mb-1 me-1"></i> Print WOR</a>
                 @endif
             </div>

@@ -18,8 +18,14 @@ class PaymentWorkOrder extends Model
         'or_no',
         'payment_amount',
         'payment_date',
+        'remarks',
         'user_id',
     ];
+
+    public function prettyPaymentAmount()
+    {
+        return "P".number_format($this->payment_amount,2,".",",");
+    }
 
     public function service()
     {

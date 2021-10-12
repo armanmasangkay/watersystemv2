@@ -130,7 +130,7 @@ Route::prefix('admin')->middleware(['auth'])->name('admin.')->group(function(){
 
     // CASHIER ALLOWED ACCESS ONLY
     Route::middleware(Allowed::role(User::$CASHIER))->group(function(){
-        // SERVICES PAYMENT
+        // SERVICES PAYMEN
             Route::get('/services-for-payment',[ServicesPaymentController::class, 'index'])->name('services-payment');
             Route::get('/services-for-payment/search',[ServicesPaymentController::class, 'search'])->name('services-payment-search');
             Route::post('/services-for-payment/work-order',[ServicesPaymentController::class, 'savePayment'])->name('services-payment-save');
@@ -176,6 +176,8 @@ Route::prefix('admin')->middleware(['auth'])->name('admin.')->group(function(){
         Route::get('/dashboard',[DashboardController::class,'index'])->name('dashboard');
 
         Route::get('/work-order',[WorkOrderController::class,'index'])->name('workorder');
+        Route::get('/work-order/filter',[WorkOrderController::class,'index'])->name('workorder.filter');
+        
     });
     // END ADMIN ALLOWED ACCESS ONLY
 
