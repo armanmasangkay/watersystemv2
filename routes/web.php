@@ -32,6 +32,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserPasswordController;
 use App\Http\Controllers\WaterBillController;
 use App\Http\Controllers\WorkOrderController;
+use App\Http\Controllers\WorkOrderPaymentsController;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
@@ -121,6 +122,8 @@ Route::prefix('admin')->middleware(['auth'])->name('admin.')->group(function(){
             Route::post('/consumer-ledger/billing/transaction/{id}',[EditBillingController::class,'getBill'])->name('get-bill');
             Route::post('/consumer-ledger/billing/update/transaction',[EditBillingController::class,'updateBill'])->name('update-billing');
         // END CUSTOMER LEDGER
+
+            Route::get('/work-order/payments',[WorkOrderPaymentsController::class,'index'])->name('work-order.payments.index');
 
     });
     // ADMIN AND CASHIER ALLOWED ACCESS

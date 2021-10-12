@@ -24,6 +24,7 @@ class ServiceFactory extends Factory
         return [
             'customer_id'=>'1',
             'type_of_service'=>'reconnection',
+            'request_number'=>uniqid(),
             'remarks'=>'No remarks',
             'landmarks'=>'Near Bulwagan',
             'work_schedule'=>now(),

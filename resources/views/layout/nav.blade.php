@@ -31,6 +31,15 @@
             </a>
           </li>
           @endcashierOnly
+
+          @cashierOnly(Auth::user()->role)
+          <li class="nav-item m1-">
+            <a class="nav-link m-1 text-secondary" aria-current="page" href="{{route('admin.services-payment')}}">
+              <i data-feather="activity" class="feather-16 m-1 mb-1"></i> Work Order Payments &nbsp;
+            </a>
+          </li>
+          @endcashierOnly 
+
           @adminonly(Auth::user()->role)
           {{-- <li class="nav-item dropdown pt-1">
             <a class="nav-link dropdown-toggle text-secondary" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -74,6 +83,8 @@
               <li>
                 <a class="dropdown-item" href="{{route('admin.services.create')}}">New</a>
                 <a class="dropdown-item" href="{{route('admin.services.index')}}">View Lists</a>
+              
+                <a class="dropdown-item" href="{{route('admin.work-order.payments.index')}}">Work Order Payments</a>
               </li>
             </ul>
           </li>
