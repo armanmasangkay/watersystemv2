@@ -19,6 +19,7 @@ class CreatePaymentWorkordersTable extends Migration
             $table->string('customer_id');
             $table->string('or_no')->unique();
             $table->double('payment_amount');
+            $table->string('remarks')->nullable();
             $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
