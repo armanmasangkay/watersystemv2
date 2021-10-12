@@ -3,7 +3,15 @@
 
 @section('content')
 
-<div class="row mt-5 justify-content-center">
+<div class="row justify-content-center mt-5">
+    <div class="col-8">
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>Warning!</strong> {{ session('msg') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    </div>
+</div>
+<div class="row mt-2 justify-content-center">
     <div class="col-12 col-md-8 col-lg-5 col-xl-4">
         <div class="card">
             <div class="card-header">
