@@ -115,7 +115,7 @@ class Service extends Model
             case 'disconnection':
                 return self::$PENDING_ENGINEER_APPROVAL;
             default:
-                return self::$READY;
+                return self::$PENDING_FOR_PAYMENT;
 
         }
     }
