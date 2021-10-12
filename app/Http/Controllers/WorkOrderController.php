@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use App\Models\Service;
 use App\Models\Officer;
 use Illuminate\Support\Str;
-use Illuminate\Http\Request;
 
 class WorkOrderController extends Controller
 {
