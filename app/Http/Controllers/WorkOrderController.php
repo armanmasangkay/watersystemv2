@@ -38,17 +38,17 @@ class WorkOrderController extends Controller
 
     public function filter(Request $request)
     {
-        $services = Service::where('request_number', $request->request_number)->where('status', 'ready')->get();
-
         $auditor = Officer::where("position", Officer::$INTERNAL_AUDITOR_I)->get();
         $engineer = Officer::where("position", Officer::$MUNICIPAL_ENGINEER)->get();
-        $msg = ($auditor == null ? 'Internal Auditor I' : null) .', '. ($engineer == null ? 'Municipal Engineer' : null);
-
-        if($msg == ", ")
+        
+        $msg = (!count($auditor) > 0 ? 'Internal Auditor I' : null) .', '. (!count($engineer) > 0 ? 'Municipal Engineer' : null);
+        
+        if(!count($auditor) > 0 || !count($engineer) > 0)
         {
-            return redirect(route('admin.officers.create'))->with('msg', 'You need to create these account(s) '. $msg .' in order to continue');
+            return redirect(route('admin.officers.create'))->with('msg', 'You need to create first these account(s) : '. $msg .' in order to continue');
         }
         
+        $services = Service::where('request_number', $request->request_number)->where('status', 'ready')->get();
         $officers = Officer::where("position", Officer::$INTERNAL_AUDITOR_I)->where("position", Officer::$MUNICIPAL_ENGINEER)->get();
         foreach($officers as $officer){
             if($officer->position == Officer::$INTERNAL_AUDITOR_I)
