@@ -26,7 +26,7 @@ class OfficerRequest extends FormRequest
     {
         return [
             'fullname' => 'required',
-            'position' => ['required', new ValidPosition]
+            'position' => ['required', new ValidPosition,'unique:officers,position']
         ];
     }
 }

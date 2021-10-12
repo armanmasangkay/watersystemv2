@@ -34,7 +34,7 @@
 
           @cashierOnly()
           <li class="nav-item m1-">
-            <a class="nav-link m-1 text-secondary" aria-current="page" href="{{route('admin.services-payment')}}">
+            <a class="nav-link m-1 text-secondary" aria-current="page" href="{{route('admin.work-order.payments.index')}}">
               <i data-feather="activity" class="feather-16 m-1 mb-1"></i> Work Order Payments &nbsp;
             </a>
           </li>

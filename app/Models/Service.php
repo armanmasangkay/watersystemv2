@@ -31,7 +31,8 @@ class Service extends Model
         'pending_waterworks_inspection'=>'Pending for Waterworks  Inspection',
         'pending_engineer_approval' => 'Municipal Engineer',
         'pending_for_payment' => 'Pending for Payment',
-        'ready' => 'Ready for Scheduling or Print of WOR'
+        'ready' => 'Ready for Scheduling or Print of WOR',
+        'finished' => 'WOR Finished'
     ];
 
     protected $fillable=[
@@ -87,6 +88,11 @@ class Service extends Model
         $dateToday = Carbon::parse(now())->format('mdY');
         $randomNum = rand(0001, 9999);
         return "$dateToday-$randomNum";
+    }
+
+    public function isReady()
+    {
+        return $this->status=="ready";
     }
 
     public static function getInitialStatus($serviceType)

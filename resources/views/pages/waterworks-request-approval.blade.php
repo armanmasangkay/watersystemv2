@@ -9,7 +9,17 @@
     <div class="col-md-8 pt-2 mt-4">
         <h3 class="h4 mb-3 mt-2 text-left text-secondary"><i data-feather="align-left" class="feather-16 mx-1"></i> Lists of Request for Water Works Inspections</h3>
     </div>
-    <div class="col-md-4"></div>
+    <div class="col-md-4">
+        <div class="float-start float-md-end">
+            <div class="btn {{ $services->count() > 0 ? 'btn-warning' : 'btn-info' }} position-relative">
+                Pending Services
+                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                    {{ $services->count() }}
+                    <span class="visually-hidden">unread messages</span>
+                </span>
+            </div>
+        </div>
+    </div>
 </div>
 
 <div class="card shadow-sm">
