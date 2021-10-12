@@ -97,7 +97,7 @@
 
         response = await response.json();
         if(response.created == true){
-            Swal.fire('Great!','New customer has been added','success').then(function(result){
+            Swal.fire('Great!','Service request successfully sent!','success').then(function(result){
                 if(result.isConfirmed)
                 {
                     window.location.reload();
