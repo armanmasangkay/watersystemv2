@@ -9,11 +9,19 @@
         <h3 class="mt-2 h5 text-secondary ps-0"><i data-feather="edit-3" class="ps-0"></i>&nbsp; Logged in as: &nbsp;<span class="text-primary">{{ Auth::user()->user_role() }} - {{ Auth::user()->username }}</span></h3>
     </div>
     <div class="col-md-6">
-        <form action="{{route('logout')}}" method="post" class="mt-0 px-0 pt-0 w-100">
-            @csrf
-            <button type="submit" class="btn btn-secondary mt-0 float-md-end">
-            <i data-feather="log-out" class="feather-16 mb-1"></i>&nbsp; LOGOUT USER
+        <div class="dropdown float-md-end">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                <i data-feather="settings" class="me-1 feather-18"></i> Settings
             </button>
-        </form>
+            <ul class="dropdown-menu px-1 pb-0" aria-labelledby="dropdownMenuButton1">
+                <li><a class="dropdown-item mt-1" href="{{route('users.update-password.edit')}}">Change Password</a></li>
+                <li><a class="dropdown-item pb-0 mb-0" href="#">
+                    <form action="{{route('logout')}}" method="post" class="mt-0 pb-1 px-0 pt-0 w-100">
+                        @csrf
+                        <button type="submit" class="border-0 bg-transparent mt-0">Sign-out</button>
+                    </form></a>
+                </li>
+            </ul>
+        </div>
     </div>
 </div>

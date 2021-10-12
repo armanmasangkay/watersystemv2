@@ -176,7 +176,7 @@ Route::prefix('admin')->middleware(['auth'])->name('admin.')->group(function(){
         Route::get('/dashboard',[DashboardController::class,'index'])->name('dashboard');
 
         Route::get('/work-order',[WorkOrderController::class,'index'])->name('workorder');
-        Route::get('/work-order/filter',[WorkOrderController::class,'index'])->name('workorder.filter');
+        Route::get('/work-order/filter',[WorkOrderController::class,'filter'])->name('workorder.filter');
         
     });
     // END ADMIN ALLOWED ACCESS ONLY
