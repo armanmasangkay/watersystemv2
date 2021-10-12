@@ -6,7 +6,7 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0 pt-lg-0 pt-md-2">
-          @adminonly(Auth::user()->role)
+          @adminonly()
           <li class="nav-item m1-">
             <a class="nav-link m-1 text-secondary" aria-current="page" href="{{route('admin.dashboard')}}">
               <i data-feather="home" class="feather-16 m-1 mb-1"></i> Home
@@ -23,24 +23,24 @@
               <li><a class="dropdown-item" href="{{route('admin.existing-customers.index')}}">View Lists</a></li>
             </ul>
           </li>
-          
-          @cashierOnly(Auth::user()->role)
+
+          @cashierOnly()
           <li class="nav-item m1-">
-            <a class="nav-link m-1 text-secondary" aria-current="page" href="{{route('admin.services-payment')}}">
-              <i data-feather="activity" class="feather-16 m-1 mb-1"></i> Pending For Payments &nbsp;
+              <a class="nav-link m-1 text-secondary" aria-current="page" href="{{route('admin.services-payment')}}">
+                <i data-feather="activity" class="feather-16 m-1 mb-1"></i> Pending For Payments &nbsp;
             </a>
           </li>
           @endcashierOnly
 
-          @cashierOnly(Auth::user()->role)
+          @cashierOnly()
           <li class="nav-item m1-">
             <a class="nav-link m-1 text-secondary" aria-current="page" href="{{route('admin.work-order.payments.index')}}">
               <i data-feather="activity" class="feather-16 m-1 mb-1"></i> Work Order Payments &nbsp;
             </a>
           </li>
-          @endcashierOnly 
+          @endcashierOnly
 
-          @adminonly(Auth::user()->role)
+          @adminonly()
           {{-- <li class="nav-item dropdown pt-1">
             <a class="nav-link dropdown-toggle text-secondary" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
              <i data-feather="align-left" class="feather-16 m-1"></i> Transactions
@@ -57,7 +57,7 @@
           @endadminonly
 
 
-          @adminonly(Auth::user()->role)
+          @adminonly()
           <li class="nav-item dropdown pt-1">
             <a class="nav-link dropdown-toggle text-secondary" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
              <i data-feather="users" class="feather-16 m-1"></i> Accounts
@@ -74,7 +74,7 @@
           </li>
           @endadminonly
 
-          @adminonly(Auth::user()->role)
+          @adminonly()
           <li class="nav-item dropdown pt-1">
             <a class="nav-link dropdown-toggle text-secondary" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
              <i data-feather="tool" class="feather-16 m-1"></i> Services
@@ -83,7 +83,7 @@
               <li>
                 <a class="dropdown-item" href="{{route('admin.services.create')}}">New</a>
                 <a class="dropdown-item" href="{{route('admin.services.index')}}">View Lists</a>
-              
+
                 <a class="dropdown-item" href="{{route('admin.work-order.payments.index')}}">Work Order Payments</a>
               </li>
             </ul>
@@ -91,7 +91,7 @@
           @endadminonly
 
 
-          @adminonly(Auth::user()->role)
+          @adminonly()
           <li class="nav-item dropdown pt-1">
             <a class="nav-link dropdown-toggle text-secondary" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               <i data-feather="settings" class="feather-16 m-1"></i> Settings
@@ -117,10 +117,10 @@
     </div>
   </nav>
 
-@auth
+    @adminonly()
       @include('templates.water-rate')
       @include('templates.surcharge')
-  @endauth
+    @endadminonly
 
   <style>
     #logoutBtn{
