@@ -33,7 +33,9 @@
       </tbody>
 </table>
 @else
-<h4 class="text-center">No payments to show!</h4>
+<div class="mt-4">
+  <p class="text-center text-muted">No payments to show!</p>
+</div>
 @endif
 
 @endsection

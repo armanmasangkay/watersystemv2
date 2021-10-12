@@ -22,19 +22,19 @@ class UserSeeder extends Seeder
             'role'=>User::$CASHIER
         ]);
         User::factory(1)->create([
-            'username'=>'bldg-inspector',
+            'username'=>'building',
             'role'=>User::$BLDG_INSPECTOR
         ]);
         User::factory(1)->create([
-            'username'=>'darksidebug',
+            'username'=>'reader',
             'role'=>User::$READER
         ]);
         User::factory(1)->create([
-            'username'=>'waterworksinspector',
+            'username'=>'waterworks',
             'role'=>User::$WATERWORKS_INSPECTOR
         ]);
         User::factory(1)->create([
-            'username'=>'municipal-engineer',
+            'username'=>'engineer',
             'role'=>User::$ENGINEER
         ]);
     }
