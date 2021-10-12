@@ -42,6 +42,17 @@ class WaterWorksApprovalController extends Controller
 
     public function pendingForCompletion()
     {
-        dd('asdada');
+       $services= Service::where('status',Service::$READY)->paginate(10);
+
+        return view('pages.pending-for-completion',[
+            'services'=>$services
+        ]);
+    }
+
+    public function markAsDone(Service $service)
+    {
+        $service->approve();
+
+        return back();
     }
 }

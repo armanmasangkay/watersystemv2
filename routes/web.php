@@ -88,6 +88,7 @@ Route::prefix('admin')->middleware(['auth'])->name('admin.')->group(function(){
         Route::post('/waterworks/request-approvals/approve', [WaterWorksApprovalController::class, 'approve'])->name('waterworks-request-approvals-approve');
         Route::post('/waterworks/request-approvals/reject/{id}', [WaterWorksApprovalController::class, 'reject'])->name('waterworks-request-approvals-reject');
         Route::get('/waterworks/pending-completion', [WaterWorksApprovalController::class, 'pendingForCompletion'])->name('waterworks.pending-for-completion');
+        Route::get('/waterworks/pending-completion/done/{service}', [WaterWorksApprovalController::class, 'markAsDone'])->name('waterworks.pending-for-completion.mark');
     });
     // END WATER WORKS ALLOWED ACCESS ONLY
 

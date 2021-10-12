@@ -1,6 +1,6 @@
 @extends('layout.approval')
 
-@section('title', 'New Connection')
+@section('title', 'Waterworks Approval Page')
 
 
 @section('content')
