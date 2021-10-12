@@ -73,7 +73,7 @@
                     <div class="row mt-3">
                         <div class="col-md-4 pe-md-0">
                             <label class='text-muted'>Payment Date (dd/mm/yyyy) <span class="text-danger"><strong>*</strong></span></label>
-                            <input type="text" class="w-75 border-top-0 border-end-0 border-start-0 border-secondary rounded-0" style="cursor: pointer;" id="carbon_date" readonly value="{{ \Carbon\Carbon::now()->format('F d, Y') }}">
+                            <input type="text" class="w-100 w-md-75 border-top-0 border-end-0 border-start-0 border-secondary rounded-0" style="cursor: pointer;" id="carbon_date" readonly value="{{ \Carbon\Carbon::now()->format('F d, Y') }}">
                             <input type="hidden" class="border-0 date" name="payment_date" id="payment_date" readonly>
                         </div>
                     </div>

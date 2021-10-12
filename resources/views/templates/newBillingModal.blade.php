@@ -41,7 +41,7 @@
                     <div class="row mt-3">
                         <div class="col-md-4 pe-md-0">
                             <label class='text-muted'>Reading date (dd/mm/yyyy) <span class="text-danger"><strong>*</strong></span></label>
-                            <input type="text" class="w-50 border-top-0 border-end-0 border-start-0 rounded-0" id="carbon_date_billing" readonly value="{{ \Carbon\Carbon::now()->format('F d, Y') }}" style="cursor:pointer;">
+                            <input type="text" class="w-75 w-md-50 border-top-0 border-end-0 border-start-0 rounded-0" id="carbon_date_billing" readonly value="{{ \Carbon\Carbon::now()->format('F d, Y') }}" style="cursor:pointer;">
                             <input type="hidden" class="border-0 date" name="reading_date" id="reading_date" readonly>
                         </div>
                     </div>
