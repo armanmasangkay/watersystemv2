@@ -14,8 +14,8 @@ class WorkOrderController extends Controller
     public function index()
     {
         $services = Service::where('status', 'finished')->get();
-        $officers = Officer::all();
-        
+        $officers = Officer::where("position", Officer::$INTERNAL_AUDITOR_I)->where("position", Officer::$MUNICIPAL_ENGINEER)->get();
+
         foreach($officers as $officer){
             if($officer->position == Officer::$INTERNAL_AUDITOR_I)
             {
@@ -39,8 +39,17 @@ class WorkOrderController extends Controller
     public function filter(Request $request)
     {
         $services = Service::where('request_number', $request->request_number)->where('status', 'ready')->get();
-        $officers = Officer::all();
+
+        $auditor = Officer::where("position", Officer::$INTERNAL_AUDITOR_I)->get();
+        $engineer = Officer::where("position", Officer::$MUNICIPAL_ENGINEER)->get();
+        $msg = ($auditor == null ? 'Internal Auditor I' : null) .', '. ($engineer == null ? 'Municipal Engineer' : null);
+
+        if($msg == ", ")
+        {
+            return redirect(route('admin.officers.create'))->with('msg', 'You need to create these account(s) '. $msg .' in order to continue');
+        }
         
+        $officers = Officer::where("position", Officer::$INTERNAL_AUDITOR_I)->where("position", Officer::$MUNICIPAL_ENGINEER)->get();
         foreach($officers as $officer){
             if($officer->position == Officer::$INTERNAL_AUDITOR_I)
             {
