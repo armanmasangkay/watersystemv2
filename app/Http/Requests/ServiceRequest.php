@@ -27,6 +27,10 @@ class ServiceRequest extends FormRequest
             'inputedAmount.required' => 'Inputed amount should not be empty.',
             'inputedAmount.numeric' => 'Inputed amount should be a number format.',
             'inputedAmount.gt' => 'Inputed amount should be greater than zero.',
+            'inputedAmount.gte' => 'Inputed amount should be greater than or equal to Amount.',
+            'amount.required' => 'Amount should not be empty.',
+            'amount.gt' => 'Amount should be greater than zero.',
+            'amount.numeric' => 'Amount should be a number format.',
         ];
     }
 
@@ -47,8 +51,9 @@ class ServiceRequest extends FormRequest
     public function rules()
     {
         return [
-            'orNum' => 'required|unique:payments,or_no',
-            'inputedAmount' => 'required|numeric|gt:0'
+            'orNum' => 'required|unique:payment_work_orders,or_no',
+            'inputedAmount' => 'required|numeric|gt:0|gte:amount',
+            'amount' => 'required|numeric|gt:0',
         ];
     }
 }

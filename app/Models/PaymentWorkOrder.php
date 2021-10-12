@@ -18,6 +18,7 @@ class PaymentWorkOrder extends Model
         'or_no',
         'payment_amount',
         'payment_date',
+        'remarks',
         'user_id',
     ];
 
