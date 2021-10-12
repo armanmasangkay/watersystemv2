@@ -7,7 +7,7 @@
         <div class="row">
             <div class="col-12 col-sm-8 col-md-6 col-lg-6 form-search d-lg-block d-md-none hidden pt-1">
                 <form action="{{ route('admin.services-search-customer') }}" method="get" class="d-flex justify-content-between align-items-center mb-lg-0">
-                    <input type="text" class="form-control" name="account_number" placeholder="Account no. or name">
+                    <input type="text" class="form-control" name="account_number" placeholder="Search for an Account #">
                     <button class="btn btn-primary ms-1 d-flex justify-content-between align-items-center" id="close"><i data-feather="search" class="feather-18 me-1"></i> Search</button>
                 </form>
             </div>
@@ -44,9 +44,9 @@
                                     <h6 class="d-flex justify-content-start align-items-center py-0 my-0"><input type="radio" name="type_of_service" id="" value="change_of_meter" class="me-2 mt-1">Change of meter</h6>
                                     <h6 class="d-flex justify-content-start align-items-center py-0 my-0"><input type="radio" name="type_of_service" id="" value="change_of_ownership" class="me-2 mt-1">Change of ownership</h6>
                                     <h6 class="d-flex justify-content-start align-items-center py-0 my-0"><input type="radio" name="type_of_service" id="" value="disconnection"class="me-2 mt-1">Disconnection</h6>
-                                    <h6 class="d-flex justify-content-start align-items-center py-0 my-0"><input type="radio" name="type_of_service" id="" value="repairs_of_damage_connection" class="me-2 mt-1">Repairs of damage connection (from main tone to meter only)</h6>
+                                    <h6 class="d-flex justify-content-start align-items-center py-0 my-0"><input type="radio" name="type_of_service" id="" value="repairs_of_damage_connection" class="me-2 mt-1">Repairs of damage connection (from main line to meter only)</h6>
                                     <h6 class="d-flex justify-content-start align-items-center py-0 my-0"><input type="radio" name="type_of_service" id="" value="report_of_no_water_low_pressure" class="me-2 mt-1">Report of no water, low pressure</h6>
-                                    <h6 class="d-flex justify-content-start align-items-center py-0 my-0"><input type="radio" name="type_of_service" id="" value="defective_meter_and_other_related_request" class="me-2 mt-1">Defective meter and other related request. (Except application for new connection and reconnection)</h6>
+                                    <h6 class="d-flex justify-content-start align-items-center py-0 my-0"><input type="radio" name="type_of_service" id="" value="defective_meter_and_other_related_request" class="me-2 mt-1">Defective meter and other related request.</h6>
                                     <!-- <h6 class="d-flex justify-content-start align-items-center py-0 my-0"><input type="checkbox" name="" id="" class="me-2 mt-1"></h6>
                                     <h6 class="d-flex justify-content-start align-items-center py-0 my-0"><input type="checkbox" name="" id="" class="me-2 mt-1"></h6> -->
                                 </div>
@@ -56,19 +56,19 @@
                     </div>
                 </div>
                 @if(!isset($customer))
-                <div class="card px-3 mt-2">
-                    <p class="text-info pt-3 info-txt"><i data-feather="info" class="feather-18 mb-1"></i> Note: Search customer then select service(s) to process your request</p>
+                {{-- <div class="card px-3 mt-2">
+                    <p class="text-info pt-3"><i data-feather="info" class="feather-18 mb-1"></i> </p>
                     <div class="row mt-1 parent mb-3 d-block d-lg-none" id="parent">
                         <div class="col-xs-12 d-flex justify-content-start align-items-center mt-2">
                             <button type="button" id="search" class="search btn btn-primary d-flex justify-content-between align-items-center"><i data-feather="search" class="feather-18 me-2"></i> Search Customer</button>
                         </div>
                     </div>
-                </div>
+                </div> --}}
                 @endif
                 @if(isset($customer))
                 <div class="row mt-3">
                     <div class="col-xs-12 d-flex justify-content-start align-items-center mt-1">
-                        <button class="btn btn-primary d-flex justify-content-between align-items-center" id="request_waterworks_btn" ><i data-feather="user-plus" class="feather-18 me-2"></i> Request Water Works</button>
+                        <button class="btn btn-primary d-flex justify-content-between align-items-center" id="request_waterworks_btn" ><i data-feather="arrow-right" class="feather-18 me-2"></i> Send Request</button>
                     </div>
                 </div>
                 @endif
