@@ -1,6 +1,6 @@
 <div class="modal modal-fluid fade paymentModal" id="servicePaymentModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-md">
-        <div class="modal-content">           
+        <div class="modal-content">
             <form action="{{ route('admin.services-payment-save') }}" method="post" id="payment-form">
                 @csrf
                 <input type="hidden" name="customer_id" value="">
@@ -38,6 +38,12 @@
                         <div class="col-md-12">
                             <small class='text-muted'>Enter Payment Amount <span class="text-danger"><strong>*</strong></span></small>
                             <input type="number" class="form-control" placeholder="0.00" name="inputedAmount" id="inputedAmount">
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-12">
+                            <small class='text-muted'>Remarks</small>
+                            <textarea class="form-control" name="remarks" id="remarks" rows="5"></textarea>
                         </div>
                     </div>
                     <div class="row mt-3">
