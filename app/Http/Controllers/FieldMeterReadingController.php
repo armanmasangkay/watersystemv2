@@ -38,13 +38,21 @@ class FieldMeterReadingController extends Controller
                 'account_number.exists'=>'Account number not found'
             ])->withInput();
         }
+        
+        if(!$customer->hasActiveConnection())
+        {
+            return back()->withErrors([
+                'account_number'=>'Account is not active'
+            ])->withInput();
+        }
+
         $acc = $customer->account();
         $fullname = $customer->fullname();
         $address = $customer->address();
        
 
         $balance = Transaction::orderByDesc('created_at')->where('customer_id', $account_number)->get();
-        $balance = $balance->first();
+        $new_balance = $balance->first();
 
         $transactions = Transaction::orderBy('created_at', 'asc')->where('customer_id', $account_number)->paginate(10);
 
@@ -52,23 +60,29 @@ class FieldMeterReadingController extends Controller
 
         $rates = WaterRate::all();
 
-
-        for($i = 0; $i < count($rates); $i++)
+        foreach($rates as $r)
         {
-            if(Str::title($customer->connection_type) == $rates[$i]->type)
+            if(Str::title($customer->connection_type) == $r->type)
             {
                 $rate = [
-                    'min_rate' => $rates[$i]->min_rate,
-                    'max_range' => $rates[$i]->consumption_max_range,
-                    'excess_rates' => $rates[$i]->excess_rate
+                    'min_rate' => $r->min_rate,
+                    'max_range' => $r->consumption_max_range,
+                    'excess_rates' => $r->excess_rate
                 ];
             }
         }
 
         $surcharge = Surcharge::all();
+        $date = "";
         // $payments = Payments
-
-        $date = ($balance->period_covered != "Beginning Balance" ? explode('-', $balance->period_covered) : explode('/', '/'.$balance->reading_date));
+        if(count($balance->toArray()) > 0)
+        {
+            $date = ($new_balance->period_covered != "Beginning Balance" ? explode('-', $new_balance->period_covered) : explode('/', '/'.$new_balance->reading_date));
+        }
+        else
+        {
+            $date = explode('/', '/'.date('Y-m-d'));
+        }
 
         return view('field-personnel.pages.meter-reading',[
             'customer' => [
@@ -82,8 +96,8 @@ class FieldMeterReadingController extends Controller
             ],
             'rates' => $rate,
             'surcharge' => $surcharge[0]->rate,
-            'last_date' => $date[1],
-            'current_transaction_id' => $balance->id
+            'last_date' => count($balance->toArray()) ? $date[1] : null,
+            'current_transaction_id' => isset($balance->id) ? $balance->id : null
         ]);
     }
 
