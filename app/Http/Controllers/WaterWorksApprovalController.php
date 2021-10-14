@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Customer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Service;
@@ -53,6 +54,10 @@ class WaterWorksApprovalController extends Controller
     {
         $service->approve();
 
+        $customer = Customer::findOrFail($service->customer_id);
+        $customer->connection_status = Customer::ACTIVE;
+        $customer->save();
+        
         return back();
     }
 }

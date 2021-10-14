@@ -44,8 +44,8 @@
                         <ul>
                             <li class="text-secondary {{ isset($customer) ? 'd-none d-lg-block' : '' }} "><h6 class="d-flex justify-content-between align-items-center"> Client Name: <span class="text-primary">{{isset($customer)?strtoUpper($customer["org_name"])?strtoupper($customer["org_name"]):strtoupper($customer["fullname"]):''}}</span></h6></li>
                             <li class="text-secondary {{ isset($customer) ? 'd-none d-lg-block' : '' }} "><h6 class="d-flex justify-content-between align-items-center"> Account No: <span class="text-primary" id="acc_num">{{ isset($customer) ? $customer["account"] : '---' }}</span></h6></li>
-                            <li class="text-secondary"><h6 class="d-flex justify-content-between align-items-center"> Meter IPS Bal: <span class="text-primary">{{ isset($customer) ?'Php '.toAccounting($customer["balance"]->billing_meter_ips) : '0.00' }}</span></h6></li>
-                            <li class="text-secondary"><h6 class="d-flex justify-content-between align-items-center"> Current Balance: <span class="text-primary">{{ isset($customer) ?'Php '.toAccounting($customer["balance"]->balance) : 'Php 0.00' }}</span></h6></li>
+                            <li class="text-secondary"><h6 class="d-flex justify-content-between align-items-center"> Meter IPS Bal: <span class="text-primary">{{ isset($customer) ?'Php '.(isset($customer["balance"]->billing_meter_ips) ? toAccounting($customer["balance"]->billing_meter_ips) : '0.00') : '0.00' }}</span></h6></li>
+                            <li class="text-secondary"><h6 class="d-flex justify-content-between align-items-center"> Current Balance: <span class="text-primary">{{ isset($customer) ?'Php '.(isset($customer["balance"]->balance) ? toAccounting($customer["balance"]->balance) : '0.00') : 'Php 0.00' }}</span></h6></li>
                         </ul>
                     </div>
                 </div>
@@ -74,19 +74,19 @@
                     <div class="card-body pt-3 pb-1 pe-4">
                         <ul>
                             <li class="text-secondary">
-                                <h6 class="d-flex justify-content-between align-items-center">Meter Reading: <span class="text-primary">{{ isset($customer) ? $customer["balance"]->reading_meter.' Cu. M' : '00 Cu. M' }}</span></h6>
+                                <h6 class="d-flex justify-content-between align-items-center">Meter Reading: <span class="text-primary">{{ isset($customer) ? (isset($customer["balance"]->reading_meter) ? $customer["balance"]->reading_meter : '0.00').' Cu. M' : '00 Cu. M' }}</span></h6>
                             </li>
                             <li class="text-secondary">
-                                <h6 class="d-flex justify-content-between align-items-center">Consumption: <span class="text-primary">{{ isset($customer) ? $customer["balance"]->reading_consumption.' Cu. M' : '00 Cu. M' }}</span></h6>
+                                <h6 class="d-flex justify-content-between align-items-center">Consumption: <span class="text-primary">{{ isset($customer) ? (isset($customer["balance"]->reading_consumption) ? $customer["balance"]->reading_consumption : '0.00').' Cu. M' : '00 Cu. M' }}</span></h6>
                             </li>
                             <li class="text-secondary">
-                                <h6 class="d-flex justify-content-between align-items-center">Amount: <span class="text-primary">Php {{ isset($customer) ? toAccounting($customer["balance"]->balance) : '0.00' }}</span></h6>
+                                <h6 class="d-flex justify-content-between align-items-center">Amount: <span class="text-primary">Php {{ isset($customer) ? (isset($customer["balance"]->balance) ? toAccounting($customer["balance"]->balance) : '0.00') : '0.00' }}</span></h6>
                             </li>
                             <li class="text-secondary">
-                                <h6 class="d-flex justify-content-between align-items-center">Surcharge: <span class="text-primary">Php {{ isset($customer) ? toAccounting($customer["balance"]->billing_surcharge) : '0.00' }}</span></h6>
+                                <h6 class="d-flex justify-content-between align-items-center">Surcharge: <span class="text-primary">Php {{ isset($customer) ? (isset($customer["balance"]->billing_surcharge) ? toAccounting($customer["balance"]->billing_surcharge) : '0.00') : '0.00' }}</span></h6>
                             </li>
                             <li class="text-secondary">
-                                <h6 class="d-flex justify-content-between align-items-center">Total Amount : <span class="text-primary">Php {{ isset($customer) ? toAccounting($customer["balance"]->balance) : '0.00' }}</span></h6>
+                                <h6 class="d-flex justify-content-between align-items-center">Total Amount : <span class="text-primary">Php {{ isset($customer) ? (isset($customer["balance"]->balance) ? toAccounting($customer["balance"]->balance) : '0.00') : '0.00' }}</span></h6>
                             </li>
                         </ul>
                     </div>
@@ -159,7 +159,7 @@
                         </tr>
                         <tr>
                             <td class="py-0 ps-3 border-bottom-0 i-data">&nbsp;Bill No.</td>
-                            <td colspan="2" class="py-0 border-bottom-0 i-data">: <span>{{ isset($customer) ? $customer["balance"]->id + 1 : '' }}</span></td>
+                            <td colspan="2" class="py-0 border-bottom-0 i-data">: <span>{{ isset($customer) ? (isset($customer["balance"]->balance) ? $customer["balance"]->id + 1 : '') : '' }}</span></td>
                         </tr>
                         <tr>
                             <td class="py-0 ps-3 border-bottom-0 i-data">&nbsp;Billing Month</td>
@@ -182,7 +182,7 @@
                         </tr>
                         <tr>
                             <td class="py-0 ps-3 border-bottom-0 i-data">&nbsp;Previous Reading</td>
-                            <td colspan="2" class="py-0 border-bottom-0 text-right i-data">: <span>{{ isset($customer) ? $customer["balance"]->reading_meter.' Cu. M' : '00 Cu. M' }}</span></td>
+                            <td colspan="2" class="py-0 border-bottom-0 text-right i-data">: <span>{{ isset($customer) ? (isset($customer["balance"]->reading_meter) ? $customer["balance"]->reading_meter : 0.00).' Cu. M' : '00 Cu. M' }}</span></td>
                         </tr>
                         <tr>
                             <td class="py-0 ps-3 border-bottom-0 i-data">&nbsp;Cu.M Consumed</td>
@@ -199,7 +199,7 @@
                         </tr>
                         <tr>
                             <td class="pt-3 pb-0 ps-3 border-bottom-0 i-data">&nbsp;Bal. from Last Bill</td>
-                            <td colspan="2" class="pt-3 pb-0 border-bottom-0 pe-3 i-data pe-4" align="left">Php<span> {{ isset($customer) ? toAccounting($customer["balance"]->balance) : '0.00' }}</span></td>
+                            <td colspan="2" class="pt-3 pb-0 border-bottom-0 pe-3 i-data pe-4" align="left">Php<span> {{ isset($customer) ? (isset($customer["balance"]->balance) ? toAccounting($customer["balance"]->balance) : '0.00') : '0.00' }}</span></td>
                         </tr>
                         <tr>
                             <td class="py-0 ps-3 border-bottom-0 i-data">&nbsp;Surcharge (10%)</td>
@@ -209,7 +209,7 @@
                             <td class="py-0 ps-3 border-bottom-0 i-data">&nbsp;Meter Installment</td>
                             <td colspan="2" class="pt-0 pb-2 border-bottom-0 pe-3 i-data pe-4" align="left">
                                 <span class="pe-4 pb-2" style="border-bottom: 1px solid #000;">
-                                    <span class="invisible">Php</span> <span class="pe-3">{{ isset($customer) ? toAccounting($customer["balance"]->meter_ips) : '0.00' }}</span>&nbsp;
+                                    <span class="invisible">Php</span> <span class="pe-3">{{ isset($customer) ? (isset($customer["balance"]->meter_ips) ? toAccounting($customer["balance"]->meter_ips) : '0.00') : '0.00' }}</span>&nbsp;
                                 </span>
                             </td>
                         </tr>

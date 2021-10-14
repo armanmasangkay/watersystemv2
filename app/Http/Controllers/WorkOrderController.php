@@ -14,7 +14,7 @@ class WorkOrderController extends Controller
     public function index()
     {
         $services = Service::where('status', 'finished')->get();
-        $officers = Officer::where("position", Officer::$INTERNAL_AUDITOR_I)->where("position", Officer::$MUNICIPAL_ENGINEER)->get();
+        $officers = Officer::all();
 
         foreach($officers as $officer){
             if($officer->position == Officer::$INTERNAL_AUDITOR_I)
@@ -49,7 +49,7 @@ class WorkOrderController extends Controller
         }
         
         $services = Service::where('request_number', $request->request_number)->where('status', 'ready')->get();
-        $officers = Officer::where("position", Officer::$INTERNAL_AUDITOR_I)->where("position", Officer::$MUNICIPAL_ENGINEER)->get();
+        $officers = Officer::all();
         foreach($officers as $officer){
             if($officer->position == Officer::$INTERNAL_AUDITOR_I)
             {
