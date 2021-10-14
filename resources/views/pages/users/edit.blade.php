@@ -22,7 +22,7 @@
                     <div class="mb-2">
                         <label class="d-block text-center">Username</label>
                         <input type="text" class="form-control-plaintext @error('username') is-invalid @enderror text-center" name='username' value="{{$user->username}}" readonly style="font-weight: bold; font-size: 17px;">
-                    
+
                         @error('username')
                         <div class="invalid-feedback">
                             {{$message}}
@@ -38,14 +38,14 @@
                             {{$message}}
                         </div>
                         @enderror
-                    </div>  
+                    </div>
                     <span class="form-label">Role</span>
                     <select class="form-select" name="role" required>
                         <option value="" selected>--Select one--</option>
                         @foreach($roles as $key=>$value)
                         <option value="{{$key}}" {{($user->role==$key)? 'selected':''}}>{{$value}}</option>
                         @endforeach
-                    
+
                     </select>
 
                     <center>

@@ -32,6 +32,9 @@ class Customer extends Model
         'meter_number'
     ];
 
+    public const ACTIVE = "active";
+    public const INACTIVE = "inactive";
+
     public function isOrgAccount()
     {
         return $this->org_name?true:false;

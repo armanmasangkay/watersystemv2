@@ -24,7 +24,7 @@
                             <h4 class="mt-4 pt-3 mb-0">{{ Auth::user()->name }}</h4>
                         </div>
                     </div>
-                    <div class="offcanvas-header">  
+                    <div class="offcanvas-header">
                         <button class="btn-close float-end"></button>
                     </div>
                 </div>
@@ -49,7 +49,7 @@
                             </li>
                         </ul>
                     </li>
-                    <li class="nav-item my-md-0 my-1 d-md-block d-lg-none"> <a class="nav-link text-secondary" href="#"><i data-feather="key" class="feather-18 me-2"></i> Reset Password </a> </li>
+                    <li class="nav-item my-md-0 my-1 d-md-block d-lg-none"> <a class="nav-link text-secondary" href="{{route('users.update-password.edit')}}"><i data-feather="key" class="feather-18 me-2"></i> Change Password </a> </li>
                     <li class="nav-item my-md-0 my-1 d-md-block d-lg-none">
                         <form action="{{ route('logout') }}" method="post" class="mb-0">
                             @csrf

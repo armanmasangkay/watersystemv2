@@ -53,18 +53,18 @@
                 <tbody>
                     @forelse ($services as $service)
                     <tr>
-                        <td class="pt-2 pb-2">{{$service->customer->account_number}}</td>
-                        <td class="pt-2 pb-2">{{$service->customer->fullname()}}</td>
-                        <td class="pt-2 pb-2">{{$service->prettyServiceType()}}</td>
-                        <td class="pt-2 pb-2">{{$service->prettyRequestDate()}}</td>
-                        <td class="d-flex justify-content-start py-0">
-                            <form action="{{ route('admin.municipal-engineer.approve') }}" method="post" class="mb-0 mx-0 d-flex py-2">
+                        <td class="pt-2 pb-2 border-bottom-0">{{$service->customer->account_number}}</td>
+                        <td class="pt-2 pb-2 border-bottom-0">{{$service->customer->fullname()}}</td>
+                        <td class="pt-2 pb-2 border-bottom-0">{{$service->prettyServiceType()}}</td>
+                        <td class="pt-2 pb-2 border-bottom-0">{{$service->prettyRequestDate()}}</td>
+                        <td class="d-flex justify-content-start py-0 border-bottom-0">
+                            <form action="{{ route('admin.municipal-engineer.approve') }}" method="post" class="mb-0 mx-0 d-flex py-1">
                                 @csrf
                                 <input type="hidden" name="id" value="{{ $service->id }}">
                                 <button type="submit" class="border-0 bg-white text-primary"><i data-feather="check" width="20"></i> Approve</button>
                             </form>
                             @if($service->isDeniable())
-                            <form action="{{route('admin.municipal-engineer.deny', ['id' => $service->id])}}" method="post" class="mb-1 mx-0 py-2">
+                            <form action="{{route('admin.municipal-engineer.deny', ['id' => $service->id])}}" method="post" class="my-1 mx-0 py-1">
                                 @csrf
                                 <button type="submit" class="border-0 bg-white text-danger"><i data-feather="x" width="20"></i> Deny</button>
                             </form>

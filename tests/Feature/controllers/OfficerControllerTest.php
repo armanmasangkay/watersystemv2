@@ -201,6 +201,7 @@ class OfficerControllerTest extends TestCase
             'position' => Officer::$INTERNAL_AUDITOR_I
         ]);
 
+        // $response->dump();
         $response->assertRedirect(route('admin.officers.index'));
         $response->assertSessionHasAll(['created' => true]);
         $this->assertDatabaseHas('officers',['fullname' => 'John Doe']);

@@ -3,22 +3,22 @@
         <div class="modal-content">
             <form action="{{ route('admin.save-meter-billing') }}" method="post" id="billing-form">
                 @csrf
-                <input type="hidden" name="connection_type" value="{{ isset($customer)?$customer['connection_type'] : ''}}">
+                <input type="hidden" name="connection_type" value="{{ isset($customer) ? $customer['connection_type'] : ''}}">
                 <input type="hidden" name="min_rates" value="{{ isset($rates) ? $rates['min_rate'] : '0'}}">
                 <input type="hidden" name="billing_excess_rate" value="{{ isset($rates) ? $rates['excess_rates'] : '0'}}">
                 <input type="hidden" name="max_range" value="{{ isset($rates) ? $rates['max_range'] : '0'}}">
-                <input type="hidden" name="or_num" value="{{ isset($customer) ? $customer['balance']->payment_or_no : ''}}">
+                <input type="hidden" name="or_num" value="{{ isset($customer) ? (isset($customer['balance']->payment_or_no) ? $customer['balance']->payment_or_no : '') : ''}}">
                 <input type="hidden" name="surcharge" value="{{ isset($surcharge) ? $surcharge : '0'}}">
                 <input type="hidden" name="customer_id" value="{{ isset($customer) ? $customer['account'] : '' }}">
                 <input type="hidden" name="current_transaction_id" value="{{ isset($current_transaction_id) ? $current_transaction_id : '' }}">
-                <input id="meter-reading" name="meter_reading" type="hidden" placeholder="Meter reading" min=0 readOnly value="{{ isset($customer) ? $customer["balance"]->reading_meter : '' }}">
-                <input id="cur_balance" name="cur_balance" type="hidden" placeholder="Meter reading" min=0 readonly value="{{ isset($customer) ? toAccounting($customer["balance"]->balance) : '0.00' }}">
+                <input id="meter-reading" name="meter_reading" type="hidden" placeholder="Meter reading" min=0 readOnly value="{{ isset($customer) ? (isset($customer["balance"]->reading_meter) ? $customer["balance"]->reading_meter : '') : '' }}">
+                <input id="cur_balance" name="cur_balance" type="hidden" placeholder="Meter reading" min=0 readonly value="{{ isset($customer) ? (isset($customer["balance"]->balance) ? toAccounting($customer["balance"]->balance) : '0.00') : '0.00' }}">
                 <input type="hidden" name='current_month' id='current-month' value="{{ isset($last_date) ? \Carbon\Carbon::parse($last_date)->format('M d') : '' }}">
                 <input type="hidden" name='next_month' id='next-month' value="{{ isset($last_date) ? \Carbon\Carbon::parse($last_date)->addMonths(1)->format('M d, Y') : '' }}">
                 <input class='form-control' type='hidden' id="consumption" name="consumption" min=0 readOnly placeholder="0">
                 <input class='form-control' type='hidden' id="amount" name="amount" min=0 readOnly placeholder="0.00">
                 <input class='form-control' type='hidden' name="surcharge_amount" id="surcharge_amount" value='0.00' min=0 readonly>
-                <input class='form-control' type='hidden' name="meter_ips" id="meter-ips" placeholder='0.00' min=0 value="{{ isset($customer) ? toAccounting($customer["balance"]->billing_meter_ips) : '0.00' }}">
+                <input class='form-control' type='hidden' name="meter_ips" id="meter-ips" placeholder='0.00' min=0 value="{{ isset($customer) ? (isset($customer["balance"]->billing_meter_ips) ? toAccounting($customer["balance"]->billing_meter_ips) : '0.00') : '0.00' }}">
                 <input class='form-control' type='hidden' id="total" name="total" placeholder='0.00' min=0 readonly>
                 <input type="hidden" name="id" value="{{ Auth::id() }}">
 

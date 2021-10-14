@@ -14,7 +14,7 @@
                 <i data-feather="settings" class="me-1 feather-18"></i> Settings
             </button>
             <ul class="dropdown-menu px-1 pb-0" aria-labelledby="dropdownMenuButton1">
-                <li><a class="dropdown-item mt-1" href="#">Change Password</a></li>
+                <li><a class="dropdown-item mt-1" href="{{route('users.update-password.edit')}}">Change Password</a></li>
                 <li><a class="dropdown-item pb-0 mb-0" href="#">
                     <form action="{{route('logout')}}" method="post" class="mt-0 pb-1 px-0 pt-0 w-100">
                         @csrf

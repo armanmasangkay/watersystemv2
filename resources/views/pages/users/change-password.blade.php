@@ -38,13 +38,17 @@
                         <input type="password" class="form-control" name='password_confirmation' required>
                     </div>
 
-                    <center>
-                        <button type="submit" class="btn btn-primary mt-4"><i data-feather="edit-3" class="feather-18 me-1 mb-1"></i> Update</button>
-                    </center>
-                </form>
-            </div>
-        </div>
-    </div>  
+                <div class="mb-3">
+                    <span class="form-label">Confirm Password</span>
+                    <input type="password" class="form-control" name='password_confirmation' required>
+                </div>
+
+                <center>
+                    <a href="{{ URL::previous()}}"  class="btn btn-secondary mt-4 p-2"> <i data-feather="corner-down-left" class="feather-18 me-1 mb-1"></i> Back</a>
+                    <button type="submit" class="btn btn-primary mt-4"><i data-feather="edit-3" class="feather-18 me-1 mb-1"></i> Update</button>
+                </center>
+            </form>
+    </div>
 </div>
 
 
