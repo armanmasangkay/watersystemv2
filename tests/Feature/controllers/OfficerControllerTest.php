@@ -158,53 +158,24 @@ class OfficerControllerTest extends TestCase
         $response = $this->actingAs($user)->put(route('admin.officers.update', $officer),
         [
             'fullname' => '',
-            'position' => Officer::$INTERNAL_AUDITOR_I
         ]);
-        $response->assertSessionHasAll(['created' => false]);
         $response->assertSessionHasErrors(['fullname']);
-    }
-
-    public function test_update_fail_if_position_is_empty()
-    {
-        $user = User::factory()->create();
-        $officer = Officer::factory()->create(['position' => Officer::$INTERNAL_AUDITOR_I]);
-        $response = $this->actingAs($user)->put(route('admin.officers.update', $officer),
-        [
-            'fullname' => 'June Vic Cadayona',
-            'position' => ''
-        ]);
-        $response->assertSessionHasAll(['created' => false]);
-        $response->assertSessionHasErrors(['position']);
-    }
-
-    public function test_update_fail_if_position_is_invalid()
-    {
-        $user = User::factory()->create();
-        $officer = Officer::factory()->create(['position' => Officer::$INTERNAL_AUDITOR_I]);
-        $response = $this->actingAs($user)->put(route('admin.officers.update', $officer),
-        [
-            'fullname' => 'June Vic Cadayona',
-            'position' => 'internal_audit_2'
-        ]);
-
-        $response->assertSessionHasAll(['created' => false]);
-        $response->assertSessionHasErrors(['position']);
     }
 
     public function test_update_officer_if_required_fields_are_filled()
     {
         $user = User::factory()->create();
         $officer = Officer::factory()->create(['position' => Officer::$INTERNAL_AUDITOR_I]);
-        $response = $this->actingAs($user)->put(route('admin.officers.update', $officer),
-        [
+        $response = $this->actingAs($user)->put(route('admin.officers.update', $officer),[
             'fullname' => 'John Doe',
-            'position' => Officer::$INTERNAL_AUDITOR_I
         ]);
 
-        // $response->dump();
         $response->assertRedirect(route('admin.officers.index'));
         $response->assertSessionHasAll(['created' => true]);
-        $this->assertDatabaseHas('officers',['fullname' => 'John Doe']);
+        $this->assertDatabaseHas('officers',[
+            'fullname' => 'John Doe',
+            'position'=>Officer::$INTERNAL_AUDITOR_I
+        ]);
     }
 
     public function test_delete_officer()
