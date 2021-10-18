@@ -226,7 +226,9 @@ class FilterServicesByRangeOfDateTest extends TestCase
       ]));
 
       $response
-            ->assertRedirect(route('admin.services.index'))
+            ->assertRedirect(route('admin.services.index',[
+                'filter'=>Service::$PENDING_BUILDING_INSPECTION
+            ]))
             ->assertSessionHasErrors(['to']);
     
 
@@ -264,7 +266,9 @@ class FilterServicesByRangeOfDateTest extends TestCase
       ]));
 
       $response
-            ->assertRedirect(route('admin.services.index'))
+            ->assertRedirect(route('admin.services.index',[
+                'filter'=>Service::$PENDING_BUILDING_INSPECTION
+            ]))
             ->assertSessionHasErrors(['from']);
 
   }
@@ -302,7 +306,9 @@ class FilterServicesByRangeOfDateTest extends TestCase
       ]));
 
       $response
-            ->assertRedirect(route('admin.services.index'))
+            ->assertRedirect(route('admin.services.index',[
+                'filter'=>Service::$PENDING_BUILDING_INSPECTION
+            ]))
             ->assertSessionHasErrors(['from']);
 
   }
@@ -376,7 +382,9 @@ class FilterServicesByRangeOfDateTest extends TestCase
       ]));
 
       $response
-            ->assertRedirect(route('admin.services.index'))
+            ->assertRedirect(route('admin.services.index',[
+                'filter'=>Service::$PENDING_BUILDING_INSPECTION
+            ]))
             ->assertSessionHasAll([
                 'from'=>now()->subDays(1)->format("Y-m-d"),
                 'to'=>now()->subDays(2)->format("Y-m-d"),
