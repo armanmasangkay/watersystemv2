@@ -58,6 +58,100 @@ class FilterServicesByRangeOfDateTest extends TestCase
     $this->assertEquals($services[3]->id,$responseServices[1]->id);
   }
 
+  public function test_successful_filtering_should_return_inputted_from_and_to_dates()
+  {
+      $user=User::factory()->create();
+      $this->actingAs($user);
+
+      $customer=Customer::factory()->create();
+
+      $services=Service::factory()->createMany([
+          [
+              'customer_id'=>$customer->account_number,
+              'created_at'=>now()->subDays(3)
+          ],
+          [
+            'customer_id'=>$customer->account_number,
+            'created_at'=>now()->subDays(2)
+          ],
+          [
+            'customer_id'=>$customer->account_number,
+            'created_at'=>now()->subDays(1)
+        ],
+        [
+            'customer_id'=>$customer->account_number,
+            'created_at'=>now()
+        ],
+    ]);
+
+      $response=$this->get(route('admin.services.filter',[
+          'from'=>now()->subDays(1)->format("Y-m-d"),
+          'to'=>now()->format("Y-m-d"),
+          'filter'=>Service::$PENDING_BUILDING_INSPECTION
+      ]));
+
+      $response
+        ->assertViewIs('pages.services-list')
+        ->assertViewHas([
+            'status',
+            'services',
+            'from'=>now()->subDays(1)->format("Y-m-d"),
+            'to'=>now()->format("Y-m-d")
+            
+        ]);
+
+    $responseServices=$response['services'];
+    $this->assertEquals($services[2]->id,$responseServices[0]->id);
+    $this->assertEquals($services[3]->id,$responseServices[1]->id);
+  }
+
+
+  public function test_filter_by_date_is_only_required_if_either_of_two_values_are_supplied()
+  {
+      $user=User::factory()->create();
+      $this->actingAs($user);
+
+      $customer=Customer::factory()->create();
+
+      $services=Service::factory()->createMany([
+          [
+              'customer_id'=>$customer->account_number,
+              'created_at'=>now()->subDays(3)
+          ],
+          [
+            'customer_id'=>$customer->account_number,
+            'created_at'=>now()->subDays(2)
+          ],
+          [
+            'customer_id'=>$customer->account_number,
+            'created_at'=>now()->subDays(1)
+        ],
+        [
+            'customer_id'=>$customer->account_number,
+            'created_at'=>now()
+        ],
+    ]);
+
+      $response=$this->get(route('admin.services.filter',[
+          'from'=>'',
+          'to'=>'',
+          'filter'=>Service::$PENDING_BUILDING_INSPECTION
+      ]));
+
+      $response
+        ->assertViewIs('pages.services-list')
+        ->assertViewHas([
+            'status',
+            'services'
+        ]);
+
+    $responseServices=$response['services'];
+    $this->assertEquals($services[0]->id,$responseServices[0]->id);
+    $this->assertEquals($services[1]->id,$responseServices[1]->id);
+    $this->assertEquals($services[2]->id,$responseServices[2]->id);
+    $this->assertEquals($services[3]->id,$responseServices[3]->id);
+  }
+
   public function test_should_still_filter_even_range_of_date_is_not_provided_and_will_just_display_services_based_on_filter()
   {
       $user=User::factory()->create();
@@ -246,6 +340,91 @@ class FilterServicesByRangeOfDateTest extends TestCase
       ]));
 
       $response->assertOk();
+
+  }
+
+  public function test_should_return_inputted_date_if_filtering_failed()
+  {
+      $user=User::factory()->create();
+      $this->actingAs($user);
+
+      $customer=Customer::factory()->create();
+
+      $services=Service::factory()->createMany([
+          [
+              'customer_id'=>$customer->account_number,
+              'created_at'=>now()->subDays(3)
+          ],
+          [
+            'customer_id'=>$customer->account_number,
+            'created_at'=>now()->subDays(2)
+          ],
+          [
+            'customer_id'=>$customer->account_number,
+            'created_at'=>now()->subDays(1)
+        ],
+        [
+            'customer_id'=>$customer->account_number,
+            'created_at'=>now()
+        ],
+    ]);
+
+      $response=$this->get(route('admin.services.filter',[
+          'from'=>now()->subDays(1)->format("Y-m-d"),
+          'to'=>now()->subDays(2)->format("Y-m-d"),
+          'filter'=>Service::$PENDING_BUILDING_INSPECTION
+      ]));
+
+      $response
+            ->assertRedirect(route('admin.services.index'))
+            ->assertSessionHasAll([
+                'from'=>now()->subDays(1)->format("Y-m-d"),
+                'to'=>now()->subDays(2)->format("Y-m-d"),
+            ]);
+    
+
+  }
+
+  public function test_filter_parameter_should_be_on_URL_if_filtering_failed()
+  {
+      $user=User::factory()->create();
+      $this->actingAs($user);
+
+      $customer=Customer::factory()->create();
+
+      $services=Service::factory()->createMany([
+          [
+              'customer_id'=>$customer->account_number,
+              'created_at'=>now()->subDays(3)
+          ],
+          [
+            'customer_id'=>$customer->account_number,
+            'created_at'=>now()->subDays(2)
+          ],
+          [
+            'customer_id'=>$customer->account_number,
+            'created_at'=>now()->subDays(1)
+        ],
+        [
+            'customer_id'=>$customer->account_number,
+            'created_at'=>now()
+        ],
+    ]);
+
+      $response=$this->get(route('admin.services.filter',[
+          'from'=>now()->subDays(1)->format("Y-m-d"),
+          'to'=>now()->subDays(2)->format("Y-m-d"),
+          'filter'=>Service::$PENDING_BUILDING_INSPECTION
+      ]));
+
+      $response
+            ->assertRedirect(route('admin.services.index',[
+                'filter'=>Service::$PENDING_BUILDING_INSPECTION
+            ]))
+            ->assertSessionHasAll([
+                'from'=>now()->subDays(1)->format("Y-m-d"),
+                'to'=>now()->subDays(2)->format("Y-m-d"),
+            ]);
 
   }
 }
