@@ -188,8 +188,8 @@ Route::prefix('admin')->middleware(['auth'])->name('admin.')->group(function(){
     // FIELD METER USER ACCESS ONLY
     Route::middleware(Allowed::role(User::$READER))->group(function(){
 
-        Route::get('/field-personnel/home',[FieldMeterController::class, 'index'])->name('home');
-
+        Route::get('/field-personnel/home',[FieldMeterReadingController::class, 'home'])->name('home');
+        Route::get('/field-personnel/unread-meter-reading',[FieldMeterReadingController::class, 'overdueReading'])->name('unread');
         Route::get('/field-personnel/meter-reading',[FieldMeterReadingController::class, 'index'])->name('field-reading');
         Route::get('/field-personnel/meter-reading/search/consumer',[FieldMeterReadingController::class, 'search'])->name('reader.search');
         Route::post('/field-personnel/meter-reading/save',[FieldMeterReadingController::class, 'store'])->name('save-meter-billing');

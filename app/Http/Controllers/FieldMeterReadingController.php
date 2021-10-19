@@ -27,6 +27,48 @@ class FieldMeterReadingController extends Controller
         return view('field-personnel.pages.meter-reading');
     }
 
+    private function countUnreadMeters()
+    {
+        $customers = Customer::all();
+        $index = 0;
+        $customersLists = [];
+
+        if(isset($customers) || !empty($customers) || $customers != null)
+        {
+            for($i = 0; $i < $customers->count(); $i++)
+            {
+                $balance = Transaction::orderByDesc('created_at')->where('customer_id', $customers[$i]->account())->get();
+                $balance = $balance->first();
+
+                if(isset($balance) || !empty($balance) || $balance != null)
+                {
+                    $monthNow = date('m');
+                    $dayNow = date('d');
+                    $prevMonth = date('t', strtotime($balance->reading_date));
+                    $prevDay = date('d', strtotime($balance->reading_date));
+
+                    if((($prevMonth - $prevDay) + $dayNow) >= 33)
+                    {
+                        $customersLists[$index] = $customers[$i];
+                        $index++;
+                    }
+                }
+            }
+        }
+
+        return $customersLists;
+    }
+
+    public function home()
+    {
+        return view('field-personnel.pages.home', ['notif' => count($this->countUnreadMeters()) ?? 0]);
+    }
+
+    public function overdueReading()
+    {
+        return view('field-personnel.pages.unread-meter', ['customers' => $this->countUnreadMeters(), 'notif' => count($this->countUnreadMeters()) ?? 0]);
+    }
+
     public function search(Request $request)
     {
         $account_number=$request->account_number;

@@ -188,6 +188,11 @@ a.btn{
     background-color: #fff;
 }
 
+span.badge{
+    top: 3px !important;
+    left: 3px !important;
+}
+
 .form-control-plaintext:disabled:focus,
 .form-control-plaintext[readonly]:focus,
 .form-control:disabled:focus,
