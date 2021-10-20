@@ -404,7 +404,7 @@ body.offcanvas-active .navbar-nav{
 
 #print table tr td{
     color: #000;
-    /* font-weight: bolder !important; */
+    font-weight: bold !important;
 }
 
 #footer{

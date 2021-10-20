@@ -6,6 +6,8 @@ $(document).ready(function(){
             $('#reload').attr('data-enable', 1)
             window.print()
         }
+        $('#reload').attr('data-enable', 0)
+        window.location.reload()
     })
 
     $('#reload').click(function(){
@@ -81,9 +83,9 @@ $(document).ready(function(){
             const meter_consumption = parseInt($('#reading_meter').val(), 10) - parseInt($('#meter-reading').val(), 10);
             const total_consumption = ((meter_consumption - max_range) * excess_rate) + min_rates;
             const amount_consumption = meter_consumption <= max_range ? min_rates : total_consumption;
-            
+
             $('#consumption').val(meter_consumption);
-            $('#mtr_con').text(meter_consumption + ' Cu.M');
+            $('#mtr_con').html(meter_consumption + ' Cu.M');
             $('#surcharge_amount').val(surcharge.toFixed(2));
             $('#mtr_sur').text(surcharge.toFixed(2));
             $('#amount').val(amount_consumption.toFixed(2));
@@ -92,7 +94,7 @@ $(document).ready(function(){
             const total = ((surcharge + balance) + (meter_ips + amount_consumption));
 
             $('#total').val(total.toFixed(2));
-            $('#mtr_due').text('Php ' + total.toFixed(2));
+            $('#mtr_due').html('Php ' + total.toFixed(2) + "");
             $('#save-billing').prop('disabled', false);
 
             let data = $('#billing-form').serialize();
