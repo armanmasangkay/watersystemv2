@@ -38,21 +38,19 @@ $(document).ready(function(){
                         console.log(response)
                         $('#save-billing').html('<i class="far fa-check"></i>&nbsp; Done!');
 
-                        Swal.fire('Billing Successfull!','New billing for client '+ $('input[name="customer_id"]').val() +' was created!','success').then(function(result){
-                            if(result.isConfirmed)
-                            {
-                                $('#print-bill').attr('data-enable', 1)
-                                $('#ledgerSetupModal').modal('hide')
-                            }
-                        })
+                        var cfm = confirm('Billing Successfull!','New billing for client '+ $('input[name="customer_id"]').val() +' was created!')
+                        if(cfm == true || cfm == false)
+                        {
+                            $('#print-bill').attr('data-enable', 1)
+                            $('#ledgerSetupModal').modal('hide')
+                        }
                     }
                     else{
-                        Swal.fire('Ooops!',response.msg).then(function(result){
-                            if(result.isConfirmed)
-                            {
-                                window.location.reload();
-                            }
-                        })
+                        var cfm = confirm('Ooops!', response.msg)
+                        if(cfm == true || cfm == false)
+                        {
+                            window.location.reload();
+                        }
                     }
                 }
             })

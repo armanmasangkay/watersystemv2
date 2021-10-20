@@ -80,7 +80,7 @@ class FieldMeterReadingController extends Controller
                 'account_number.exists'=>'Account number not found'
             ])->withInput();
         }
-        
+
         if(!$customer->hasActiveConnection())
         {
             return back()->withErrors([
@@ -132,7 +132,7 @@ class FieldMeterReadingController extends Controller
                 'address' => $address,
                 'transactions' => $transactions,
                 'account' => $acc,
-                'balance' => $balance,
+                'balance' => $new_balance,
                 'connection_type' => $customer->connection_type,
                 'org_name'=>$customer->org_name
             ],
