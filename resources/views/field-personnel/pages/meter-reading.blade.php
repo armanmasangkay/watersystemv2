@@ -103,20 +103,21 @@
         </div>
         <div class="row">
             <div class="col-xs-12 d-flex justify-content-md-start justify-content-center align-items-center mt-2">
-                <button class="btn btn-success d-flex justify-content-between align-items-center ms-1" id="print-bill" data-enable="0"><i data-feather="printer" class="feather-18 me-2"></i> Print Bill</button>
+                <!-- <button class="btn btn-success d-flex justify-content-between align-items-center ms-1" id="print-bill" data-enable="0"><i data-feather="printer" class="feather-18 me-2"></i> Print Bill</button> -->
                 <!-- <button class="btn btn-secondary d-flex justify-content-between align-items-center ms-1" id="reload" data-enable="0"><i data-feather="rotate-cw" class="feather-18 me-2"></i> Reload Page</button> -->
             </div>
         </div>
         @endif
     </div>
 
-    <div id="print" style="display: none;">
+    <div id="print" hidden>
+        <button class="btn btn-primary btn_printNow" id="print-bill"><i class="fas fa-print"></i></button>
         <div class="row">
             <div class="container p-1">
                 <div class="col-md-4 offset-md-4">
                     <table class="table">
                         <tr>
-                            <td class="border-bottom-0 pt-1">
+                            <td class="border-bottom-0 pt-1 pe-0">
                                 <img src="{{ asset('assets/img/logo-macrohon_black.png') }}" class="m-0" alt="logo">
                             </td>
                             <td colspan="2" class="border-bottom-0 px-0">
@@ -131,10 +132,10 @@
                             </td>
                         </tr>
                         <tr>
-                            <td colspan="3" class="pt-2 border-bottom-0"><h6 class="text-center fs-3" style="font-weight: bolder !important;"><strong>STATEMENT OF ACCOUNT</strong></h6></td>
+                            <td colspan="3" class="pt-4 border-bottom-0"><h6 class="text-center fs-3" style="font-weight: bolder !important;"><strong>STATEMENT OF ACCOUNT</strong></h6></td>
                         </tr>
                         <tr>
-                            <td  colspan="3" class="text-center py-0 w-100" style="border-bottom: 1px solid #000;"></td>
+                            <td  colspan="3" class="text-center py-0 w-100" style="border-bottom: 2px solid #000;"></td>
                         </tr>
                         <tr>
                             <td class="pt-2 pb-0 ps-3 border-bottom-0 i-data fs-4" style="font-weight: bolder !important;">&nbsp;Account No.</td>
@@ -224,7 +225,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td  colspan="3" class="text-left pt-2 pb-0 w-100 pt-2" style="border-bottom: 2px solid #000;"></td>
+                            <td  colspan="3" class="text-left pt-2 pb-0 w-100 py-2" style="border-bottom: 2px solid #000;"></td>
                         </tr>
                         <tr>
                             <td class="pt-2 ps-3 border-bottom-0 reader fs-4" style="font-weight: bolder !important;"><small>&nbsp;Meter Reader</small></td>
@@ -232,7 +233,7 @@
                         </tr>
                         <tr>
                             <td class="pt-0 ps-3 border-bottom-0 reader fs-4" style="font-weight: bolder !important;"><small>&nbsp;DateTime Read</small></td>
-                            <td colspan="2" class="py-0 border-bottom-0 pe-3 reader fs-4" style="font-weight: bolder !important;">: <small>{{ date('Y M d, h:m a', strtotime('now')) }}</small></td>
+                            <td colspan="2" class="py-1 border-bottom-0 text-left reader fs-4" style="font-weight: bolder !important;">: <small class="text-left">{{ date('Y M d, h:m a', strtotime('now')) }}</small></td>
                         </tr>
                         <tr>
                             <td  colspan="3" class="text-left py-0 w-100 pt-2 fs-4" style="border-bottom: 2px solid #000;"></td>

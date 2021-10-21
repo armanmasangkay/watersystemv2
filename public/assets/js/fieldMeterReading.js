@@ -1,13 +1,18 @@
 $(document).ready(function(){
 
+    let reading = document.getElementById('reading')
+    let print = document.getElementById('print')
+
     $('#print-bill').click(function(){
         if($(this).attr('data-enable') == 1)
         {
-            $('#reload').attr('data-enable', 1)
+            // $('#reload').attr('data-enable', 1)
             window.print()
         }
-        $('#reload').attr('data-enable', 0)
-        window.location.reload()
+        setTimeout(function(){
+            $('#reload').attr('data-enable', 0)
+            window.location.reload()
+        }, 20000)
     })
 
     $('#reload').click(function(){
@@ -45,6 +50,8 @@ $(document).ready(function(){
                         {
                             $('#print-bill').attr('data-enable', 1)
                             $('#ledgerSetupModal').modal('hide')
+                            reading.hidden = true
+                            print.hidden = false
                         }
                     }
                     else{
@@ -85,7 +92,7 @@ $(document).ready(function(){
             const amount_consumption = meter_consumption <= max_range ? min_rates : total_consumption;
 
             $('#consumption').val(meter_consumption);
-            $('#mtr_con').html(meter_consumption + ' Cu.M');
+            $('#mtr_con').text(meter_consumption + ' Cu.M');
             $('#surcharge_amount').val(surcharge.toFixed(2));
             $('#mtr_sur').text(surcharge.toFixed(2));
             $('#amount').val(amount_consumption.toFixed(2));
@@ -94,7 +101,7 @@ $(document).ready(function(){
             const total = ((surcharge + balance) + (meter_ips + amount_consumption));
 
             $('#total').val(total.toFixed(2));
-            $('#mtr_due').html('Php ' + total.toFixed(2) + "");
+            $('#mtr_due').text('Php ' + total.toLocaleString('en-US', {minimumFractionDigits: 2}));
             $('#save-billing').prop('disabled', false);
 
             let data = $('#billing-form').serialize();

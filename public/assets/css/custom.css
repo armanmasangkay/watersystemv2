@@ -394,6 +394,17 @@ body.offcanvas-active .navbar-nav{
 
 #print{
     overflow: hidden;
+    position: relative;
+}
+
+#print .btn_printNow{
+    position: absolute;
+    top: 0.5rem;
+    left: 0.1rem;
+    height: 45px;
+    width: 45px;
+    border-radius: calc(45px/2);
+    z-index: 1000;
 }
 
 #print table tr td img{
@@ -430,7 +441,7 @@ body.offcanvas-active .navbar-nav{
         font-size: 30px !important;
     }
 
-    #reading, .nav-mobile{
+    #reading, .nav-mobile, #print-bill{
         display: none;
     }
 
