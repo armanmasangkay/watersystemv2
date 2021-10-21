@@ -6,6 +6,8 @@ use App\Http\Requests\services\StoreServiceRequest;
 use App\Models\Customer;
 use App\Models\Service;
 use App\Rules\RedundantService;
+use Carbon\Carbon;
+use Illuminate\Contracts\Session\Session;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
@@ -31,15 +33,44 @@ class ServiceController extends Controller
     }
 
     public function filter(Request $request){
+
+        if($request->from!=null ||  $request->to!=null){
+
+            $validator=validator($request->all(),[
+                'from'=>'required_with:to|before_or_equal:to',
+                'to'=>'required_with:from',
+            ]);
+    
+            if($validator->fails()){
+                return redirect(route('admin.services.index',[
+                    'filter'=>$request->filter
+                ]))->withErrors($validator->errors())->with([
+                    'from'=>$request->from,
+                    'to'=>$request->to,
+                ]);
+            }
+            
+        }
+        
+
         if($request->filter == 'none'){
             return redirect(route('admin.services.index'));
         }
-        $services = Service::where('status', $request->filter)->paginate(10);
-        $status = Service::getServiceStatus();
 
+        $from=$request->from;
+
+        $to=Carbon::parse($request->to)->addDay(1)->format("Y-m-d");
+
+        $services = Service::where('status', $request->filter)
+                    ->whereBetween('created_at',[$from ?? '',$to ?? ''])        
+                    ->paginate(10);
+         
+        $status = Service::getServiceStatus();
         return view('pages.services-list', [
             'services' => $services,
-            'status' => $status
+            'status' => $status,
+            'from'=>$request->from,
+            'to'=>$request->to
         ]);
 
     }

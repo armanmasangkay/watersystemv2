@@ -6,12 +6,26 @@
 
     <div class="col-md-12 mt-4">
         <div class="row">
-            <div class="col-md-8 py-0">
+            <div class="col-md-3 py-0">
                 <h5 class="text-secondary h4 mt-4"><i data-feather="align-right" class="mb-1 feather-30 me-1"></i> Lists of Services</h5>
             </div>
-            <div class="col-md-4 pt-md-3">
+            <div class="col-md-9 pt-md-3">
                 <form action="{{ route('admin.services.filter')}}" class="d-flex justify-content-start mb-2" method="get">
-                    <select class="form-select col-md me-1" name="filter" id="filter">
+                    <label class="me-2">From</label>
+                    <input type="date" class="form-control me-2 @error('from') is-invalid @enderror" name="from" value="{{$from??session('from')}}"/>
+                    @error('from')
+                    <div class="invalid-feedback">
+                        {{$message}}
+                      </div>
+                    @enderror
+                    <label class="me-2">To</label>
+                    <input type="date" class="form-control me-2 @error('to') is-invalid @enderror" name="to" value="{{$to??session('to')}}"/>
+                    @error('to')
+                    <div class="invalid-feedback">
+                        {{$message}}
+                      </div>
+                    @enderror
+                    <select class="form-select me-1" name="filter" id="filter">
                         <option value="none">None</option>
                         @foreach ($status as $key => $value)
                             @if (request()->filter == $key)

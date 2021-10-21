@@ -36,7 +36,7 @@
                 <table class="table mb-0">
                     <tr>
                         <td colspan="3" class="border-bottom-0 pt-4 text-center"><h3 class="float-end"><strong>WORK ORDER REQUEST</strong></32></td>
-                        <td colspan="2" class="border-bottom-0 display-6 pt-4 text-right"><h3 class="float-end"><strong>#: <span class="text-danger">{{ $service->id }}</span></strong></h3></td>
+                        <td colspan="2" class="border-bottom-0 display-6 pt-4 text-right"><h3 class="float-end"><strong>#: <span class="text-danger">{{ $service->request_number }}</span></strong></h3></td>
                     </tr>
                     <tr>
                         <td colspan="4" class="border-bottom-0 pt-3 text-center"></td>

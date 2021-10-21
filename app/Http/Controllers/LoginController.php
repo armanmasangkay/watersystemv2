@@ -21,27 +21,27 @@ class LoginController extends Controller
             
             if(Auth::user()->isCashier())
             {
-                return redirect()->intended(route('admin.existing-customers.index'));
+                return redirect(route('admin.existing-customers.index'));
             }
             else if(Auth::user()->isReader())
             {
-                return redirect()->intended(route('admin.home'));
+                return redirect(route('admin.home'));
             }
             else if(Auth::user()->isBuildingInspector())
             {
-                return redirect()->intended(route('admin.request-approvals'));
+                return redirect(route('admin.request-approvals'));
             }
             else if(Auth::user()->isWaterworksInspector())
             {
-                return redirect()->intended(route('admin.waterworks-request-approvals'));
+                return redirect(route('admin.waterworks-request-approvals'));
             }
             else if(Auth::user()->isEngineer())
             {
-                return redirect()->intended(route('admin.municipal-engineer.index'));
+                return redirect(route('admin.municipal-engineer.index'));
             }
             else
             {
-                return redirect()->intended(route('admin.dashboard'));
+                return redirect(route('admin.dashboard'));
      
             }
         }

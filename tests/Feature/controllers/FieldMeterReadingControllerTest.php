@@ -23,7 +23,8 @@ class FieldMeterReadingControllerTest extends TestCase
     public function test_can_search_consumer_with_transactions()
     {
         $customer = Customer::factory()->create([
-            'connection_type'=>'Residential'
+            'connection_type'=>'Residential',
+            'connection_status'=>Customer::ACTIVE
         ]);
        $user=$this->getUser();
       

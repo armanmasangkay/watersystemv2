@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\OfficerRequest;
 use App\Models\Officer;
+use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
 class OfficerController extends Controller
@@ -44,10 +45,17 @@ class OfficerController extends Controller
         ]);
     }
 
-    public function update(OfficerRequest $request, Officer $officer)
+    public function update(Request $request, Officer $officer)
     {
+        $validator=validator($request->all(),[
+            'fullname'=>'required'
+        ]);
+
+        if($validator->fails()){
+            return redirect(route('admin.officers.index'))->withErrors($validator->errors());
+        }
+        
         $officer->fullname = Str::title($request->fullname);
-        $officer->position = $request->position;
         $officer->save();
 
         return redirect(route('admin.officers.index'))->with([

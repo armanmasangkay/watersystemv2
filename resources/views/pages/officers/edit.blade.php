@@ -22,29 +22,6 @@
                         </div>
                         @enderror
                     </div>
-
-                    <div class="mb-2">
-                        <span class="form-label">Position</span>
-                        <select class="form-select @error('position') is-invalid @enderror" name="position">
-                            <option value="">--Select one--</option>
-                            @foreach($positions as $key=>$value)
-                                @if ($officer->position == $key)
-                                    <option value="{{$key}}" selected>{{$value}}</option>
-                                @else
-                                    @if (old('position') == $key)
-                                        <option value="{{$key}}" selected>{{$value}}</option>
-                                    @else
-                                        <option value="{{$key}}">{{$value}}</option>
-                                    @endif
-                                @endif
-                            @endforeach
-                        </select>
-                        @error('position')
-                            <div class="invalid-feedback">
-                                {{$message}}
-                            </div>
-                        @enderror
-                    </div>
                     <center>
                         <button type="submit" class="btn btn-primary mt-4"><i data-feather="edit-3" class="feather-18 me-1 mb-1"></i>Update Officer</button>
                     </center>
