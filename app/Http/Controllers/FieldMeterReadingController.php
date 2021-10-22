@@ -8,6 +8,7 @@ use App\Models\Transaction;
 use App\Models\Surcharge;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
 
@@ -71,7 +72,19 @@ class FieldMeterReadingController extends Controller
 
     public function filter(Request $request)
     {
-        dd($request->all());
+        $validator = Validator::make($request->all(),[
+            'barangay' => 'required',
+            'purok' => 'required'
+        ]);
+
+        if($validator->fails())
+        {
+            return response()->json(['filtered' => false, 'errors' => $validator->errors()]);
+        }
+
+        $data = Customer::where('purok' , $request->purok)->where('barangay' , $request->barangay)->get();
+
+        return response()->json(['filtered' => true, 'data' => $data]);
     }
 
     public function search(Request $request)
