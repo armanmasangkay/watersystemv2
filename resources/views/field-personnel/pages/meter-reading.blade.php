@@ -35,6 +35,7 @@
                 @if(isset($customer))
                 <h6 class="text-secondary ps-1 d-block d-lg-none pt-2" style="font-size: 17px !important;"><strong>CLIENT : {{isset($customer)?strtoUpper($customer["org_name"])?strtoupper($customer["org_name"]):strtoupper($customer["fullname"]):''}}</strong></h6>
                 <h6 class="text-secondary ps-1 d-block d-lg-none pb-2" style="font-size: 15px !important;"><strong>ACCOUNT NO : <span class="text-primary" id="customer_account">{{ isset($customer) ? $customer["account"] : '' }}</span></strong></h6>
+                <h6 class="text-secondary ps-1 d-block d-lg-none pb-2" style="font-size: 15px !important;"><strong>SERIAL NUMBER: <span class="text-primary" id="customer_account">{{ isset($customer) ? $customer["serial_number"] : '' }}</span></strong></h6>
                 @endif
                 <div class="card bg-white mt-md-2">
                     <div class="card-header pt-3 pb-2 bg-white {{ isset($customer) ? 'd-none d-lg-block' : '' }} ">

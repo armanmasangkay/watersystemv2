@@ -69,10 +69,15 @@ class FieldMeterReadingController extends Controller
         return view('field-personnel.pages.unread-meter', ['customers' => $this->countUnreadMeters(), 'notif' => count($this->countUnreadMeters()) ?? 0]);
     }
 
+    public function filter(Request $request)
+    {
+        dd($request->all());
+    }
+
     public function search(Request $request)
     {
         $account_number=$request->account_number;
-    
+
         try{
             $customer=Customer::findOrFail($account_number);
         }catch(ModelNotFoundException $e){
@@ -80,7 +85,7 @@ class FieldMeterReadingController extends Controller
                 'account_number.exists'=>'Account number not found'
             ])->withInput();
         }
-        
+
         if(!$customer->hasActiveConnection())
         {
             return back()->withErrors([
@@ -91,7 +96,7 @@ class FieldMeterReadingController extends Controller
         $acc = $customer->account();
         $fullname = $customer->fullname();
         $address = $customer->address();
-       
+
 
         $balance = Transaction::orderByDesc('created_at')->where('customer_id', $account_number)->get();
         $new_balance = $balance->first();
@@ -134,7 +139,8 @@ class FieldMeterReadingController extends Controller
                 'account' => $acc,
                 'balance' => $balance,
                 'connection_type' => $customer->connection_type,
-                'org_name'=>$customer->org_name
+                'org_name'=>$customer->org_name,
+                'serial_number' => $customer->meter_number
             ],
             'rates' => $rate,
             'surcharge' => $surcharge[0]->rate,
@@ -147,7 +153,7 @@ class FieldMeterReadingController extends Controller
     {
         if(isset($request->read_date))
         {
-            if( \Carbon\Carbon::parse($request->current_month) >= $request->read_date && 
+            if( \Carbon\Carbon::parse($request->current_month) >= $request->read_date &&
                 \Carbon\Carbon::parse($request->next_month) <= $request->read_date )
             {
                 return response()->json(['created' => false, 'msg' => 'Cannot create billing, make sure that the reading date is not covered from the previous reading date.']);
