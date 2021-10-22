@@ -62,7 +62,7 @@ Route::prefix('admin')->middleware(['auth'])->name('admin.')->group(function(){
     Route::get('/ledger/export/{account_number}',[ExportsController::class,'exportLedger'])->name('ledger.export'); // (Fully Tested)
 
 
-   
+
     Route::get('/transaction/new',[TransactionsController::class,'index'])->middleware('auth')->name('new-transaction');
 
     Route::get('/search-consumer',[CustomerSearchController::class,'search'])->name('search-customer');
@@ -90,7 +90,7 @@ Route::prefix('admin')->middleware(['auth'])->name('admin.')->group(function(){
         Route::post('/waterworks/request-approvals/reject/{id}', [WaterWorksApprovalController::class, 'reject'])->name('waterworks-request-approvals-reject');
         Route::get('/waterworks/pending-completion', [WaterWorksApprovalController::class, 'pendingForCompletion'])->name('waterworks.pending-for-completion');
         Route::get('/waterworks/pending-completion/done/{service}', [WaterWorksApprovalController::class, 'markAsDone'])->name('waterworks.pending-for-completion.mark');
-            
+
     });
     // END WATER WORKS ALLOWED ACCESS ONLY
 
@@ -181,15 +181,16 @@ Route::prefix('admin')->middleware(['auth'])->name('admin.')->group(function(){
 
         Route::get('/work-order',[WorkOrderController::class,'index'])->name('workorder');
         Route::get('/work-order/filter',[WorkOrderController::class,'filter'])->name('workorder.filter');
-        
+
     });
     // END ADMIN ALLOWED ACCESS ONLY
 
     // FIELD METER USER ACCESS ONLY
     Route::middleware(Allowed::role(User::$READER))->group(function(){
 
-        Route::get('/field-personnel/home',[FieldMeterController::class, 'index'])->name('home');
-
+        Route::get('/field-personnel/home',[FieldMeterReadingController::class, 'home'])->name('home');
+        Route::post('/field-personnel/filter/consumer', [FieldMeterReadingController::class, 'filter'])->name('filter');
+        Route::get('/field-personnel/unread-meter-reading',[FieldMeterReadingController::class, 'overdueReading'])->name('unread');
         Route::get('/field-personnel/meter-reading',[FieldMeterReadingController::class, 'index'])->name('field-reading');
         Route::get('/field-personnel/meter-reading/search/consumer',[FieldMeterReadingController::class, 'search'])->name('reader.search');
         Route::post('/field-personnel/meter-reading/save',[FieldMeterReadingController::class, 'store'])->name('save-meter-billing');

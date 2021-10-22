@@ -188,6 +188,11 @@ a.btn{
     background-color: #fff;
 }
 
+span.badge{
+    top: 3px !important;
+    left: 3px !important;
+}
+
 .form-control-plaintext:disabled:focus,
 .form-control-plaintext[readonly]:focus,
 .form-control:disabled:focus,
@@ -222,7 +227,7 @@ body.offcanvas-active .navbar-nav{
 }
 
 .screen-darken.active{
-	z-index:10; 
+	z-index:10;
 	transition:opacity .3s ease, width 0s;
     opacity:1;
     width:100%;
@@ -288,12 +293,12 @@ body.offcanvas-active .navbar-nav{
     .form-search{
         overflow: hidden;
     }
-    
+
     .form-search.hidden{
         transition: height .2s ease-out;
         height: 0px;
     }
-    
+
     .form-search.active{
         transition: height .2s ease-in;
         height: 60px;
@@ -304,7 +309,7 @@ body.offcanvas-active .navbar-nav{
 	.mobile-offcanvas{
 		visibility: hidden;
 		transform:translateX(-100%);
-	    border-radius:0; 
+	    border-radius:0;
 		display:block;
 	    position: fixed;
 	    top: 0; left:0;
@@ -439,8 +444,8 @@ body.offcanvas-active .navbar-nav{
         font-size: 11px;
     }
 
-    #footer h6.text-muted, 
-    #footer p.text-muted, 
+    #footer h6.text-muted,
+    #footer p.text-muted,
     #footer p.text-muted a{
         color: #000 !important;
         font-weight: 500;
@@ -594,6 +599,6 @@ body.offcanvas-active .navbar-nav{
 }
 
 .home{
-    position: relative;
+    /* position: relative; */
     top: -5rem;
 }

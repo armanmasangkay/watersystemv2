@@ -12,14 +12,14 @@
             <div class="col-md-9 pt-md-3">
                 <form action="{{ route('admin.services.filter')}}" class="d-flex justify-content-start mb-2" method="get">
                     <label class="me-2">From</label>
-                    <input type="date" class="form-control me-2 @error('from') is-invalid @enderror" name="from"/>
+                    <input type="date" class="form-control me-2 @error('from') is-invalid @enderror" name="from" value="{{$from??session('from')}}"/>
                     @error('from')
                     <div class="invalid-feedback">
                         {{$message}}
                       </div>
                     @enderror
                     <label class="me-2">To</label>
-                    <input type="date" class="form-control me-2 @error('to') is-invalid @enderror" name="to"/>
+                    <input type="date" class="form-control me-2 @error('to') is-invalid @enderror" name="to" value="{{$to??session('to')}}"/>
                     @error('to')
                     <div class="invalid-feedback">
                         {{$message}}
