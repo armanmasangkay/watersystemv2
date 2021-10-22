@@ -109,7 +109,7 @@ class FieldMeterReadingController extends Controller
         $acc = $customer->account();
         $fullname = $customer->fullname();
         $address = $customer->address();
-
+        $meter_sn = $customer->meter_number;
 
         $balance = Transaction::orderByDesc('created_at')->where('customer_id', $account_number)->get();
         $new_balance = $balance->first();
@@ -150,7 +150,8 @@ class FieldMeterReadingController extends Controller
                 'address' => $address,
                 'transactions' => $transactions,
                 'account' => $acc,
-                'balance' => $balance,
+                'meter_number' => $meter_sn,
+                'balance' => $new_balance,
                 'connection_type' => $customer->connection_type,
                 'org_name'=>$customer->org_name,
                 'serial_number' => $customer->meter_number
@@ -198,10 +199,11 @@ class FieldMeterReadingController extends Controller
         ];
 
         $update_transaction = Transaction::findOrFail($this->waterbill->balance->id);
-
-        $update_transaction->billing_surcharge = $this->toAccounting($this->waterbill->computed_total['surcharge']);
-        $update_transaction->billing_total += $this->toAccounting($this->waterbill->computed_total['surcharge']);
-        $update_transaction->balance += $this->toAccounting($this->waterbill->computed_total['surcharge']);
+        // i need to remove the toAccounting because it throws a 500 error
+        // please accept this changes
+        $update_transaction->billing_surcharge = $this->waterbill->computed_total['surcharge'];
+        $update_transaction->billing_total += $this->waterbill->computed_total['surcharge'];
+        $update_transaction->balance += $this->waterbill->computed_total['surcharge'];
         $update_transaction->update();
 
 

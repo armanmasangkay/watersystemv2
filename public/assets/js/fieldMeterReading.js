@@ -1,11 +1,18 @@
 $(document).ready(function(){
 
+    let reading = document.getElementById('reading')
+    let print = document.getElementById('print')
+
     $('#print-bill').click(function(){
         if($(this).attr('data-enable') == 1)
         {
-            $('#reload').attr('data-enable', 1)
+            // $('#reload').attr('data-enable', 1)
             window.print()
         }
+        setTimeout(function(){
+            $('#reload').attr('data-enable', 0)
+            window.location.reload()
+        }, 20000)
     })
 
     $('#reload').click(function(){
@@ -38,21 +45,21 @@ $(document).ready(function(){
                         console.log(response)
                         $('#save-billing').html('<i class="far fa-check"></i>&nbsp; Done!');
 
-                        Swal.fire('Billing Successfull!','New billing for client '+ $('input[name="customer_id"]').val() +' was created!','success').then(function(result){
-                            if(result.isConfirmed)
-                            {
-                                $('#print-bill').attr('data-enable', 1)
-                                $('#ledgerSetupModal').modal('hide')
-                            }
-                        })
+                        var cfm = confirm('Billing Successfull!','New billing for client '+ $('input[name="customer_id"]').val() +' was created!')
+                        if(cfm == true || cfm == false)
+                        {
+                            $('#print-bill').attr('data-enable', 1)
+                            $('#ledgerSetupModal').modal('hide')
+                            reading.hidden = true
+                            print.hidden = false
+                        }
                     }
                     else{
-                        Swal.fire('Ooops!',response.msg).then(function(result){
-                            if(result.isConfirmed)
-                            {
-                                window.location.reload();
-                            }
-                        })
+                        var cfm = confirm('Ooops!', response.msg)
+                        if(cfm == true || cfm == false)
+                        {
+                            window.location.reload();
+                        }
                     }
                 }
             })
@@ -83,7 +90,7 @@ $(document).ready(function(){
             const meter_consumption = parseInt($('#reading_meter').val(), 10) - parseInt($('#meter-reading').val(), 10);
             const total_consumption = ((meter_consumption - max_range) * excess_rate) + min_rates;
             const amount_consumption = meter_consumption <= max_range ? min_rates : total_consumption;
-            
+
             $('#consumption').val(meter_consumption);
             $('#mtr_con').text(meter_consumption + ' Cu.M');
             $('#surcharge_amount').val(surcharge.toFixed(2));
@@ -94,7 +101,7 @@ $(document).ready(function(){
             const total = ((surcharge + balance) + (meter_ips + amount_consumption));
 
             $('#total').val(total.toFixed(2));
-            $('#mtr_due').text('Php ' + total.toFixed(2));
+            $('#mtr_due').text('Php ' + total.toLocaleString('en-US', {minimumFractionDigits: 2}));
             $('#save-billing').prop('disabled', false);
 
             let data = $('#billing-form').serialize();
