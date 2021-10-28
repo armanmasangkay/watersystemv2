@@ -27,7 +27,7 @@ class FieldMeterReadingControllerTest extends TestCase
             'connection_status'=>Customer::ACTIVE
         ]);
        $user=$this->getUser();
-      
+
         WaterRate::factory()->create();
         Surcharge::factory()->create();
 
@@ -44,7 +44,7 @@ class FieldMeterReadingControllerTest extends TestCase
 
     public function test_cannot_search_transaction_if_account_number_is_null()
     {
-    
+
         $response = $this->actingAs($this->getUser())->get(route('admin.reader.search',['account_number'=>'']));
         $response->assertSessionHasErrors();
     }
@@ -106,4 +106,66 @@ class FieldMeterReadingControllerTest extends TestCase
                         'created' => true,
                     ]);
     }
+
+    /**
+     * @test
+     */
+    public function filterCustomersByBarangayAndPurok()
+    {
+        $customer = Customer::factory()->create([
+            'connection_status' => 'active'
+        ]);
+        $user = User::factory()->create([
+            'role' => User::$READER
+        ]);
+
+
+        $response = $this->actingAs($user)->post(route('admin.filter'),[
+            'barangay' => 'Amparo',
+            'purok' => 'Purok 1'
+        ]);
+
+        $response->assertJson(['filtered' => true]);
+    }
+
+    /**
+     * @test
+     */
+    public function filterCustomersPurokShouldBeRequired()
+    {
+        $customer = Customer::factory()->create([
+            'connection_status' => 'active'
+        ]);
+        $user = User::factory()->create([
+            'role' => User::$READER
+        ]);
+
+
+        $response = $this->actingAs($user)->post(route('admin.filter'),[
+            'barangay' => 'Amparo',
+        ]);
+
+        $response->assertJson(['filtered' => false]);
+    }
+
+    /**
+     * @test
+     */
+    public function filterCustomersBarangayShouldBeRequired()
+    {
+        $customer = Customer::factory()->create([
+            'connection_status' => 'active'
+        ]);
+        $user = User::factory()->create([
+            'role' => User::$READER
+        ]);
+
+
+        $response = $this->actingAs($user)->post(route('admin.filter'),[
+            'purok' => 'Purok 1'
+        ]);
+
+        $response->assertJson(['filtered' => false]);
+    }
+
 }

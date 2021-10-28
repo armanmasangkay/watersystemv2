@@ -8,6 +8,7 @@ use App\Models\Transaction;
 use App\Models\Surcharge;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
 
@@ -69,10 +70,27 @@ class FieldMeterReadingController extends Controller
         return view('field-personnel.pages.unread-meter', ['customers' => $this->countUnreadMeters(), 'notif' => count($this->countUnreadMeters()) ?? 0]);
     }
 
+    public function filter(Request $request)
+    {
+        $validator = Validator::make($request->all(),[
+            'barangay' => 'required',
+            'purok' => 'required'
+        ]);
+
+        if($validator->fails())
+        {
+            return response()->json(['filtered' => false, 'errors' => $validator->errors()]);
+        }
+
+        $data = Customer::where('purok' , $request->purok)->where('barangay' , $request->barangay)->get();
+
+        return response()->json(['filtered' => true, 'data' => $data]);
+    }
+
     public function search(Request $request)
     {
         $account_number=$request->account_number;
-    
+
         try{
             $customer=Customer::findOrFail($account_number);
         }catch(ModelNotFoundException $e){
@@ -135,7 +153,8 @@ class FieldMeterReadingController extends Controller
                 'meter_number' => $meter_sn,
                 'balance' => $new_balance,
                 'connection_type' => $customer->connection_type,
-                'org_name'=>$customer->org_name
+                'org_name'=>$customer->org_name,
+                'serial_number' => $customer->meter_number
             ],
             'rates' => $rate,
             'surcharge' => $surcharge[0]->rate,
@@ -148,7 +167,7 @@ class FieldMeterReadingController extends Controller
     {
         if(isset($request->read_date))
         {
-            if( \Carbon\Carbon::parse($request->current_month) >= $request->read_date && 
+            if( \Carbon\Carbon::parse($request->current_month) >= $request->read_date &&
                 \Carbon\Carbon::parse($request->next_month) <= $request->read_date )
             {
                 return response()->json(['created' => false, 'msg' => 'Cannot create billing, make sure that the reading date is not covered from the previous reading date.']);

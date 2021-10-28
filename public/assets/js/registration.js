@@ -153,7 +153,7 @@ function populatePurokOptions(brgy){
     }catch(err){
 
     }
-    
+
     return purokOptions;
 }
 
@@ -193,7 +193,7 @@ $(document).ready(function(){
         if(selectedBrgy!=""){
             purokDropdown.append(populatePurokOptions(selectedBrgy));
         }
-        
+
     })
 
     purokDropdown.change((e)=>{
@@ -299,6 +299,7 @@ $(document).ready(function(){
                     })
 
                 }else{
+
 
                     if(response.errors.firstname){
                         $("#error-firstname").prop('hidden',false);

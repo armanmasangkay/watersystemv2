@@ -15,7 +15,9 @@ class ServicesListSeeder extends Seeder
      */
     public function run()
     {
-        $customer = Customer::factory()->create();
+        $customer = Customer::factory()->create([
+            'connection_status' => 'active'
+        ]);
 
         Service::factory()->create([
             'customer_id' => $customer->account_number,

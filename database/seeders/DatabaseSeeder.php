@@ -13,14 +13,22 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        if(env('APP_DEBUG') == true){
+            $this->call([
+                UserSeeder::class,
+                CustomerSeeder::class,
+                WaterRateSeeder::class,
+                SurchargeSeeder::class,
+                ServicesListSeeder::class,
+            ]);
+        }else{
+            $this->call([
+                UserSeeder::class,
+                WaterRateSeeder::class,
+                SurchargeSeeder::class,
+            ]);
+        }
 
-        $this->call([
-            UserSeeder::class,
-            // CustomerSeeder::class,
-            WaterRateSeeder::class,
-            SurchargeSeeder::class,
-            ServicesListSeeder::class,
-        ]);
 
     }
 }

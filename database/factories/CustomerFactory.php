@@ -29,13 +29,13 @@ class CustomerFactory extends Factory
     public function definition()
     {
         $currentYear=date("Y");
-        $customerData=[ 
+        $customerData=[
             'account_number'=>"020-$currentYear-".str_pad($this->counter++,3,'0',STR_PAD_LEFT),
             'firstname'=>$this->faker->firstName,
             'middlename'=>$this->faker->lastName,
             'lastname'=>$this->faker->lastName,
             'civil_status'=>FakeCustomerData::civilStatus(),
-            'purok'=>'Purok 1',
+            'purok'=>'Purok Pag-asa',
             'barangay'=>'Amparo',
             'contact_number'=>'09757375747',
             'connection_type'=>FakeCustomerData::connectionType(),
@@ -44,7 +44,7 @@ class CustomerFactory extends Factory
             'meter_number'=>'123'
         ];
         return $customerData;
-      
-        
+
+
     }
 }
