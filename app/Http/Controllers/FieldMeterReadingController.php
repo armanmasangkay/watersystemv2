@@ -82,7 +82,7 @@ class FieldMeterReadingController extends Controller
             return response()->json(['filtered' => false, 'errors' => $validator->errors()]);
         }
 
-        $data = Customer::where('purok' , $request->purok)->where('barangay' , $request->barangay)->get();
+        $data = Customer::where('purok' , $request->purok)->where('barangay' , $request->barangay)->where('connection_status', Customer::ACTIVE)->get();
 
         return response()->json(['filtered' => true, 'data' => $data]);
     }
