@@ -7,7 +7,7 @@
     <div class="col-12 col-md-8 col-lg-5 col-xl-4">
         <div class="card mt-3">
             <div class="card-header py-3">
-                <h3 class='text-center'>Change Account Password</h3>
+                <h3 class='text-center'><i data-feather="key" class="feather-25 m-1 mb-1"></i> Change Account Password</h3>
             </div>
             <div class="card-body px-4">
                 <form action="{{route('users.update-password.store')}}" class="mt-3" method="post">
