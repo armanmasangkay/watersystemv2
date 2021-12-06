@@ -48,7 +48,7 @@
                       <form action="{{route('admin.user-passwords.update',$user)}}" method="post" class="pt-0 mb-0">
                         @csrf
                         @method("PUT")
-                        <button type="submit" class="btn-info border-0 py-1 px-2 rounded-1 text-white text-decoration-none mx-1">Reset Password</a>
+                        <button type="submit" class="btn-secondary border-0 py-1 px-2 rounded-1 text-white text-decoration-none mx-1">Reset Password</a>
                       </form>
                     </div>
                   </td>
