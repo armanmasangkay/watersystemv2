@@ -13,7 +13,9 @@
 
     </head>
     <body class="bg-light bg-gradient">
-        @includeWhen(url()->current()!=route('login'),'layout.nav')
+        @includeWhen(url()->current()!=route('login') && 
+                    url()->current()!=route('consumer.login.index') &&
+                    url()->current()!=route('consumer.signup.index'),'layout.nav')
         <div class="container{{ Request::is('admin/consumer-ledger*') || Request::is('admin/service-list*') ? '-fluid px-5' : '' }}">
             @yield('content')
         </div>

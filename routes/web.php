@@ -9,11 +9,13 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutUserController;
 use App\Http\Controllers\TransactionsController;
 use App\Http\Controllers\BLDGApprovalController;
+use App\Http\Controllers\ConsumerAuthController;
 use App\Http\Controllers\WaterWorksApprovalController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\WaterRateController;
 use App\Http\Controllers\SurchargeController;
 use App\Http\Controllers\ConsumerLedgerController;
+use App\Http\Controllers\ConsumerSignupController;
 use App\Http\Controllers\ExistingCustomerController;
 use App\Http\Controllers\SearchedCustomerController;
 use App\Http\Controllers\PaymentController;
@@ -207,3 +209,9 @@ Route::prefix('admin')->middleware(['auth'])->name('admin.')->group(function(){
 Route::post('/logout',[LogoutUserController::class,'logout'])->middleware('auth')->name('logout');
 
 Route::post('/get/computed/water-bill',[WaterBillController::class, 'computeWaterBill'])->name('water-bill');
+
+
+
+// Consumer Account Portal
+Route::get('/consumer/login',[ConsumerAuthController::class,'loginPage'])->name('consumer.login.index');
+Route::get('/consumer/signup',[ConsumerSignupController::class,'signUpPage'])->name('consumer.signup.index');
