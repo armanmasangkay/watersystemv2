@@ -30,7 +30,7 @@ class Transaction extends Model
         'user_id',
         'posted_by'
     ];
-    private   function toAccounting($num)
+    private function toAccounting($num)
     {
         return number_format($num, 2, '.', ',');
     }
@@ -48,6 +48,33 @@ class Transaction extends Model
     public function user()
     {
         return $this->belongsTo(User::class,'user_id','id');
+    }
+    public function getBillingAmountFormatted()
+    {
+        return $this->toAccounting($this->billing_amount);
+    }
+
+    public function getSurchargeFormatted()
+    {
+        return $this->toAccounting($this->billing_surcharge);
+    }
+
+    public function getMeterIPBalanceFormatted()
+    {
+        return $this->toAccounting($this->billing_meter_ips);
+    }
+    public function getBillingTotalFormatted()
+    {
+        return $this->toAccounting($this->billing_total);
+    }
+    public function getNameOfBillCreator()
+    {
+        return $this->user->name();
+    }
+
+    public function getOutstandingBalanceFormatted()
+    {
+        return $this->toAccounting($this->balance);
     }
 
     public function payments()
