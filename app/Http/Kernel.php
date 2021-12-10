@@ -2,17 +2,8 @@
 
 namespace App\Http;
 
-use App\Http\Middleware\AllowedAccess;
-use App\Http\Middleware\AllowedAccessGroupAdmin;
-use App\Http\Middleware\AllowedAccessGroupMeterReader;
-use App\Http\Middleware\EnsureIsAdmin;
-use App\Http\Middleware\IsCashier;
-use App\Http\Middleware\RestricCashier;
-use App\Http\Middleware\AllowedBldgInspectorAccess;
-use App\Http\Middleware\AllowedAdminCashierAccess;
 use App\Http\Middleware\AllowedRole;
-use App\Http\Middleware\AllowedWaterworksInspector;
-use App\Http\Middleware\AllowedCashierAccess;
+use App\Http\Middleware\AuthenticatedAccount;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -81,6 +72,7 @@ class Kernel extends HttpKernel
         // 'auth.allowed-admin-cashier-access' => AllowedAdminCashierAccess::class,
         // 'auth.allowed-waterworks-access' => AllowedWaterworksInspector::class,
         // 'auth.allowed-cashier-access' => AllowedCashierAccess::class,
-        'allowed'=>AllowedRole::class
+        'allowed'=>AllowedRole::class,
+        'auth.account'=>AuthenticatedAccount::class
     ];
 }
