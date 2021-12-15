@@ -9,11 +9,14 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutUserController;
 use App\Http\Controllers\TransactionsController;
 use App\Http\Controllers\BLDGApprovalController;
+use App\Http\Controllers\ConsumerAuthController;
+use App\Http\Controllers\ConsumerDashboardController;
 use App\Http\Controllers\WaterWorksApprovalController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\WaterRateController;
 use App\Http\Controllers\SurchargeController;
 use App\Http\Controllers\ConsumerLedgerController;
+use App\Http\Controllers\ConsumerSignupController;
 use App\Http\Controllers\ExistingCustomerController;
 use App\Http\Controllers\SearchedCustomerController;
 use App\Http\Controllers\PaymentController;
@@ -207,3 +210,19 @@ Route::prefix('admin')->middleware(['auth'])->name('admin.')->group(function(){
 Route::post('/logout',[LogoutUserController::class,'logout'])->middleware('auth')->name('logout');
 
 Route::post('/get/computed/water-bill',[WaterBillController::class, 'computeWaterBill'])->name('water-bill');
+
+
+
+// CONSUMER ACCOUNT PORTAL
+
+// -Sign in
+Route::get('/consumer/signin',[ConsumerAuthController::class,'signInPage'])->name('consumer.signin.index');
+Route::post('/consumer/signin',[ConsumerAuthController::class,'signIn'])->name('consumer.signin');
+// -Sign up
+Route::get('/consumer/signup',[ConsumerSignupController::class,'signUpPage'])->name('consumer.signup.index');
+Route::post('/consumer/signup',[ConsumerSignupController::class,'signUp'])->name('consumer.signup.store');
+// -Sign out
+Route::get('/consumer/signout',[ConsumerAuthController::class,'signout'])->name('consumer.signout');
+
+// -Dashboard
+Route::get('/consumer/dashboard',[ConsumerDashboardController::class,'dashboard'])->name('consumer.dashboard')->middleware('auth.account');
