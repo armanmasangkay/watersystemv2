@@ -46,7 +46,7 @@
                         </div>
                     </div>
                     <div class='row px-md-2 mb-2 mt-2'>
-                        <div class='col-6 col-md-3 col-lg-2 col-xl-1 mt-2 pe-md-1 ps-md-1 ps-lg-1 pe-sm-1 pe-1'>
+                        {{-- <div class='col-6 col-md-3 col-lg-2 col-xl-1 mt-2 pe-md-1 ps-md-1 ps-lg-1 pe-sm-1 pe-1'>
                             <small class='text-primary'>{{ isset($last_date) ? \Carbon\Carbon::parse($last_date)->format('M, Y') : '' }}</small>
                             <select name='current_month' id='current-month' class='form-select border-0' disabled style="font-weight: bold; font-size: 20px;">
                                 @if(isset($customer))
@@ -68,7 +68,7 @@
                                 @endfor
                                 @endif
                             </select>
-                        </div>
+                        </div> --}}
 
                         <div class='col-6 col-md-6 col-lg-4 col-xl-2 mt-2 mt-lg-2 mt-md-2 px-lg-1 pe-sm-1 ps-md-1 pe-1'>
                             <small class='text-muted'>Meter Reading <span class="text-danger"><strong>*</strong></span></small>
@@ -96,12 +96,12 @@
                             <input style="font-weight: bold; font-size: 20px;" class="form-control-plaintext ps-2" type='number' id="total" name="total" placeholder='0.00' min=0 readonly>
                         </div>
                     </div>
-                    <div class="row mt-3">
+                    {{-- <div class="row mt-3">
                         <div class="col-md-12 pe-md-0 d-flex justify-content-start align-items-center">
                             <input name="override" id="override" type="checkbox">
                             <label class='text-muted ms-2'>Allow override period covered date ?</label>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i data-feather="x"></i> Close</button>

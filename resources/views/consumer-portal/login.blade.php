@@ -44,7 +44,7 @@
                     No account yet? <a href="{{route('consumer.signup.index')}}">Sign up</a>
                 </small>
             </div>
-            <div class="card-footer text-muted">
+            <div class="card-footer text-gray">
             <small>Don't share your password to anyone</small>
             </div>
         </div>
