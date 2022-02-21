@@ -226,3 +226,4 @@ Route::get('/consumer/signout',[ConsumerAuthController::class,'signout'])->name(
 
 // -Dashboard
 Route::get('/consumer/dashboard',[ConsumerDashboardController::class,'dashboard'])->name('consumer.dashboard')->middleware('auth.account');
+Route::get('/consumer/latest',[ConsumerDashboardController::class,'latestBill'])->name('consumer.latest')->middleware('auth.account');

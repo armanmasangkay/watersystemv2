@@ -69,7 +69,7 @@ class Transaction extends Model
     }
     public function getNameOfBillCreator()
     {
-        return $this->user->name();
+        return isset($this->user)?$this->user->name():"System Generated";
     }
 
     public function getOutstandingBalanceFormatted()

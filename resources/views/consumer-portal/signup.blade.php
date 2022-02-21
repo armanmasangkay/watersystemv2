@@ -27,7 +27,7 @@
         <div class="card p-md-2 shadow-sm">
             <div class="card-body">
                 <p class="mb-3">
-                    <small class="text-muted">Fields with <span class="text-danger">*</span> are required</small>
+                    <small class="text-gray">Fields with <span class="text-danger">*</span> are required</small>
                 </p>
                 <form method="POST" action="{{route('consumer.signup.store')}}" enctype="multipart/form-data">
                     @csrf

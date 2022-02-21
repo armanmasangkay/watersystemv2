@@ -24,12 +24,12 @@ class CreateTransactionsTable extends Migration
             $table->double('billing_surcharge')->nullable();
             $table->double('billing_meter_ips')->nullable()->default('0.00');
             $table->double('billing_total')->nullable();
-            $table->foreignId('posted_by')->references('id')->on('users')->onDelete('cascade');
+            $table->foreignId('posted_by')->nullable()->references('id')->on('users')->onDelete('cascade');
             $table->string('payment_or_no')->nullable();
             $table->date('payment_date')->nullable();
             $table->double('payment_amount')->nullable();
             $table->double('balance');
-            $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreignId('user_id')->nullable()->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
             $table->foreign('customer_id')->references('account_number')->on('customers')->onDelete('cascade');
         });
