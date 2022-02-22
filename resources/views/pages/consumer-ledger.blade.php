@@ -102,7 +102,7 @@
                                     <td id="tdmb-{{ $billing->period_covered }}" class="pt-2 pb-2 text-center f8d6b0 border-end border-secondary"><small>{{ \App\Classes\Facades\NumberHelper::toAccounting($billing->billing_meter_ips) }}</small></td>
                                     <td id="tdbt-{{ $billing->period_covered }}" class="pt-2 pb-2 text-center f8d6b0 border-end border-secondary"><small>{{ \App\Classes\Facades\NumberHelper::toAccounting($billing->billing_total) }}</small></td>
                                     <td id="tdbb-{{ $billing->period_covered }}" class="pt-2 pb-2 text-center f8d6b0 border-end border-secondary"><small>{{ \App\Classes\Facades\NumberHelper::toAccounting($billing->balance) }}</small></td>
-                                    <td class="pt-2 pb-2 text-center f8d6b0 border-end border-secondary"><small>{{ $billing->user->name }}</small></td>
+                                    <td class="pt-2 pb-2 text-center f8d6b0 border-end border-secondary"><small>{{ $billing->getNameOfBillCreator() }}</small></td>
                                     <td class="pt-2 pb-2 text-center eee border-end border-secondary">
                                         <small>
                                         @foreach($billing->payments as $payment)
