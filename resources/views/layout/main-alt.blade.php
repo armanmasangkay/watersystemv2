@@ -11,21 +11,34 @@
 
     </head>
     <body class="bg-light bg-gradient">
-
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
             <div class="container-fluid">
               <a class="navbar-brand" href="{{route('consumer.dashboard')}}">Consumer Portal</a>
               <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
               </button>
-              <div class="collapse navbar-collapse d-lg-flex flex-row justify-content-end" id="navbarNav">
-                <ul class="navbar-nav">
-                  <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="{{route('consumer.signout')}}">
-                        <i class="fas fa-sign-out-alt"></i> Sign out
-                    </a>
-                  </li>
-                
+              <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav d-lg-flex flex-col justify-content-between" style="width:100%">
+                  <div class="d-lg-flex flex-row">
+                    <li class="nav-item">
+                      <a class="nav-link {{ request()->routeIs('consumer.dashboard')?"active":"" }}" aria-current="page" href="{{route('consumer.dashboard')}}">
+                         <i class="fas fa-home"></i> Home
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link {{ request()->routeIs('consumer.latest')?"active":"" }}" aria-current="page" href="{{route('consumer.latest')}}">
+                          <i class="far fa-eye"></i> View Latest Bill
+                      </a>
+                    </li>
+                  </div>
+                  <div>
+                    <li class="nav-item">
+                      <a class="nav-link" aria-current="page" href="{{route('consumer.signout')}}">
+                          <i class="fas fa-sign-out-alt"></i> Sign out
+                      </a>
+                    </li>
+                  </div>
+                 
                 </ul>
               </div>
             </div>

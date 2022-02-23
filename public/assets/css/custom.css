@@ -77,9 +77,11 @@
 }
 
 .text-muted, .text-secondary{
-    color: #6c757d !important;
+    color: #1b1b1b !important;
 }
-
+.text-gray{
+    color: #6c757d;
+}
 .navbar ul li a:active{
     color: #3f3f3f !important;
     background-color: transparent !important;

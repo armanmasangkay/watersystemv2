@@ -41,12 +41,12 @@
                 <td>{{$transaction->getMeterIPBalanceFormatted()}}</td>
                 <td>{{$transaction->getBillingTotalFormatted()}}</td>
                 <td>{{$transaction->getOutstandingBalanceFormatted()}}</td>
-                <td>{{$transaction->getNameOfBillCreator()}}</td>
+                <td></td>
                 <td>{{$transaction->payment_or_no}}</td>
                 <td>{{$transaction->payment_date}}</td>
                 <td>{{$transaction->payment_amount}}</td>
                 <td>{{$transaction->getNameOfBillCreator()}}</td>
-             //TODO:: Continue working with the data. Make sure that it shows the oldest first to the newest
+             
             
             </tr>
           @empty

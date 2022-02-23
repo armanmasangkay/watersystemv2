@@ -7,6 +7,7 @@ use App\Models\WaterRate;
 use App\Models\Transaction;
 use App\Models\Payments;
 use App\Models\Surcharge;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -117,8 +118,8 @@ class ConsumerLedgerController extends Controller
         $validator = Validator::make($request->all(), [
             'customer_id' => 'required',
             'current_transaction_id' => 'required',
-            'current_month' => 'required',
-            'next_month' => 'required',
+            // 'current_month' => 'required',
+            // 'next_month' => 'required',
             'reading_date' => 'required',
             'reading_meter' => 'required|numeric|gt:0',
             'consumption' => 'required|numeric',
@@ -136,13 +137,37 @@ class ConsumerLedgerController extends Controller
             return response()->json(['created' => false, 'msg' => 'Current meter reading should not be less than the previous meter reading.']);
         }
 
+        $latestTransaction=Transaction::where('customer_id',$request->customer_id)->orderBy('reading_date','desc')->first();
+
+        $lastReadingDate=Carbon::parse($latestTransaction->reading_date);
+        $inputtedReadingDate=Carbon::parse($request->reading_date);
+    
+        $isInputtedReadingDateNotOnPast=$lastReadingDate->diffInDays($inputtedReadingDate,false)>=0;
+
+        $isWithinValidRange=$lastReadingDate->addDays(28)->diffInDays($inputtedReadingDate,false)>=0 & $lastReadingDate->addDays(7)->diffInDays($inputtedReadingDate,false)<=0;
+       
+        if(!$isInputtedReadingDateNotOnPast){
+            return response()->json(['created' => false, 
+                                    'msg' => 'You must input a reading date that is similar or later than the previous reading date '. $latestTransaction->reading_date
+            ]);
+        }
+        
+        if(!$isWithinValidRange){
+            return response()->json(['created' => false, 
+                                    'msg' => 'You can only add a bill between '. $lastReadingDate->subDays(7)->toDateString() . " and " . $lastReadingDate->addDays(7)->toDateString()
+            ]);
+        }
+
+        $periodCoveredFrom= $lastReadingDate->subDays(35)->toFormattedDateString();
+        $periodCoveredFromTo= $inputtedReadingDate->toFormattedDateString();
+
         $this->waterbill->getConnectionType($request->customer_id);
         $this->waterbill->getCurrentBalance($request->customer_id);
         $this->waterbill->computeBillConsumption($request->reading_meter);
 
         $fillable=[
             'customer_id' => $this->waterbill->balance != null ? $this->waterbill->balance->customer_id : $request->customer_id,
-            'period_covered' => $request->current_month.'-'.$request->next_month,
+            'period_covered' => $periodCoveredFrom.'-'.$periodCoveredFromTo,
             'reading_date' => date('Y-m-d', strtotime($request->reading_date)),
             'reading_meter' => $request->reading_meter,
             'reading_consumption' => $this->waterbill->computed_total['meter_consumption'],

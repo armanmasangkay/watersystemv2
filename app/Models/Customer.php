@@ -34,6 +34,8 @@ class Customer extends Model
 
     public const ACTIVE = "active";
     public const INACTIVE = "inactive";
+    const CT_RESIDENTIAL_INSTITUTIONAL="residential";
+    const CT_COMMERCIAL="commercial";
 
     public function isOrgAccount()
     {
@@ -100,7 +102,13 @@ class Customer extends Model
         return $this->connection_status==="active";
     }
 
-    public static function count(){
+    public static function count()
+    {
         return self::all()->count();
+    }
+
+    public function getLatestTransaction()
+    {
+        return $this->transactions()->orderBy('reading_date','desc')->first();
     }
 }

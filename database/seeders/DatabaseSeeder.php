@@ -16,7 +16,6 @@ class DatabaseSeeder extends Seeder
         if(env('APP_DEBUG') == true){
             $this->call([
                 UserSeeder::class,
-                CustomerSeeder::class,
                 WaterRateSeeder::class,
                 SurchargeSeeder::class,
                 ServicesListSeeder::class,
