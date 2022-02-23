@@ -7,12 +7,14 @@
 <hr>
 <div class="table-responsive">
     <table class="table-bordered w-100" style="border:1px solid #e4e8ec">
-        <caption>Ready by ({{$transaction->getNameOfBillCreator()}})</caption>
+        <caption>Read by ({{$transaction->getNameOfBillCreator()}})</caption>
         <tr>
             <td class="p-4">
                 <p class="text-gray">Period covered</p>
                 <h4>{{$transaction->period_covered}}</h4>
             </td>
+
+            {{-- test --}}
             <td class="p-4">
                 <p class="text-gray">Reading Date (YYYY-MM-DD)</p>
                 <h4>{{$transaction->reading_date}}</h4>
