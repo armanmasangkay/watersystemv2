@@ -53,7 +53,6 @@ $(document).ready(function(){
                             $('#ledgerSetupModal').modal('hide')
                             reading.hidden = true
                             print.hidden = false
-                            // print.style.height = "100%"
                         }
                     }
                     else{
