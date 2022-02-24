@@ -37,20 +37,18 @@
                   <td scope="row" class="border-bottom-0 border-top">{{$user->name}}</td>
                   <td class="border-bottom-0 border-top">{{$user->username}}</td>
                   <td class="border-bottom-0 border-top">{{$user->user_role()}}</td>
-                  <td class="border-bottom-0 border-top pb-3">
+                  <td class="border-bottom-0 border-top py-2">
                     <div class="d-flex justify-content-start pe-0 me-0">
-                      <a href="{{route('admin.users.edit',$user)}}" class="me-3">Edit</a>
-                      <span> | </span>
+                      <a href="{{route('admin.users.edit',$user)}}" class="me-1 bg-warning py-1 px-2 rounded-1 text-white text-decoration-none">Edit</a>
                       <form action="{{route('admin.users.destroy',$user)}}" method="post" class="pt-0 mb-0">
                         @csrf
                         @method("DELETE")
-                        <button type="submit" class="btn-link border-0 bg-white p-0 mx-3" onclick="return confirm('Are you sure you want to delete this user? This cannot be reverted back.')">Delete</button>
+                        <button type="submit" class="bg-danger py-1 px-2 rounded-1 text-white text-decoration-none border-0 mx-1" onclick="return confirm('Are you sure you want to delete this user? This cannot be reverted back.')">Delete</button>
                       </form>
-                      <span> | </span>
                       <form action="{{route('admin.user-passwords.update',$user)}}" method="post" class="pt-0 mb-0">
                         @csrf
                         @method("PUT")
-                        <button type="submit" class="btn-link border-0 bg-white p-0 mx-3">Reset Password</a>
+                        <button type="submit" class="btn-secondary border-0 py-1 px-2 rounded-1 text-white text-decoration-none mx-1">Reset Password</a>
                       </form>
                     </div>
                   </td>

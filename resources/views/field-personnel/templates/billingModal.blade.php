@@ -11,14 +11,14 @@
                 <input type="hidden" name="surcharge" value="{{ isset($surcharge) ? $surcharge : '0'}}">
                 <input type="hidden" name="customer_id" value="{{ isset($customer) ? $customer['account'] : '' }}">
                 <input type="hidden" name="current_transaction_id" value="{{ isset($current_transaction_id) ? $current_transaction_id : '' }}">
-                <input id="meter-reading" name="meter_reading" type="hidden" placeholder="Meter reading" min=0 readOnly value="{{ isset($customer) ? (isset($customer["balance"]->reading_meter) ? $customer["balance"]->reading_meter : '') : '' }}">
-                <input id="cur_balance" name="cur_balance" type="hidden" placeholder="Meter reading" min=0 readonly value="{{ isset($customer) ? (isset($customer["balance"]->balance) ? $customer["balance"]->balance : '0.00') : '0.00' }}">
+                <input id="meter-reading" name="meter_reading" type="hidden" placeholder="Meter reading" min=0 readOnly value="{{ isset($customer) ? (isset($customer['balance']->reading_meter) ? $customer['balance']->reading_meter : '0.00') : '0.00' }}">
+                <input id="cur_balance" name="cur_balance" type="hidden" placeholder="Meter reading" min=0 readonly value="{{ isset($customer) ? (isset($customer['balance']->balance) ? $customer['balance']->balance : '0.00') : '0.00' }}">
                 <input type="hidden" name='current_month' id='current-month' value="{{ isset($last_date) ? \Carbon\Carbon::parse($last_date)->format('M d') : '' }}">
                 <input type="hidden" name='next_month' id='next-month' value="{{ isset($last_date) ? \Carbon\Carbon::parse($last_date)->addMonths(1)->format('M d, Y') : '' }}">
                 <input class='form-control' type='hidden' id="consumption" name="consumption" min=0 readOnly placeholder="0">
                 <input class='form-control' type='hidden' id="amount" name="amount" min=0 readOnly placeholder="0.00">
                 <input class='form-control' type='hidden' name="surcharge_amount" id="surcharge_amount" value='0.00' min=0 readonly>
-                <input class='form-control' type='hidden' name="meter_ips" id="meter-ips" placeholder='0.00' min=0 value="{{ isset($customer) ? (isset($customer["balance"]->billing_meter_ips) ? $customer["balance"]->billing_meter_ips : '0.00') : '0.00' }}">
+                <input class='form-control' type='hidden' name="meter_ips" id="meter-ips" placeholder='0.00' min=0 value="{{ isset($customer) ? (isset($customer['balance']->billing_meter_ips) ? $customer['balance']->billing_meter_ips : '0.00') : '0.00' }}">
                 <input class='form-control' type='hidden' id="total" name="total" placeholder='0.00' min=0 readonly>
                 <input type="hidden" name="id" value="{{ Auth::id() }}">
 

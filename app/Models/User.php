@@ -19,7 +19,7 @@ class User extends Authenticatable
     public static $BLDG_INSPECTOR=4;
     public static $WATERWORKS_INSPECTOR=5;
     public static $ENGINEER=6;
-
+    public static $ACCOUNT_OFFICER=7;
 
     /**
      * The attributes that are mass assignable.
@@ -61,6 +61,7 @@ class User extends Authenticatable
             '4'=>'Building Inspector',
             '5'=>'Waterworks Inspector',
             '6'=>'Municipal Engineer',
+            '7'=>'Account Officer',
         ];
     }
 
@@ -103,6 +104,11 @@ class User extends Authenticatable
     public function isEngineer()
     {
         return $this->role==self::$ENGINEER;
+    }
+
+    public function isAccountOfficer()
+    {
+        return $this->role==self::$ACCOUNT_OFFICER;
     }
 
     public function username()

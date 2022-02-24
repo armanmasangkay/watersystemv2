@@ -31,21 +31,21 @@ class DashboardController extends Controller
 
     private function autoGenerateBill()
     {
-           $activeCustomers=Customer::where('connection_status',Customer::ACTIVE)->get();
+        $activeCustomers=Customer::where('connection_status',Customer::ACTIVE)->get();
 
-           foreach($activeCustomers as $customer){
+        foreach($activeCustomers as $customer){
 
-            
-                $lastTransaction=$customer->getLatestTransaction();
-            
+            $lastTransaction=$customer->getLatestTransaction();
+
+            if($lastTransaction){
                 $numOfTransactionsToCreate=ceil(Carbon::parse($lastTransaction->reading_date)->diffInDays(now())/35)+1;
-            
+
                 for($i=0;$i<$numOfTransactionsToCreate;$i++){
                     $lastTransaction=$customer->getLatestTransaction();
                     // dd($lastTransaction->reading_date);
-                  
+                    
                     if(!is_null($lastTransaction)){
-                     
+                        
                         $lastReadingDate= Carbon::parse($lastTransaction->reading_date);
         
                         $isPast35Days=$lastReadingDate->diffInDays(now())>35;
@@ -63,13 +63,13 @@ class DashboardController extends Controller
                             $periodCovered=$periodCoveredFromStr . "-" . $periodCoveredToStr;
                             $readingDate=$periodCoveredTo->toDateString();
                             $meterReading=$lastTransaction->reading_meter;
-    
+
                             $newSurchage=$lastTransaction->billing_amount*$surchargeRate;
                             $lastTransaction->billing_surcharge=$newSurchage;
                             $lastTransaction->billing_total=$lastTransaction->billing_total+$newSurchage;
                             $lastTransaction->balance=$lastTransaction->balance+$newSurchage;
                             $lastTransaction->update();
-    
+
                             Transaction::create([
                                 'customer_id'=>$customer->account_number,
                                 'period_covered'=>$periodCovered,
@@ -88,17 +88,10 @@ class DashboardController extends Controller
                                 'posted_by'
                             ]);
                         }
-    
                     }
-
-
-            
-              
-                }
-                
-                
-           }
-           
+                } 
+            }
+        }
     }
 
 
