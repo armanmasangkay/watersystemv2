@@ -131,7 +131,7 @@ class FieldMeterReadingController extends Controller
                 ];
             }
         }
-
+  
         $surcharge = Surcharge::all();
         $date = "";
         // $payments = Payments
@@ -165,6 +165,7 @@ class FieldMeterReadingController extends Controller
 
     public function store(Request $request)
     {
+
         if(isset($request->read_date))
         {
             if( \Carbon\Carbon::parse($request->current_month) >= $request->read_date &&
@@ -184,7 +185,7 @@ class FieldMeterReadingController extends Controller
         $this->waterbill->computeBillConsumption($request->reading_meter);
 
         $fillable=[
-            'customer_id' => $this->waterbill->balance->customer_id,
+            'customer_id' => $request->customer_id,
             'period_covered' => $request->current_month.'-'.$request->next_month,
             'reading_date' => date('Y-m-d', strtotime($request->read_date)),
             'reading_meter' => $request->reading_meter,
@@ -208,6 +209,6 @@ class FieldMeterReadingController extends Controller
 
 
         $transactions = Transaction::create($fillable);
-        return response()->json(['created' => true, 'data'=>$fillable]);
+        return response()->json(['created' => true, 'data'=>$fillable, 'id' => $request->customer_id]);
     }
 }

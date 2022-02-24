@@ -32,7 +32,7 @@
 
                                 <div class="col-md-3 mb-2 pe-md-1">
                                     <label><small class="text-muted">Firstname</small><small class="text-danger"> *</small></label>
-                                    <input type="text" name="firstname" class="form-control mt-2" placeholder="First name" >
+                                    <input type="text" name="firstname" class="form-control mt-0" placeholder="First name" >
                                     <small id="error-firstname" class="text-danger" hidden>
 
                                     </small>
@@ -43,7 +43,7 @@
                                 </div>
                                 <div class="col-md-3 ps-lg-1 pt-md-0 pt-sm-2 pt-xs-2">
                                     <label><small class="text-muted">Lastname</small><small class="text-danger"> *</small></label>
-                                    <input type="text" name="lastname" class="form-control mt-2" placeholder="Last name">
+                                    <input type="text" name="lastname" class="form-control mt-0" placeholder="Last name">
                                     <small id="error-lastname" class="text-danger" hidden>
 
                                     </small>

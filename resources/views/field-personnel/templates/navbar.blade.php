@@ -40,12 +40,14 @@
                         <button class="btn-close float-end"></button>
                     </div>
                 </div>
-                <a class="navbar-brand text-secondary pb-2 border-md-bottom border-lg-2 border-secondary" href="#" style="font-size: 18px !important;"><strong>MMWS</strong></a>
-
+                <a class="navbar-brand text-secondary pb-2 border-md-bottom border-lg-2 border-secondary" href="#" style="font-size: 18px !important;">
+                    <span class="d-none d-md-block"><strong>MMWS</strong></span>
+                    <span class="d-block d-md-none"><strong>Macrohon Water System</strong></span>
+                </a>
                 <ul class="navbar-nav ms-lg-3">
-                    <li class="nav-item my-md-0 my-1"><a class="nav-link text-secondary" href="{{ route('admin.home') }}"><i data-feather="home" class="feather-18 me-2"></i> Home Page </a></li>
-                    <li class="nav-item my-md-0 my-1"><a class="nav-link text-secondary" href="{{ route('admin.field-reading') }}"><i data-feather="info" class="feather-18 me-2"></i> Meter Reading </a></li>
-                    <li class="nav-item my-md-0 my-1"><a class="nav-link text-secondary" href="{{ route('admin.meter-services') }}"><i data-feather="activity" class="feather-18 me-2"></i> Water Services </a></li>
+                    <li class="nav-item my-md-0 my-1"><a class="nav-link text-secondary ps-2" href="{{ route('admin.home') }}"><i data-feather="home" class="feather-18 me-2"></i> Home Page </a></li>
+                    <li class="nav-item my-md-0 my-1"><a class="nav-link text-secondary ps-2" href="{{ route('admin.field-reading') }}"><i data-feather="info" class="feather-18 me-2"></i> Meter Reading </a></li>
+                    <li class="nav-item my-md-0 my-1"><a class="nav-link text-secondary ps-2" href="{{ route('admin.meter-services') }}"><i data-feather="activity" class="feather-18 me-2"></i> Water Services </a></li>
                     <!-- <li class="nav-item my-md-0 d-none d-lg-block my-1"><a class="nav-link text-secondary" href="#"><i data-feather="repeat" class="feather-18 me-2"></i> Sync Data </a></li> -->
                     <li class="nav-item dropdown my-md-0 my-1 d-none d-lg-block">
                         <a class="nav-link dropdown-toggle text-secondary" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -61,11 +63,11 @@
                             </li>
                         </ul>
                     </li>
-                    <li class="nav-item my-md-0 my-1 d-md-block d-lg-none"> <a class="nav-link text-secondary" href="{{route('users.update-password.edit')}}"><i data-feather="key" class="feather-18 me-2"></i> Change Password </a> </li>
+                    <li class="nav-item my-md-0 my-1 d-md-block d-lg-none"> <a class="nav-link text-secondary ps-2" href="{{route('users.update-password.edit')}}"><i data-feather="key" class="feather-18 me-2"></i> Change Password </a> </li>
                     <li class="nav-item my-md-0 my-1 d-md-block d-lg-none">
                         <form action="{{ route('logout') }}" method="post" class="mb-0">
                             @csrf
-                            <button class="nav-link text-secondary border-0 bg-white"><i data-feather="log-out" class="feather-18 me-2"></i> Sign-out </button>
+                            <button class="nav-link text-secondary border-0 bg-white ps-2"><i data-feather="log-out" class="feather-18 me-2"></i> Sign-out </button>
                         </form>
                     </li>
                 </ul>
