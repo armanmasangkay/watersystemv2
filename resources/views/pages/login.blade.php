@@ -5,7 +5,7 @@
 @section('content')
 
 <div class="container login">
-    <h1 class="text-center mt-5">ERP User Role Base Access</h1>
+    <h1 class="text-center mt-5">Macrohon Water System</h1>
     <div class="row justify-content-center mb-5 mt-3">
         <div class="col-12 col-md-8 col-lg-6 col-xl-5 px-xl-4">
            

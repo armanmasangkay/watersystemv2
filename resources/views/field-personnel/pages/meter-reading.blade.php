@@ -143,20 +143,20 @@
                             <td colspan="2" class="pt-2 pb-0 border-bottom-0 i-data fs-4" style="font-weight: bolder !important;">: <span>{{ isset($customer) ? $customer["account"] : '' }}</span></td>
                         </tr>
                         <tr>
-                            <td class="py-0 ps-3 border-bottom-0 i-data fs-4" style="font-weight: bolder !important;">&nbsp;Name</td>
-                            <td colspan="2" class="py-0 border-bottom-0 i-data fs-4" style="font-weight: bolder !important;">: <span>{{isset($customer)?strtoUpper($customer["org_name"])?strtoupper($customer["org_name"]):strtoupper($customer["fullname"]):''}}</span></td>
+                            <td class="py-1 ps-3 border-bottom-0 i-data fs-4" style="font-weight: bolder !important;">&nbsp;Name</td>
+                            <td colspan="2" class="py-1 border-bottom-0 i-data fs-4" style="font-weight: bolder !important;">: <span>{{isset($customer)?strtoUpper($customer["org_name"])?strtoupper($customer["org_name"]):strtoupper($customer["fullname"]):''}}</span></td>
                         </tr>
                         <tr>
-                            <td class="py-0 ps-3 border-bottom-0 i-data fs-4" style="font-weight: bolder !important;">&nbsp;Address</td>
-                            <td colspan="2" class="py-0 border-bottom-0 i-data fs-4" style="font-weight: bolder !important;">: <span>{{ isset($customer) ? $customer["address"] : '' }}</span></td>
+                            <td class="py-1 ps-3 border-bottom-0 i-data fs-4" style="font-weight: bolder !important;">&nbsp;Address</td>
+                            <td colspan="2" class="py-1 border-bottom-0 i-data fs-4" style="font-weight: bolder !important;">: <span>{{ isset($customer) ? $customer["address"] : '' }}</span></td>
                         </tr>
                         <tr>
-                            <td class="py-0 ps-3 border-bottom-0 i-data fs-4" style="font-weight: bolder !important;">&nbsp;Classification</td>
-                            <td colspan="2" class="py-0 border-bottom-0 i-data fs-4" style="font-weight: bolder !important;">: <span>{{ isset($customer) ? ucwords($customer["connection_type"]) : '' }}</span></td>
+                            <td class="py-1 ps-3 border-bottom-0 i-data fs-4" style="font-weight: bolder !important;">&nbsp;Classification</td>
+                            <td colspan="2" class="py-1 border-bottom-0 i-data fs-4" style="font-weight: bolder !important;">: <span>{{ isset($customer) ? ucwords($customer["connection_type"]) : '' }}</span></td>
                         </tr>
                         <tr>
-                            <td class="py-0 ps-3 border-bottom-0 i-data fs-4" style="font-weight: bolder !important;">&nbsp;Meter S/N</td>
-                            <td colspan="2" class="py-0 border-bottom-0 i-data fs-4" style="font-weight: bolder !important;">: <span>{{ isset($customer) ? $customer["meter_number"] : '' }}</span></td>
+                            <td class="pt-1 pb-0 ps-3 border-bottom-0 i-data fs-4" style="font-weight: bolder !important;">&nbsp;Meter S/N</td>
+                            <td colspan="2" class="pt-1 pb-0 border-bottom-0 i-data fs-4" style="font-weight: bolder !important;">: <span>{{ isset($customer) ? $customer["meter_number"] : '' }}</span></td>
                         </tr>
                         -<tr>
                             <td  colspan="3" class="text-left py-0 w-100 pt-2" style="border-bottom: 2px solid #000;"></td>
@@ -166,16 +166,16 @@
                             <td colspan="2" class="pt-2 pb-0 border-bottom-0 i-data fs-4" style="font-weight: bolder !important;">: <span>{{ isset($customer) ? (isset($customer["balance"]->balance) ? $customer["balance"]->id + 1 : '') : '' }}</span></td>
                         </tr>
                         <tr>
-                            <td class="py-0 ps-3 border-bottom-0 i-data fs-4" style="font-weight: bolder !important;">&nbsp;Billing Month</td>
-                            <td colspan="2" class="py-0 border-bottom-0 i-data fs-4" style="font-weight: bolder !important;">: <span>{{ isset($last_date) ? date('M Y', strtotime('now')) : '' }}</span></td>
+                            <td class="py-1 ps-3 border-bottom-0 i-data fs-4" style="font-weight: bolder !important;">&nbsp;Billing Month</td>
+                            <td colspan="2" class="py-1 border-bottom-0 i-data fs-4" style="font-weight: bolder !important;">: <span>{{ isset($last_date) ? date('M Y', strtotime('now')) : '' }}</span></td>
                         </tr>
                         <tr>
-                            <td class="py-0 ps-3 border-bottom-0 i-data fs-4" style="font-weight: bolder !important;">&nbsp;Billing Period</td>
-                            <td colspan="2" class="py-0 border-bottom-0 i-data fs-4" style="font-weight: bolder !important;">: <span class="me-3 pe-3">{{ isset($last_date) ? \Carbon\Carbon::parse($last_date)->format('M d') : '' }}-{{ isset($last_date) ? \Carbon\Carbon::parse($last_date)->addMonths(1)->format('M d, Y') : '' }}</span></td>
+                            <td class="py-1 ps-3 border-bottom-0 i-data fs-4" style="font-weight: bolder !important;">&nbsp;Billing Period</td>
+                            <td colspan="2" class="py-1 border-bottom-0 i-data fs-4" style="font-weight: bolder !important;">: <span class="me-3 pe-3">{{ isset($last_date) ? \Carbon\Carbon::parse($last_date)->format('M d') : '' }}-{{ isset($last_date) ? \Carbon\Carbon::parse($last_date)->addMonths(1)->format('M d, Y') : '' }}</span></td>
                         </tr>
                         <tr>
-                            <td class="py-0 ps-3 border-bottom-0 i-data fs-4" style="font-weight: bolder !important;">&nbsp;Due Date</td>
-                            <td colspan="2" class="py-0 border-bottom-0 i-data fs-4" style="font-weight: bolder !important;">: <span>{{ isset($last_date) ? \Carbon\Carbon::parse($last_date)->addMonths(1)->addDays(-1)->format('M d') : '' }}</span></td>
+                            <td class="pt-1 pb-0 ps-3 border-bottom-0 i-data fs-4" style="font-weight: bolder !important;">&nbsp;Due Date</td>
+                            <td colspan="2" class="pt-1 pb-0 border-bottom-0 i-data fs-4" style="font-weight: bolder !important;">: <span>{{ isset($last_date) ? \Carbon\Carbon::parse($last_date)->addMonths(1)->addDays(-1)->format('M d') : '' }}</span></td>
                         </tr>
                         <tr>
                             <td  colspan="3" class="text-left py-0 w-100 pt-2" style="border-bottom: 2px solid #000;"></td>
@@ -185,12 +185,12 @@
                             <td class="pt-2 pb-0 border-bottom-0 text-right i-data fs-4" style="font-weight: bolder !important;">: <span id="mtr_cur"></span></td>
                         </tr>
                         <tr>
-                            <td colspan="2" class="py-0 ps-3 border-bottom-0 i-data fs-4" style="font-weight: bolder !important;">&nbsp;Previous &nbsp;Reading</td>
-                            <td class="py-0 border-bottom-0 text-right i-data fs-4" style="font-weight: bolder !important;">: <span>{{ isset($customer) ? (isset($customer["balance"]->reading_meter) ? $customer["balance"]->reading_meter : 0.00).' Cu. M' : '00 Cu. M' }}</span></td>
+                            <td colspan="2" class="py-1 ps-3 border-bottom-0 i-data fs-4" style="font-weight: bolder !important;">&nbsp;Previous &nbsp;Reading</td>
+                            <td class="py-1 border-bottom-0 text-right i-data fs-4" style="font-weight: bolder !important;">: <span>{{ isset($customer) ? (isset($customer["balance"]->reading_meter) ? $customer["balance"]->reading_meter : 0.00).' Cu. M' : '00 Cu. M' }}</span></td>
                         </tr>
                         <tr>
-                            <td colspan="2" class="py-0 ps-3 border-bottom-0 i-data fs-4" style="font-weight: bolder !important;">&nbsp;Cu.M &nbsp;Consumed</td>
-                            <td class="py-0 border-bottom-0 i-data fs-4" style="font-weight: bolder !important;">: <span id="mtr_con"></span></td>
+                            <td colspan="2" class="pt-1 pb-0 ps-3 border-bottom-0 i-data fs-4" style="font-weight: bolder !important;">&nbsp;Cu.M &nbsp;Consumed</td>
+                            <td class="pt-1 pb-0 border-bottom-0 i-data fs-4" style="font-weight: bolder !important;">: <span id="mtr_con"></span></td>
                         </tr>
                         <tr>
                             <td  colspan="3" class="text-left py-0 w-100 pt-2" style="border-bottom: 2px solid #000;"></td>
@@ -206,8 +206,8 @@
                             <td colspan="2" class="pt-3 pb-0 border-bottom-0 pe-3 i-data pe-4 fs-4" align="left" style="font-weight: bolder !important;">: Php<span id="billFromLast"> {{ isset($customer) ? (isset($customer["balance"]->balance) ? toAccounting($customer["balance"]->balance) : '0.00') : '0.00' }}</span></td>
                         </tr>
                         <tr>
-                            <td class="py-0 ps-3 border-bottom-0 i-data fs-4" style="font-weight: bolder !important;">&nbsp;Surcharge &nbsp;(10%)</td>
-                            <td colspan="2" class="py-0 border-bottom-0 pe-3 i-data pe-4 fs-4" align="left" style="font-weight: bolder !important;">: <span class="invisible">Php</span> <span class="align-right" id="mtr_sur">0.00</span></td>
+                            <td class="py-1 ps-3 border-bottom-0 i-data fs-4" style="font-weight: bolder !important;">&nbsp;Surcharge &nbsp;(10%)</td>
+                            <td colspan="2" class="py-1 border-bottom-0 pe-3 i-data pe-4 fs-4" align="left" style="font-weight: bolder !important;">: <span class="invisible">Php</span> <span class="align-right" id="mtr_sur">0.00</span></td>
                         </tr>
                         <tr>
                             <td class="py-0 ps-3 border-bottom-0 i-data fs-4" style="font-weight: bolder !important;">&nbsp;Meter &nbsp;Installment</td>

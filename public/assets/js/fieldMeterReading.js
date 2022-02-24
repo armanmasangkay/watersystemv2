@@ -12,7 +12,7 @@ $(document).ready(function(){
         setTimeout(function(){
             $('#reload').attr('data-enable', 0)
             window.location.reload()
-        }, 20000)
+        }, 40000)
     })
 
     $('#reload').click(function(){
@@ -41,6 +41,8 @@ $(document).ready(function(){
                 url: actionURI,
                 data: data,
                 success: function(response){
+                    // var json = JSON.parse(response)
+                    console.log(response.id)
                     if(response.created == true){
                         console.log(response)
                         $('#save-billing').html('<i class="far fa-check"></i>&nbsp; Done!');
@@ -52,9 +54,11 @@ $(document).ready(function(){
                             $('#ledgerSetupModal').modal('hide')
                             reading.hidden = true
                             print.hidden = false
+                            // print.style.height = "100%"
                         }
                     }
                     else{
+                        alert(response.id)
                         var cfm = confirm('Ooops!', response.msg)
                         if(cfm == true || cfm == false)
                         {
@@ -72,52 +76,62 @@ $(document).ready(function(){
     });
 
     $('#reading_meter').on('keyup', function(){
+        if($(this).val() !== '')
+            {
+            if(parseInt($(this).val()) >= parseInt($('#meter-reading').val()))
+            {
+                // alert(parseInt($('#meter-reading').val()) + '' + parseInt($(this).val()))
+                $('#mtr_cur').text($(this).val() + ' Cu.M');
 
-        if(parseInt($(this).val()) >= parseInt($('#meter-reading').val()))
-        {
-            $('#mtr_cur').text($(this).val() + ' Cu.M');
+                const max_range = parseFloat($('input[name="max_range"]').val());
+                const min_rates = parseFloat($('input[name="min_rates"]').val());
+                const excess_rate = parseFloat($('input[name="billing_excess_rate"]').val());
+                const payment_or = $('input[name="or_num"]').val();
+                const balance = parseFloat($('input[name="cur_balance"]').val());
+                const surcharge_rate = parseFloat($('input[name="surcharge"]').val());
+                const meter_ips = parseFloat($('input[name="meter_ips"]').val());
 
-            const max_range = parseFloat($('input[name="max_range"]').val());
-            const min_rates = parseFloat($('input[name="min_rates"]').val());
-            const excess_rate = parseFloat($('input[name="billing_excess_rate"]').val());
-            const payment_or = $('input[name="or_num"]').val();
-            const balance = parseFloat($('input[name="cur_balance"]').val());
-            const surcharge_rate = parseFloat($('input[name="surcharge"]').val());
-            const meter_ips = parseFloat($('input[name="meter_ips"]').val());
+                const surcharge = (payment_or != null ? (balance * surcharge_rate) : 0.00);
 
-            const surcharge = (payment_or != null ? (balance * surcharge_rate) : 0.00);
+                const meter_consumption = parseInt($('#reading_meter').val(), 10) - parseInt($('#meter-reading').val(), 10);
+                const total_consumption = ((meter_consumption - max_range) * excess_rate) + min_rates;
+                const amount_consumption = meter_consumption <= max_range ? min_rates : total_consumption;
 
-            const meter_consumption = parseInt($('#reading_meter').val(), 10) - parseInt($('#meter-reading').val(), 10);
-            const total_consumption = ((meter_consumption - max_range) * excess_rate) + min_rates;
-            const amount_consumption = meter_consumption <= max_range ? min_rates : total_consumption;
+                $('#consumption').val(meter_consumption);
+                $('#mtr_con').text(meter_consumption + ' Cu.M');
+                $('#surcharge_amount').val(surcharge.toFixed(2));
+                $('#mtr_sur').text(surcharge.toFixed(2));
+                $('#amount').val(amount_consumption.toFixed(2));
+                $('#mtr_cur_bill').text('Php '+ amount_consumption.toFixed(2));
 
-            $('#consumption').val(meter_consumption);
-            $('#mtr_con').text(meter_consumption + ' Cu.M');
-            $('#surcharge_amount').val(surcharge.toFixed(2));
-            $('#mtr_sur').text(surcharge.toFixed(2));
-            $('#amount').val(amount_consumption.toFixed(2));
-            $('#mtr_cur_bill').text('Php '+ amount_consumption.toFixed(2));
+                const total = ((surcharge + balance) + (meter_ips + amount_consumption));
 
-            const total = ((surcharge + balance) + (meter_ips + amount_consumption));
+                $('#total').val(total.toFixed(2));
+                $('#mtr_due').text('Php ' + total.toLocaleString('en-US', {minimumFractionDigits: 2}));
+                $('#save-billing').prop('disabled', false);
 
-            $('#total').val(total.toFixed(2));
-            $('#mtr_due').text('Php ' + total.toLocaleString('en-US', {minimumFractionDigits: 2}));
-            $('#save-billing').prop('disabled', false);
+                let data = $('#billing-form').serialize();
+                var APP_CSRF = $("input[name='_token']").val();
 
-            let data = $('#billing-form').serialize();
-            var APP_CSRF = $("input[name='_token']").val();
-
-            $.ajax({
-                headers: {
-                    'X-CSRF-TOKEN': APP_CSRF
-                },
-                type: 'POST',
-                url: "/get/computed/water-bill",
-                data: {'reading_meter' : $('input[name="reading_meter"]').val(), customer_id: $('#acc_num').text()},
-                success: function(response){
-                    
-                }
-            })
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': APP_CSRF
+                    },
+                    type: 'POST',
+                    url: "/get/computed/water-bill",
+                    data: {'reading_meter' : $('input[name="reading_meter"]').val(), customer_id: $('#acc_num').text()},
+                    success: function(response){
+                        
+                    }
+                })
+            }
+            else{
+                $('#save-billing').prop('disabled', true);
+                $('#consumption').val(0);
+                $('#surcharge_amount').val('0.00');
+                $('#amount').val('0.00');
+                $('#total').val('0.00');
+            }
         }
         else{
             $('#save-billing').prop('disabled', true);
