@@ -6,6 +6,7 @@ use App\Models\Customer;
 use App\Models\WaterRate;
 use App\Models\Transaction;
 use App\Models\Surcharge;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -165,7 +166,7 @@ class FieldMeterReadingController extends Controller
 
     public function store(Request $request)
     {
-
+       
         if(isset($request->read_date))
         {
             if( \Carbon\Carbon::parse($request->current_month) >= $request->read_date &&
@@ -178,6 +179,27 @@ class FieldMeterReadingController extends Controller
         if($request->reading_meter < $request->meter_reading)
         {
             return response()->json(['created' => false, 'msg' => 'Current meter reading should not be less than the previous meter reading.']);
+        }
+
+        $latestTransaction=Transaction::where('customer_id',$request->customer_id)->orderBy('reading_date','desc')->first();
+
+        $lastReadingDate=Carbon::parse($latestTransaction->reading_date);
+        $inputtedReadingDate=Carbon::parse($request->reading_date);
+    
+        $isInputtedReadingDateNotOnPast=$lastReadingDate->diffInDays($inputtedReadingDate,false)>=0;
+
+        $isWithinValidRange=$lastReadingDate->addDays(28)->diffInDays($inputtedReadingDate,false)>=0 & $lastReadingDate->addDays(7)->diffInDays($inputtedReadingDate,false)<=0;
+       
+        if(!$isInputtedReadingDateNotOnPast){
+            return response()->json(['created' => false, 
+                                    'msg' => 'You must input a reading date that is similar or later than the previous reading date '. $latestTransaction->reading_date
+            ]);
+        }
+        
+        if(!$isWithinValidRange){
+            return response()->json(['created' => false, 
+                                    'msg' => 'You can only add a bill between '. $lastReadingDate->subDays(7)->toDateString() . " and " . $lastReadingDate->addDays(7)->toDateString()
+            ]);
         }
 
         $this->waterbill->getConnectionType($request->customer_id);
@@ -200,8 +222,6 @@ class FieldMeterReadingController extends Controller
         ];
 
         $update_transaction = Transaction::findOrFail($this->waterbill->balance->id);
-        // i need to remove the toAccounting because it throws a 500 error
-        // please accept this changes
         $update_transaction->billing_surcharge = $this->waterbill->computed_total['surcharge'];
         $update_transaction->billing_total += $this->waterbill->computed_total['surcharge'];
         $update_transaction->balance += $this->waterbill->computed_total['surcharge'];

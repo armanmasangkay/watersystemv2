@@ -35,16 +35,15 @@ $(document).ready(function(){
             $('#save-billing').prop('disabled', true);
 
             let data = $(this).serialize();
-
+           
             $.ajax({
                 type: 'POST',
                 url: actionURI,
                 data: data,
                 success: function(response){
-                    // var json = JSON.parse(response)
-                    console.log(response.id)
+                
                     if(response.created == true){
-                        console.log(response)
+                        console.log("true")
                         $('#save-billing').html('<i class="far fa-check"></i>&nbsp; Done!');
 
                         var cfm = confirm('Billing Successfull!','New billing for client '+ $('input[name="customer_id"]').val() +' was created!')
@@ -58,8 +57,8 @@ $(document).ready(function(){
                         }
                     }
                     else{
-                        alert(response.id)
-                        var cfm = confirm('Ooops!', response.msg)
+                
+                        var cfm = confirm('Ooops! ' + response.msg)
                         if(cfm == true || cfm == false)
                         {
                             window.location.reload();
