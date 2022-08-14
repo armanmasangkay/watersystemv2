@@ -21,22 +21,26 @@ class ConsumerAuthController extends Controller
             'password'=>['required'],
         ]);
 
-        if(!Auth::guard('accounts')->attempt($credentials))
+        if(! Auth::guard('accounts')->attempt($credentials))
         {
 
             return back()->withErrors([
-                'account_number'=>'The provided credentials do not match our records.',
+                'account_number'
+                    =>'The provided credentials do not match our records.',
             ])->withInput();
            
         }
 
-        if(Auth::guard('accounts')->user()->status==Account::STATUS_PENDING){
+        if(Auth::guard('accounts')->user()->status == Account::STATUS_PENDING) {
             return back()->withErrors([
-                'account_number'=>'This account is not approved yet. Please check your account from time to time!',
+                'account_number'
+                    =>'This account is not approved yet. 
+                    Please check your account from time to time!',
             ])->withInput();
         }
 
         $request->session()->regenerate();
+
         return redirect(route('consumer.dashboard'));
 
         

@@ -11,10 +11,15 @@ class ConsumerDashboardController extends Controller
     public function dashboard()
     {
         $from=now()->subYear(1);
+        
         $to=now();
-        $transactions=Transaction::whereBetween('created_at',[$from,$to])
-                                ->where('customer_id',Auth::guard("accounts")->user()->account_number)
+
+        $userAccountNumber = Auth::guard("accounts")->user()->account_number;
+
+        $transactions=Transaction::whereBetween('created_at',[$from, $to])
+                                ->where('customer_id', $userAccountNumber)
                                 ->get();
+
         return view("consumer-portal.dashboard",[
             "transactions"=>$transactions
         ]);
@@ -22,13 +27,14 @@ class ConsumerDashboardController extends Controller
 
     public function latestBill()
     {
-        $transaction=Transaction::where('customer_id',Auth::guard("accounts")->user()->account_number)
+        $userAccountNumber = Auth::guard("accounts")->user()->account_number;
+
+        $transaction=Transaction::where('customer_id', $userAccountNumber)
                                 ->orderBy('created_at','desc')
                                 ->first();
 
 
-                            //TODO: Get the latest Bill
-       return view("consumer-portal.latest",[
+       return view("consumer-portal.latest", [
            'transaction'=>$transaction
        ]);
     }

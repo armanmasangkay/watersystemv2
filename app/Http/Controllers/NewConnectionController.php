@@ -12,22 +12,30 @@ use Illuminate\Support\Facades\Auth;
 
 class NewConnectionController extends Controller
 {
-    public function create(){
+    public function create()
+    {
         return view('pages.new-consumer',[
-            'civilStatuses'=>CustomerRegistrationOptions::civilStatuses(),
-            'barangays'=>CustomerRegistrationOptions::barangays(),
-            'connectionTypes'=>CustomerRegistrationOptions::connectionTypes(),
-            'connectionStatuses'=>CustomerRegistrationOptions::connectionStatuses()
+            'civilStatuses' => CustomerRegistrationOptions::civilStatuses(),
+            'barangays' => CustomerRegistrationOptions::barangays(),
+            'connectionTypes' => CustomerRegistrationOptions::connectionTypes(),
+            'connectionStatuses' => 
+                CustomerRegistrationOptions::connectionStatuses()
         ]);
     }
 
-    public function store(NewConnectionRequest $request){
+    public function store(NewConnectionRequest $request)
+    {
 
         $requestData = $request->all();
+
         $requestData['connection_status'] = 'inactive';
+
         $customer = Customer::create($requestData);
+
         $serviceType="new_connection";
+
         $initialStatus=Service::getInitialStatus($serviceType);
+
         Service::create([
             'customer_id' => $customer->account_number,
             'type_of_service' => $serviceType,
@@ -43,6 +51,7 @@ class NewConnectionController extends Controller
             'type_of_transaction' => $requestData['connection_type'],
             'issued_by' => Auth::id()
         ]);
+        
         return response()->json(['created' => true]);
     }
 }

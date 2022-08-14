@@ -68,6 +68,11 @@ class Service extends Model
         return self::$serviceStatus;
     }
 
+    public static function getAllPendingForBuildingInspection()
+    {
+        return self::where('status', 'pending_building_inspection');
+    }
+
     public static function getServiceTypes()
     {
         return self::$serviceTypes;

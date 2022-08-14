@@ -11,16 +11,12 @@ class OfficerController extends Controller
 {
     public function index()
     {
-        return view('pages.officers.index',[
-            'officers' => Officer::paginate(20)
-        ]);
+        return view('pages.officers.index', ['officers' => Officer::paginate(20)]);
     }
 
     public function create()
     {
-        return view('pages.officers.create',[
-            'positions' => Officer::getPositions()
-        ]);
+        return view('pages.officers.create',['positions' => Officer::getPositions()]);
     }
 
     public function store(OfficerRequest $request)
@@ -30,15 +26,15 @@ class OfficerController extends Controller
             'position' => $request->position
         ]);
 
-        return redirect(route('admin.officers.index'))->with([
-            'created' => true,
-            'message' => 'New Officer has been successfully added!'
-        ]);
-    }
+        return redirect(route('admin.officers.index'))
+                        ->with([
+                                'created' => true,
+                                'message' => 'New Officer has been successfully added!'
+                            ]);
+        }
 
     public function edit(Officer $officer)
     {
-
         return view('pages.officers.edit',[
             'officer' => $officer,
             'positions' => Officer::getPositions()
@@ -51,26 +47,29 @@ class OfficerController extends Controller
             'fullname'=>'required'
         ]);
 
-        if($validator->fails()){
+        if($validator->fails()) {
             return redirect(route('admin.officers.index'))->withErrors($validator->errors());
         }
         
         $officer->fullname = Str::title($request->fullname);
+
         $officer->save();
 
-        return redirect(route('admin.officers.index'))->with([
-            'created' => true,
-            'message' => 'Officer has been successfully updated!'
-        ]);
+        return redirect(route('admin.officers.index'))
+                        ->with([
+                            'created' => true,
+                            'message' => 'Officer has been successfully updated!'
+                        ]);
     }
 
     public function destroy(Officer $officer)
     {
         $officer->delete();
 
-        return redirect(route('admin.officers.index'))->with([
-            'created' => true,
-            'message' => 'Officer has been successfully deleted!'
-        ]);
+        return redirect(route('admin.officers.index'))
+                        ->with([
+                            'created' => true,
+                            'message' => 'Officer has been successfully deleted!'
+                        ]);
     }
 }

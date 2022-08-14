@@ -7,6 +7,7 @@ use App\Models\WaterRate;
 use App\Models\Transaction;
 use App\Models\Payments;
 use App\Models\Surcharge;
+use App\Services\NewWaterBillService;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
@@ -136,7 +137,7 @@ class ConsumerLedgerController extends Controller
         {
             return response()->json(['created' => false, 'msg' => 'Current meter reading should not be less than the previous meter reading.']);
         }
-
+    
         $latestTransaction=Transaction::where('customer_id',$request->customer_id)->orderBy('reading_date','desc')->first();
 
         $lastReadingDate=Carbon::parse($latestTransaction->reading_date);

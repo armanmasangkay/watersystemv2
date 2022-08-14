@@ -5,7 +5,8 @@ namespace App\Services;
 class ServiceReturnDataArray{
 
 
-    public static function set($serviceStatus, $services){
+    public static function set($serviceStatus, $services)
+    {
         $data = [
             'pending_building_inspection' => [
                 'search_route' => 'admin.search',
@@ -24,6 +25,7 @@ class ServiceReturnDataArray{
                 'services' => $services,
             ]
         ];
+        
         return $data[$serviceStatus];
     }
 }
