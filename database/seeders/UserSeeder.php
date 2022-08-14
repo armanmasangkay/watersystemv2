@@ -37,5 +37,10 @@ class UserSeeder extends Seeder
             'username'=>'engineer',
             'role'=>User::$ENGINEER
         ]);
+
+        User::factory(1)->create([
+            'username'=>'accoff',
+            'role'=>User::$ACCOUNT_OFFICER
+        ]);
     }
 }

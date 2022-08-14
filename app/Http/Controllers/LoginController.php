@@ -39,6 +39,10 @@ class LoginController extends Controller
             {
                 return redirect(route('admin.municipal-engineer.index'));
             }
+            else if(Auth::user()->isAccountOfficer())
+            {
+                return redirect('/account-officer/dashboard');
+            }
             else
             {
                 return redirect(route('admin.dashboard'));

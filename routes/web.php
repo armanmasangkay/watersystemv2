@@ -1,6 +1,7 @@
 <?php
 
 use App\Classes\Facades\Middleware\Allowed;
+use App\Http\Controllers\AccountOfficerController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\CustomerSearchController;
@@ -36,7 +37,10 @@ use App\Http\Controllers\UserPasswordController;
 use App\Http\Controllers\WaterBillController;
 use App\Http\Controllers\WorkOrderController;
 use App\Http\Controllers\WorkOrderPaymentsController;
+use App\Models\Account;
 use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [RootController::class,'index'])->middleware('auth'); // (Fully Tested)
@@ -45,7 +49,13 @@ Route::get('/', [RootController::class,'index'])->middleware('auth'); // (Fully 
 Route::get('/login',[LoginController::class,'index'])->name('login'); // (Fully Tested)
 Route::post('/login',[LoginController::class,'authenticate']); // (Fully Tested)
 
-Route::middleware('auth')->group(function(){
+Route::put(
+    '/account-officer/reset-password/consumer/{account}',
+    [AccountOfficerController::class, 'resetPassword']
+);
+
+Route::middleware('auth')->group(function () {
+    Route::get('/account-officer/dashboard', [AccountOfficerController::class, 'index'])->name('account-officer.dashboard');
     Route::get('/users/change-password', [UserController::class, 'updatePassword'])->name('users.update-password.edit'); // (Fully Tested)
     Route::put('/users/change-password', [UserController::class, 'storeNewPassword'])->name('users.update-password.store'); // (Fully Tested)
 });
