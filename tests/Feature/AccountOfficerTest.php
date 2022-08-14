@@ -48,6 +48,17 @@ class AccountOfficerTest extends TestCase
         $response->assertViewHas('accounts');
 
     }
+
+    public function test_dashboard_view_when_no_account()
+    {
+        $this->createAndLoginOfficer();
+
+        $response = $this->get(route('account-officer.dashboard'));
+        $response->assertSeeText('No accounts to show!');
+        $response->assertDontSeeText('Email');
+        $response->assertDontSeeText('Mobile Number');
+
+    }
     public function test_dashboard_protection()
     {
         $response = $this->get(route('account-officer.dashboard'));

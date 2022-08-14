@@ -13,6 +13,7 @@
   
     @endif
 
+    @if($accounts->count() > 0)
     <table class="table">
         <thead>
             <tr>
@@ -38,11 +39,15 @@
                         </form>
                     </td>
                 </tr>
+                
             @endforeach
         </tbody>
        
         
     </table>
+    @else
+         <p>No accounts to show!</p>
+    @endif
 
 </div>
 
