@@ -13,6 +13,6 @@ jobs:
       with:
         server: ftp.macrohonwater.ph
         username: macroho1
-        password: EaXDOdl@|Ipn
+        password: macroho1
         server-dir: public_html/water.macrohonwater.ph/
         
