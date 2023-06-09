@@ -1,38 +1,31 @@
+name: Deploy macrohon water system
 on:
-  push: 
-    branches: main
-name: 🚀 Deploy website on push
+  push:
+    branches:
+      - main
 jobs:
   web-deploy:
-    name: 🎉 Deploy
+    name: Deploy
     runs-on: ubuntu-latest
     steps:
-    - name: 🚚 Get latest code
-      uses: actions/checkout@v2.3.2
-      
-    - name: Update dependencies
-      run: composer update
-      
-    - name: Install dependencies
-      run: composer install
-      
-    - name: Copy .env file
-      run: php -r "file_exists('.env') || copy('.env.example', '.env');"
-      
-#     - name: Clear configuration
-#       run: php artisan config:clear
-      
-#     - name: Clear cache
-#       run: php artisan cache:clear
-  
-    - name: Generate app key
-      run: php artisan key:generate
-    
-    - name: 📂 Sync files
-      uses: SamKirkland/FTP-Deploy-Action@v4.0.0
-      with:
-        server: ftp.macrohonwater.ph
-        username: dev-mws@dev-mws.macrohonwater.ph
-        password: dev-macrohonwaters@2023
-        server-dir: /
+      - name: Get the latest code
+        uses: actions/checkout@v2.3.2
+      - uses: actions/setup-node@master
+      - name: Copy .env
+        run: php -r "file_exists('.env') || copy('.env.example', '.env');"
+      - name: Install Dependencies
+        run: composer update --ignore-platform-reqs
+      - name: Generate key
+        run: php artisan key:generate
+      - name: Generate storage link
+        run: php artisan storage:link
+      - name: Directory Permissions
+        run: chmod -R 777 storage bootstrap/cache
+      - name: 📂 Sync files
+        uses: SamKirkland/FTP-Deploy-Action@4.0.0
+        with:
+          server: ftp.macrohonwater.ph
+          username: dev-mws@dev-mws.macrohonwater.ph
+          password: dev-macrohonwaters@2023
+          server-dir: public_html/stg-mws.macrohonwater.ph
         
