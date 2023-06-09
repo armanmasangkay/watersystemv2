@@ -14,6 +14,6 @@ jobs:
         server: ftp.macrohonwater.ph
         username: macrohonwaters@water.macrohonwater.ph
         password: macrohonwaters@2023
-        server-dir: /public_html/water.macrohonwater.ph/
+        server-dir: /home/macroho1/public_html/water.macrohonwater.ph/
         protocol: ftps
         port: 21
