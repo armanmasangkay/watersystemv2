@@ -8,8 +8,8 @@ jobs:
     - name: 🚚 Get latest code
       uses: actions/checkout@v3
       
-    - name: Update dependencies
-      run: composer update
+#     - name: Update dependencies
+#       run: composer update
       
     - name: Install dependencies
       run: composer install
@@ -21,4 +21,8 @@ jobs:
         username: dev-mws@dev-mws.macrohonwater.ph
         password: dev-macrohonwaters@2023
         server-dir: /
+        include: |
+          *
+        exclude: |
+          .github
         
