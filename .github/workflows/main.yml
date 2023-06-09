@@ -24,8 +24,8 @@ jobs:
         uses: SamKirkland/FTP-Deploy-Action@4.3.2
         with:
           server: ftp.macrohonwater.ph
-          username: stg-mws@stg-mws.macrohonwater.ph
+          username: prod@macrohonwater.ph
           password: dev-macrohonwaters@2023
-          server-dir: /home/macroho1/public_html/stg-mws.macrohonwater.ph
+          server-dir: public_html/
           dry-run: true
         
