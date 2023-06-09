@@ -15,7 +15,7 @@ jobs:
       run: composer install
       
     - name: Copy .env file
-      run: php -r "file_exists('.env') || copy('.env.example', '.env')"
+      run: php -r "file_exists('.env') || copy('.env.example', '.env');"
       
 #     - name: Clear configuration
 #       run: php artisan config:clear
