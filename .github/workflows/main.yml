@@ -1,12 +1,8 @@
-on:
-  push:
-    branches:
-      - main
-
-name: Macrohon Water System
+on: push
+name: 🚀 Deploy website on push
 jobs:
   web-deploy:
-    name: mws_app
+    name: 🎉 Deploy
     runs-on: ubuntu-latest
     steps:
       - name: Get latest code
