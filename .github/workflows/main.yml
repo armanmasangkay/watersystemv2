@@ -12,9 +12,7 @@ jobs:
       uses: SamKirkland/FTP-Deploy-Action@v4.3.4
       with:
         server: ftp.macrohonwater.ph
-        username: macrohonwatersystem@water.macrohonwater.ph
-        password: macrohonwaters@2023
+        username: macroho1
+        password: EaXDOdl@|Ipn
         server-dir: public_html/water.macrohonwater.ph/
-        protocol: ftp
-        port: 21
         
