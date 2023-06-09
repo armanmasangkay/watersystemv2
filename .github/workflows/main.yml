@@ -1,17 +1,19 @@
 on: push
-name: Macrohon Water System
+name: 🚀 Deploy macrohon water sytem on push
 jobs:
   web-deploy:
-    name: mws_app
+    name: 🎉 Deploy
     runs-on: ubuntu-latest
     steps:
     - name: 🚚 Get latest code
       uses: actions/checkout@v3
-      
-    - name: Sync files
+
+    - name: 📂 Sync files
       uses: SamKirkland/FTP-Deploy-Action@v4.3.4
       with:
         server: ftp.macrohonwater.ph
         username: macrohonwaters
         password: macrohonwaters@2023
         server-dir: /public_html/water.macrohonwater.ph/
+        protocol: ftps
+        port: 21
