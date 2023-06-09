@@ -13,13 +13,26 @@ jobs:
       
     - name: Install dependencies
       run: composer install
-
+      
+    - name: Copy .env file
+      run: php -r "file_exists('.env') || copy('.env.example', '.env')"
+      
+#     - name: Clear configuration
+#       run: php artisan config:clear
+      
+#     - name: Clear cache
+#       run: php artisan cache:clear
+  
+    - name: Generate app key
+      run: php artisan key:generate
+    
     - name: 📂 Sync files
-      uses: SamKirkland/FTP-Deploy-Action@v4.0.0
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.4
       with:
         server: ftp.macrohonwater.ph
         username: dev-mws@dev-mws.macrohonwater.ph
         password: dev-macrohonwaters@2023
+        dry-run: true
         server-dir: /
         include: |
           *
