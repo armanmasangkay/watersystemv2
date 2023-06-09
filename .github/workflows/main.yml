@@ -5,12 +5,14 @@ jobs:
     name: 🎉 Deploy
     runs-on: ubuntu-latest
     steps:
-      - name: Get latest code
-        uses: actions/checkout@v2.3.2
-      - name: Sync files
-        uses: SamKirkland/FTP-Deploy-Action@v4.6.6
-        with:
-          server: ftp.macrohonwater.ph
-          username: macrohonwaters@water.macrohonwater.ph
-          password: macrohonwaters@2023
-          server-dir: /public_html/water.macrohonwater.ph/
+    - name: 🚚 Get latest code
+      uses: actions/checkout@v3
+    
+    - name: 📂 Sync files
+      uses: SamKirkland/FTP-Deploy-Action@v4.0.0
+      with:
+        server: ftp.macrohonwater.ph
+        username: macrohonwatersystem@mws.macrohonwaters.ph
+        password: macrohonwaters@2023
+        server-dir: mws.macrohonwaters.ph/macrohonwatersystem/
+        
