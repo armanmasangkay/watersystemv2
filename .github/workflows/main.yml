@@ -27,7 +27,7 @@ jobs:
       run: php artisan key:generate
     
     - name: 📂 Sync files
-      uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.3
       with:
         server: ftp.macrohonwater.ph
         username: dev-mws@dev-mws.macrohonwater.ph
