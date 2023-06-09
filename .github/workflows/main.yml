@@ -1,4 +1,6 @@
-on: push
+on:
+  push: 
+    branches: main
 name: 🚀 Deploy website on push
 jobs:
   web-deploy:
@@ -6,11 +8,26 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: 🚚 Get latest code
-      uses: actions/checkout@v3
-
+      uses: actions/checkout@v2.3.2
+      
+    - name: Update dependencies
+      run: composer update
+      
     - name: Install dependencies
       run: composer install
-
+      
+    - name: Copy .env file
+      run: php -r "file_exists('.env') || copy('.env.example', '.env');"
+      
+#     - name: Clear configuration
+#       run: php artisan config:clear
+      
+#     - name: Clear cache
+#       run: php artisan cache:clear
+  
+    - name: Generate app key
+      run: php artisan key:generate
+    
     - name: 📂 Sync files
       uses: SamKirkland/FTP-Deploy-Action@v4.0.0
       with:
