@@ -27,5 +27,5 @@ jobs:
           server: ftp.macrohonwater.ph
           username: dev-mws@dev-mws.macrohonwater.ph
           password: dev-macrohonwaters@2023
-          server-dir: public_html/stg-mws.macrohonwater.ph
+          server-dir: public_html/stg-mws.macrohonwater.ph/
         
