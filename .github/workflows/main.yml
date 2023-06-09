@@ -14,5 +14,5 @@ jobs:
         server: ftp.macrohonwater.ph
         username: macrohonwatersystem@water.macrohonwater.ph
         password: macrohonwaters@2023
-        server-dir: public_html/water.macrohonwater.ph/
+        server-dir: mws.macrohonwaters.ph/macrohonwatersystem
         
