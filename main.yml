@@ -10,7 +10,6 @@ jobs:
     steps:
       - name: Get the latest code
         uses: actions/checkout@v2.3.2
-      - uses: actions/setup-node@master
       - name: Copy .env
         run: php -r "file_exists('.env') || copy('.env.example', '.env');"
       - name: Install Dependencies
@@ -22,10 +21,10 @@ jobs:
       - name: Directory Permissions
         run: chmod -R 777 storage bootstrap/cache
       - name: 📂 Sync files
-        uses: SamKirkland/FTP-Deploy-Action@2.0.0
+        uses: SamKirkland/FTP-Deploy-Action@4.3.2
         with:
           server: ftp.macrohonwater.ph
           username: stg-mws@stg-mws.macrohonwater.ph
           password: dev-macrohonwaters@2023
-          server-dir: /
+          dry-run: true
         
