@@ -64,9 +64,9 @@ jobs:
 
       - name: Export distribution matrix
         id: export-deployment-matrix
+        # JSON="$(JSON//'%'/'%25')"
         run: |
           JSON="$(cat ./deployment-config.json)"
-          JSON="$(JSON//'%'/'%25')"
           JSON="$(JSON//$'\n'/'%0A')"
           JSON="$(JSON//$'\r'/'%0D')"
           echo "::set-output name=deployment-matrix::$JSON"
