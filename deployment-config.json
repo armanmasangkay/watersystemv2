@@ -2,11 +2,11 @@
   {
     "name": "fmt18",
     "ip": "216.218.206.62",
-    "username": "root",
-    "password": "githubactions",
+    "username": "macroho1_mws-admin",
+    "password": "dev-macrohonwaters@2023",
     "port": "22",
     "beforeHooks": "echo $GITHUB_PATH",
     "afterHooks": "",
-    "path": "public_html/staging"
+    "path": "/home/macroho1/public_html/staging"
   }
 ]
