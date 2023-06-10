@@ -213,7 +213,7 @@ jobs:
             ln -s -n -f $BASE_PATH/.env $RELEASE_PATH
             ln -s -n -f $STORAGE_PATH $RELEASE_PATH
             ln -s -n -f $RELEASE_PATH $ACTIVE_RELEASE_PATH 
-            service php8.0-fm reload
+            service php7.4-fm reload
 
   run-after-hooks:
     name: "${{ matrix.server.name }}: After hook"
