@@ -1,0 +1,12 @@
+[
+  {
+    "name": "fmt18",
+    "ip": "216.218.206.62",
+    "username": "root",
+    "password": "githubactions",
+    "port": "22",
+    "beforeHooks": "echo $GITHUB_PATH",
+    "afterHooks": "",
+    "path": "public_html/staging"
+  }
+]
