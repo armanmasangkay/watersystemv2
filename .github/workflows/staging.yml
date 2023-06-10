@@ -1,0 +1,20 @@
+name: Deployment to staging
+
+on:
+  push:
+    branches:
+      - main
+
+jobs: 
+  create-deployment-artifacts:
+    name: Create deployment artifacts
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Compile CSS and JS
+        run: |
+          npm install
+          npm run prod
+          
+
