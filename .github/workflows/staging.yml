@@ -65,12 +65,11 @@ jobs:
         id: export-deployment-matrix
         run: |
           JSON="$(cat ./deployment-config.json)"
-          JSON="$(JSON//'%'/25)"
-          JSON="$(JSON//$'\n'/%0A)"
-          JSON="$(JSON//$'\r'/%0D)"
 
           echo "::set-output name=deployment-matrix::$JSON"
-
+# JSON="$(JSON//'%'/25)"
+# JSON="$(JSON//$'\n'/%0A)"
+# JSON="$(JSON//$'\r'/%0D)"
   prepare-release-on-servers:
     runs-on: ubuntu-latest
     needs: create-deployment-artifacts
