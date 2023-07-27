@@ -17,7 +17,7 @@ jobs:
 
       - name: "📂 Sync files"
         # uses: SamKirkland/FTP-Deploy-Action@master
-        uses: modern-dev/ftp-mirror@v2
+        uses: airvzxf/ftp-deployment-action@latest
         with:
           server: ${{secrets.FTP_SERVER}}
           user: ${{secrets.FTP_USERNAME}}
