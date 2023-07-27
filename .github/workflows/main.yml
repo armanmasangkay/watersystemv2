@@ -10,7 +10,7 @@ jobs:
     name: FTP-Deploy-Action
     runs-on: ubuntu-latest
     steps: 
-      - uses: actions/checkout@v2.1.0
+      - uses: actions/checkout@v1
         with: 
           fetch-depth: 2
       - uses: actions/setup-node@master
@@ -30,8 +30,8 @@ jobs:
         run: chmod -R 777 storage bootstrap/cache
 
       - name: 📂 Sync files
-        uses: SamKirkland/FTP-Deploy-Action@2.0.0
+        uses: stackcci/git-ftp-deploy@1.0.0
         env: 
-          FTP_SERVER: ${{secrets.FTP_SERVER}}
-          FTP_USERNAME: ${{secrets.FTP_USERNAME}}
-          FTP_PASSWORD: ${{secrets.FTP_PASSWORD}}
+          url: ${{secrets.FTP_SERVER}}
+          user: ${{secrets.FTP_USERNAME}}
+          password: ${{secrets.FTP_PASSWORD}}
