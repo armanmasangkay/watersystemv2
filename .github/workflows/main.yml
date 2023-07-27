@@ -15,7 +15,7 @@ jobs:
           fetch-depth: 2
 
       - name: "📂 Sync files"
-        uses: SamKirkland/FTP-Deploy-Action@latest
+        uses: SamKirkland/FTP-Deploy-Action@master
         with:
           server: ${{secrets.FTP_SERVER}}
           username: ${{secrets.FTP_USERNAME}}
