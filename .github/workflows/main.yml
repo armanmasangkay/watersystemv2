@@ -17,12 +17,12 @@ jobs:
 
       - name: "📂 Sync files"
         # uses: SamKirkland/FTP-Deploy-Action@master
-        uses: priradev/ftp-interactions@v0.2.9-beta
+        uses: modern-dev/ftp-mirror@v2
         with:
-          # server: ${{secrets.FTP_SERVER}}
-          username: ${{secrets.FTP_USERNAME}}
+          server: ${{secrets.FTP_SERVER}}
+          user: ${{secrets.FTP_USERNAME}}
           password: ${{secrets.FTP_PASSWORD}}
-          host: ${{secrets.FTP_SERVER}}
+          # host: ${{secrets.FTP_SERVER}}
           # local_dir: "./"
           # port: 21
           # dry-run: true
