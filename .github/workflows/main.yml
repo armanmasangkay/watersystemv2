@@ -15,10 +15,10 @@ jobs:
           fetch-depth: 2
 
       - name: "📂 Sync files"
-        uses: airvzxf/ftp-deployment-action@latest
+        uses: SamKirkland/FTP-Deploy-Action@latest
         with:
           server: ${{secrets.FTP_SERVER}}
-          user: ${{secrets.FTP_USERNAME}}
+          username: ${{secrets.FTP_USERNAME}}
           password: ${{secrets.FTP_PASSWORD}}
           # local_dir: "./"
           # port: 21
