@@ -1,4 +1,4 @@
-name: "Auto deploy to CPanel"
+name: "🚀 Auto deployment"
 
 on: 
   push: 
@@ -7,10 +7,11 @@ on:
 
 jobs:
   FTP-Deploy-Action:
-    name: "FTP-Deploy-Action"
+    name: "🎉 Deployment actions"
     runs-on: ubuntu-latest
     steps: 
-      - uses: actions/checkout@v2
+      - name: 🚚 Checkout code
+        uses: actions/checkout@v2
         with: 
           fetch-depth: 2
 
