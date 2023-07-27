@@ -25,20 +25,20 @@
         <table class="table mb-0">
             <thead>       
               <tr>
-                <td scope="col" class="border-bottom-0 py-3"><strong>FULL NAME</strong></td>
-                <td scope="col" class="border-bottom-0 py-3"><strong>USERNAME</strong></td>
-                <td scope="col" class="border-bottom-0 py-3"><strong>ROLE</strong></td>
-                <td scope="col" class="border-bottom-0 py-3"><strong>ACTIONS</strong></td>
+                <td scope="col" class="border-bottom-0 border-top-0 p-3"><strong>FULL NAME</strong></td>
+                <td scope="col" class="border-bottom-0 border-top-0  p-3"><strong>USERNAME</strong></td>
+                <td scope="col" class="border-bottom-0 border-top-0  p-3"><strong>ROLE</strong></td>
+                <td scope="col" class="border-bottom-0 border-top-0  p-3"><strong>ACTIONS</strong></td>
               </tr>
             </thead>
             <tbody>
                 @forelse($users as $user)
                 <tr>
-                  <td scope="row" class="border-bottom-0 border-top">{{$user->name}}</td>
-                  <td class="border-bottom-0 border-top">{{$user->username}}</td>
-                  <td class="border-bottom-0 border-top">{{$user->user_role()}}</td>
+                  <td scope="row" class="p-3 border-bottom-0 border-top">{{$user->name}}</td>
+                  <td class="p-3 border-bottom-0 border-top">{{$user->username}}</td>
+                  <td class="p-3 border-bottom-0 border-top">{{$user->user_role()}}</td>
                   <td class="border-bottom-0 border-top py-2">
-                    <div class="d-flex justify-content-start pe-0 me-0">
+                    <div class="d-flex justify-content-start pe-0 my-1 me-0">
                       <a href="{{route('admin.users.edit',$user)}}" class="me-1 bg-warning py-1 px-2 rounded-1 text-white text-decoration-none">Edit</a>
                       <form action="{{route('admin.users.destroy',$user)}}" method="post" class="pt-0 mb-0">
                         @csrf

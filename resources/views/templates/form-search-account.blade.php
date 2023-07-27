@@ -8,7 +8,7 @@
     @error('keyword') is-invalid @enderror" id="" value="{{old('keyword',request()->keyword??'')}}"
     placeholder="Account number / Name" required>
     @endif
-    <button href="" class="btn btn-primary mb-1">
+    <button href="" class="btn btn-primary ms-1">
     <i data-feather="search" width="20"></i>
     Search</button>
 

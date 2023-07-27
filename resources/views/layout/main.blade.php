@@ -17,7 +17,7 @@
         @includeWhen(url()->current()!=route('login') && 
                     url()->current()!=route('consumer.signin.index') &&
                     url()->current()!=route('consumer.signup.index'),'layout.nav')
-        <div class="container{{ Request::is('admin/consumer-ledger*') || Request::is('admin/service-list*') ? '-fluid px-5' : '' }}">
+        <div class="container{{ Request::is('admin/consumer-ledger*') || Request::is('admin/service-list*') || Request::is('admin/services*') || Request::is('admin/existing-customers*') ? '-fluid px-5' : '' }}">
             @yield('content')
         </div>
 
