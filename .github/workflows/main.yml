@@ -11,16 +11,18 @@ jobs:
     runs-on: ubuntu-latest
     steps: 
       - name: "🚚 Checkout code"
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with: 
           fetch-depth: 2
 
       - name: "📂 Sync files"
-        uses: SamKirkland/FTP-Deploy-Action@master
+        # uses: SamKirkland/FTP-Deploy-Action@master
+        uses: priradev/ftp-interactions@v0.2.9-beta
         with:
-          server: ${{secrets.FTP_SERVER}}
+          # server: ${{secrets.FTP_SERVER}}
           username: ${{secrets.FTP_USERNAME}}
           password: ${{secrets.FTP_PASSWORD}}
+          host: ${{secrets.FTP_SERVER}}
           # local_dir: "./"
           # port: 21
           # dry-run: true
