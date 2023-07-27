@@ -10,27 +10,12 @@ jobs:
     name: FTP-Deploy-Action
     runs-on: ubuntu-latest
     steps: 
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v3
         with: 
           fetch-depth: 2
-      - uses: actions/setup-node@master
-      - name: Copy .env
-        run: php -r "file_exists('.env') || copy('.env.example', '.env');"
-
-      - name: Install Dependencies
-        run: composer update --ignore-platform-reqs
-
-      - name: Generate key
-        run: php artisan key:generate
-
-      - name: Generate storage link
-        run: php artisan storage:link
-
-      - name: Directory Permissions
-        run: chmod -R 777 storage bootstrap/cache
 
       - name: 📂 Sync files
-        uses: stackcci/git-ftp-deploy@1.0.0
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         env: 
           url: ${{secrets.FTP_SERVER}}
           user: ${{secrets.FTP_USERNAME}}
