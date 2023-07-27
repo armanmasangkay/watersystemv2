@@ -17,12 +17,12 @@ jobs:
 
       - name: "📂 Sync files"
         # uses: SamKirkland/FTP-Deploy-Action@master
-        uses: airvzxf/ftp-deployment-action@latest
+        uses: joutvhu/ftp-transfer@v1.0.0
         with:
-          server: ${{secrets.FTP_SERVER}}
+          # server: ${{secrets.FTP_SERVER}}
           user: ${{secrets.FTP_USERNAME}}
           password: ${{secrets.FTP_PASSWORD}}
-          # host: ${{secrets.FTP_SERVER}}
+          host: ${{secrets.FTP_SERVER}}
           # local_dir: "./"
           # port: 21
           # dry-run: true
