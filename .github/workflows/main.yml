@@ -10,7 +10,7 @@ jobs:
     name: "🎉 Deployment actions"
     runs-on: ubuntu-latest
     steps: 
-      - name: 🚚 Checkout code
+      - name: "🚚 Checkout code"
         uses: actions/checkout@v2
         with: 
           fetch-depth: 2
