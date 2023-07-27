@@ -15,11 +15,10 @@ jobs:
           fetch-depth: 2
 
       - name: 📂 Sync files
-        uses: SamKirkland/FTP-Deploy-Action@master
+        uses: sand4rt/ftp-deployer@v1.7
         with:
-          server: ${{secrets.FTP_SERVER}}
+          host: ${{secrets.FTP_SERVER}}
           username: ${{secrets.FTP_USERNAME}}
           password: ${{secrets.FTP_PASSWORD}}
-          # port: 21
-          timeout: 60000
+          port: 21
           # dry-run: true
