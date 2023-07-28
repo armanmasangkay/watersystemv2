@@ -14,11 +14,14 @@ jobs:
         uses: actions/checkout@v2
 
       - name: "📂 Deploying to dev server..."
-        uses: wlixcc/SFTP-Deploy-Action@v1.2.1
+        uses: appleboy/ssh-action@master
         with:
           username: ${{secrets.FTP_SERVER_USERNAME}}
-          server: ${{secrets.FTP_SERVER}}
-          ssh_private_key: ${{secrets.SSH_KEY}}
-          local_path: "./*"
+          host: ${{secrets.FTP_SERVER}}
+          key: ${{secrets.SSH_KEY}}
           port: 21
-          remote_path: "/home/macroho1/stg-mws.macrohonwater.ph/"
+          script: |
+            cd /var/www/youtube.com/
+            git pull origin main
+            git status
+            composer install
