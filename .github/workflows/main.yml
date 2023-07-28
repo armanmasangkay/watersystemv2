@@ -17,10 +17,10 @@ jobs:
         uses: wlixcc/SFTP-Deploy-Action@v1.2.4
         with:
           server: ${{secrets.FTP_SERVER}}
-          username: ${{secrets.FTP_SERVER_USERNAME}}
+          username: ${{secrets.FTP_USERNAME}}
           host: ${{secrets.FTP_SERVER}}
           ssh_private_key: ${{secrets.SSH_KEY}}
           local_path: "./*"
-          port: 21
+          port: 22
           remote_path: "/home/macroho1/stg-mws.macrohonwater.ph"
           args: "-o ConnectTimeout=5"
