@@ -11,18 +11,16 @@ jobs:
     runs-on: ubuntu-latest
     steps: 
       - name: "🚚 Checkout code"
-        uses: actions/checkout@v3
-        with: 
-          fetch-depth: 2
+        uses: actions/checkout@v2
 
-      - name: "📂 Sync files"
-        # uses: SamKirkland/FTP-Deploy-Action@master
-        uses: joutvhu/ftp-transfer@v1.0.0
+      - name: "📂 Deploying to dev server..."
+        uses: wlixcc/SFTP-Deploy-Action@v1.2.4
         with:
-          # server: ${{secrets.FTP_SERVER}}
-          user: ${{secrets.FTP_USERNAME}}
-          password: ${{secrets.FTP_PASSWORD}}
+          server: ${{secrets.FTP_SERVER}}
+          username: ${{secrets.FTP_USERNAME}}
           host: ${{secrets.FTP_SERVER}}
-          # local_dir: "./"
-          # port: 21
-          # dry-run: true
+          ssh_private_key: ${{secrets.SSH_KEY}}
+          local_path: "./*"
+          port: 21
+          remote_path: "/home/macroho1/stg-mws.macrohonwater.ph"
+          args: "-o ConnectTimeout=5"
