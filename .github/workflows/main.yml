@@ -17,11 +17,11 @@ jobs:
         uses: appleboy/ssh-action@master
         with:
           username: ${{secrets.FTP_USERNAME}}
-          host: ${{secrets.FTP_SERVER}}
+          host: "macrohonwater.ph"
           key: ${{secrets.SSH_KEY}}
-          port: 21
+          port: 22
           script: |
-            cd /home/macroho1/stg-mws.macrohonwater.ph
+            cd /home/macroho1/prod-mws.macrohonwater.ph
             git pull origin main
             git status
             composer install
