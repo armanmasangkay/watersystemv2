@@ -14,12 +14,12 @@ jobs:
         uses: actions/checkout@v2
 
       - name: "📂 Deploying to dev server..."
-        uses: wlixcc/SFTP-Deploy-Action@v1.2.4
+        uses: wlixcc/SFTP-Deploy-Action@v1.2.1
         with:
+          username: ${{secrets.FTP_SERVER_USERNAME}}
           server: ${{secrets.FTP_SERVER}}
-          username: ${{secrets.FTP_USERNAME}}
           ssh_private_key: ${{secrets.SSH_KEY}}
           local_path: "./*"
           port: 21
-          remote_path: "/home/macroho1/stg-mws.macrohonwater.ph"
-          args: "-o ConnectTimeout=5"
+          remote_path: "/home/macroho1/stg-mws.macrohonwater.ph/"
+          sftpArgs: "-o ConnectTimeout=5"
