@@ -22,4 +22,4 @@ jobs:
           local_path: "./*"
           port: 21
           remote_path: "/home/macroho1/stg-mws.macrohonwater.ph/"
-          sftpArgs: "-o ConnectTimeout=5"
+          sftpArgs: "-o ConnectTimeout=60000"
