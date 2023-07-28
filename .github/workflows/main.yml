@@ -21,6 +21,6 @@ jobs:
           host: ${{secrets.FTP_SERVER}}
           ssh_private_key: ${{secrets.SSH_KEY}}
           local_path: "./*"
-          port: 22
+          port: 21
           remote_path: "/home/macroho1/stg-mws.macrohonwater.ph"
           args: "-o ConnectTimeout=5"
