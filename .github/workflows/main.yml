@@ -16,7 +16,8 @@ jobs:
       - name: "📂 Deploying to dev server..."
         uses: appleboy/ssh-action@master
         with:
-          username: ${{secrets.FTP_USERNAME}}
+          #username: ${{secrets.FTP_USERNAME}}
+          username: "macroho1"
           host: "macrohonwater.ph"
           key: ${{secrets.SSH_KEY}}
           port: 22
