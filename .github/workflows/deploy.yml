@@ -13,27 +13,10 @@ jobs:
       - name: "Check out code"
         uses: actions/checkout@v2.3.2
         
-        
-  dependencies-installation:
-    name: "Dependency installation"
-    needs: app-deployment
-    runs-on: ubuntu-latest
-    
-    steps: 
-      - name: "Preparing app..."
-        uses: actions/checkout@v2.3.2
-        
       - name: "Installing dependencies..."
         run: |
           composer update && composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
-    
-    
-  app-deploy:
-    name: "Deploy to staging"
-    needs: dependencies-installation
-    runs-on: ubuntu-latest
-    
-    steps:
+        
       - name: "Synching files to staging..."
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
@@ -59,6 +42,8 @@ jobs:
             **/intprogress.github/**
             **/.htaccess
             **/main.yaml
+    
+
     
   
     
