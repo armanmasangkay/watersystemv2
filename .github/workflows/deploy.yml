@@ -25,7 +25,7 @@ jobs:
           host: "ftp.macrohonwater.ph"
           user: "user@prod-mws.macrohonwater.ph"
           password: "r2)ucSx,Jh$u"
-          localDir: "./*"
+          localDir: "./"
           remoteDir: "/"
           options: "--delete --asci"
           #port: 21
