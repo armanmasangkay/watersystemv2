@@ -22,7 +22,7 @@ jobs:
           ssh_private_key: ${{secrets.SSH_KEY}}
           port: 21
           local_path: ./*
-          remote_path: /home/macroho1/stg-mws.macrohonwater.ph/
+          remote_path: /home/macroho1/prod-mws.macrohonwater.ph/
           # script: |
           #  cd /home/macroho1/stg-mws.macrohonwater.ph
           #  git pull origin main
