@@ -6,25 +6,32 @@ on:
     
 jobs:
   app-deployment:
-    name: "Deploy app"
+    name: "Running app"
     runs-on: ubuntu-latest
     
     steps: 
       - name: "Check out code"
         uses: actions/checkout@v2.3.2
-          
-      - name: "Install dependencies"
-        run: |
-          composer update && composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
         
-      
-  app-deploy:
-    name: "Push to staging"
+        
+  dependencies-installation:
+    name: "Dependency installation"
     needs: app-deployment
     runs-on: ubuntu-latest
     
+    steps: 
+      - name: "Installing dependencies..."
+        run: |
+          composer update && composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+    
+    
+  app-deploy:
+    name: "Deploy to staging"
+    needs: dependencies-installation
+    runs-on: ubuntu-latest
+    
     steps:
-      - name: "Sync files"
+      - name: "Synching files to staging..."
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
           server: "ftp.macrohonwater.ph"
