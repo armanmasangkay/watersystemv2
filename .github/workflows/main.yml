@@ -12,15 +12,19 @@ jobs:
     steps: 
       - name: "🚚 Checkout code"
         uses: actions/checkout@v2
+        
+      - name: "Installing dependencies..."
+        run: |
+          composer update && composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
 
-      - name: "📂 Deploying to dev server..."
+      - name: "📂 Deploying to prod server..."
         uses: wlixcc/SFTP-Deploy-Action@v1.2.1
         with:
           #username: ${{secrets.FTP_USERNAME}}
           username: macroho1
           server: 216.218.206.62
           ssh_private_key: ${{secrets.SSH_KEY}}
-          port: 21
+          port: 22
           local_path: ./*
           remote_path: /home/macroho1/prod-mws.macrohonwater.ph/
           args: "-o ConnectTimeout=5"
