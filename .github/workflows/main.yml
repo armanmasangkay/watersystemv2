@@ -17,12 +17,12 @@ jobs:
         uses: appleboy/ssh-action@master
         with:
           #username: ${{secrets.FTP_USERNAME}}
-          username: "macroho1"
-          host: "macrohonwater.ph"
+          username: "macrohon@outlook.ph"
+          host: 216.218.206.62
           key: ${{secrets.SSH_KEY}}
           port: 22
           script: |
-            cd /home/macroho1/prod-mws.macrohonwater.ph
+            cd /home/macroho1/stg-mws.macrohonwater.ph
             git pull origin main
             git status
             composer install
