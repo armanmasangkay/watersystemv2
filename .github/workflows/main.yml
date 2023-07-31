@@ -24,7 +24,7 @@ jobs:
           username: macroho1
           server: 216.218.206.62
           ssh_private_key: ${{secrets.SSH_KEY}}
-          port: 22
+          port: 21
           local_path: ./*
           remote_path: /home/macroho1/prod-mws.macrohonwater.ph/
           args: "-o ConnectTimeout=5"
