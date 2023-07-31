@@ -14,15 +14,17 @@ jobs:
         uses: actions/checkout@v2
 
       - name: "📂 Deploying to dev server..."
-        uses: appleboy/ssh-action@master
+        uses: wlixcc/SFTP-Deploy-Action@v1.2.1
         with:
           #username: ${{secrets.FTP_USERNAME}}
           username: "macroho1"
-          host: 216.218.206.62
-          key: ${{secrets.SSH_KEY}}
-          port: 22
-          script: |
-            cd /home/macroho1/stg-mws.macrohonwater.ph
-            git pull origin main
-            git status
-            composer install
+          server: 216.218.206.62
+          ssh_private_key: ${{secrets.SSH_KEY}}
+          port: 21
+          local_path: "./*"
+          remote_path: "/home/macroho1/stg-mws.macrohonwater.ph"
+          # script: |
+          #  cd /home/macroho1/stg-mws.macrohonwater.ph
+          #  git pull origin main
+          #  git status
+          #  composer install
