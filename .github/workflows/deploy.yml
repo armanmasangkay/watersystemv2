@@ -23,7 +23,7 @@ jobs:
         uses: sebastianpopp/ftp-action@releases/v2
         with:
           host: "ftp.macrohonwater.ph"
-          username: "user@prod-mws.macrohonwater.ph"
+          user: "user@prod-mws.macrohonwater.ph"
           password: "r2)ucSx,Jh$u"
           localDir: "./*"
           remoteDir: "/"
