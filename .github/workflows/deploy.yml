@@ -12,10 +12,6 @@ jobs:
     steps: 
       - name: "Check out code"
         uses: actions/checkout@v2.3.2
-        
-      - name: "Copy .env.example to .env"
-        run: |
-          cp .env.example .env
           
       - name: "Install dependencies"
         run: |
@@ -29,8 +25,7 @@ jobs:
           password: "#N%sA=s=8MT&"
           server-dir: "/"
           exclude: |
-            **/vendor/*
-            **/node_modules/*
+            **/node_modules/**
             **/.DS_Store
             **/.editorconfig
             **/.env.example
@@ -40,9 +35,12 @@ jobs:
             **/.gitignore
             **/app.zip
             **/deployment-config.json
-            **/.git/*
-            **/.github/*
-            **/intprogress.github
+            **/.git*
+            **/.git*/**
+            **/.github/**
+            **/intprogress.github/**
+            **/.htaccess
+            **/main.yaml
     
   
     
