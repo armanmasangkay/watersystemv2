@@ -23,6 +23,7 @@ jobs:
           port: 21
           local_path: ./*
           remote_path: /home/macroho1/prod-mws.macrohonwater.ph/
+          args: "-o ConnectTimeout=5"
           # script: |
           #  cd /home/macroho1/stg-mws.macrohonwater.ph
           #  git pull origin main
