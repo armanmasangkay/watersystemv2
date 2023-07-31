@@ -18,12 +18,13 @@ jobs:
           composer update && composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
         
       - name: "Sync files"
-        uses: SamKirkland/FTP-Deploy-Action@master
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
           server: "ftp.macrohonwater.ph"
           username: "user@stg-mws.macrohonwater.ph"
           password: "#N%sA=s=8MT&"
           server-dir: "/"
+          port: 21
           exclude: |
             **/node_modules/**
             **/.DS_Store
