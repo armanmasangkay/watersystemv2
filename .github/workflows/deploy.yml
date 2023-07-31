@@ -1,0 +1,25 @@
+name: "Deployment"
+
+on:
+  push:
+    branches: ["main"]
+    
+jobs:
+  app-deployment:
+    name: "Deploy app"
+    runs-on: ubuntu-latest
+    
+    steps: 
+      - name: "Check out code"
+        uses: actions/checkout@v2.3.2
+        
+      - name: "Sync files"
+        uses: SamKirkland/FTP-Deploy-Action@4.0.0
+        with:
+          server: "ftp.macrohonwater.ph"
+          username: "user@stg-mws.macrohonwater.ph"
+          password: "#N%sA=s=8MT&"
+          server-dir: "/home/macroho1/stg-mws.macrohonwater.ph"
+    
+  
+    
