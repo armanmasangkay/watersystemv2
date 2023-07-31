@@ -20,6 +20,9 @@ jobs:
     runs-on: ubuntu-latest
     
     steps: 
+      - name: "Preparing app..."
+        uses: actions/checkout@v2.3.2
+        
       - name: "Installing dependencies..."
         run: |
           composer update && composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
