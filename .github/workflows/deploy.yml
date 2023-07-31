@@ -20,29 +20,29 @@ jobs:
           composer update && composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
         
       - name: "Synching files to staging..."
-        uses: sebastianpopp/ftp-action@releases/v2
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4 #sebastianpopp/ftp-action@releases/v2
         with:
-          host: "ftp.macrohonwater.ph"
-          user: "user@prod-mws.macrohonwater.ph"
+          server: "ftp.macrohonwater.ph"
+          username: "user@prod-mws.macrohonwater.ph"
           password: "r2)ucSx,Jh$u"
-          #port: 21
-          #exclude: |
-          #  **/node_modules/**
-          #  **/.DS_Store
-          #  **/.editorconfig
-          #  **/.env.example
-          #  **/.gitattributes
-          #  **/.styleci.yml
-          #  **/.ftpquota
-          #  **/.gitignore
-          #  **/app.zip
-          #  **/deployment-config.json
-          #  **/.git*
-          #  **/.git*/**
-          #  **/.github/**
-          #  **/intprogress.github/**
-          #  **/.htaccess
-          #  **/main.yaml
+          port: 21
+          exclude: |
+            **/node_modules/**
+            **/.DS_Store
+            **/.editorconfig
+            **/.env.example
+            **/.gitattributes
+            **/.styleci.yml
+            **/.ftpquota
+            **/.gitignore
+            **/app.zip
+            **/deployment-config.json
+            **/.git*
+            **/.git*/**
+            **/.github/**
+            **/intprogress.github/**
+            **/.htaccess
+            **/main.yaml
     
 
     
