@@ -19,7 +19,7 @@ jobs:
           server: "ftp.macrohonwater.ph"
           username: "user@stg-mws.macrohonwater.ph"
           password: "#N%sA=s=8MT&"
-          server-dir: "/home/macroho1/stg-mws.macrohonwater.ph"
+          server-dir: "/home/macroho1/stg-mws.macrohonwater.ph/"
     
   
     
