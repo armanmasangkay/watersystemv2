@@ -1,4 +1,4 @@
-name: "Deployment"
+name: "Deployment automation"
 
 on:
   push:
@@ -17,6 +17,13 @@ jobs:
         run: |
           composer update && composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
         
+      
+  app-deploy:
+    name: "Push to staging"
+    needs: app-deployment
+    runs-on: ubuntu-latest
+    
+    steps:
       - name: "Sync files"
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
         with:
