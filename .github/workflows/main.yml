@@ -17,7 +17,7 @@ jobs:
         uses: appleboy/ssh-action@master
         with:
           #username: ${{secrets.FTP_USERNAME}}
-          username: "macrohon@outlook.ph"
+          username: "macroho1"
           host: 216.218.206.62
           key: ${{secrets.SSH_KEY}}
           port: 22
