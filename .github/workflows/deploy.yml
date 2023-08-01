@@ -22,8 +22,8 @@ jobs:
       - name: "Synching files to staging..."
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4 #sebastianpopp/ftp-action@releases/v2
         with:
-          server: "ftp.macrohonwater.ph"
-          username: "macroho1"
+          server: "216.218.206.62"
+          username: "macrohon@outlook.ph"
           password: "EaXDOdl@|Ipn" #"r2)ucSx,Jh$u"
           server-dir: "/home/macroho1/prod-mws.macrohonwater.ph/"
           port: 21
