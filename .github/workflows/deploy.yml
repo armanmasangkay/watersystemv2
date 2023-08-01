@@ -19,13 +19,13 @@ jobs:
         run: |
           composer update && composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
         
-      - name: "Synching files to staging..."
+      - name: "Synching files to production..."
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4 #sebastianpopp/ftp-action@releases/v2
         with:
-          server: "ftp.macrohonwater.ph"
-          username: "macroho1"
-          password: "EaXDOdl@|Ipn" #"r2)ucSx,Jh$u"
-          server-dir: "/home/macroho1/prod-mws.macrohonwater.ph/"
+          server: ftp.macrohonwater.ph
+          username: macroho1
+          password: EaXDOdl@|Ipn #"r2)ucSx,Jh$u"
+          server-dir: /home/macroho1/prod-mws.macrohonwater.ph/
           port: 21
           exclude: |
             **/node_modules/**
