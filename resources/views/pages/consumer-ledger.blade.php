@@ -1,10 +1,10 @@
 @extends('layout.main')
 
-@section('title', 'Register a Customer')
+@section('title', 'Consumer Ledger')
 
 @section('content')
 
-<div class="container{{ Request::is('admin/consumer-ledger*') ? '-fluid px-4' : '' }} mt-5">
+<div class="container{{ Request::is('admin/consumer-ledger*') ? '-fluid px-0' : '' }} mt-5">
     <div class="row">
         <div class="col-md-12">
             <div class="card border-secondary">
@@ -60,13 +60,13 @@
                 <div class="card-body p-0">
                     <div class="table-responsive p-0">
                         <table class="table mb-0 border-0" style="min-width: 1200px;">
-                            <thead>
+                            <thead style="font-size: 13px; font-weight: bolder">
                                 <tr>
-                                    <td class="pt-0 pb-4 text-center bg-white border-end border-secondary" rowspan="2"><strong>PERIOD </br>COVERED</strong></td>
+                                    <td class="py-4 pb-4 text-center bg-white border-end border-secondary" rowspan="2"><strong>PERIOD </br>COVERED</strong></td>
                                     <td class="pt-3 pb-3 text-center f0f0f0 border-end border-secondary" colspan="3"><strong>READING</strong></td>
                                     <td class="pt-3 pb-3 text-center f8d6b0 border-end border-secondary" colspan="6"><strong>BILLING</strong></td>
                                     <td class="pt-3 pb-3 text-center eee border-bottom border-end border-secondary" colspan="4"><strong>PAYMENT</strong></td>
-                                    <td class="pt-0 pb-4 text-center bg-white border-bottom border-secondary" rowspan="2"><strong>EDIT </br>BILLING</strong></td>
+                                    <td class="py-4 pb-4 text-center bg-white border-bottom border-secondary" rowspan="2"><strong>EDIT </br>BILLING</strong></td>
                                 </tr>
                                 <tr>
                                     <td class="pt-2 pb-2 text-center f0f0f0 border-end border-secondary"><strong>DATE</strong></td>
@@ -160,7 +160,7 @@
                                     </td>
                                     <td class="pt-2 pb-2 text-center bg-white border-bottom border-secondary">
                                         @if($billing->payments->count() == 0 && $billing->balance > 0)
-                                            <a href="#" class="text-primary" data-id="{{ $billing->id }}" id="edit"><i data-feather="edit-3" class="feather-18 me-1"></i> Edit</a>
+                                            <a href="#" class="text-primary" data-id="{{ $billing->id }}" id="edit"><small><i data-feather="edit-3" class="feather-18 me-1"></i> Edit</small></a>
                                         @endif
                                     </td>
                                 </tr>

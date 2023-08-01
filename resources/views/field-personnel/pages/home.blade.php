@@ -168,5 +168,5 @@
 
 @section('custom-js')
 <script src="{{ asset('assets/js/location.js') }}" defer></script>
-<script src="{{ asset('assets/js/form-search-animation.js') }}" defer></script>
+<script src="{{ asset('assets/js/toggle-side-nav.js') }}" defer></script>
 @endsection

@@ -4,12 +4,12 @@
 
 @section('content')
 
-<div class="container mt-5">
+<div class="container{{ Request::is('admin/existing-customers*')  ? '-fluid' : '' }} mt-5">
     <h5 class="text-secondary h4"><i data-feather="align-right" class="mb-1 feather-30 me-1"></i> Lists of Consumers</h5>
     <div class="card border">
         <div class="card-header border-0 px-2 pb-0 pt-2 bg-white">
             <div class="row">
-                <div class="col-lg-5 col-md-7 col-sm-8 pe-md-0 pe-md-5">
+                <div class="py-2 col-lg-5 col-md-7 col-sm-8 pe-md-0 pe-md-5">
                     <form action="{{route('admin.searched-customers.index')}}" class="mb-0" action="get">
                         <div class="input-group mb-2">
                             <input type="text" name='keyword' value="{{$keyword??''}}" class="form-control @error('keyword')is-invalid @enderror" placeholder="Enter name or account #" aria-describedby="button-addon2">
@@ -48,21 +48,21 @@
 
                         @foreach ($customers as $customer)
                         <tr style="cursor: pointer;" onclick='location.href=`{{ route("admin.search-transactions", ["account_number" => $customer->account_number]) }}`'>
-                            <td class="text-primary border-top {{ ($customers->count() < 10) ? 'border-bottom-0' : '' }} "><strong>{{$customer->account_number}}</strong></td>
+                            <td class="py-3 text-primary border-top {{ ($customers->count() < 10) ? 'border-bottom-0' : '' }} "><strong>{{$customer->account_number}}</strong></td>
                             @if($customer->isOrgAccount())
-                            <td class="text-secondary border-top {{ ($customers->count() < 10) ? 'border-bottom-0' : '' }} ">
+                            <td class="py-3 text-secondary border-top {{ ($customers->count() < 10) ? 'border-bottom-0' : '' }} ">
                               ORG/COMPANY: <strong>{{$customer->org_name}}</strong><br>
                               <small class="text-muted">Registered by ({{$customer->fullname()}})</small>
                             </td>
                             @else
-                            <td class="text-secondary border-top {{ ($customers->count() < 10) ? 'border-bottom-0' : '' }} ">{{$customer->firstname . ' ' .$customer->middlename. ' '.$customer->lastname}}</td>
+                            <td class="py-3 text-secondary border-top {{ ($customers->count() < 10) ? 'border-bottom-0' : '' }} ">{{$customer->firstname . ' ' .$customer->middlename. ' '.$customer->lastname}}</td>
                             @endif
                             
-                            <td class="text-secondary border-top {{ ($customers->count() < 10) ? 'border-bottom-0' : '' }} ">{{Str::ucfirst($customer->civil_status)}}</td>
-                            <td class="text-secondary border-top {{ ($customers->count() < 10) ? 'border-bottom-0' : '' }} ">{{$customer->contact_number}}</td>
-                            <td class="text-secondary border-top {{ ($customers->count() < 10) ? 'border-bottom-0' : '' }} ">{{$customer->purok.', '.$customer->barangay}}</td>
-                            <td class="text-secondary border-top {{ ($customers->count() < 10) ? 'border-bottom-0' : '' }} ">{{Str::ucfirst($customer->connection_type)}}</td>
-                            <td class="text-secondary border-top {{ ($customers->count() < 10) ? 'border-bottom-0' : '' }} ">{{Str::ucfirst($customer->connection_status)}}</td>
+                            <td class="py-3 text-secondary border-top {{ ($customers->count() < 10) ? 'border-bottom-0' : '' }} ">{{Str::ucfirst($customer->civil_status)}}</td>
+                            <td class="py-3 text-secondary border-top {{ ($customers->count() < 10) ? 'border-bottom-0' : '' }} ">{{$customer->contact_number}}</td>
+                            <td class="py-3 text-secondary border-top {{ ($customers->count() < 10) ? 'border-bottom-0' : '' }} ">{{$customer->purok.', '.$customer->barangay}}</td>
+                            <td class="py-3 text-secondary border-top {{ ($customers->count() < 10) ? 'border-bottom-0' : '' }} ">{{Str::ucfirst($customer->connection_type)}}</td>
+                            <td class="py-3 text-secondary border-top {{ ($customers->count() < 10) ? 'border-bottom-0' : '' }} ">{{Str::ucfirst($customer->connection_status)}}</td>
                         </tr>
                         @endforeach
                         @else
