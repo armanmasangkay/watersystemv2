@@ -5,11 +5,11 @@
 @section('content')
 
     <div class="col-md-12 mt-4">
-        <div class="row">
+        <div class="row justify-content-between">
             <div class="col-md-3 py-0">
-                <h5 class="text-secondary h4 mt-4"><i data-feather="align-right" class="mb-1 feather-30 me-1"></i> Lists of Services</h5>
+                <h5 class="text-secondary h4 mt-4 mb-3"><i data-feather="align-right" class="mb-1 feather-30 me-1"></i> Lists of Services</h5>
             </div>
-            <div class="col-md-9 pt-md-3">
+            <div class="col-md-7 pt-md-3">
                 <form action="{{ route('admin.services.filter')}}" class="d-flex justify-content-start mb-2" method="get">
                     <label class="me-2">From</label>
                     <input type="date" class="form-control me-2 @error('from') is-invalid @enderror" name="from" value="{{$from??session('from')}}"/>
@@ -35,7 +35,7 @@
                             @endif
                         @endforeach
                     </select>
-                    <button type="submit" class="btn btn-primary col-md-3"><i data-feather="filter" class="feather-18"></i> Filter</button>
+                    <button type="submit" class="d-flex items-center pt-2 btn btn-primary"><i data-feather="filter" class="feather-18 me-2 mt-1"></i> <span class="mt-1">Filter</span></button>
                 </form>
             </div>
         </div>
@@ -44,27 +44,27 @@
                 <table class="table mb-0">
                     <thead>
                         <tr>
-                            <td scope="col" class="border-bottom-0 py-3"><strong>REQUEST NUMBER</strong></td>
-                            <td scope="col" class="border-bottom-0 py-3"><strong>FULL NAME</strong></td>
-                            <td scope="col" class="border-bottom-0 py-3"><strong>TYPE OF SERVICE</strong></td>
-                            <td scope="col" class="border-bottom-0 py-3"><strong>REMARKS</strong></td>
-                            <td scope="col" class="border-bottom-0 py-3"><strong>LANDMARKS</strong></td>
-                            <td scope="col" class="border-bottom-0 py-3"><strong>CONTACT NUMBER</strong></td>
-                            <td scope="col" class="border-bottom-0 py-3"><strong>STATUS</strong></td>
-                            <td scope="col" class="border-bottom-0 py-3"><strong>ACTION</strong></td>
+                            <td scope="col" class="border-bottom-0 border-top-0 py-3"><strong>REQUEST NUMBER</strong></td>
+                            <td scope="col" class="border-bottom-0 border-top-0 py-3"><strong>FULL NAME</strong></td>
+                            <td scope="col" class="border-bottom-0 border-top-0 py-3"><strong>TYPE OF SERVICE</strong></td>
+                            <td scope="col" class="border-bottom-0 border-top-0 py-3"><strong>REMARKS</strong></td>
+                            <td scope="col" class="border-bottom-0 border-top-0 py-3"><strong>LANDMARKS</strong></td>
+                            <td scope="col" class="border-bottom-0 border-top-0 py-3"><strong>CONTACT NUMBER</strong></td>
+                            <td scope="col" class="border-bottom-0 border-top-0 py-3"><strong>STATUS</strong></td>
+                            <td scope="col" class="border-bottom-0 border-top-0 py-3"><strong>ACTION</strong></td>
                         </tr>
                     </thead>
                     <tbody>
                         @forelse ($services as $service)
                             <tr>
-                                <td scope="row" class="border-bottom-0 border-top">{{$service->request_number}}</td>
-                                <td scope="row" class="border-bottom-0 border-top">{{$service->customer->fullname()}}</td>
-                                <td scope="row" class="border-bottom-0 border-top">{{ $service->prettyType()}}</td>
-                                <td scope="row" class="border-bottom-0 border-top">{{$service->remarks}}</td>
-                                <td scope="row" class="border-bottom-0 border-top">{{$service->landmarks}}</td>
-                                <td scope="row" class="border-bottom-0 border-top">{{$service->customer->contact_number}}</td>
-                                <td scope="row" class="border-bottom-0 border-top">{{$service->prettyStatus()}}</td>
-                                <td scope="row" class="border-bottom-0 border-top pb-3">
+                                <td scope="row" class="py-3 border-bottom-0 border-top">{{$service->request_number}}</td>
+                                <td scope="row" class="py-3 border-bottom-0 border-top">{{$service->customer->fullname()}}</td>
+                                <td scope="row" class="py-3 border-bottom-0 border-top">{{ $service->prettyType()}}</td>
+                                <td scope="row" class="py-3 border-bottom-0 border-top">{{$service->remarks}}</td>
+                                <td scope="row" class="py-3 border-bottom-0 border-top">{{$service->landmarks}}</td>
+                                <td scope="row" class="py-3 border-bottom-0 border-top">{{$service->customer->contact_number}}</td>
+                                <td scope="row" class="py-3 border-bottom-0 border-top">{{$service->prettyStatus()}}</td>
+                                <td scope="row" class="py-3 border-bottom-0 border-top">
                                     <div class="row">
                                         @if($service->isReady())
                                         <div class="col-6 pe-0">

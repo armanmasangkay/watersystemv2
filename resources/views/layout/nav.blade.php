@@ -1,6 +1,6 @@
-  <nav class="navbar navbar-expand-md navabr-light border-bottom pt-3 pb-3">
-    <div class="container{{ Request::is('admin/consumer-ledger*') || Request::is('admin/service-list*') ? '-fluid px-5' : ' px-3' }}">
-      <a class="navbar-brand text-dark pe-4 pt-md-0" href="{{route('admin.dashboard')}}"><strong>MWS</strong></a>
+  <nav class="navbar navbar-expand-md navabr-light border-bottom py-2">
+    <div class="container{{ Request::is('admin/consumer-ledger*') || Request::is('admin/service-list*') || Request::is('admin/existing-customers*') || Request::is('admin/services*')  ? '-fluid px-4' : ' px-3' }}">
+      <a class="navbar-brand text-dark pe-4 pt-md-1" href="{{route('admin.dashboard')}}"><strong>MWS</strong></a>
       <button class="navbar-toggler border-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span data-feather="align-center" class="text-secondary"></span>
       </button>

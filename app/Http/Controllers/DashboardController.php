@@ -32,6 +32,8 @@ class DashboardController extends Controller
     private function autoGenerateBill()
     {
         $activeCustomers=Customer::where('connection_status',Customer::ACTIVE)->get();
+        
+        if($activeCustomers->count() === 0) return;
 
         foreach($activeCustomers as $customer){
 
@@ -85,7 +87,7 @@ class DashboardController extends Controller
                                 'payment_amount',
                                 'balance'=>$lastTransaction->balance+$billingAmount,
                                 'user_id',
-                                'posted_by'
+                                'posted_by' => null
                             ]);
                         }
                     }
